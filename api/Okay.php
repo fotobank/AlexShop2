@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL^E_NOTICE);
+
 /**
  * Основной класс AlexShop для доступа к API CMS
  *
@@ -38,73 +38,59 @@ error_reporting(E_ALL^E_NOTICE);
  * @property Topvisor() topvisor
  */
 class Okay {
-    
-	private $classes = array(
-		'config'     => 'Config',
-		'request'    => 'Request',
-		'db'         => 'Database',
-		'settings'   => 'Settings',
-		'design'     => 'Design',
-		'products'   => 'Products',
-		'variants'   => 'Variants',
-		'categories' => 'Categories',
-		'brands'     => 'Brands',
-		'features'   => 'Features',
-		'money'      => 'Money',
-		'pages'      => 'Pages',
-		'blog'       => 'Blog',
-		'cart'       => 'Cart',
-		'image'      => 'Image',
-		'delivery'   => 'Delivery',
-		'payment'    => 'Payment',
-		'orders'     => 'Orders',
-		'users'      => 'Users',
-		'coupons'    => 'Coupons',
-		'comments'   => 'Comments',
-		'feedbacks'  => 'Feedbacks',
-		'notify'     => 'Notify',
-		'managers'   => 'Managers',
-		'languages'  => 'Lang',
-		'translations'  => 'Translations',
-        'comparison'   => 'Comparison',
-        'subscribes' => 'Subscribes',
-        'banners'	 => 'Banners',
-        'callbacks'  => 'Callbacks'
-        /*statistic*/
-        ,'reportstat' => 'ReportStat'
-        /*statistic*/
-        ,'topvisor'  => 'Topvisor'
-        
-	);
-    
+
+    /**
+     * алиасы API
+     * @var array
+     */
+    private static $alias = [
+        'db' => 'Database',
+        'languages'  => 'Lang',
+    ];
+    /**
+     * Созданные объекты
+     * @var array
+     */
 	private static $objects = array();
-    
+
+    /**
+     * Конструктор оставим пустым, но определим его на случай обращения parent::__construct() в классах API
+     */
     public function __construct() {
 		//error_reporting(E_ALL & !E_STRICT);
 	}
-    
+
+    /**
+     * Магический метод, создает нужный объект API
+     *
+     * @param $name
+     *
+     * @return mixed|null
+     */
     public function __get($name) {
-		// Если такой объект уже существует, возвращаем его
-        if(isset(self::$objects[$name])) {
-			return(self::$objects[$name]);
-		}
 
-		// Если запрошенного API не существует - ошибка
-        if(!array_key_exists($name, $this->classes)) {
-			return null;
-		}
+        // прокси классы можно писать с маленькой или большой букв
+        $name = lcfirst ($name);
+        $class = ucfirst($name);
+        // Проверка алиаса в API
+        if (isset(self::$alias[$name])){
+            $class = self::$alias[$name];
+        }
+        // Если такой объект уже существует, возвращаем его
+        if (isset(self::$objects[$class])){
+            return self::$objects[$class];
+        }
+        $file_class = __DIR__ . '/' . $class . '.php';
 
-		// Определяем имя нужного класса
-		$class = $this->classes[$name];
+        if(is_readable($file_class)){
+            include_once $file_class;
+            self::$objects[$class] = new $class();
 
-		// Подключаем его
-		include_once __DIR__ .'/'.$class.'.php';
-
-		// Сохраняем для будущих обращений к нему
-		self::$objects[$name] = new $class();
-
-		// Возвращаем созданный объект
-		return self::$objects[$name];
+        } else {
+            return null;
+        }
+        // Возвращаем созданный объект
+        return self::$objects[$class];
 	}
     
     public function translit($text) {

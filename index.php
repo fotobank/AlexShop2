@@ -1,6 +1,15 @@
 <?php
 
+
 $time_start = microtime(true);
+version_compare(phpversion(), '7.0.4', '>=') === true or die ('PHP 7.0.4 is required, you have ' . phpversion());
+/** @noinspection TernaryOperatorSimplifyInspection */
+defined('DEBUG_MODE') or define('DEBUG_MODE', true);
+
+if(DEBUG_MODE) {
+    error_reporting(E_ALL^E_NOTICE);
+}
+
 session_start();
 require_once('view/IndexView.php');
 
