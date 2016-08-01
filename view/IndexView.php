@@ -123,7 +123,7 @@ class IndexView extends View {
             if ($category->parent_id && $category->visible) {
                 $all_categories[$category->parent_id]->has_children_visible = 1;
             }
-            if ($category->subcategories) {
+            if (isset($category->subcategories)) {
                 $this->count_visible($category->subcategories);
             }
         }

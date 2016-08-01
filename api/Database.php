@@ -19,7 +19,9 @@ class Database extends Okay {
      * В деструкторе отсоединяемся от базы
      */
     public function __destruct() {
-    	$this->disconnect();
+        if(!DEBUG_MODE){
+            $this->disconnect();
+        }
     }
     
     /**

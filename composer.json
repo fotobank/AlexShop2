@@ -1,0 +1,21 @@
+{
+  "name": "jurii/alexshop2",
+  "description": "The Shopping Framework.",
+  "keywords": [
+    "framework",
+    "alexshop2"
+  ],
+  "license": "MIT",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Алексеев Юрий",
+      "email": "aleksjurii@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7",
+    "filp/whoops": "2.1.3"
+  }
+}

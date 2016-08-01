@@ -120,7 +120,7 @@ class View extends Okay {
                 $strlen = $first_lang->id == $this->language->id ? "" : $first_lang->label;
                 $page_url = trim(substr($page_url, strlen($strlen)),"/");
             }
-            if($_GET['page_url'] == 'all-products'){
+            if(isset($_GET['page_url']) && $_GET['page_url'] === 'all-products'){
                 $page_url = $_GET['page_url'];
             }
             $this->design->assign('language', $this->language);

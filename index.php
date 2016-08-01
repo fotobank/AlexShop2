@@ -1,17 +1,24 @@
 <?php
 
-
 $time_start = microtime(true);
 version_compare(phpversion(), '7.0.4', '>=') === true or die ('PHP 7.0.4 is required, you have ' . phpversion());
 /** @noinspection TernaryOperatorSimplifyInspection */
 defined('DEBUG_MODE') or define('DEBUG_MODE', true);
 
 if(DEBUG_MODE) {
-    error_reporting(E_ALL^E_NOTICE);
+    error_reporting(-1);
+} else {
+    error_reporting(0);
 }
 
 session_start();
 require_once('view/IndexView.php');
+require_once __DIR__ . '/vendor/autoload.php';
+include __DIR__ . '/core/inc/functions.php';
+
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
 
 $view = new IndexView();
 
