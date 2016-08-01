@@ -28,6 +28,14 @@ error_reporting(E_ALL^E_NOTICE);
  * @property Feedbacks()  feedbacks
  * @property Notify()     notify
  * @property Managers()   managers
+ * @property Lang() languages
+ * @property Translations() translations
+ * @property Comparison() comparison
+ * @property Subscribes() subscribes
+ * @property Banners() banners
+ * @property Callbacks() callbacks
+ * @property ReportStat() reportstat
+ * @property Topvisor() topvisor
  */
 class Okay {
     
