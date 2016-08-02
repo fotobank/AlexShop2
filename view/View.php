@@ -64,8 +64,9 @@ class View extends Okay {
                 $ruri = explode('/', $ruri);
                 $as = $first_lang->id !== $this->languages->lang_id() ? 2 : 1;
                 
-                if(is_array($ruri) && $first_lang->id == $this->languages->lang_id() && $ruri[1] == $first_lang->label) {
-                    header("HTTP/1.1 301 Moved Permanently");
+                if(is_array($ruri) && $first_lang->id == $this->languages->lang_id() &&
+                    (isset($ruri[1]) && $ruri[1] == $first_lang->label)) {
+                    header('HTTP/1.1 301 Moved Permanently');
                     header('Location: '.$this->config->root_url.'/'.implode('/',array_slice($ruri, 2)));
                     exit();
                 }
