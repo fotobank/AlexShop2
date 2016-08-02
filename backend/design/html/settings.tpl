@@ -63,6 +63,9 @@
         <ul>
             <li><label class=property>Имя сайта</label><input name="site_name" class="okay_inp" type="text" value="{$settings->site_name|escape}" /></li>
             <li><label class=property>Имя компании</label><input name="company_name" class="okay_inp" type="text" value="{$settings->company_name|escape}" /></li>
+            <li><label class=property>телефон 1</label><input name="phone1" class="okay_inp" type="text" value="{$settings->phone1}" /></li>
+            <li><label class=property>телефон 2</label><input name="phone2" class="okay_inp" type="text" value="{$settings->phone2}" /></li>
+            <li><label class=property>телефон 3</label><input name="phone3" class="okay_inp" type="text" value="{$settings->phone3}" /></li>
             <li><label class=property>Формат даты</label><input name="date_format" class="okay_inp" type="text" value="{$settings->date_format|escape}" /></li>
             <li><label class=property>Email для восстановления пароля</label><input name="admin_email" class="okay_inp" type="text" value="{$settings->admin_email|escape}" /></li>
             <li>

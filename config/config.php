@@ -30,7 +30,7 @@ db_sql_mode =;
 
 
 [php]
-error_reporting = E_ALL;
+error_reporting = -1;
 php_charset = UTF8;
 php_locale_collate = ru_RU;
 php_locale_ctype = ru_RU;

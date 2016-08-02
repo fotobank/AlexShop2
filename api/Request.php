@@ -26,46 +26,50 @@ class Request extends Okay {
         }
         return $_SERVER['REQUEST_METHOD'];
     }
-    
+
     /**
-    * Возвращает переменную _GET, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
-    * Второй параметр $type может иметь такие значения: integer, string, boolean
-    * Если $type не задан, возвращает переменную в чистом виде
-    */
+     * Возвращает переменную _GET, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
+     * Второй параметр $type может иметь такие значения: integer, string, boolean
+     * Если $type не задан, возвращает переменную в чистом виде
+     *
+     * @param      $name
+     * @param null $type
+     *
+     * @return array|bool|float|int|mixed|null
+     */
     public function get($name, $type = null) {
         $val = null;
         if(isset($_GET[$name])) {
             $val = $_GET[$name];
         }
-        
         if(!empty($type) && is_array($val)) {
             $val = reset($val);
         }
-        
-        if($type == 'string') {
-            return strval(preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $val));
+        if($type === 'string') {
+            return (string)preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $val);
         }
-        
-        if($type == 'integer') {
-            return intval($val);
+        if($type === 'integer') {
+            return (int)$val;
         }
-        
-        if($type == 'float') {
-            return floatval($val);
+        if($type === 'float') {
+            return (float)$val;
         }
-        
-        if($type == 'boolean') {
+        if($type === 'boolean') {
             return !empty($val);
         }
-        
         return $val;
     }
-    
+
     /**
-    * Возвращает переменную _POST, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
-    * Второй параметр $type может иметь такие значения: integer, string, boolean
-    * Если $type не задан, возвращает переменную в чистом виде
-    */
+     * Возвращает переменную _POST, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
+     * Второй параметр $type может иметь такие значения: integer, string, boolean
+     * Если $type не задан, возвращает переменную в чистом виде
+     *
+     * @param null $name
+     * @param null $type
+     *
+     * @return bool|float|int|null|string
+     */
     public function post($name = null, $type = null) {
         $val = null;
         if(!empty($name) && isset($_POST[$name])) {
@@ -73,23 +77,18 @@ class Request extends Okay {
         } elseif(empty($name)) {
             $val = file_get_contents('php://input');
         }
-        
-        if($type == 'string') {
-            return strval(preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $val));
+        if($type === 'string') {
+            return (string)preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $val);
         }
-        
-        if($type == 'integer') {
-            return intval($val);
+        if($type === 'integer') {
+            return (int)$val;
         }
-        
-        if($type == 'float') {
-            return floatval($val);
+        if($type === 'float') {
+            return (float)$val;
         }
-        
-        if($type == 'boolean') {
+        if($type === 'boolean') {
             return !empty($val);
         }
-        
         return $val;
     }
     
@@ -139,10 +138,14 @@ class Request extends Okay {
         }
         return true;
     }
-    
+
     /**
-    * URL
-    */
+     * URL
+     *
+     * @param array $params
+     *
+     * @return string
+     */
     public function url($params = array()) {
         $url = @parse_url($_SERVER["REQUEST_URI"]);
         parse_str($url['query'], $query);
@@ -171,9 +174,8 @@ class Request extends Okay {
         } else {
             $url['query'] = null;
         }
-        
-        $result = http_build_url(null, $url);
-        return $result;
+
+        return http_build_url(null, $url);
     }
     
 }
@@ -272,8 +274,7 @@ if (!function_exists('http_build_url')) {
             .((isset($parse_url['port'])) ? ':' . $parse_url['port'] : '')
             .((isset($parse_url['path'])) ? $parse_url['path'] : '')
             .((isset($parse_url['query'])) ? '?' . $parse_url['query'] : '')
-            .((isset($parse_url['fragment'])) ? '#' . $parse_url['fragment'] : '')
-        ;
+            .((isset($parse_url['fragment'])) ? '#' . $parse_url['fragment'] : '');
     }
 }
 
@@ -284,22 +285,22 @@ if(!function_exists('http_build_query')) {
             $k    = urlencode($k);
             if(is_int($k) && $prefix != null) {
                 $k    = $prefix.$k;
-            };
+            }
             if(!empty($key)) {
                 $k    = $key."[".$k."]";
-            };
+            }
             
             if(is_array($v) || is_object($v)) {
                 array_push($ret,http_build_query($v,"",$sep,$k));
             } else {
                 array_push($ret,$k."=".urlencode($v));
-            };
-        };
+            }
+        }
         
         if(empty($sep)) {
             $sep = ini_get("arg_separator.output");
-        };
+        }
         
         return    implode($sep, $ret);
-    };
-};
+    }
+}

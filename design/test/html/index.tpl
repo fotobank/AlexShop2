@@ -260,8 +260,9 @@
 		{* Телефоны *}
 		<div class="col-xs-8 col-lg-2 p-l-0 p-l-1-md_down">
 			<div class="i-phone h5 font-weight-bold">
-				<div><a class="link-black" href="tel:{$lang->index_phone_1}" data-language="{$translate_id['index_phone_1']}" >{$lang->index_phone_1}</a></div>
-				<div><a class="link-black" href="tel:{$lang->index_phone_2}" data-language="{$translate_id['index_phone_2']}" >{$lang->index_phone_2}</a></div>
+				<div><a class="link-black" href="tel:{$settings->phone1}">{$settings->phone1}</a></div>
+				<div><a class="link-black" href="tel:{$settings->phone2}">{$settings->phone2}</a></div>
+                <div><a class="link-black" href="tel:{$settings->phone3}">{$settings->phone3}</a></div>
 			</div>
 		</div>
 
@@ -392,7 +393,12 @@
 				<div class="h5">
 					<span data-language="{$translate_id['index_contacts']}">{$lang->index_contacts}</span>
 				</div>
-				<div class="p-l-1 text-nowrap" data-language="{$translate_id['index_contacts_body']}">{$lang->index_contacts_body}</div>
+                <div class="p-l-1 text-nowrap" data-language="{$translate_id['index_contacts_body']}">
+                тел. {$settings->phone1}<br>
+                тел. {$settings->phone2}<br>
+                тел. {$settings->phone3}<br>
+				{$lang->index_contacts_body}
+                </div>
 			</div>
 			{* Соц. сети *}
 			<div class="col-xs-6 col-lg-3">

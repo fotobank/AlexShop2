@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.18, created on 2016-08-01 17:19:05
+<?php /* Smarty version Smarty-3.1.18, created on 2016-08-02 04:06:34
          compiled from "backend\design\html\settings.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:8441579f5a59b64685-42191292%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'd17576cad23d8b01fa4f5acf614bfd3d87670016' => 
     array (
       0 => 'backend\\design\\html\\settings.tpl',
-      1 => 1467208466,
+      1 => 1470099994,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.18',
+  'unifunc' => 'content_579f5a59d0e362_44024885',
   'variables' => 
   array (
     'manager' => 0,
@@ -26,8 +28,6 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'login_1c' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.18',
-  'unifunc' => 'content_579f5a59d0e362_44024885',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_579f5a59d0e362_44024885')) {function content_579f5a59d0e362_44024885($_smarty_tpl) {?><?php if (!is_callable('smarty_function_math')) include 'O:\\domains\\okay\\Smarty\\libs\\plugins\\function.math.php';
 ?><?php $_smarty_tpl->_capture_stack[0][] = array('tabs', null, null); ob_start(); ?>
@@ -105,6 +105,12 @@ if ($_smarty_tpl->parent != null) $_smarty_tpl->parent->tpl_vars['meta_title'] =
             <li><label class=property>Имя сайта</label><input name="site_name" class="okay_inp" type="text" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['settings']->value->site_name, ENT_QUOTES, 'UTF-8', true);?>
 " /></li>
             <li><label class=property>Имя компании</label><input name="company_name" class="okay_inp" type="text" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['settings']->value->company_name, ENT_QUOTES, 'UTF-8', true);?>
+" /></li>
+            <li><label class=property>телефон 1</label><input name="phone1" class="okay_inp" type="text" value="<?php echo $_smarty_tpl->tpl_vars['settings']->value->phone1;?>
+" /></li>
+            <li><label class=property>телефон 2</label><input name="phone2" class="okay_inp" type="text" value="<?php echo $_smarty_tpl->tpl_vars['settings']->value->phone2;?>
+" /></li>
+            <li><label class=property>телефон 3</label><input name="phone3" class="okay_inp" type="text" value="<?php echo $_smarty_tpl->tpl_vars['settings']->value->phone3;?>
 " /></li>
             <li><label class=property>Формат даты</label><input name="date_format" class="okay_inp" type="text" value="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['settings']->value->date_format, ENT_QUOTES, 'UTF-8', true);?>
 " /></li>
