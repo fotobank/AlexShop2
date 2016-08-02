@@ -28,18 +28,16 @@
  */
 
 use core\Autoloader;
-use proxy\Config;
 use proxy\Session;
 use Tracy\Debugger;
 use Core\Alex;
-use Tracy\DefaultBarPanel;
-use Tracy\Dumper;
 
 
 include(ROOT . 'vendor/autoload.php');
 include(SYS_DIR . 'core/Autoloader.php');
 new Autoloader();
 
+require SYS_DIR . 'inc/api_functions.php';
 require SYS_DIR . 'inc/functions.php';
 require SYS_DIR . 'inc/global.php';
 
@@ -122,7 +120,7 @@ ini_set('assert.exception', DEBUG_MODE);
 // тест
 //assert(false, 'Remove it!');
 
-
+// защита
 parse_req($_REQUEST);
-$_SERVER["REQUEST_URI"] = filter($_SERVER["REQUEST_URI"], 'reqUri');
+$_SERVER['REQUEST_URI'] = filter($_SERVER['REQUEST_URI'], 'reqUri');
 $_SERVER['REMOTE_ADDR'] = filter($_SERVER['REMOTE_ADDR'], 'ip');
