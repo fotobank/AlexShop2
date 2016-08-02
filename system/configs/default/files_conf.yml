@@ -1,0 +1,12 @@
+imgFormats: 'jpg,gif,png'
+attachFormats: 'zip,rar,mp3,avi,mp4,flv,3gp'
+max_size: '10240000'
+thumb_width: '120'
+quality: '100'
+watermark: '1'
+watermark_text: aleks.od.ua
+watermark_font: '3'
+watermark_image: ''
+watermark_valign: bottom
+watermark_halign: left
+watermark_position: 5|5

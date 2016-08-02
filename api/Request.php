@@ -287,7 +287,7 @@ if(!function_exists('http_build_query')) {
                 $k    = $prefix.$k;
             }
             if(!empty($key)) {
-                $k    = $key."[".$k."]";
+                $k    = $key. '[' .$k. ']';
             }
             
             if(is_array($v) || is_object($v)) {

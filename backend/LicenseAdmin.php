@@ -35,7 +35,7 @@ class LicenseAdmin extends Okay {
         if(strtotime($l->expiration)<time() && $l->expiration!='*') {
             $l->valid = false;
         }
-        
+
         $this->design->assign('license', $l);
         return $this->design->fetch('license.tpl');
     }

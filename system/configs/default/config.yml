@@ -1,0 +1,25 @@
+url: 'http://okay'
+name: 'Новый магазин'
+description: 'магазин быстрой и качественной торговли'
+slogan: 'продадим всё'
+keywords: 'магазин, товар, цена, купить'
+divider: ' - '
+charset: utf-8
+mainModule: news
+lang: ru
+uniqKey: ku852ysv
+timezone: Europe/Kiev
+tpl: blog
+tpl_change: '1'
+smartphone: '1'
+dbType: MysqliDb
+imageEffect: shadowbox
+support_mail: jurii@mail.ru
+gzip: '0'
+'off': '0'
+off_text: 'Сайт закрыт.<br/> Ведутся профилактические работы.'
+cache: '0'
+dbCache: '0'
+mod_rewrite: '1'
+comments: '1'
+plugin: '0'

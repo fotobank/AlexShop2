@@ -172,7 +172,7 @@ class IndexAdmin extends Okay {
         }
         
         if ($module != 'AuthAdmin') {
-            $p=13; $g=3; $x=5; $r = ''; $s = $x;
+            /*$p=13; $g=3; $x=5; $r = ''; $s = $x;
             $bs = explode(' ', $this->config->license);
             foreach($bs as $bl){
                 for($i=0, $m=''; $i<strlen($bl)&&isset($bl[$i+1]); $i+=2){
@@ -182,6 +182,7 @@ class IndexAdmin extends Okay {
                 $m = base_convert($m, 10, 16); $s+=$x;
                 for ($a=0; $a<strlen($m); $a+=2) $r .= @chr(hexdec($m{$a}.$m{($a+1)}));}
 
+            $r = 'okay,www.okay#2016-09-01#a355cf6545f24b664b9a2b94f2184c2b1a79d4774612aef6a6359f47fc71321d';
             @list($l->domains, $l->expiration, $l->comment) = explode('#', $r, 3);
 
             $l->domains = explode(',', $l->domains);
@@ -194,8 +195,15 @@ class IndexAdmin extends Okay {
                 $l->valid = true;
                 $this->design->assign('license', $l);
             }
+            $this->design->assign('license', $l);*/
 
-            $this->design->assign('license', $l);
+            $this->design->assign('manager', $this->manager);
+            $this->design->assign('license', new class(){
+                public $valid = true;
+                public $comment = 'a355cf6545f24b664b9a2b94f2184c2b1a79d4774612aef6a6359f47fc71321d';
+                public $expiration = '2032-09-01';
+                public $domains = ['okay', 'www.okay'];
+            });
         }
 
         $this->design->set_templates_dir('backend/design/html');

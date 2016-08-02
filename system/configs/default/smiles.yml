@@ -1,0 +1,36 @@
+':smile:':
+    title: Улыбка
+    url: media/smiles/1.gif
+':sad:':
+    title: 'Расстроен'
+    url: media/smiles/2.gif
+':laugh:':
+    title: Смеётся
+    url: media/smiles/3.gif
+':cool:':
+    title: Крутой
+    url: media/smiles/4.gif
+':feel:':
+    title: Стесняется
+    url: media/smiles/5.gif
+':belay:':
+    title: Удивлён
+    url: media/smiles/6.gif
+':what:':
+    title: 'В замешательстве'
+    url: media/smiles/what.gif
+':drink:':
+    title: Бухаем
+    url: media/smiles/drink.gif
+':hell:':
+    title: 'Не в себе'
+    url: media/smiles/aq.gif
+':crying:':
+    title: Плачет
+    url: media/smiles/7.gif
+':happy:':
+    title: Счастлив
+    url: media/smiles/8.gif
+winked:
+    title: Поражн
+    url: media/smiles/winked.gif

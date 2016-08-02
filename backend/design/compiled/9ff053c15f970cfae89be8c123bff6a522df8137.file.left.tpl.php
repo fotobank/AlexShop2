@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.18, created on 2016-08-01 16:50:33
+<?php /* Smarty version Smarty-3.1.18, created on 2016-08-02 05:40:11
          compiled from "backend\design\html\left.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:24312579f53a9486ce8-03893488%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:2109757a0080bea5b29-05577063%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '24312579f53a9486ce8-03893488',
+  'nocache_hash' => '2109757a0080bea5b29-05577063',
   'function' => 
   array (
   ),
@@ -31,9 +31,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.18',
-  'unifunc' => 'content_579f53a96b1862_45554814',
+  'unifunc' => 'content_57a0080c3a9425_71840856',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_579f53a96b1862_45554814')) {function content_579f53a96b1862_45554814($_smarty_tpl) {?>
+<?php if ($_valid && !is_callable('content_57a0080c3a9425_71840856')) {function content_57a0080c3a9425_71840856($_smarty_tpl) {?>
 <div id="okay_logo">
      <a href='index.php?module=LicenseAdmin'><img src="design/images/logo.png" alt="OkayCMS"/></a>
 </div>

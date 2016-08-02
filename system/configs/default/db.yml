@@ -1,0 +1,11 @@
+dbhost: 'localhost'
+dbuser: 'root'
+dbpass: ''
+dbname: 'alex'
+prefix: 'JMY'
+
+user_db: 'alex'
+user_prefix: 'JMY'
+
+dbencoding: 'utf8'
+dbport: 'default'

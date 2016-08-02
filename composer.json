@@ -1,9 +1,9 @@
 {
-  "name": "jurii/alexshop2",
+  "name": "jurii/okay",
   "description": "The Shopping Framework.",
   "keywords": [
     "framework",
-    "alexshop2"
+    "alexshop"
   ],
   "license": "MIT",
   "type": "project",
@@ -13,9 +13,15 @@
       "email": "aleksjurii@gmail.com"
     }
   ],
-  "minimum-stability": "dev",
+
   "require": {
-    "php": ">=7",
+    "fzaninotto/faker": "1.6.x-dev",
+    "respect/validation": "2.0.x-dev",
+    "league/flysystem": "^1.0.17",
+    "league/flysystem-dropbox": "^1.0.1",
+    "league/flysystem-ziparchive": "^1.0.2",
+    "symfony/yaml": "3.1.x-dev",
+    "nette/di": "2.4.x-dev",
     "filp/whoops": "2.1.3"
   }
 }
