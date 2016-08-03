@@ -181,13 +181,14 @@ class Request extends Okay {
     /**
      * @param \IndexView $view
      * вывод результата
+     *
+     * @return bool|string
      */
     public function print(IndexView $view){
 
         $res = $view->fetch();
         if($res !== false) {
             header('Content-type: text/html; charset=UTF-8');
-            print $res;
 
             // Сохраняем последнюю просмотренную страницу в переменной $_SESSION['last_visited_page']
             if ((isset($_SESSION['last_visited_page']) && empty($_SESSION['last_visited_page'])) ||
@@ -198,6 +199,8 @@ class Request extends Okay {
                 }
                 $_SESSION['current_page'] = $_SERVER['REQUEST_URI'];
             }
+
+            return $res;
         } else {
             // Иначе страница об ошибке
             header('http/1.0 404 not found');
@@ -205,7 +208,7 @@ class Request extends Okay {
             // Подменим переменную GET, чтобы вывести страницу 404
             $_GET['page_url'] = '404';
             $_GET['module'] = 'PageView';
-            print $view->fetch();
+            return $view->fetch();
         }
     }
 

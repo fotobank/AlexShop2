@@ -1857,11 +1857,8 @@ function filter($text, $type = false)
     }
 
     $text = str_replace('||men||', '<', $text);
-    /** @noinspection CascadeStringReplacementInspection */
     $text = str_replace('||and||', '&', $text);
-    /** @noinspection CascadeStringReplacementInspection */
     $text = str_replace('||bol||', '>', $text);
-    /** @noinspection CascadeStringReplacementInspection */
     $text = str_replace(array_keys($wordReplace), array_values($wordReplace), $text);
 
     switch ($type) {
@@ -1895,8 +1892,6 @@ function filter($text, $type = false)
                 array_values(Core::getInstance()->deniedHTML), (string)$text));
             break;
 
-        case 'module':
-        case 'a':
         case 'alphanum':
             $text = preg_replace("'[^A-ZА-Яa-zа-я0-9_ -.,\\[\\]]'ius", '', $text);
             break;
@@ -1915,9 +1910,7 @@ function filter($text, $type = false)
             if (!($text == 'vk' || $text = 'yandex' || $text = 'mailru' || $text = 'google' || $text = 'facebook' || $text = 'odnoklassniki')) {
                 $text = '';
             }
-
             break;
-
 
         case 'dir':
             $text = preg_replace("'([^a-z0-9_/-]|[/]*$)'iu", '', $text);
@@ -1931,18 +1924,11 @@ function filter($text, $type = false)
             break;
 
         case 'reqUri':
-            if (eregStrt('index.php', $text)) {
-                $text = filter($text);
-            } else {
-                $text = 'index.php';
-            }
             break;
 
         case 'forBB':
             $text = str_replace("\n", '<br/>', $text);
             break;
-
-
     }
 
     if ($type != 'template') {
@@ -1959,7 +1945,8 @@ function filter($text, $type = false)
  */
 function eregStrt($what, $where)
 {
-    return preg_match("@$what@i", $where);
+    $rez = preg_match("@$what@i", $where);
+    return $rez;
 }
 
 /**
