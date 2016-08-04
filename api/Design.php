@@ -1,7 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__).'/'.'Okay.php');
-require_once(dirname(dirname(__FILE__)).'/Smarty/libs/Smarty.class.php');
+use core\Alex;
+
+require_once __DIR__ .'/'.'Okay.php';
+require_once dirname(__DIR__).'/Smarty/libs/Smarty.class.php';
 
 class Design extends Okay {
     
@@ -27,7 +29,7 @@ class Design extends Okay {
         
         // Создаем папку для скомпилированных шаблонов текущей темы
         if(!is_dir($this->smarty->compile_dir)) {
-            mkdir($this->smarty->compile_dir, 0777);
+            Alex::checkDir($this->smarty->compile_dir, 0777);
         }
         
         $this->smarty->cache_dir = 'cache';

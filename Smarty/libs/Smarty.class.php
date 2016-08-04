@@ -43,7 +43,7 @@ if (!defined('DS')) {
  * Sets SMARTY_DIR only if user application has not already defined it.
  */
 if (!defined('SMARTY_DIR')) {
-    define('SMARTY_DIR', dirname(__FILE__) . DS);
+    define('SMARTY_DIR', __DIR__ . DS);
 }
 
 /**

@@ -184,7 +184,7 @@ class Request extends Okay {
      *
      * @return bool|string
      */
-    public function print(IndexView $view){
+    public function create(IndexView $view){
 
         $res = $view->fetch();
         if($res !== false) {
@@ -204,7 +204,6 @@ class Request extends Okay {
         } else {
             // Иначе страница об ошибке
             header('http/1.0 404 not found');
-
             // Подменим переменную GET, чтобы вывести страницу 404
             $_GET['page_url'] = '404';
             $_GET['module'] = 'PageView';

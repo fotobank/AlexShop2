@@ -58,7 +58,7 @@ class BlogView extends View {
                 $comment->ip        = $_SERVER['REMOTE_ADDR'];
                 
                 // Если были одобренные комментарии от текущего ip, одобряем сразу
-                $this->db->query("SELECT 1 FROM __comments WHERE approved=1 AND ip=? LIMIT 1", $comment->ip);
+                $this->db->query('SELECT 1 FROM __comments WHERE approved=1 AND ip=? LIMIT 1', $comment->ip);
                 if($this->db->num_rows()>0)
                 	$comment->approved = 1;
                 
@@ -142,7 +142,7 @@ class BlogView extends View {
         $this->setHeaderLastModify(max($last_modify));
         
         // Количество постов на 1 странице
-        $items_per_page = max(1, intval($this->settings->posts_num));
+        $items_per_page = max(1, (int)$this->settings->posts_num);
         
         $filter = array();
         
@@ -188,5 +188,4 @@ class BlogView extends View {
         $body = $this->design->fetch('blog.tpl');
         return $body;
     }
-    
 }

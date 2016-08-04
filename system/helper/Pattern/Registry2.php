@@ -103,7 +103,7 @@ class Registry2
      * Return the single instance of object
      * @return object
      */
-    public static function & __instance()
+    public static function &__instance()
     {
         if (!isset(self:: $instance)){
             self:: $instance = new self;
@@ -122,7 +122,7 @@ class Registry2
      *
      * @return object
      */
-    public static function & register($tool, $name = '', $p = null, $f = '__instance')
+    public static function &register($tool, $name = '', $p = null, $f = '__instance')
     {
         if (is_string($tool) && !$name){
             $name = $tool;
@@ -175,7 +175,7 @@ class Registry2
      * @return object
      * @throws \helper\Pattern\RegistryException2
      */
-    public static function & factory($name, $params = null, $func = '__instance')
+    public static function &factory($name, $params = null, $func = '__instance')
     {
 
         if (is_object($name)){

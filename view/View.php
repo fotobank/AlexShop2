@@ -89,7 +89,7 @@ class View extends Okay {
             // Выбор текущей валюты
             if($currency_id = $this->request->get('currency_id', 'integer')) {
                 $_SESSION['currency_id'] = $currency_id;
-                header("Location: ".$this->request->url(array('currency_id'=>null)));
+                header('Location: ' .$this->request->url(array('currency_id'=>null)));
             }
             
             // Берем валюту из сессии
@@ -103,7 +103,7 @@ class View extends Okay {
             
             // Пользователь, если залогинен
             if(isset($_SESSION['user_id'])) {
-                $u = $this->users->get_user(intval($_SESSION['user_id']));
+                $u = $this->users->get_user((int)$_SESSION['user_id']);
                 if($u && $u->enabled) {
                     $this->user = $u;
                     $this->group = $this->users->get_group($this->user->group_id);
@@ -111,7 +111,7 @@ class View extends Okay {
             }
             
             // Текущая страница (если есть)
-            $subdir = substr(dirname(dirname(__FILE__)), strlen($_SERVER['DOCUMENT_ROOT']));
+            $subdir = substr(dirname(__DIR__), strlen($_SERVER['DOCUMENT_ROOT']));
             $page_url = trim(substr($_SERVER['REQUEST_URI'], strlen($subdir)),"/");
             if(strpos($page_url, '?') !== false) {
                 $page_url = substr($page_url, 0, strpos($page_url, '?'));

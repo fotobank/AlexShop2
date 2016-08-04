@@ -351,15 +351,12 @@ END;
 
             /** сообщение в log - класс не найден */
             $this->logLoadError($class_name);
-            if (DEBUG_MODE) {
-                throw new AutoloadException('Class "' . $class_name . '"  not found');
-            } else {
-                fatal_error('Ошибка доступа', '"' . $class_name . '" - file not found');
-            }
+            if(DEBUG_MODE)
+            {throw new AutoloadException('Class "' . $class_name . '"  not found');}
+
         } catch (AutoloadException $e) {
             throw new AutoloadException($e->getMessage());
         }
-        return true;
     }
 
     /**

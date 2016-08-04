@@ -12,7 +12,7 @@
  * @license   MIT License: http://opensource.org/licenses/MIT
  */
 
-namespace lib\helper\Pattern;
+namespace helper\Pattern;
 
 use exception\BaseException;
 

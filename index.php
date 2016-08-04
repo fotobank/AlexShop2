@@ -1,9 +1,11 @@
 <?php
 
+use lib\Security\Security;
+
 include(__DIR__ . '/system/configs/define/config.php');
 include(SYS_DIR . DS . 'core' . DS . 'boot.php');
 
-
+new Security();
 $view = new IndexView();
 
 if(isset($_GET['logout'])) {
@@ -12,5 +14,5 @@ if(isset($_GET['logout'])) {
     exit();
 }
 
-$page = $view->request->print($view);
-print $page;
+$page = $view->request->create($view);
+print Optimize::html($page);

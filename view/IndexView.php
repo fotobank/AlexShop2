@@ -5,7 +5,9 @@ require_once('View.php');
 class IndexView extends View {
     
     public $modules_dir = 'view/';
-    
+    // подключаемый модуль
+    protected $curr_module;
+
     public function __construct() {
         parent::__construct();
     }
@@ -75,7 +77,7 @@ class IndexView extends View {
         if (is_file($this->modules_dir."$module.php")) {
             include_once($this->modules_dir."$module.php");
             if (class_exists($module)) {
-                $this->main = new $module($this);
+                $this->curr_module = new $module($this);
             } else {
                 return false;
             }
@@ -84,7 +86,7 @@ class IndexView extends View {
         }
         
         // Создаем основной блок страницы
-        if (!$content = $this->main->fetch()) {
+        if (!$content = $this->curr_module->fetch()) {
             return false;
         }
         

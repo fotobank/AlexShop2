@@ -31,17 +31,22 @@ use core\Autoloader;
 use proxy\Session;
 use Tracy\Debugger;
 use Core\Alex;
+use helper\Pattern\Registry;
 
-
+// автозагрузки
 include(ROOT . 'vendor/autoload.php');
+include(ROOT . 'Smarty/libs/Smarty.class.php');
 include(SYS_DIR . 'core/Autoloader.php');
 new Autoloader();
+
+
+Session::start();
 
 require SYS_DIR . 'inc/api_functions.php';
 require SYS_DIR . 'inc/functions.php';
 require SYS_DIR . 'inc/global.php';
 
-Session::start();
+
 
 if(DEBUG_MODE || Session::get('logged') === true)
 {
@@ -68,12 +73,7 @@ else
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();*/
 
-// профилирование при DEBUG_MODE
-/*if(DEBUG_MODE && !is_ajax())
-{
-    Registry::build('Test');
-}*/
-
+// проверить существавание папки и её прав доступа
 Alex::checkDir(ROOT.'tmp/log', 0777);
 
 /** PRODUCTION or DEVELOPMENT or DETECT */
@@ -86,7 +86,7 @@ Debugger::$email      = 'aleksjurii@mail.com';
 Debugger::$maxDepth   = 5; // default: 3
 Debugger::$maxLen     = 200; // default: 150
 Debugger::$showLocation = true;
-Debugger::$errorTemplate = ROOT . 'usr/html/404/404.html';
+Debugger::$errorTemplate = SYS_DIR . 'html/404/404.html';
 Debugger::barDump(get_defined_vars());
 include(SYS_DIR . 'lib/tracy/src/shortcuts.php');
 
