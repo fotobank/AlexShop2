@@ -71,7 +71,7 @@ class Okay {
      */
     public function __get($name) {
 
-        // прокси классы можно писать с маленькой или большой букв
+        // название классов можно писать с маленькой или большой букв
         $name = lcfirst ($name);
         $class = ucfirst($name);
         // Проверка алиаса в API
@@ -85,7 +85,7 @@ class Okay {
         $file_class = __DIR__ . '/' . $class . '.php';
 
         if(is_readable($file_class)){
-            include_once $file_class;
+            require_once $file_class;
             self::$objects[$class] = new $class();
 
         } else {

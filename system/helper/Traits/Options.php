@@ -28,10 +28,6 @@
  */
 
 /**
- * Framework Component
- */
-
-/**
  * @namespace
  */
 namespace helper\Traits;
