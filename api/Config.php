@@ -90,7 +90,7 @@ class Config
         # Запишем конфиги
         if (isset($this->vars[$name])){
             $conf = file_get_contents(dirname(__DIR__) . '/' . $this->config_file);
-            $conf = preg_replace("/" . $name . "\s*=.*\n/i", $name . ' = ' . $value . "\r\n", $conf);
+            $conf = preg_replace('/' . $name . "\s*=.*\n/i", $name . ' = ' . $value . "\r\n", $conf);
             $cf = fopen(dirname(__DIR__) . '/' . $this->config_file, 'w');
             fwrite($cf, $conf);
             fclose($cf);

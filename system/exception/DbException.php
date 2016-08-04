@@ -35,6 +35,6 @@ namespace exception;
  *
  * @package exception
  */
-class Db_Exception extends BaseException
+class DbException extends BaseException
 {
 }

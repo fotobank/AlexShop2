@@ -1,6 +1,7 @@
 <?php
 
 use core\Alex;
+use proxy\Config;
 
 
 class Design extends Okay {
@@ -23,14 +24,17 @@ class Design extends Okay {
         
         // Берем тему из настроек
         $theme = $this->settings->theme;
-        
-        
-        $this->smarty->compile_dir = $this->config->root_dir.'/compiled/'.$theme;
-        $this->smarty->template_dir = $this->config->root_dir.'/design/'.$theme.'/html';
+
+        $this->smarty->compile_dir = $this->config->root_dir.'compiled/'.$theme;
+        $template_dir = $this->config->root_dir.'design/'.$theme.'/html';
+        $this->smarty->template_dir = [$template_dir];
         
         // Создаем папку для скомпилированных шаблонов текущей темы
         if(!is_dir($this->smarty->compile_dir)) {
             Alex::checkDir($this->smarty->compile_dir, 0777);
+        }
+        if(!is_dir($template_dir)) {
+            Alex::checkDir($template_dir, 0777);
         }
         
         $this->smarty->cache_dir = 'cache';

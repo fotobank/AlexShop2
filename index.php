@@ -3,7 +3,8 @@
 use lib\Security\Security;
 
 include(__DIR__ . '/system/configs/define/config.php');
-include(SYS_DIR . DS . 'core' . DS . 'boot.php');
+/** @noinspection PhpIncludeInspection */
+include SYS_DIR . 'core' . DS . 'boot.php';
 
 new Security();
 $view = new IndexView();

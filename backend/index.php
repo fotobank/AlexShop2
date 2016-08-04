@@ -5,7 +5,7 @@ $time_start = microtime(true);
 $_SESSION['id'] = session_id();
 
 include(__DIR__ . '/../system/configs/define/config.php');
-include(SYS_DIR . DS . 'core' . DS . 'boot.php');
+include SYS_DIR . 'core' . DS . 'boot.php';
 
 chdir('..');
 

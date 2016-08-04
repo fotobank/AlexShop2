@@ -1,6 +1,8 @@
 <?php
 
-require_once('../api/Okay.php');
+include __DIR__ . '/../system/configs/define/config.php';
+/** @noinspection PhpIncludeInspection */
+include SYS_DIR . 'core' . DS . 'boot.php';
 
 $filename = $_GET['file'];
 $token = $_GET['token'];

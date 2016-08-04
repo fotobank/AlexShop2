@@ -7,7 +7,7 @@
  * @version   1.0
  * @author    Alex Jurii <jurii@mail.ru>
  * @link      http://alex.od.ua
- * @copyright Авторские права (C) 2000-2016, Alex Jurii
+ * @copyright РђРІС‚РѕСЂСЃРєРёРµ РїСЂР°РІР° (C) 2000-2016, Alex Jurii
  * @date      :     02.08.2016
  * @time      :     23:28
  * @license   MIT License: http://opensource.org/licenses/MIT
@@ -32,7 +32,7 @@ class AlexException extends CommonException
  * Class Alex
  * @package core
  *
- * сборник статичесских функций
+ * СЃР±РѕСЂРЅРёРє СЃС‚Р°С‚РёС‡РµСЃСЃРєРёС… С„СѓРЅРєС†РёР№
  */
 class Alex
 {
@@ -63,7 +63,7 @@ class Alex
     public static function mkDir($dir, $mode = 0777)
     {
         if (!mkdir($dir, $mode, true) && !is_dir($dir)) {
-            throw new AlexException('Не возможно создать дирректорию:' . $dir);
+            throw new AlexException('РќРµ РІРѕР·РјРѕР¶РЅРѕ СЃРѕР·РґР°С‚СЊ РґРёСЂСЂРµРєС‚РѕСЂРёСЋ:' . $dir);
         }
     }
 

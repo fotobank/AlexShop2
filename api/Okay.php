@@ -1,4 +1,5 @@
 <?php
+use proxy\Config;
 
 
 /**
@@ -43,7 +44,7 @@ class Okay {
      * алиасы API
      * @var array
      */
-    private static $alias = [
+    private $alias = [
         'db' => 'Database',
         'languages'  => 'Lang',
     ];
@@ -53,11 +54,12 @@ class Okay {
      */
 	private static $objects = array();
 
+
     /**
-     * Конструктор оставим пустым, но определим его на случай обращения parent::__construct() в классах API
+     * Okay constructor.
      */
     public function __construct() {
-		//error_reporting(E_ALL & !E_STRICT);
+       //  $this->config = Config::getData('config');
 	}
 
     /**
@@ -73,8 +75,8 @@ class Okay {
         $name = lcfirst ($name);
         $class = ucfirst($name);
         // Проверка алиаса в API
-        if (isset(self::$alias[$name])){
-            $class = self::$alias[$name];
+        if (isset($this->alias[$name])){
+            $class = $this->alias[$name];
         }
         // Если такой объект уже существует, возвращаем его
         if (isset(self::$objects[$class])){

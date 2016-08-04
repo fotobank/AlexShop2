@@ -1,7 +1,5 @@
 <?php
 
-
-
 class Money extends Okay {
     
     private $currencies = array();
