@@ -1,11 +1,9 @@
 <?php
 
-require_once('Okay.php');
-
 class Callbacks extends Okay {
 
     public function email_callback_admin($callback_id) {
-        if(!($callback = $this->callbacks->get_callback(intval($callback_id)))) {
+        if(!($callback = $this->callbacks->get_callback((int)$callback_id))) {
             return false;
         }
         $this->design->assign('callback', $callback);
@@ -43,11 +41,11 @@ class Callbacks extends Okay {
         $processed = '';
         
         if(isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
         
         if(isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         
         if(isset($filter['processed'])) {
@@ -108,7 +106,7 @@ class Callbacks extends Okay {
     
     public function delete_callback($id) {
         if(!empty($id)) {
-            $query = $this->db->placehold("DELETE FROM __callbacks WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold('DELETE FROM __callbacks WHERE id=? LIMIT 1', (int)$id);
             $this->db->query($query);
         }
     }

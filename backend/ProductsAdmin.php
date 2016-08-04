@@ -1,6 +1,5 @@
 <?php
 
-require_once('api/Okay.php');
 
 class ProductsAdmin extends Okay {
     
@@ -30,7 +29,9 @@ class ProductsAdmin extends Okay {
         }
         
         // Бренды категории
-        $brands = $this->brands->get_brands(array('category_id'=>$filter['category_id']));
+        $brands = $this->brands->get_brands([
+            'category_id' => array_key_exists('category_id', $filter) ? $filter['category_id'] : ''
+        ]);
         $this->design->assign('brands', $brands);
         
         // Все бренды

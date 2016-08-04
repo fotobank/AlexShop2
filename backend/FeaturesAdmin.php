@@ -1,6 +1,6 @@
 <?php
 
-require_once('api/Okay.php');
+
 
 class FeaturesAdmin extends Okay {
     

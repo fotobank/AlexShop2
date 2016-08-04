@@ -1,11 +1,23 @@
-dbhost: 'localhost'
-dbuser: 'root'
-dbpass: ''
-dbname: 'alex'
-prefix: 'JMY'
+#Сервер базы данных
+db_server: "localhost"
 
-user_db: 'alex'
-user_prefix: 'JMY'
+#Пользователь базы данных
+db_user: "okay"
 
-dbencoding: 'utf8'
-dbport: 'default'
+#Пароль к базе
+db_password: "278019"
+
+#Имя базы
+db_name: "okay"
+
+#Префикс для таблиц
+db_prefix: 's_'
+
+#Кодировка базы данных
+db_charset: 'utf8'
+
+#Режим SQL
+db_sql_mode:
+
+#Смещение часового пояса
+db_timezone: '+04:00'

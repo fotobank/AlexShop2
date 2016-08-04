@@ -1,6 +1,6 @@
 <?php
 
-require_once('api/Okay.php');
+
 $okay = new Okay();
 
 header("Content-type: text/xml; charset=UTF-8");

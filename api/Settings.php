@@ -5,7 +5,6 @@
  * В отличие от класса Config оперирует настройками доступными админу и хранящимися в базе данных.
  */
 
-require_once('Okay.php');
 
 class Settings extends Okay {
     

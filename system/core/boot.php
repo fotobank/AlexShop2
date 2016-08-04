@@ -28,14 +28,13 @@
  */
 
 use core\Autoloader;
+use proxy\Config;
 use proxy\Session;
 use Tracy\Debugger;
-use Core\Alex;
-use helper\Pattern\Registry;
+use core\Alex;
 
 // автозагрузки
 include(ROOT . 'vendor/autoload.php');
-include(ROOT . 'Smarty/libs/Smarty.class.php');
 include(SYS_DIR . 'core/Autoloader.php');
 new Autoloader();
 
@@ -73,23 +72,26 @@ else
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();*/
 
+$config = Config::getData('debugger');
 // проверить существавание папки и её прав доступа
-Alex::checkDir(ROOT.'tmp/log', 0777);
+Alex::checkDir(SYS_DIR . $config['logDir'], 0777);
 
 /** PRODUCTION or DEVELOPMENT or DETECT */
-Debugger::enable(Debugger::DETECT, ROOT.'tmp/log');
+Debugger::enable(Debugger::DETECT, SYS_DIR . $config['logDir']);
 /** выводить нотисы в строке
  * true - вызов Exception
  */
-Debugger::$strictMode = false;
-Debugger::$email      = 'aleksjurii@mail.com';
-Debugger::$maxDepth   = 5; // default: 3
-Debugger::$maxLen     = 200; // default: 150
-Debugger::$showLocation = true;
-Debugger::$errorTemplate = SYS_DIR . 'html/404/404.html';
-Debugger::barDump(get_defined_vars());
-include(SYS_DIR . 'lib/tracy/src/shortcuts.php');
+Debugger::$strictMode = $config['strictMode'];
+Debugger::$logSeverity = $config['logSeverity'];
+Debugger::$email      = $config['email'];
+Debugger::$maxDepth   = $config['maxDepth']; // default: 3
+Debugger::$maxLen     = $config['maxLen']; // default: 150
+Debugger::$showLocation = $config['showLocation'];
+Debugger::$errorTemplate = SYS_DIR . $config['errorTemplate'];
+//Debugger::barDump(get_defined_vars());
+if(DEBUG_MODE){include(ROOT . 'vendor/tracy/tracy/src/shortcuts.php');}
 
+// Debugger::log('Unexpected error'); // text message
 
 //dump(ROOT);
 //Debugger::barDump($arr, 'The Array');

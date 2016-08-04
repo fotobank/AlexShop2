@@ -1,6 +1,6 @@
 ﻿<?php
 
-require_once('api/Okay.php');
+
 
 class Pay2Pay extends Okay
 {	

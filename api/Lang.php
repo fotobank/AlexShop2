@@ -1,6 +1,6 @@
 <?php
 
-require_once('Okay.php');
+
 
 class Lang extends Okay {
     
@@ -20,6 +20,15 @@ class Lang extends Okay {
     
     public $languages;
     public $lang_id;
+
+    /**
+     * Lang constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->init_languages();
+    }
     
     public function lang_list() {
         $langs['ru'] = (object)array('name' => 'Русский',     'label' => 'ru');
@@ -127,7 +136,8 @@ class Lang extends Okay {
     public function set_lang_id($id) {
         $this->lang_id = $_SESSION['lang_id'] = $id;
     }
-    
+
+
     public function languages($filter=array()) {
         if(empty($this->languages)) {
             $this->init_languages();

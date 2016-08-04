@@ -1,6 +1,6 @@
 <?php
 
-require_once('api/Okay.php');
+
 
 class BannersAdmin extends Okay {
     public function fetch() {

@@ -1,0 +1,37 @@
+#Использовать imagemagick для обработки изображений (вместо gd)
+use_imagick: 'true'
+
+#Директория оригиналов изображений
+original_images_dir: 'files/originals/'
+
+#Директория миниатюр
+resized_images_dir: 'files/products/'
+
+#Файл изображения с водяным знаком
+watermark_file: 'backend/files/watermark/watermark.png'
+
+#Изображения оригиналов и нарезок фоток блога
+original_blog_dir: 'files/blog/'
+resized_blog_dir: 'files/blog_resized/'
+
+#Изображения оригиналов и нарезок фоток брендов
+original_brands_dir: 'files/brands/'
+resized_brands_dir: 'files/brands_resized/'
+
+#Изображения оригиналов и нарезок фоток категории
+original_categories_dir: 'files/categories/'
+resized_categories_dir: 'files/categories_resized/'
+
+#Изображения оригиналов и нарезок фоток доставки
+original_deliveries_dir: 'files/deliveries/'
+resized_deliveries_dir: 'files/deliveries_resized/'
+
+#Изображения оригиналов и нарезок фоток способов оплаты
+original_payments_dir: 'files/payments/'
+resized_payments_dir: 'files/payments_resized/'
+
+#Изображения баннеров
+banners_images_dir: 'files/slides/'
+
+#Промо изображения
+special_images_dir: 'files/special/'

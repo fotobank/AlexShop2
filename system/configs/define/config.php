@@ -70,7 +70,7 @@ defined('ACCESS') or define('ACCESS', true);
 defined('CONFIGS_DEFAULT_PATH') or define('CONFIGS_DEFAULT_PATH', 'configs'.DS.'default');
 
 // сканирование классов в автозагрузке
-defined('DIR_CLASS_AUTOLOAD') or define('DIR_CLASS_AUTOLOAD', 'system, ajax, api, backend, captcha, payment, view, Smarty');
+defined('DIR_CLASS_AUTOLOAD') or define('DIR_CLASS_AUTOLOAD', 'system, ajax, api, backend, captcha, payment, view');
 
 @ini_set('allow_url_fopen', 1);
 mb_internal_encoding('UTF-8');

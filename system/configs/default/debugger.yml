@@ -1,0 +1,8 @@
+logDir: 'assests/log'
+logSeverity: 'E_NOTICE | E_WARNING'
+strictMode: false
+email: 'aleksjurii@mail.com'
+maxDepth:    5
+maxLen:      200
+showLocation:  true
+errorTemplate:  'html/404/404.html'

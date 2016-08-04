@@ -2,7 +2,7 @@
 
 // Работаем в корневой директории
 chdir ('../../');
-require_once('api/Okay.php');
+
 $okay = new Okay();
 
 require_once(dirname(__FILE__).'/PawInvoiceView.php');

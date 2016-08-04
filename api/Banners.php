@@ -1,6 +1,6 @@
 <?php
 
-require_once('Okay.php');
+
 
 class Banners extends Okay {
     

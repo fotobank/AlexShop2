@@ -8,7 +8,7 @@ function get_tag_val($xml, $name)
 
 // Работаем в корневой директории
 chdir ('../../');
-require_once('api/Okay.php');
+
 $okay = new Okay();
 
 

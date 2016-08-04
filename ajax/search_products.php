@@ -1,6 +1,8 @@
 <?php
-    session_start();
-    require_once('../api/Okay.php');
+
+    include(__DIR__ . '/../system/configs/define/config.php');
+    include(SYS_DIR . DS . 'core' . DS . 'boot.php');
+
     define('IS_CLIENT', true);
     $okay = new Okay();
     $limit = 30;
@@ -12,7 +14,7 @@
     $first_lang = $okay->languages->languages();
     if (!empty($first_lang)) {
         $first_lang = reset($first_lang);
-        if($first_lang->id !== $language->id) {
+        if($first_lang->id != $language->id) {
             $lang_link = $language->label . '/';
         }
     }
@@ -84,8 +86,8 @@
     $res = new stdClass;
     $res->query = $keyword;
     $res->suggestions = $suggestions;
-    header("Content-type: application/json; charset=UTF-8");
-    header("Cache-Control: must-revalidate");
-    header("Pragma: no-cache");
-    header("Expires: -1");		
+    header('Content-type: application/json; charset=UTF-8');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: no-cache');
+    header('Expires: -1');
     print json_encode($res);

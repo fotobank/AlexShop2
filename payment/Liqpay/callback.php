@@ -2,7 +2,7 @@
 
 // Работаем в корневой директории
 chdir ('../../');
-require_once('api/Okay.php');
+
 $okay = new Okay();
 
 // Выбираем из xml нужные данные

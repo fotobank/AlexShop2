@@ -1,11 +1,13 @@
 <?php
 
-chdir('..');
-
 // Засекаем время
 $time_start = microtime(true);
-session_start();
 $_SESSION['id'] = session_id();
+
+include(__DIR__ . '/../system/configs/define/config.php');
+include(SYS_DIR . DS . 'core' . DS . 'boot.php');
+
+chdir('..');
 
 @ini_set('session.gc_maxlifetime', 86400); // 86400 = 24 часа
 @ini_set('session.cookie_lifetime', 0); // 0 - пока браузер не закрыт

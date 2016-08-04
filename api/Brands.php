@@ -1,26 +1,24 @@
 <?php
 
-require_once('Okay.php');
-
 class Brands extends Okay {
     
-    public function get_brands($filter = array()) {
+    public function get_brands($filter = []) {
         $category_id_filter = '';
         $category_join = '';
         $visible_filter = '';
         $product_id_filter = '';
         $product_join = '';
         if(isset($filter['visible'])) {
-            $visible_filter = $this->db->placehold('AND p.visible=?', intval($filter['visible']));
+            $visible_filter = $this->db->placehold('AND p.visible=?', (int)$filter['visible']);
         }
 
         if(isset($filter['product_id'])) {
             $product_id_filter = $this->db->placehold('AND p.id in (?@)', (array)$filter['product_id']);
-            $product_join = $this->db->placehold("LEFT JOIN __products p ON p.brand_id=b.id");
+            $product_join = $this->db->placehold('LEFT JOIN __products p ON p.brand_id=b.id');
         }
 
         if(!empty($filter['category_id'])) {
-            $category_join = $this->db->placehold("LEFT JOIN __products p ON p.brand_id=b.id LEFT JOIN __products_categories pc ON p.id = pc.product_id");
+            $category_join = $this->db->placehold('LEFT JOIN __products p ON p.brand_id=b.id LEFT JOIN __products_categories pc ON p.id = pc.product_id');
             $category_id_filter = $this->db->placehold("AND pc.category_id in(?@) $visible_filter", (array)$filter['category_id']);
         }
         $lang_sql = $this->languages->get_query(array('object'=>'brand'));
@@ -93,7 +91,7 @@ class Brands extends Okay {
         $result = $this->languages->get_description($brand, 'brand');
         
         $brand->last_modify = date("Y-m-d H:i:s");
-        $this->db->query("INSERT INTO __brands SET ?%", $brand);
+        $this->db->query('INSERT INTO __brands SET ?%', $brand);
         $id = $this->db->insert_id();
         
         // Если есть описание для перевода. Указываем язык для обновления
@@ -109,7 +107,7 @@ class Brands extends Okay {
         $result = $this->languages->get_description($brand, 'brand');
         
         $brand->last_modify = date("Y-m-d H:i:s");
-        $query = $this->db->placehold("UPDATE __brands SET ?% WHERE id=? LIMIT 1", $brand, intval($id));
+        $query = $this->db->placehold('UPDATE __brands SET ?% WHERE id=? LIMIT 1', $brand, (int)$id);
         $this->db->query($query);
         
         // Если есть описание для перевода. Указываем язык для обновления
@@ -123,11 +121,11 @@ class Brands extends Okay {
     public function delete_brand($id) {
         if(!empty($id)) {
             $this->image->delete_image($id, 'image', 'brands', $this->config->original_brands_dir, $this->config->resized_brands_dir);
-            $query = $this->db->placehold("DELETE FROM __brands WHERE id=? LIMIT 1", $id);
+            $query = $this->db->placehold('DELETE FROM __brands WHERE id=? LIMIT 1', $id);
             $this->db->query($query);
-            $query = $this->db->placehold("UPDATE __products SET brand_id=NULL WHERE brand_id=?", $id);
+            $query = $this->db->placehold('UPDATE __products SET brand_id=NULL WHERE brand_id=?', $id);
             $this->db->query($query);
-            $this->db->query("DELETE FROM __lang_brands WHERE brand_id=?", $id);
+            $this->db->query('DELETE FROM __lang_brands WHERE brand_id=?', $id);
     	}
     }
     

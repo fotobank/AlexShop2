@@ -1,6 +1,6 @@
 <?php
 
-require_once('Okay.php');
+
 
 class Money extends Okay {
     
@@ -58,7 +58,7 @@ class Money extends Okay {
     }
     
     public function get_currency($id = null) {
-        if(!empty($id) && is_integer($id) && isset($this->currencies[$id])) {
+        if(!empty($id) && is_int($id) && isset($this->currencies[$id])) {
             return $this->currencies[$id];
         }
         if(!empty($id) && is_string($id)) {

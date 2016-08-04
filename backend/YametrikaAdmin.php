@@ -1,6 +1,6 @@
 <?PHP
 
-require_once('api/Okay.php');
+
 
 class YametrikaAdmin extends Okay
 {

@@ -1,6 +1,6 @@
 <?php
 
-require_once('api/Okay.php');
+
 
 class Paypal extends Okay
 {	

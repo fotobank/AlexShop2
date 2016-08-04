@@ -1,7 +1,7 @@
 <?php
 session_start();
 chdir('../../../..');
-require_once('api/Okay.php');
+
 
 $okay = new Okay();
 $manager = $okay->managers->get_manager();

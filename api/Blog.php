@@ -1,7 +1,5 @@
 <?php
 
-require_once('Okay.php');
-
 class Blog extends Okay {
     
     public function get_post($id) {
@@ -9,7 +7,7 @@ class Blog extends Okay {
             return false;
         }
         if(is_int($id)) {
-            $where = $this->db->placehold('AND b.id=? ', intval($id));
+            $where = $this->db->placehold('AND b.id=? ', (int)$id);
         } else {
             $where = $this->db->placehold('AND b.url=? ', $id);
         }
@@ -49,10 +47,10 @@ class Blog extends Okay {
         $px = ($lang_id ? 'l' : 'b');
         
         if(isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
         if(isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         
         if(!empty($filter['id'])) {
@@ -60,7 +58,7 @@ class Blog extends Okay {
         }
         
         if(isset($filter['visible'])) {
-            $visible_filter = $this->db->placehold('AND b.visible = ?', intval($filter['visible']));
+            $visible_filter = $this->db->placehold('AND b.visible = ?', (int)$filter['visible']);
         }
         if(isset($filter['keyword'])) {
     		$keywords = explode(' ', $filter['keyword']);
@@ -105,7 +103,7 @@ class Blog extends Okay {
         }
     		
         if(isset($filter['visible'])) {
-            $visible_filter = $this->db->placehold('AND b.visible = ?', intval($filter['visible']));
+            $visible_filter = $this->db->placehold('AND b.visible = ?', (int)$filter['visible']);
         }		
         
         if(isset($filter['keyword'])) {
@@ -173,11 +171,11 @@ class Blog extends Okay {
     public function delete_post($id) {
         if(!empty($id)) {
             $this->image->delete_image($id, 'image', 'blog', $this->config->original_blog_dir, $this->config->resized_blog_dir);
-    		$query = $this->db->placehold("DELETE FROM __blog WHERE id=? LIMIT 1", intval($id));
+    		$query = $this->db->placehold('DELETE FROM __blog WHERE id=? LIMIT 1', (int)$id);
             if($this->db->query($query)) {
                 $this->settings->lastModifyPosts = date("Y-m-d H:i:s");
-    		    $this->db->query("DELETE FROM __lang_blog WHERE blog_id=?", intval($id));
-    			$query = $this->db->placehold("DELETE FROM __comments WHERE type='blog' AND object_id=?", intval($id));
+    		    $this->db->query('DELETE FROM __lang_blog WHERE blog_id=?', (int)$id);
+    			$query = $this->db->placehold("DELETE FROM __comments WHERE type='blog' AND object_id=?", (int)$id);
                 if($this->db->query($query)) {
                     return true;
                 }
@@ -187,7 +185,7 @@ class Blog extends Okay {
     }	
     
     public function get_next_post($id) {
-    	$this->db->query("SELECT date FROM __blog WHERE id=? LIMIT 1", $id);
+    	$this->db->query('SELECT date FROM __blog WHERE id=? LIMIT 1', $id);
     	$date = $this->db->result('date');
         
     	$this->db->query("(SELECT id FROM __blog WHERE date=? AND id>? AND visible  ORDER BY id limit 1)
@@ -196,14 +194,14 @@ class Blog extends Okay {
     	                  $date, $id, $date);
     	$next_id = $this->db->result('id');
         if($next_id) {
-            return $this->get_post(intval($next_id));
+            return $this->get_post((int)$next_id);
         } else {
             return false;
         }
     }
     
     public function get_prev_post($id) {
-    	$this->db->query("SELECT date FROM __blog WHERE id=? LIMIT 1", $id);
+    	$this->db->query('SELECT date FROM __blog WHERE id=? LIMIT 1', $id);
     	$date = $this->db->result('date');
         
     	$this->db->query("(SELECT id FROM __blog WHERE date=? AND id<? AND visible ORDER BY id DESC limit 1)
@@ -212,13 +210,13 @@ class Blog extends Okay {
     	                  $date, $id, $date);
     	$prev_id = $this->db->result('id');
         if($prev_id) {
-            return $this->get_post(intval($prev_id));
+            return $this->get_post((int)$prev_id);
         } else {
             return false;
         }
     }
 
-    public function get_related_products($filter = array()) {
+    public function get_related_products($filter = []) {
         $product_id_filter = '';
         $post_id_filter = '';
         if(!empty($filter['post_id'])) {
@@ -243,7 +241,7 @@ class Blog extends Okay {
     }
 
     public function add_related_product($post_id, $related_id, $position=0) {
-        $query = $this->db->placehold("INSERT IGNORE INTO __related_blogs SET post_id=?, related_id=?, position=?", $post_id, $related_id, $position);
+        $query = $this->db->placehold('INSERT IGNORE INTO __related_blogs SET post_id=?, related_id=?, position=?', $post_id, $related_id, $position);
         $this->db->query($query);
         return $related_id;
     }

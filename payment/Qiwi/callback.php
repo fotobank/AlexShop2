@@ -17,7 +17,7 @@ function updateBill($login, $password, $txn, $status)
 	chdir ('../../');
 	
 	// Подключаем основной класс
-	require_once('api/Okay.php');
+
 	$okay = new Okay();
 
 	// Выбираем оплачиваемый заказ

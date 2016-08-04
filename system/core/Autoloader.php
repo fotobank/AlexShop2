@@ -33,6 +33,7 @@ namespace core;
 use Exception;
 use exception\BaseException;
 use helper\Recursive\Recursive;
+use Tracy\Debugger;
 
 
 /** @noinspection PhpIncludeInspection */
@@ -352,9 +353,12 @@ END;
             /** сообщение в log - класс не найден */
             $this->logLoadError($class_name);
             if(DEBUG_MODE)
-            {throw new AutoloadException('Class "' . $class_name . '"  not found');}
+            {
+             //   throw new AutoloadException('Class "' . $class_name . '"  not found');
+            }
 
         } catch (AutoloadException $e) {
+            Debugger::log($e, Debugger::ERROR); // also sends an email notification
             throw new AutoloadException($e->getMessage());
         }
     }

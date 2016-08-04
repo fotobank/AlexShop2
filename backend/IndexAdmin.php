@@ -1,6 +1,6 @@
 <?php
 
-require_once('api/Okay.php');
+
 
 // Этот класс выбирает модуль в зависимости от параметра Section и выводит его на экран
 class IndexAdmin extends Okay {

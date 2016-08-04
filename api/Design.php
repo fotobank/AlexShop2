@@ -2,13 +2,14 @@
 
 use core\Alex;
 
-require_once __DIR__ .'/'.'Okay.php';
-require_once dirname(__DIR__).'/Smarty/libs/Smarty.class.php';
 
 class Design extends Okay {
-    
+
+    /**
+     * @var Smarty() smarty
+     */
     public $smarty;
-    
+
     public function __construct() {
         parent::__construct();
         

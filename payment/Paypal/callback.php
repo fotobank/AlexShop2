@@ -7,7 +7,7 @@
 // Working in root dir
 chdir ('../../');
 
-require_once('api/Okay.php');
+
 $okay = new Okay();
 
 

@@ -8,9 +8,9 @@ namespace lib\Security;
  */
 if(false !== strpos($_SERVER['SCRIPT_NAME'], AlexSelfChk()))
 {
-    // Иначе страница об ошибке
+    // РРЅР°С‡Рµ СЃС‚СЂР°РЅРёС†Р° РѕР± РѕС€РёР±РєРµ
     header('http/1.0 404 not found');
-    // Подменим переменную GET, чтобы вывести страницу 404
+    // РџРѕРґРјРµРЅРёРј РїРµСЂРµРјРµРЅРЅСѓСЋ GET, С‡С‚РѕР±С‹ РІС‹РІРµСЃС‚Рё СЃС‚СЂР°РЅРёС†Сѓ 404
     $_GET['page_url'] = '404';
     $_GET['module'] = 'PageView';
     $view = new \IndexView();

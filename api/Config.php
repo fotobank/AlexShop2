@@ -5,8 +5,6 @@
  * В отличие от класса Settings, Config оперирует низкоуровневыми настройками, например найстройками базы данных.
  */
 
-require_once('Okay.php');
-
 class Config
 {
 
@@ -44,7 +42,8 @@ class Config
             $protocol = 'https';
         } elseif (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) {
             $protocol = 'https';
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+        } elseif ((!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ||
+            (!empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')) {
             $protocol = 'https';
         }
 
@@ -55,7 +54,7 @@ class Config
             $this->vars['root_url'] .= '/' . $subdir;
         }
 
-        // Подпапка в которую установлен OkayCMS относительно корня веб-сервера
+        // Подпапка в которую установлен CMS относительно корня веб-сервера
         $this->vars['subfolder'] = $subdir . '/';
 
         // Определяем корневую директорию сайта
@@ -112,5 +111,4 @@ class Config
 
         return false;
     }
-
 }

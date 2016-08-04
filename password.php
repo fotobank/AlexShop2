@@ -20,7 +20,7 @@ session_start();
   <div class="maindiv">
 
 <?php
-require_once('api/Okay.php');
+
 $okay = new Okay();
 
 // Если пришли по ссылке из письма

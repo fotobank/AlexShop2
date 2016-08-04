@@ -2,7 +2,7 @@
 
 //for cron!
 //chdir('/home/path/example.com/www');
-require_once('api/Okay.php');
+
 $okay = new Okay();
 
 //for cron! --- id языка в cron запросе
