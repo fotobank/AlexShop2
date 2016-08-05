@@ -2,7 +2,7 @@
 
 
 
-class FeedbacksAdmin extends Okay {
+class FeedbacksAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

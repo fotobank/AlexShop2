@@ -2,14 +2,14 @@
 
 
 
-class ScriptsAdmin extends Okay {
+class ScriptsAdmin extends Registry {
 
     public function fetch() {
         $scripts_dir = 'design/'.$this->settings->theme.'/js/';
         $scripts = array();
 
         // Порядок файлов в меню
-        $sort = array('okay.js', 'baloon.js', 'bootstrap.min.js', 'bootstrap.min.js.map', 'jquery-2.1.4.min.js', 'jquery-2.1.4.min.map', 'jquery-ui.min.js', 'jquery.autocomplete-min.js', 'jquery.fancybox.min.js', 'slick.min.js');
+        $sort = array('Registry.js', 'baloon.js', 'bootstrap.min.js', 'bootstrap.min.js.map', 'jquery-2.1.4.min.js', 'jquery-2.1.4.min.map', 'jquery-ui.min.js', 'jquery.autocomplete-min.js', 'jquery.fancybox.min.js', 'slick.min.js');
 
         // Чтаем все js-файлы
         if($handle = opendir($scripts_dir)) {

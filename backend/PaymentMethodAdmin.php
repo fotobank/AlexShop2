@@ -2,7 +2,7 @@
 
 
 
-class PaymentMethodAdmin extends Okay {
+class PaymentMethodAdmin extends Registry {
     
     public function fetch() {
         $payment_method = new stdClass;

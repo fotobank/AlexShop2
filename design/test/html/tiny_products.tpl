@@ -2,7 +2,7 @@
 <div class="fn-product card {if $smarty.get.module=="ComparisonView"}fn-resize m-b-0 border-b-1-primary{/if}">
 	<div class="card-block fn-transfer">
 		{* Изображение товара *}
-		<a class="{if $smarty.get.module=="ComparisonView"}fn-zoom okaycms {/if}card-image m-b-1" href="{if $smarty.get.module=="ComparisonView"}{$product->image->filename|resize:800:600:w}{else}{$lang_link}products/{$product->url}{/if}">
+		<a class="{if $smarty.get.module=="ComparisonView"}fn-zoom alexshopcms {/if}card-image m-b-1" href="{if $smarty.get.module=="ComparisonView"}{$product->image->filename|resize:800:600:w}{else}{$lang_link}products/{$product->url}{/if}">
             {if $product->image->filename}
                 <img class="fn-img" src="{$product->image->filename|resize:219:172}" alt="{$product->name|escape}" title="{$product->name|escape}"/>
                 {if $product->special}
@@ -32,9 +32,9 @@
 				<span class="fn-price">{$product->variant->price|convert}</span> {$currency->sign|escape}
 			</div>
 		</div>
-		<form class="fn-variants okaycms" action="/{$lang_link}cart">
+		<form class="fn-variants alexshopcms" action="/{$lang_link}cart">
 			{* Варианты товара *}
-			<select name="variant" class="fn-variant okaycms form-control c-select{if $product->variants|count < 2} hidden-xs-up{/if}">
+			<select name="variant" class="fn-variant alexshopcms form-control c-select{if $product->variants|count < 2} hidden-xs-up{/if}">
 	            {foreach $product->variants as $v}
 	                <option value="{$v->id}" data-price="{$v->price|convert}" data-stock="{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku}"{/if}>{if $v->name}{$v->name}{else}{$product->name|escape}{/if}</option>
 	            {/foreach}
@@ -57,16 +57,16 @@
 
 
             {if $smarty.get.module != "ProductsView" && $smarty.get.module !="MainView" && $smarty.get.module !="ProductView" && $smarty.get.module !="BlogView"}
-            <a class="btn-comparison-remove {if $smarty.get.module == "ComparisonView"}fn-comparison{else}fn-wishlist{/if} okaycms hidden-md-down selected" href="#" data-id="{$product->id}" title="{if $smarty.get.module == "ComparisonView"}{$lang->tiny_products_remove_comparison}{else}{$lang->tiny_products_remove_favorite}{/if}">&times;</a>
+            <a class="btn-comparison-remove {if $smarty.get.module == "ComparisonView"}fn-comparison{else}fn-wishlist{/if} alexshopcms hidden-md-down selected" href="#" data-id="{$product->id}" title="{if $smarty.get.module == "ComparisonView"}{$lang->tiny_products_remove_comparison}{else}{$lang->tiny_products_remove_favorite}{/if}">&times;</a>
             {/if}
             <div class="input-group">
                 {if $smarty.get.module != "ComparisonView"}
                     {* Сравнение *}
                     <div class="input-group-btn text-xs-right">
                         {if !in_array($product->id,$comparison->ids)}
-                            <a class="btn-comparison fn-comparison okaycms hidden-md-down" href="#" data-id="{$product->id}" title="{$lang->tiny_products_add_comparison}" data-result-text="{$lang->tiny_products_remove_comparison}" data-language="{$translate_id['tiny_products_add_comparison']}"></a>
+                            <a class="btn-comparison fn-comparison alexshopcms hidden-md-down" href="#" data-id="{$product->id}" title="{$lang->tiny_products_add_comparison}" data-result-text="{$lang->tiny_products_remove_comparison}" data-language="{$translate_id['tiny_products_add_comparison']}"></a>
                         {else}
-                            <a class="btn-comparison fn-comparison okaycms hidden-md-down selected" href="#" data-id="{$product->id}" title="{$lang->tiny_products_remove_comparison}" data-result-text="{$lang->tiny_products_add_comparison}" data-language="{$translate_id['tiny_products_remove_comparison']}"></a>
+                            <a class="btn-comparison fn-comparison alexshopcms hidden-md-down selected" href="#" data-id="{$product->id}" title="{$lang->tiny_products_remove_comparison}" data-result-text="{$lang->tiny_products_add_comparison}" data-language="{$translate_id['tiny_products_remove_comparison']}"></a>
                         {/if}
                     </div>
                 {/if}
@@ -75,9 +75,9 @@
                     {* Избранное *}
                     <div class="input-group-btn text-xs-left">
                         {if $product->id|in_array:$wished_products}
-                            <a href="#" data-id="{$product->id}" class="btn-favorites fn-wishlist okaycms selected" title="{$lang->tiny_products_remove_favorite}" data-result-text="{$lang->tiny_products_add_favorite}" data-language="{$translate_id['tiny_products_remove_favorite']}"></a>
+                            <a href="#" data-id="{$product->id}" class="btn-favorites fn-wishlist alexshopcms selected" title="{$lang->tiny_products_remove_favorite}" data-result-text="{$lang->tiny_products_add_favorite}" data-language="{$translate_id['tiny_products_remove_favorite']}"></a>
                         {else}
-                            <a href="#" data-id="{$product->id}" class="btn-favorites fn-wishlist okaycms" title="{$lang->tiny_products_add_favorite}" data-result-text="{$lang->tiny_products_remove_favorite}" data-language="{$translate_id['tiny_products_add_favorite']}"></a>
+                            <a href="#" data-id="{$product->id}" class="btn-favorites fn-wishlist alexshopcms" title="{$lang->tiny_products_add_favorite}" data-result-text="{$lang->tiny_products_remove_favorite}" data-language="{$translate_id['tiny_products_add_favorite']}"></a>
                         {/if}
                     </div>
                 {/if}

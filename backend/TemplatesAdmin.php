@@ -2,7 +2,7 @@
 
 
 
-class TemplatesAdmin extends Okay {
+class TemplatesAdmin extends Registry {
     
     public function fetch() {
         $templates_dir = 'design/'.$this->settings->theme.'/html/';

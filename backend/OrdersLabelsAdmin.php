@@ -2,7 +2,7 @@
 
 
 
-class OrdersLabelsAdmin extends Okay {
+class OrdersLabelsAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

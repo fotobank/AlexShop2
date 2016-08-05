@@ -18,17 +18,17 @@ function updateBill($login, $password, $txn, $status)
 	
 	// Подключаем основной класс
 
-	$okay = new Okay();
+	$registry = new Registry();
 
 	// Выбираем оплачиваемый заказ
-	$order = $okay->orders->get_order(intval($txn));
+	$order = $registry->orders->get_order(intval($txn));
 	
 	// 210 = Счет не найден
 	if(empty($order))
 		return new soapval('updateBillResult', 'xsd:integer', 210); 
 		
 	// Выбираем из базы соответствующий метод оплаты
-	$method = $okay->payment->get_payment_method(intval($order->payment_method_id));
+	$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
 	if(empty($method))
 		return new soapval('updateBillResult', 'xsd:integer', 210);
 	// Настройки способа оплаты	
@@ -50,10 +50,10 @@ function updateBill($login, $password, $txn, $status)
 		return new soapval('updateBillResult', 'xsd:integer', 215);
 		
 	// Проверка наличия товара
-	$purchases = $okay->orders->get_purchases(array('order_id'=>intval($order->id)));
+	$purchases = $registry->orders->get_purchases(array('order_id'=>intval($order->id)));
 	foreach($purchases as $purchase)
 	{
-		$variant = $okay->variants->get_variant(intval($purchase->variant_id));
+		$variant = $registry->variants->get_variant(intval($purchase->variant_id));
 		if(empty($variant) || (!$variant->infinity && $variant->stock < $purchase->amount))
 		{
 			// 300 = Неизвестная ошибка
@@ -62,12 +62,12 @@ function updateBill($login, $password, $txn, $status)
 	}
 	
 	// Установим статус оплачен
-	$okay->orders->update_order(intval($order->id), array('paid'=>1));
+	$registry->orders->update_order(intval($order->id), array('paid'=>1));
 	
 	// Спишем товары  
-	$okay->orders->close(intval($order->id));
-	$okay->notify->email_order_user(intval($order->id));
-	$okay->notify->email_order_admin(intval($order->id));
+	$registry->orders->close(intval($order->id));
+	$registry->notify->email_order_user(intval($order->id));
+	$registry->notify->email_order_admin(intval($order->id));
 
 	// Успешное завершение
 	return new soapval('updateBillResult', 'xsd:integer', 0); 

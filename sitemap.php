@@ -1,20 +1,20 @@
 <?php
 
 
-$okay = new Okay();
+$registry = new Registry();
 
 header("Content-type: text/xml; charset=UTF-8");
 print '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 print '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
 
-$languages = $okay->languages->languages();
+$languages = $registry->languages->languages();
 $lang_link = '';
 if (!empty($languages)) {
     $first_lang = reset($languages);
     if($_GET['lang_label']) {
-        $language = $okay->languages->languages(array('id'=>$okay->languages->lang_id()));
+        $language = $registry->languages->languages(array('id'=>$registry->languages->lang_id()));
     } else {
-        $okay->languages->set_lang_id($first_lang->id);
+        $registry->languages->set_lang_id($first_lang->id);
     }
     if(!empty($language) && is_object($language) && $language->id != $first_lang->id) {
         $lang_link = $language->label.'/';
@@ -22,7 +22,7 @@ if (!empty($languages)) {
 }
 
 // Главная страница
-$url = $okay->config->root_url.'/'.$lang_link;
+$url = $registry->config->root_url.'/'.$lang_link;
 print "\t<url>"."\n";
 print "\t\t<loc>$url</loc>"."\n";
 print "\t\t<changefreq>daily</changefreq>"."\n";
@@ -30,17 +30,17 @@ print "\t\t<priority>1.0</priority>"."\n";
 print "\t</url>"."\n";
 
 // Страницы
-foreach($okay->pages->get_pages() as $p) {
+foreach($registry->pages->get_pages() as $p) {
     if($p->visible && $p->menu_id == 1 && $p->url) {
-        $url = $okay->config->root_url.'/'.$lang_link.esc($p->url);
+        $url = $registry->config->root_url.'/'.$lang_link.esc($p->url);
         print "\t<url>"."\n";
         print "\t\t<loc>$url</loc>"."\n";
         //lastModify
         $last_modify = array();
         if ($p->url == 'blog') {
-            $okay->db->query("SELECT b.last_modify FROM __blog b");
-            $last_modify = $okay->db->results('last_modify');
-            $last_modify[] = $okay->settings->lastModifyPosts;
+            $registry->db->query("SELECT b.last_modify FROM __blog b");
+            $last_modify = $registry->db->results('last_modify');
+            $last_modify[] = $registry->settings->lastModifyPosts;
         }
         $last_modify[] = $p->last_modify;
         $last_modify = max($last_modify);
@@ -54,8 +54,8 @@ foreach($okay->pages->get_pages() as $p) {
 }
 
 // Блог
-foreach($okay->blog->get_posts(array('visible'=>1)) as $p) {
-    $url = $okay->config->root_url.'/'.$lang_link.'blog/'.esc($p->url);
+foreach($registry->blog->get_posts(array('visible'=>1)) as $p) {
+    $url = $registry->config->root_url.'/'.$lang_link.'blog/'.esc($p->url);
     print "\t<url>"."\n";
     print "\t\t<loc>$url</loc>"."\n";
     //lastModify
@@ -68,19 +68,19 @@ foreach($okay->blog->get_posts(array('visible'=>1)) as $p) {
 }
 
 // Категории
-foreach($okay->categories->get_categories() as $c) {
+foreach($registry->categories->get_categories() as $c) {
     if($c->visible) {
-        $url = $okay->config->root_url.'/'.$lang_link.'catalog/'.esc($c->url);
+        $url = $registry->config->root_url.'/'.$lang_link.'catalog/'.esc($c->url);
         print "\t<url>"."\n";
         print "\t\t<loc>$url</loc>"."\n";
         //lastModify
         $last_modify = array();
-        $okay->db->query("SELECT p.last_modify 
+        $registry->db->query("SELECT p.last_modify 
             FROM __products p 
             INNER JOIN __products_categories pc ON pc.product_id = p.id AND pc.category_id in(?@) 
             WHERE 1 
             GROUP BY p.id", $c->children);
-        $res = $okay->db->results('last_modify');
+        $res = $registry->db->results('last_modify');
         if (!empty($res)) {
             $last_modify = $res;
         }
@@ -95,16 +95,16 @@ foreach($okay->categories->get_categories() as $c) {
 }
 
 // Бренды
-foreach($okay->brands->get_brands() as $b) {
-    $url = $okay->config->root_url.'/'.$lang_link.'brands/'.esc($b->url);
+foreach($registry->brands->get_brands() as $b) {
+    $url = $registry->config->root_url.'/'.$lang_link.'brands/'.esc($b->url);
     print "\t<url>"."\n";
     print "\t\t<loc>$url</loc>"."\n";
     //lastModify
     $last_modify = array();
-    $okay->db->query("SELECT p.last_modify
+    $registry->db->query("SELECT p.last_modify
         FROM __products p 
         WHERE p.brand_id=?", $b->id);
-    $res = $okay->db->results('last_modify');
+    $res = $registry->db->results('last_modify');
     if (!empty($res)) {
         $last_modify = $res;
     }
@@ -118,9 +118,9 @@ foreach($okay->brands->get_brands() as $b) {
 }
 
 // Товары
-$okay->db->query("SELECT url, last_modify FROM __products WHERE visible=1");
-foreach($okay->db->results() as $p) {
-    $url = $okay->config->root_url.'/'.$lang_link.'products/'.esc($p->url);
+$registry->db->query("SELECT url, last_modify FROM __products WHERE visible=1");
+foreach($registry->db->results() as $p) {
+    $url = $registry->config->root_url.'/'.$lang_link.'products/'.esc($p->url);
     print "\t<url>"."\n";
     print "\t\t<loc>$url</loc>"."\n";
     //lastModify

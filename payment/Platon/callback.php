@@ -3,7 +3,7 @@
 // Работаем в корневой директории
 chdir ('../../');
 
-$okay = new Okay();
+$registry = new Registry();
 
 // Сумма, которую заплатил покупатель. Дробная часть отделяется точкой.
 $amount = $_POST['amount'];
@@ -22,7 +22,7 @@ if($_POST['status'] !== 'SALE')
 ////////////////////////////////////////////////
 // Выберем заказ из базы
 ////////////////////////////////////////////////
-$order = $okay->orders->get_order(intval($order_id));
+$order = $registry->orders->get_order(intval($order_id));
 if(empty($order))
 	die('Оплачиваемый заказ не найден');
  
@@ -34,7 +34,7 @@ if($order->paid)
 ////////////////////////////////////////////////
 // Выбираем из базы соответствующий метод оплаты
 ////////////////////////////////////////////////
-$method = $okay->payment->get_payment_method(intval($order->payment_method_id));
+$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
 if(empty($method))
 	die("Неизвестный метод оплаты");
  
@@ -45,16 +45,16 @@ $my_sign = md5(strtoupper(strrev($_POST['email']).$settings['platon_password'].$
 if($sign !== $my_sign)
 	die("bad sign\n");
 
-if($amount != $okay->money->convert($order->total_price, $method->currency_id, false) || $amount<=0)
+if($amount != $registry->money->convert($order->total_price, $method->currency_id, false) || $amount<=0)
 	die("incorrect price\n");
 	
 ////////////////////////////////////
 // Проверка наличия товара
 ////////////////////////////////////
-$purchases = $okay->orders->get_purchases(array('order_id'=>intval($order->id)));
+$purchases = $registry->orders->get_purchases(array('order_id'=>intval($order->id)));
 foreach($purchases as $purchase)
 {
-	$variant = $okay->variants->get_variant(intval($purchase->variant_id));
+	$variant = $registry->variants->get_variant(intval($purchase->variant_id));
 	if(empty($variant) || (!$variant->infinity && $variant->stock < $purchase->amount))
 	{
 		die("Нехватка товара $purchase->product_name $purchase->variant_name");
@@ -62,11 +62,11 @@ foreach($purchases as $purchase)
 }
        
 // Установим статус оплачен
-$okay->orders->update_order(intval($order->id), array('paid'=>1));
+$registry->orders->update_order(intval($order->id), array('paid'=>1));
 
 // Спишем товары  
-$okay->orders->close(intval($order->id));
-$okay->notify->email_order_user(intval($order->id));
-$okay->notify->email_order_admin(intval($order->id));
+$registry->orders->close(intval($order->id));
+$registry->notify->email_order_user(intval($order->id));
+$registry->notify->email_order_admin(intval($order->id));
 
 die("OK".$order_id."\n");

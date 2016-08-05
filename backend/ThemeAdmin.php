@@ -2,7 +2,7 @@
 
 
 
-class ThemeAdmin extends Okay {
+class ThemeAdmin extends Registry {
     
     private $themes_dir = 'design/';
     private $compiled_dir = 'compiled/';

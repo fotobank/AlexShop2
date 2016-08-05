@@ -2,31 +2,31 @@
 
     $limit = 100;
     
-    if(!$okay->managers->access('orders')) {
+    if(!$registry->managers->access('orders')) {
         exit();
     }
 
     if (!empty($_SESSION['admin_lang_id'])) {
-        $okay->languages->set_lang_id($_SESSION['admin_lang_id']);
+        $registry->languages->set_lang_id($_SESSION['admin_lang_id']);
     }
-    $lang_id  = $okay->languages->lang_id();
+    $lang_id  = $registry->languages->lang_id();
     $px = ($lang_id ? 'l' : 'p');
-    $lang_sql = $okay->languages->get_query(array('object'=>'product', 'px'=>'p'));
+    $lang_sql = $registry->languages->get_query(array('object'=>'product', 'px'=>'p'));
     
-    $keyword = $okay->request->get('query', 'string');
+    $keyword = $registry->request->get('query', 'string');
     $keywords = explode(' ', $keyword);
     $keyword_sql = '';
     foreach($keywords as $keyword) {
-        $kw = $okay->db->escape(trim($keyword));
-        $keyword_sql .= $okay->db->placehold("AND (
+        $kw = $registry->db->escape(trim($keyword));
+        $keyword_sql .= $registry->db->placehold("AND (
             $px.name LIKE '%$kw%' 
             OR $px.meta_keywords LIKE '%$kw%' OR 
             p.id in (SELECT product_id FROM __variants WHERE sku LIKE '%$kw%') 
         ) ");
     }
     
-    $stock_filter = (!$okay->settings->is_preorder ? "AND (pv.stock IS NULL OR pv.stock>0)" : "");
-    $okay->db->query("SELECT 
+    $stock_filter = (!$registry->settings->is_preorder ? "AND (pv.stock IS NULL OR pv.stock>0)" : "");
+    $registry->db->query("SELECT 
             p.id, 
             $px.name, 
             i.filename as image 
@@ -43,14 +43,14 @@
         LIMIT ?
     ", $limit);
     
-    foreach($okay->db->results() as $product) {
+    foreach($registry->db->results() as $product) {
         $products[$product->id] = $product;
     }
     
-    $lang_sql = $okay->languages->get_query(array('object'=>'variant', 'px'=>'pv'));
+    $lang_sql = $registry->languages->get_query(array('object'=>'variant', 'px'=>'pv'));
     $variants = array();
     if(!empty($products)) {
-        $okay->db->query("SELECT 
+        $registry->db->query("SELECT 
                 pv.id, 
                 $lang_sql->fields,
                 pv.sku, 
@@ -66,14 +66,14 @@
                 $stock_filter 
                 AND pv.price>0 
             ORDER BY pv.position
-        ", $okay->settings->max_order_amount, $okay->settings->max_order_amount, array_keys($products));
-        $variants = $okay->db->results();
+        ", $registry->settings->max_order_amount, $registry->settings->max_order_amount, array_keys($products));
+        $variants = $registry->db->results();
     }
     
     foreach($variants as $variant) {
         if(isset($products[$variant->product_id])) {
             $products[$variant->product_id]->variants[] = $variant;
-            if ($variant->currency_id && ($currency = $okay->money->get_currency(intval($variant->currency_id)))) {
+            if ($variant->currency_id && ($currency = $registry->money->get_currency(intval($variant->currency_id)))) {
                 if ($currency->rate_from != $currency->rate_to) {
                     $variant->price = $variant->price*$currency->rate_to/$currency->rate_from;
                     $variant->compare_price = $variant->compare_price*$currency->rate_to/$currency->rate_from;
@@ -87,7 +87,7 @@
         if(!empty($product->variants)) {
             $suggestion = new stdClass;
             if(!empty($product->image)) {
-                $product->image = $okay->design->resize_modifier($product->image, 35, 35);
+                $product->image = $registry->design->resize_modifier($product->image, 35, 35);
             }
             $suggestion->value = $product->name;
             $suggestion->data = $product;

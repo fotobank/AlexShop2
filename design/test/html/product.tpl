@@ -15,7 +15,7 @@
 		<div class = "row fn-transfer">
 			{if $product->image}
                 <div class = "col-lg-5">
-					<a class = "fn-zoom okaycms btn-block relative border-a-1-info text-xs-center"
+					<a class = "fn-zoom alexshopcms btn-block relative border-a-1-info text-xs-center"
                        href = "{$product->image->filename|resize:800:600:w}" rel = "group">
 						{* Промо изображение *}
                         {if $product->special}
@@ -29,11 +29,11 @@
 					</a>
                     {* Дополнительные фото продукта *}
                     {if $product->images|count > 1}
-                        <div class = "row m-y-2 fn-slick-images okaycms">
+                        <div class = "row m-y-2 fn-slick-images alexshopcms">
 							{* cut удаляет первую фотографию, если нужно начать 2-й - пишем cut:2 и тд *}
                             {foreach $product->images|cut as $i=>$image}
                                 <div class = "col-xs-4 col-lg-3">
-									<a class = "fn-zoom okaycms btn-block border-a-1-info text-xs-center product-images"
+									<a class = "fn-zoom alexshopcms btn-block border-a-1-info text-xs-center product-images"
                                        href = "{$image->filename|resize:800:600:w}" rel = "group">
 										<img src = "{$image->filename|resize:87:72}" alt = "{$product->name|escape}"/>
 									</a>
@@ -46,7 +46,7 @@
                                 {else}
 
                 <div class = "col-lg-5">
-                    <a class = "fn-zoom okaycms btn-block relative border-a-1-info text-xs-center"
+                    <a class = "fn-zoom alexshopcms btn-block relative border-a-1-info text-xs-center"
                        href = "design/{$settings->theme}/images/no_image.png" rel = "group">
                         {* Промо изображение *}
                         {if $product->special}
@@ -60,7 +60,7 @@
                 </div>
             {/if}
             <div class = "col-lg-7 fn-product" itemprop = "offers" itemscope = "" itemtype = "http://schema.org/Offer">
-				<form class = "fn-variants okaycms row" action = "/{$lang_link}cart">
+				<form class = "fn-variants alexshopcms row" action = "/{$lang_link}cart">
 					<div class = "col-lg-6">
 						{* Цена *}
                         <div class = "h4 font-weight-bold">
@@ -98,7 +98,7 @@
 
                         {* Варианты товара *}
                         <select name = "variant"
-                                class = "fn-variant okaycms form-control c-select m-t-1 m-b-1-md_down{if $product->variants|count < 2} hidden-xs-up{/if}">
+                                class = "fn-variant alexshopcms form-control c-select m-t-1 m-b-1-md_down{if $product->variants|count < 2} hidden-xs-up{/if}">
 							{foreach $product->variants as $v}
                                 <option value = "{$v->id}" data-price = "{$v->price|convert}"
                                         data-stock = "{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku}"{/if}>{if $v->name}{$v->name}{else}{$product->name|escape}{/if}</option>
@@ -121,7 +121,7 @@
                                         data-language = "{$translate_id['product_pre_order']}">{$lang->product_pre_order}</button>
 							</div>
                         {/if}
-                        <div class = "fn-product-amount fn-is_stock okaycms text-xs-center text-md-left{if $product->variant->stock < 1} hidden-xs-up{/if}">
+                        <div class = "fn-product-amount fn-is_stock alexshopcms text-xs-center text-md-left{if $product->variant->stock < 1} hidden-xs-up{/if}">
 							{* Кол-во товаров *}
                             <span class = "minus">&minus;</span>
 							<input class = "form-control" type = "text" name = "amount" value = "1"
@@ -237,14 +237,14 @@
                         {* Сравнение *}
                         <div class = "form-group m-t-1 text-xs-center text-md-left hidden-md-down">
 							{if !in_array($product->id,$comparison->ids)}
-                                <a class = "i-comparison fn-comparison okaycms" href = "#" data-id = "{$product->id}"
+                                <a class = "i-comparison fn-comparison alexshopcms" href = "#" data-id = "{$product->id}"
                                    title = "{$lang->product_add_comparison}"
                                    data-result-text = "{$lang->product_remove_comparison}"
                                    data-language = "{$translate_id['product_add_comparison']}"></a>
 
                                                                 {else}
 
-                                <a class = "i-comparison fn-comparison okaycms selected" href = "#"
+                                <a class = "i-comparison fn-comparison alexshopcms selected" href = "#"
                                    data-id = "{$product->id}" title = "{$lang->product_remove_comparison}"
                                    data-result-text = "{$lang->product_add_comparison}"
                                    data-language = "{$translate_id['product_remove_comparison']}"></a>
@@ -254,14 +254,14 @@
                         <div class = "form-group text-xs-center text-md-left m-t-1">
 							{if $product->id|in_array:$wished_products}
                                 <a href = "#" data-id = "{$product->id}"
-                                   class = "i-favorites fn-wishlist okaycms selected"
+                                   class = "i-favorites fn-wishlist alexshopcms selected"
                                    title = "{$lang->product_remove_favorite}"
                                    data-result-text = "{$lang->product_add_favorite}"
                                    data-language = "{$translate_id['product_remove_favorite']}"></a>
 
                                                                 {else}
 
-                                <a href = "#" data-id = "{$product->id}" class = "i-favorites fn-wishlist okaycms"
+                                <a href = "#" data-id = "{$product->id}" class = "i-favorites fn-wishlist alexshopcms"
                                    title = "{$lang->product_add_favorite}"
                                    data-result-text = "{$lang->product_remove_favorite}"
                                    data-language = "{$translate_id['product_add_favorite']}"></a>

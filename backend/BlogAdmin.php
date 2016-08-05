@@ -2,7 +2,7 @@
 
 
 
-class BlogAdmin extends Okay {
+class BlogAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

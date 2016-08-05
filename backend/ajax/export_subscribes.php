@@ -1,6 +1,6 @@
 <?php
 
-class ExportAjax extends Okay {
+class ExportAjax extends Registry {
     
     private $columns_names = array(
         'email'=>            'Email'

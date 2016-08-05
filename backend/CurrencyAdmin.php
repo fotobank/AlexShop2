@@ -2,7 +2,7 @@
 
 
 
-class CurrencyAdmin extends Okay {
+class CurrencyAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

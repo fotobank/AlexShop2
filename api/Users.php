@@ -2,7 +2,7 @@
 
 
 
-class Users extends Okay {
+class Users extends Registry {
     
     // осторожно, при изменении соли испортятся текущие пароли пользователей
     private $salt = '8e86a279d6e182b3c811c559e6b15484';

@@ -1,6 +1,6 @@
 <?php
 
-class ExportAjax extends Okay {
+class ExportAjax extends Registry {
     
     public $total_price;
     public $total_amount;

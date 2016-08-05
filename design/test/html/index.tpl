@@ -25,7 +25,7 @@
     	<meta name="robots" content="index,follow"/>
 	{/if}
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-    <meta name="generator" content="OkayCMS {$config->version}"/>
+    <meta name="generator" content="alexshopcms {$config->version}"/>
     {if $language->label}
     <meta http-equiv="Content-Language" content="{$language->label|escape}"/>
     {/if}
@@ -110,9 +110,9 @@
 	<link href="design/{$settings->theme|escape}/css/bootstrap.css" rel="stylesheet"/>
 	<script src="design/{$settings->theme|escape}/js/bootstrap.min.js"></script>
 
-	{* Okay *}
+	{* Order *}
 	{include file="scripts.tpl"}
-	<script src="design/{$settings->theme}/js/okay.js"></script>
+	<script src="design/{$settings->theme}/js/order.js"></script>
 
 	{* Всплывающие подсказки для администратора *}
 	{if $smarty.session.admin}
@@ -250,7 +250,7 @@
 		{* Форма поиска *}
 		<div class="col-xs-12 col-lg-3 m-y-1-md_down">
 			<form id="fn-search" class="input-group" action="{$lang_link}all-products">
-				<input class="fn-search okaycms form-control" type="text" name="keyword" value="{$keyword|escape}" data-language="{$translate_id['index_search']}" placeholder="{$lang->index_search}"/>
+				<input class="fn-search alexshopcms form-control" type="text" name="keyword" value="{$keyword|escape}" data-language="{$translate_id['index_search']}" placeholder="{$lang->index_search}"/>
 				<span class="input-group-btn">
 					<button class="i-search" type="submit"></button>
 				</span>
@@ -268,7 +268,7 @@
 
 		{* Обратный звонок *}
 		<div class="col-xs-4 col-lg-2 p-l-0-md_down">
-			<a class="btn btn-sm btn-block btn-warning font-weight-bold i-callback fn-callback okaycms" href="#fn-callback" data-language="{$translate_id['index_back_call']}">{$lang->index_back_call}</a>
+			<a class="btn btn-sm btn-block btn-warning font-weight-bold i-callback fn-callback alexshopcms" href="#fn-callback" data-language="{$translate_id['index_back_call']}">{$lang->index_back_call}</a>
 		</div>
 	</div>
 </div>
@@ -324,7 +324,7 @@
 {get_banner var=banner1 group=1}
 {if $banner1->items}
 	<div class="container hidden-md-down">
-		<div class="fn-slick-banner okaycms slick-banner">
+		<div class="fn-slick-banner alexshopcms slick-banner">
 			{foreach $banner1->items as $bi}
 				<div>
 					{if $bi->url}
@@ -452,7 +452,7 @@
 </div>
 {* Копирайт *}
 <div class="container p-y-1">
-	© {$smarty.now|date_format:"%Y"}. <a class="link-black" href="http://okay-cms.com" target="_blank"><span data-language="{$translate_id['index_copyright']}">{$lang->index_copyright}</span></a>
+	© {$smarty.now|date_format:"%Y"}. <a class="link-black" href="http://alexshop-sms.com" target="_blank"><span data-language="{$translate_id['index_copyright']}">{$lang->index_copyright}</span></a>
 </div>
 {* Форма обратного звонка *}
 {include file='callback.tpl'}

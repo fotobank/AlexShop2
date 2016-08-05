@@ -2,7 +2,7 @@
 
 
 
-class Banners extends Okay {
+class Banners extends Registry {
     
     public function get_banners_images($filter = array()) {
         // По умолчанию

@@ -1,6 +1,6 @@
 <?php
 
-class ExportAjax extends Okay {
+class ExportAjax extends Registry {
 
     private $columns_names = array(
         'name'=>             'Товар',
@@ -77,7 +77,7 @@ class ExportAjax extends Okay {
             }
         }
 
-        if(empty($products)) {
+        if(0 === count($products)) {
             return false;
         }
 

@@ -5,12 +5,12 @@ include(__DIR__ . '/../system/configs/define/config.php');
 include SYS_DIR . 'core' . DS . 'boot.php';
 
 define('IS_CLIENT', true);
-$okay = new Okay();
+$registry = new Registry();
 $result = [];
 
 $limit = 500;
 
-$id = $okay->request->get('id', 'integer');
+$id = $registry->request->get('id', 'integer');
 
 if (!empty($_COOKIE['wished_products'])){
     $products_ids = explode(',', $_COOKIE['wished_products']);
@@ -19,7 +19,7 @@ if (!empty($_COOKIE['wished_products'])){
     $products_ids = [];
 }
 
-if ($okay->request->get('action', 'string') == 'delete'){
+if ($registry->request->get('action', 'string') == 'delete'){
     $key = array_search($id, $products_ids);
     unset($products_ids[$key]);
 } else {
@@ -37,29 +37,29 @@ if (!count($products_ids)){
     setcookie('wished_products', implode(',', $products_ids), time() + 30 * 24 * 3600, '/');
 }
 
-$okay->design->assign('wished_products', $products_ids);
+$registry->design->assign('wished_products', $products_ids);
 
-$language = $okay->languages->languages(['id' => $okay->languages->lang_id()]);
-$okay->design->assign('language', $language);
+$language = $registry->languages->languages(['id' => $registry->languages->lang_id()]);
+$registry->design->assign('language', $language);
 
 $lang_link = '';
-$first_lang = $okay->languages->languages();
+$first_lang = $registry->languages->languages();
 if (!empty($first_lang)){
     $first_lang = reset($first_lang);
     if ($first_lang->id !== $language->id){
         $lang_link = $language->label . '/';
     }
 }
-$okay->design->assign('lang_link', $lang_link);
-$okay->design->assign('lang', $okay->translations);
+$registry->design->assign('lang_link', $lang_link);
+$registry->design->assign('lang', $registry->translations);
 
 header("Content-type: text/html; charset=UTF-8");
 header("Cache-Control: must-revalidate");
 header("Pragma: no-cache");
 header("Expires: -1");
 /*mt1sk*/
-$result['info'] = $okay->design->fetch('wishlist_informer.tpl');
+$result['info'] = $registry->design->fetch('wishlist_informer.tpl');
 $result['cnt'] = count($products_ids);
 print json_encode($result);
-//print $okay->design->fetch('wishlist_informer.tpl');
+//print $registry->design->fetch('wishlist_informer.tpl');
 /*/mt1sk*/

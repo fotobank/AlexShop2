@@ -2,7 +2,7 @@
 
 
 
-class MultiExportAdmin extends Okay {
+class MultiExportAdmin extends Registry {
 
     private $export_files_dir = 'backend/files/export/';
 

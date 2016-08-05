@@ -2,7 +2,7 @@
 
 
 
-class BannersAdmin extends Okay {
+class BannersAdmin extends Registry {
     public function fetch() {
         if($this->request->method('post')) {
             // Действия с выбранными

@@ -3,7 +3,7 @@
 
 
 ########################################
-class CommentsAdmin extends Okay {
+class CommentsAdmin extends Registry {
     
     public function fetch() {
         $filter = array();

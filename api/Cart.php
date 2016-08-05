@@ -2,7 +2,7 @@
 
 
 
-class Cart extends Okay {
+class Cart extends Registry {
     
     public function get_cart() {
         $cart = new stdClass();

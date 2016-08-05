@@ -2,7 +2,7 @@
 
 
 
-class CouponsAdmin extends Okay {
+class CouponsAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

@@ -2,7 +2,7 @@
 
 
 
-class BannerAdmin extends Okay {
+class BannerAdmin extends Registry {
     
     public function fetch() {
         $categories = $this->categories->get_categories_tree();

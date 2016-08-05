@@ -2,7 +2,7 @@
 
 
 
-class OrdersLabelAdmin extends Okay {
+class OrdersLabelAdmin extends Registry {
     
     public function fetch() {
         $label = new stdClass;

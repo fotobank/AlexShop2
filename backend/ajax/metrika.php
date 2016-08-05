@@ -1,7 +1,7 @@
 <?php
 
  
-class  MetrikaAjax extends Okay
+class  MetrikaAjax extends Registry
 {
 
 	private $yandex_metrika_token;

@@ -2,7 +2,7 @@
 
 
 
-class Payment extends Okay {
+class Payment extends Registry {
 	
     public function get_payment_methods($filter = array()) {
         $delivery_filter = '';

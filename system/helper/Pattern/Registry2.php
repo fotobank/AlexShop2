@@ -64,7 +64,7 @@
  * $registry = Registry::__instance();
  * читаем и пишем в свойства объекта
  * var_dump($registry->C);
- * $Registry->B = "B";
+ * $registry->B = "B";
  * var_dump($registry->B);
  * $registry->D = new C(new B());
  */

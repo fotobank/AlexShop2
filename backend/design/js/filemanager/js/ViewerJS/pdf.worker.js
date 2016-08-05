@@ -26850,7 +26850,7 @@ var PDFImage = (function PDFImageClosure() {
         var alpha = buffer[i + 3];
         if (alpha === 0) {
           // according formula we have to get Infinity in all components
-          // making it white (typical paper color) should be okay
+          // making it white (typical paper color) should be order
           buffer[i] = 255;
           buffer[i + 1] = 255;
           buffer[i + 2] = 255;

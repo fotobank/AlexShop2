@@ -1,30 +1,30 @@
 <?php
 
-	if(!$okay->managers->access('products')) {
+	if(!$registry->managers->access('products')) {
         exit();
     }
     $limit = 100;
 
     if (!empty($_SESSION['admin_lang_id'])) {
-        $okay->languages->set_lang_id($_SESSION['admin_lang_id']);
+        $registry->languages->set_lang_id($_SESSION['admin_lang_id']);
     }
-    $lang_id  = $okay->languages->lang_id();
+    $lang_id  = $registry->languages->lang_id();
     $px = ($lang_id ? 'l' : 'p');
-    $lang_sql = $okay->languages->get_query(array('object'=>'product', 'px'=>'p'));
+    $lang_sql = $registry->languages->get_query(array('object'=>'product', 'px'=>'p'));
     
-    $keyword = $okay->request->get('query', 'string');
+    $keyword = $registry->request->get('query', 'string');
     $keywords = explode(' ', $keyword);
     $keyword_sql = '';
     foreach($keywords as $keyword) {
-        $kw = $okay->db->escape(trim($keyword));
-        $keyword_sql .= $okay->db->placehold("AND (
+        $kw = $registry->db->escape(trim($keyword));
+        $keyword_sql .= $registry->db->placehold("AND (
             $px.name LIKE '%$kw%' 
             OR $px.meta_keywords LIKE '%$kw%' 
             OR p.id in (SELECT product_id FROM __variants WHERE sku LIKE '%$kw%') 
         ) ");
     }
     
-    $okay->db->query("SELECT 
+    $registry->db->query("SELECT 
             p.id, 
             $px.name, 
             i.filename as image 
@@ -38,12 +38,12 @@
         LIMIT ?
     ", $limit);
     
-    $products = $okay->db->results();
+    $products = $registry->db->results();
     
     $suggestions = array();
     foreach($products as $product) {
         if(!empty($product->image)) {
-            $product->image = $okay->design->resize_modifier($product->image, 35, 35);
+            $product->image = $registry->design->resize_modifier($product->image, 35, 35);
         }
         
         $suggestion = new stdClass();

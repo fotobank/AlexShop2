@@ -2,7 +2,7 @@
 
 
 
-class LanguagesAdmin extends Okay {
+class LanguagesAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

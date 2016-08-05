@@ -4,23 +4,23 @@ include __DIR__ . '/../system/configs/define/config.php';
 include SYS_DIR . 'core' . DS . 'boot.php';
 
 define('IS_CLIENT', true);
-$okay = new Okay();
-$product_id = $okay->request->get('product', 'integer');
-$action = $okay->request->get('action');
+$registry = new Registry();
+$product_id = $registry->request->get('product', 'integer');
+$action = $registry->request->get('action');
 if ($action == 'add'){
-    $okay->comparison->add_item((int)$product_id);
+    $registry->comparison->add_item((int)$product_id);
 } elseif ($action == 'delete') {
-    $okay->comparison->delete_item((int)$product_id);
+    $registry->comparison->delete_item((int)$product_id);
 }
 
-$comparison = $okay->comparison->get_comparison();
-$okay->design->assign('comparison', $comparison);
+$comparison = $registry->comparison->get_comparison();
+$registry->design->assign('comparison', $comparison);
 
-$language = $okay->languages->languages(['id' => $okay->languages->lang_id()]);
-$okay->design->assign('language', $language);
+$language = $registry->languages->languages(['id' => $registry->languages->lang_id()]);
+$registry->design->assign('language', $language);
 
 $lang_link = '';
-$first_lang = $okay->languages->languages();
+$first_lang = $registry->languages->languages();
 if (!empty($first_lang)){
     $first_lang = reset($first_lang);
     if ($first_lang->id !== $language->id){
@@ -28,10 +28,10 @@ if (!empty($first_lang)){
     }
 }
 
-$okay->design->assign('lang_link', $lang_link);
-$okay->design->assign('lang', $okay->translations);
+$registry->design->assign('lang_link', $lang_link);
+$registry->design->assign('lang', $registry->translations);
 
-$result = $okay->design->fetch('comparison_informer.tpl');
+$result = $registry->design->fetch('comparison_informer.tpl');
 header("Content-type: application/json; charset=UTF-8");
 header("Cache-Control: must-revalidate");
 header("Pragma: no-cache");

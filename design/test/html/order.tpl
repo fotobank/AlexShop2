@@ -77,7 +77,7 @@
 						<div class="purchase-row">
 							{* Количество *}
 							<div class="purchase-amount">
-								<div class="fn-product-amount fn-is_stock okaycms text-xs-center">
+								<div class="fn-product-amount fn-is_stock alexshopcms text-xs-center">
 									{* Кол-во товаров *}
 									<input disabled class="form-control" type="text" data-id="{$purchase->variant_id}" name="amounts[{$purchase->variant_id}]" value="{$purchase->amount}">
 								</div>

@@ -2,7 +2,7 @@
 
 
 
-class Delivery extends Okay {
+class Delivery extends Registry {
     
     public function get_delivery($id) {
         if (empty($id)) {

@@ -3,7 +3,7 @@
 
 use exception\DbException;
 
-class Database extends Okay
+class Database extends Registry
 {
 
     private $mysqli;

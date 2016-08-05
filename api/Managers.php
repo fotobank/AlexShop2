@@ -2,7 +2,7 @@
 
 
 
-class Managers extends Okay {
+class Managers extends Registry {
     
     public $permissions_list = array('products', 'categories', 'brands', 'features', 'orders', 'labels',
         'users', 'groups', 'coupons', 'pages', 'blog', 'comments', 'feedbacks', 'import', 'export',

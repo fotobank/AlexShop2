@@ -2,7 +2,7 @@
 
 
 
-class ImportAdmin extends Okay {
+class ImportAdmin extends Registry {
     
     public $import_files_dir = 'backend/files/import/';
     public $import_file = 'import.csv';

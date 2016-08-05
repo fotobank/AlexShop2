@@ -2,7 +2,7 @@
 
 
 
-class GroupsAdmin extends Okay {
+class GroupsAdmin extends Registry {
     
     public function fetch() {
         if($this->request->method('post')) {

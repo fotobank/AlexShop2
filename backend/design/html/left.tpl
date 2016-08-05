@@ -1,6 +1,6 @@
 
 <div id="okay_logo">
-     <a href='index.php?module=LicenseAdmin'><img src="design/images/logo.png" alt="OkayCMS"/></a>
+     <a href='index.php?module=LicenseAdmin'><img src="design/images/logo.png" alt="AlexShop CMS"/></a>
 </div>
 
 <ul id="main_menu">

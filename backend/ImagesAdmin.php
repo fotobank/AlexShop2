@@ -2,7 +2,7 @@
 
 
 
-class ImagesAdmin extends Okay {
+class ImagesAdmin extends Registry {
     
     public function fetch() {
         $images_dir = 'design/'.$this->settings->theme.'/images/';

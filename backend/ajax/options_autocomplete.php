@@ -1,25 +1,25 @@
 <?php
 
-    if(!$okay->managers->access('products')) {
+    if(!$registry->managers->access('products')) {
         exit();
     }
     $limit = 100;
     
-    $keyword = $okay->request->get('query', 'string');
-    $feature_id = $okay->request->get('feature_id', 'string');
+    $keyword = $registry->request->get('query', 'string');
+    $feature_id = $registry->request->get('feature_id', 'string');
     
-    $query = $okay->db->placehold('SELECT DISTINCT po.value 
+    $query = $registry->db->placehold('SELECT DISTINCT po.value 
         FROM __options po
         WHERE 
-            value LIKE "'.$okay->db->escape($keyword).'%" 
+            value LIKE "'.$registry->db->escape($keyword).'%" 
             AND feature_id=? 
         ORDER BY po.value 
         LIMIT ?
     ', $feature_id, $limit);
     
-    $okay->db->query($query);
+    $registry->db->query($query);
     
-    $options = $okay->db->results('value');
+    $options = $registry->db->results('value');
     
     $res = new stdClass;
     $res->query = $keyword;

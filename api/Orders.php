@@ -1,15 +1,17 @@
 <?php
 
 
-
-class Orders extends Okay {
+/**
+ * Class Orders
+ */
+class Orders extends Registry {
     
     public function get_order($id) {
         if (empty($id)) {
             return false;
         }
         if(is_int($id)) {
-            $where = $this->db->placehold('AND o.id=? ', intval($id));
+            $where = $this->db->placehold('AND o.id=? ', (int)$id);
         } else {
             $where = $this->db->placehold('AND  o.url=? ', $id);
         }

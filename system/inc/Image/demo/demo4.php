@@ -6,7 +6,7 @@
 
 require_once '../AcImage.php';
 
-//$filePath = 'img/visokaya.jpg';
+//$filePath = 'img/visRegistrya.jpg';
 $savePath = 'out/'.rand(0, 1000).'.jpg';
 $filePath = 'img/dlinnaya.jpg';
 

@@ -1,6 +1,6 @@
 <?php
 
-class Notify extends Okay {
+class Notify extends Registry {
     
     public function email($to, $subject, $message, $from = '', $reply_to = '') {
         $headers = "MIME-Version: 1.0\n" ;

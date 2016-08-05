@@ -3,7 +3,7 @@
 
 
 
-class PaymentModule extends Okay
+class PaymentModule extends Registry
 {
  
 	public function checkout_form()

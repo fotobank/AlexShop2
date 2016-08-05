@@ -2,7 +2,7 @@
 
 
 
-class TopvisorProjectsAdmin extends Okay {
+class TopvisorProjectsAdmin extends Registry {
     
     public function fetch() {
         if ($this->request->post('api_settings')) {

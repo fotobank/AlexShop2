@@ -3,31 +3,31 @@
 //for cron!
 //chdir('/home/path/example.com/www');
 
-$okay = new Okay();
+$registry = new Registry();
 
 //for cron! --- id языка в cron запросе
-//$okay->languages->set_lang_id($argv[1]);
-$language = $okay->languages->get_language($okay->languages->lang_id());
+//$registry->languages->set_lang_id($argv[1]);
+$language = $registry->languages->get_language($registry->languages->lang_id());
 
 $l = '';
 $lang_link = '';
 if (!empty($language)) {
     $l = '_'.$language->label;
-    $languages = $okay->languages->languages();
+    $languages = $registry->languages->languages();
     $first = reset($languages);
     if ($first->id != $language->id) {
         $lang_link = $language->label.'/';
     }
 }
 
-$sub_sitemaps = glob($okay->config->root_dir."/sitemap".$l."_*.xml");
+$sub_sitemaps = glob($registry->config->root_dir."/sitemap".$l."_*.xml");
 if(is_array($sub_sitemaps)) {
     foreach ($sub_sitemaps as $sitemap) {
         @unlink($sitemap);
     }
 }
-if (file_exists($okay->config->root_dir."/sitemap".$l.".xml")) {
-    @unlink($okay->config->root_dir."sitemap".$l.".xml");
+if (file_exists($registry->config->root_dir."/sitemap".$l.".xml")) {
+    @unlink($registry->config->root_dir."sitemap".$l.".xml");
 }
 $sitemap_index = 1;
 $url_index = 1;
@@ -37,8 +37,8 @@ file_put_contents('sitemap'.$l.'_'.$sitemap_index.'.xml', '<urlset xmlns="http:/
 
 // Главная страница
 //for cron!
-//$okay->config->root_url = 'http://example.com';
-$url = $okay->config->root_url.'/'.$lang_link;
+//$registry->config->root_url = 'http://example.com';
+$url = $registry->config->root_url.'/'.$lang_link;
 
 file_put_contents('sitemap'.$l.'_'.$sitemap_index.'.xml', "\t<url>"."\n", FILE_APPEND);
 file_put_contents('sitemap'.$l.'_'.$sitemap_index.'.xml', "\t\t<loc>$url</loc>"."\n", FILE_APPEND);
@@ -47,14 +47,14 @@ file_put_contents('sitemap'.$l.'_'.$sitemap_index.'.xml', "\t\t<priority>1.0</pr
 file_put_contents('sitemap'.$l.'_'.$sitemap_index.'.xml', "\t</url>"."\n", FILE_APPEND);
 
 // Страницы
-foreach($okay->pages->get_pages() as $p) {
+foreach($registry->pages->get_pages() as $p) {
     if($p->visible && $p->menu_id == 1 && $p->url) {
-		$url = $okay->config->root_url.'/'.$lang_link.esc($p->url);
+		$url = $registry->config->root_url.'/'.$lang_link.esc($p->url);
         $last_modify = array();
         if ($p->url == 'blog') {
-            $okay->db->query("SELECT b.last_modify FROM __blog b");
-            $last_modify = $okay->db->results('last_modify');
-            $last_modify[] = $okay->settings->lastModifyPosts;
+            $registry->db->query("SELECT b.last_modify FROM __blog b");
+            $last_modify = $registry->db->results('last_modify');
+            $last_modify[] = $registry->settings->lastModifyPosts;
         }
         $last_modify[] = $p->last_modify;
         $last_modify = max($last_modify);
@@ -76,8 +76,8 @@ foreach($okay->pages->get_pages() as $p) {
 }
 
 // Блог
-foreach($okay->blog->get_posts(array('visible'=>1)) as $p) {
-    $url = $okay->config->root_url.'/'.$lang_link.'blog/'.esc($p->url);
+foreach($registry->blog->get_posts(array('visible'=>1)) as $p) {
+    $url = $registry->config->root_url.'/'.$lang_link.'blog/'.esc($p->url);
     $last_modify = substr($p->last_modify, 0, 10);
     file_put_contents('sitemap'.$l.'_'.$sitemap_index.'.xml', "\t<url>"."\n", FILE_APPEND);
     file_put_contents('sitemap'.$l.'_'.$sitemap_index.'.xml', "\t\t<loc>$url</loc>"."\n", FILE_APPEND);
@@ -95,16 +95,16 @@ foreach($okay->blog->get_posts(array('visible'=>1)) as $p) {
 }
 
 // Категории
-foreach($okay->categories->get_categories() as $c) {
+foreach($registry->categories->get_categories() as $c) {
     if($c->visible) {
-        $url = $okay->config->root_url.'/'.$lang_link.'catalog/'.esc($c->url);
+        $url = $registry->config->root_url.'/'.$lang_link.'catalog/'.esc($c->url);
         $last_modify = array();
-        $okay->db->query("SELECT p.last_modify
+        $registry->db->query("SELECT p.last_modify
             FROM __products p
             INNER JOIN __products_categories pc ON pc.product_id = p.id AND pc.category_id in(?@)
             WHERE 1
             GROUP BY p.id", $c->children);
-        $res = $okay->db->results('last_modify');
+        $res = $registry->db->results('last_modify');
         if (!empty($res)) {
             $last_modify = $res;
         }
@@ -127,13 +127,13 @@ foreach($okay->categories->get_categories() as $c) {
 }
 
 // Бренды
-foreach($okay->brands->get_brands() as $b) {
-    $url = $okay->config->root_url.'/'.$lang_link.'brands/'.esc($b->url);
+foreach($registry->brands->get_brands() as $b) {
+    $url = $registry->config->root_url.'/'.$lang_link.'brands/'.esc($b->url);
     $last_modify = array();
-    $okay->db->query("SELECT p.last_modify
+    $registry->db->query("SELECT p.last_modify
         FROM __products p
         WHERE p.brand_id=?", $b->id);
-    $res = $okay->db->results('last_modify');
+    $res = $registry->db->results('last_modify');
     if (!empty($res)) {
         $last_modify = $res;
     }
@@ -155,9 +155,9 @@ foreach($okay->brands->get_brands() as $b) {
 }
 
 // Товары
-$okay->db->query("SELECT url, last_modify FROM __products WHERE visible=1");
-foreach($okay->db->results() as $p) {
-    $url = $okay->config->root_url.'/'.$lang_link.'products/'.esc($p->url);
+$registry->db->query("SELECT url, last_modify FROM __products WHERE visible=1");
+foreach($registry->db->results() as $p) {
+    $url = $registry->config->root_url.'/'.$lang_link.'products/'.esc($p->url);
     $last_modify = substr($p->last_modify, 0, 10);
     file_put_contents('sitemap'.$l.'_'.$sitemap_index.'.xml', "\t<url>"."\n", FILE_APPEND);
     file_put_contents('sitemap'.$l.'_'.$sitemap_index.'.xml', "\t\t<loc>$url</loc>"."\n", FILE_APPEND);
@@ -180,7 +180,7 @@ $last_modify = date("Y-m-d");
 file_put_contents('sitemap'.$l.'.xml', '<?xml version="1.0" encoding="UTF-8"?>'."\n");
 file_put_contents('sitemap'.$l.'.xml', '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n", FILE_APPEND);
 for ($i = 1; $i <= $sitemap_index; $i++) {
-    $url = $okay->config->root_url.'/sitemap'.$l.'_'.$i.'.xml';
+    $url = $registry->config->root_url.'/sitemap'.$l.'_'.$i.'.xml';
     file_put_contents('sitemap'.$l.'.xml', "\t<sitemap>"."\n", FILE_APPEND);
     file_put_contents('sitemap'.$l.'.xml', "\t\t<loc>$url</loc>"."\n", FILE_APPEND);
     file_put_contents('sitemap'.$l.'.xml', "\t\t<lastmod>$last_modify</lastmod>"."\n", FILE_APPEND);

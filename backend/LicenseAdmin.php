@@ -2,7 +2,7 @@
 
 
 
-class LicenseAdmin extends Okay {
+class LicenseAdmin extends Registry {
     
     public function fetch() {
         if($this->request->method('POST')) {

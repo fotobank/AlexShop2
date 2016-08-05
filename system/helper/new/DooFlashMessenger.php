@@ -27,7 +27,7 @@
  * SOFTWARE.
  */
 
-lass DooFlashMessenger {
+class DooFlashMessenger {
 
 	/**
 	* Namespace for session, default is dooFlashMessenger

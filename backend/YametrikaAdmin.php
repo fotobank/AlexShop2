@@ -1,8 +1,6 @@
 <?PHP
 
-
-
-class YametrikaAdmin extends Okay
+class YametrikaAdmin extends Registry
 {
  
   public function fetch()

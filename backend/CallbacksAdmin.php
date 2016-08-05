@@ -2,7 +2,7 @@
 
 
 
-class CallbacksAdmin extends Okay {
+class CallbacksAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

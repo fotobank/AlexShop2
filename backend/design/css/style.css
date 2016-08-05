@@ -17,7 +17,7 @@ div.variant_not_in_stock {
 .clearfix:after {
     clear: both;
     content: " ";
-    height: 0px;
+    height: 0;
     display: block;
 }
 
@@ -153,8 +153,8 @@ div.variant_not_in_stock {
 /* Добавление категории */
 #product_categories span.add { 
     display: inline-block;
-    padding: 0px 0 3px 28px;
-    background: url(../images/plus.png) no-repeat 0px 3px;
+    padding: 0 0 3px 28px;
+    background: url(../images/plus.png) no-repeat 0 3px;
     font-size: 15px;
 }
 #product_categories .add.f_right {
@@ -163,8 +163,8 @@ div.variant_not_in_stock {
 /* Удаление категории */
 #product_categories span.delete {
     display: inline-block;
-    background: url(../images/cross-circle-frame.png) no-repeat 0px 3px;
-    padding: 0px 0 3px 26px;
+    background: url(../images/cross-circle-frame.png) no-repeat 0 3px;
+    padding: 0 0 3px 26px;
 }
 
 /* Купоны */
@@ -238,7 +238,7 @@ div.variant_not_in_stock {
     height: 26px;
     margin-left: 233px;
     width: 22px;
-    background: url(../images/cross-circle-frame.png) no-repeat 0px 3px;
+    background: url(../images/cross-circle-frame.png) no-repeat 0 3px;
 }
 #variants_block li.variant_sku { width: 105px; }
 #variants_block li.variant_sku input { width: 80px; }
@@ -265,9 +265,8 @@ div.variant_not_in_stock {
     margin-top: 5px;
     display: block;
     height: 24px;
-    background-repeat: no-repeat;
     padding-left: 28px;
-    background-image: url(../images/plus.png);
+    background: url(../images/plus.png) no-repeat;
 }
 
 
@@ -281,13 +280,13 @@ div.variant_not_in_stock {
 
 .button_save {
     float: right;
-    margin-top: 0px;
+    margin-top: 0;
     margin-right: 15px;
 }
 
 .button_delete {
     float: right;
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 
@@ -323,7 +322,7 @@ div.variant_not_in_stock {
 #product .block li:after {
     clear: left;
     content: " ";
-    height: 0px;
+    height: 0;
     display: block;
 }    
 #product .block label.property {
@@ -359,7 +358,7 @@ div.variant_not_in_stock {
 #product .block li input.page_url {
     width: 195px;
 }
-#product .block li input.okay_small_inp {
+#product .block li input.order_small_inp {
     width: 137px;
 }
 #product .block div.page_url {
@@ -458,7 +457,7 @@ div.variant_not_in_stock {
 #product div.images span.add_image_url {
     background-image: url(../images/world_link.png);
     margin-left: 5px;
-    background-position: 0px 3px;
+    background-position: 0 3px;
     font-size: 14px;
     margin-bottom: 15px;
 }
@@ -795,13 +794,12 @@ span.order_label_big
 {
     float:left; 
     display: block;
-    padding:0px;
+    padding: 0;
     width:32px;
     height:32px;
     margin-right:5px;
     margin-top: 5px;
-    background-color: #e0e0e0;
-    background-image:url(../images/label_big.png);
+    background: #e0e0e0 url(../images/label_big.png);
     cursor: pointer;
 }
 #labels {
@@ -814,7 +812,7 @@ span.order_label
 {
     float:right; 
     display: block;
-    padding:0px;
+    padding: 0;
     width:20px;
     height:20px;
     margin-right:3px;
@@ -875,7 +873,7 @@ span.order_label
 /* Хэлпер для мультисорта */
 
 .sort-multi-helper{
-    border-top: 1px solid #D0D0D0
+    border-top: 1px solid #D0D0D0;
     border: 30px solid red;
 }
 
@@ -982,7 +980,7 @@ textarea.editor_small{
 }
 #currencies_block ul#header li {
     font-size: 13px;
-    padding-left: 0px;
+    padding-left: 0;
     margin-left: 1px;
 }
 #currencies_block ul li {
@@ -994,7 +992,7 @@ textarea.editor_small{
 #currencies_block ul li input {
     font-size: 14px;
     color: #636363;
-    margin-top: 0px;
+    margin-top: 0;
     padding-top: 2px;
     margin-left: 2px;
 }
@@ -1401,7 +1399,7 @@ ul.themes li img.preview
 h1.locked{
     background-image: url(../images/lock.png);
     background-repeat: no-repeat;
-    background-position: 0px 3px;
+    background-position: 0 3px;
     padding-left: 25px;
 }
 
@@ -1480,7 +1478,7 @@ div.upload_image input{
     display: block;
     margin-bottom: 5px;
 }
-.banners_group #column_left textarea.okay_inp {
+.banners_group #column_left textarea.order_inp {
     width: 100%;
 }
 /* Промо изображения */
@@ -1542,11 +1540,11 @@ ul.seo_notice {
 ul.seo_notice li {
     height: 26px;
 }
-#okay_logo {
-    padding: 14px 0px 7px;
+#order_logo {
+    padding: 14px 0 7px;
     text-align: center;
 }
-#okay_logo img {
+#order_logo img {
     max-width: 100%;
 }
 .license_info {
@@ -1673,7 +1671,7 @@ ul.seo_notice li {
 .date_filter .form_group {
     margin-bottom: 6px;
 }
-.date_filter  .okay_inp {
+.date_filter  .order_inp {
     height: 24px;
     width: 105px;
 }
@@ -1855,7 +1853,7 @@ input:checked + label.featured_icon:before {
 }
 .related_products a.delete {
     width: 22px;
-    background: url(../images/cross-circle-frame.png) no-repeat 0px 0px;
+    background: url(../images/cross-circle-frame.png) no-repeat 0 0;
 }
 .grey_translit{
     background: #cccccc;
@@ -1968,7 +1966,7 @@ input[type="checkbox"] {
 #topvisor_key_form {
     margin: 0 0 20px 0;
 }
-#topvisor_key_form .okay_inp {
+#topvisor_key_form .order_inp {
     height: 33px;
     margin-right: 5px;
 }
@@ -2024,9 +2022,9 @@ input[type="checkbox"] {
 #apometr  .ui-datepicker-calendar td:hover {
     background-color: #e9f5fe;
     border-color: #00a651;
-    -moz-box-shadow: 0px 0px 0px 1px rgba(0, 166, 81, 1) ;
-    -webkit-box-shadow: 0px 0px 0px 1px rgba(0, 166, 81, 1);
-    box-shadow: 0px 0px 0px 1px rgba(0, 166, 81, 1);
+    -moz-box-shadow: 0 0 0 1px rgba(0, 166, 81, 1) ;
+    -webkit-box-shadow: 0 0 0 1px rgba(0, 166, 81, 1);
+    box-shadow: 0 0 0 1px rgba(0, 166, 81, 1);
 }
 
 #apometr  .ui-datepicker-calendar .ui-state-default {
@@ -2102,7 +2100,7 @@ input[type="checkbox"] {
 #apometr .ui-datepicker-prev,
 #apometr .ui-datepicker-prev-hover {
     background-color: transparent;
-    left: 0px;
+    left: 0;
     top: 6px;
     background-position: -3px -932px;
 }
@@ -2133,7 +2131,7 @@ input[type="checkbox"] {
     margin-left: -118px; 
 }
 #topvisor_projects_form  .row {
-    padding: 11px 0px;
+    padding: 11px 0;
     border-top: none;
     border-bottom: 1px solid #56b9ff;
 }
@@ -2145,7 +2143,7 @@ input[type="checkbox"] {
 }
 #topvisor_projects_form .projects_head {
     background-color: #c4e6ff;
-    padding: 12px 0px;
+    padding: 12px 0;
     border: none;
 } 
 #topvisor_projects_form  .query_position {
@@ -2202,7 +2200,7 @@ input[type="checkbox"] {
     margin-right: 23px;
     margin-top: 3px;
 }
-#topvisor_projects_form .okay_inp {
+#topvisor_projects_form .order_inp {
     width: 342px;
     height:29px;
     border: 1px solid #56b9ff;
@@ -2343,7 +2341,7 @@ input[type="checkbox"] {
 #topvisor_group_form .button_blue {
     margin: 15px 15px 15px 32px;
 }
-#topvisor_group_form  .okay_inp {
+#topvisor_group_form  .order_inp {
     height: 28px;
     border: 1px solid #56b9ff;
     border-radius: 2px;
@@ -2365,7 +2363,7 @@ input[type="checkbox"] {
     display: inline-block;
     width: 14px;
     height: 16px;
-    margin: 0px 18px 0px 5px;
+    margin: 0 18px 0 5px;
     background: url(../images/sprite_admin2.png)no-repeat -10px -462px;
     vertical-align: top;
 }
@@ -2445,7 +2443,7 @@ input[type="checkbox"] {
     width: 140px;
     margin-right: -142px;
     z-index: 10;
-    top: 0px;
+    top: 0;
     right: -8px;
     text-align: left;
     line-height: normal;
@@ -2489,13 +2487,13 @@ input[type="checkbox"] {
 }
 .diagram_row td.query_position .topvisor_abs {
 	position: absolute;
-	top: 0px;
+	top: 0;
 	right: 5px;
 	font-weight: 400;
 	font-size: 10px;
 }
 .d_up  {
-	background-position: 0px -1008px;
+	background-position: 0 -1008px;
 }
 .d_equal  {
 	background-position: -78px -1009px;

@@ -2,7 +2,7 @@
 
 
 
-class BannersImagesAdmin extends Okay {
+class BannersImagesAdmin extends Registry {
     
     public function fetch() {
         $filter = array();

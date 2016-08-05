@@ -2,7 +2,7 @@
 
 
 
-class ManagersAdmin extends Okay {
+class ManagersAdmin extends Registry {
     
     public function fetch() {
         if($this->request->method('post')) {

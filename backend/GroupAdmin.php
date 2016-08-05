@@ -2,7 +2,7 @@
 
 
 
-class GroupAdmin extends Okay {
+class GroupAdmin extends Registry {
     
     public function fetch() {
         $group = new stdClass;

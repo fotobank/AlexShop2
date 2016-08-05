@@ -2,7 +2,7 @@
 
 
 
-class PostAdmin extends Okay {
+class PostAdmin extends Registry {
     
     public function fetch() {
         $related_products = array();

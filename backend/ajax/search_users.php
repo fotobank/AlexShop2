@@ -1,24 +1,24 @@
 <?php
 
-    if(!$okay->managers->access('orders') && !$okay->managers->access('users')) {
+    if(!$registry->managers->access('orders') && !$registry->managers->access('users')) {
         exit();
     }
     $limit = 100;
     
-    $keyword = $okay->request->get('query', 'string');
+    $keyword = $registry->request->get('query', 'string');
     
-    $okay->db->query('SELECT 
+    $registry->db->query('SELECT 
             u.id, 
             u.name, 
             u.email 
         FROM __users u 
         WHERE 
-            u.name LIKE "%'.$okay->db->escape($keyword).'%" 
-            OR u.email LIKE "%'.$okay->db->escape($keyword).'%"
+            u.name LIKE "%'.$registry->db->escape($keyword).'%" 
+            OR u.email LIKE "%'.$registry->db->escape($keyword).'%"
         ORDER BY u.name 
         LIMIT ?
     ', $limit);
-    $users = $okay->db->results();
+    $users = $registry->db->results();
     
     $suggestions = array();
     foreach($users as $user) {

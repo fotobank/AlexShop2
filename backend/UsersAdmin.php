@@ -1,8 +1,6 @@
 <?php
 
-
-
-class UsersAdmin extends Okay {
+class UsersAdmin extends Registry {
     
     public function fetch() {
         if($this->request->method('post')) {
@@ -31,7 +29,7 @@ class UsersAdmin extends Okay {
                 }
             }
         }
-        
+
         foreach($this->users->get_groups() as $g) {
             $groups[$g->id] = $g;
         }

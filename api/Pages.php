@@ -2,7 +2,7 @@
 
 
 
-class Pages extends Okay {
+class Pages extends Registry {
     
     public function get_page($id) {
         if(gettype($id) == 'string') {

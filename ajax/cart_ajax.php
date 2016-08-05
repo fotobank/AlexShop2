@@ -5,89 +5,89 @@ include __DIR__ . '/../system/configs/define/config.php';
 include SYS_DIR . 'core' . DS . 'boot.php';
 
 define('IS_CLIENT', true);
-$okay = new Okay();
-if (isset($_SESSION['user_id']) && $user = $okay->users->get_user((int)$_SESSION['user_id'])){
-    $okay->design->assign('user', $user);
+$registry = new Registry();
+if (isset($_SESSION['user_id']) && $user = $registry->users->get_user((int)$_SESSION['user_id'])){
+    $registry->design->assign('user', $user);
 }
 
-$action = $okay->request->get('action');
-$variant_id = $okay->request->get('variant_id', 'integer');
-$amount = $okay->request->get('amount', 'integer');
+$action = $registry->request->get('action');
+$variant_id = $registry->request->get('variant_id', 'integer');
+$amount = $registry->request->get('amount', 'integer');
 
 switch ($action) {
     case 'update_citem':
-        $okay->cart->update_item($variant_id, $amount);
+        $registry->cart->update_item($variant_id, $amount);
         break;
     case 'remove_citem':
-        $okay->cart->delete_item($variant_id);
+        $registry->cart->delete_item($variant_id);
         break;
     case 'add_citem':
-        $okay->cart->add_item($variant_id, $amount);
+        $registry->cart->add_item($variant_id, $amount);
         break;
     default:
         break;
 }
 
-$language = $okay->languages->languages(['id' => $okay->languages->lang_id()]);
-$okay->design->assign('language', $language);
+$language = $registry->languages->languages(['id' => $registry->languages->lang_id()]);
+$registry->design->assign('language', $language);
 $lang_link = '';
-$first_lang = $okay->languages->languages();
+$first_lang = $registry->languages->languages();
 if (!empty($first_lang)){
     $first_lang = reset($first_lang);
     if ($first_lang->id !== $language->id){
         $lang_link = $language->label . '/';
     }
 }
-$okay->design->assign('lang_link', $lang_link);
-$okay->design->assign('lang', $okay->translations);
+$registry->design->assign('lang_link', $lang_link);
+$registry->design->assign('lang', $registry->translations);
 
-$cart = $okay->cart->get_cart();
+$cart = $registry->cart->get_cart();
 if (count($cart->purchases) > 0){
-    $coupon_code = trim($okay->request->get('coupon_code', 'string'));
+    $coupon_code = trim($registry->request->get('coupon_code', 'string'));
     if (empty($coupon_code)){
-        $okay->cart->apply_coupon('');
+        $registry->cart->apply_coupon('');
     } else {
-        $coupon = $okay->coupons->get_coupon((string)$coupon_code);
+        $coupon = $registry->coupons->get_coupon((string)$coupon_code);
         if (empty($coupon) || !$coupon->valid){
-            $okay->cart->apply_coupon($coupon_code);
-            $okay->design->assign('coupon_error', 'invalid');
+            $registry->cart->apply_coupon($coupon_code);
+            $registry->design->assign('coupon_error', 'invalid');
         } else {
-            $okay->cart->apply_coupon($coupon_code);
+            $registry->cart->apply_coupon($coupon_code);
         }
     }
 
-    $cart = $okay->cart->get_cart();
-    $okay->design->assign('cart', $cart);
-    $currencies = $okay->money->get_currencies(['enabled' => 1]);
+    $cart = $registry->cart->get_cart();
+    $registry->design->assign('cart', $cart);
+    $currencies = $registry->money->get_currencies(['enabled' => 1]);
     if (isset($_SESSION['currency_id'])){
-        $currency = $okay->money->get_currency($_SESSION['currency_id']);
+        $currency = $registry->money->get_currency($_SESSION['currency_id']);
     } else {
         $currency = reset($currencies);
     }
-    $okay->design->assign('currency', $currency);
+    $registry->design->assign('currency', $currency);
 
-    $deliveries = $okay->delivery->get_deliveries(['enabled' => 1]);
-    $okay->design->assign('deliveries', $deliveries);
+    $deliveries = $registry->delivery->get_deliveries(['enabled' => 1]);
+    $registry->design->assign('deliveries', $deliveries);
     foreach ($deliveries as $delivery){
-        $delivery->payment_methods = $okay->payment->get_payment_methods(['delivery_id' => $delivery->id, 'enabled' => 1]);
+        $delivery->payment_methods = $registry->payment->get_payment_methods(['delivery_id' => $delivery->id, 'enabled' => 1]);
     }
-    $okay->design->assign('all_currencies', $okay->money->get_currencies());
-    if ($okay->coupons->count_coupons(['valid' => 1]) > 0){
-        $okay->design->assign('coupon_request', true);
+    $registry->design->assign('all_currencies', $registry->money->get_currencies());
+    if ($registry->coupons->count_coupons(['valid' => 1]) > 0){
+        $registry->design->assign('coupon_request', true);
     }
     /** @var array $result */
     $result['result'] = 1;
-    $result['cart_informer'] = $okay->design->fetch('cart_informer.tpl');
-    $result['cart_purchases'] = $okay->design->fetch('cart_purchases.tpl');
-    $result['cart_deliveries'] = $okay->design->fetch('cart_deliveries.tpl');
+    $result['cart_informer'] = $registry->design->fetch('cart_informer.tpl');
+    $result['cart_purchases'] = $registry->design->fetch('cart_purchases.tpl');
+    $result['cart_deliveries'] = $registry->design->fetch('cart_deliveries.tpl');
     $result['currency_sign'] = $currency->sign;
-    $result['total_price'] = $okay->money->convert($cart->total_price, $currency->id);
+    $result['total_price'] = $registry->money->convert($cart->total_price, $currency->id);
     $result['total_products'] = $cart->total_products;
 } else {
     /** @var array $result */
     $result['result'] = 0;
-    $result['cart_informer'] = $okay->design->fetch('cart_informer.tpl');
-    $result['content'] = $okay->design->fetch('cart.tpl');
+    $result['cart_informer'] = $registry->design->fetch('cart_informer.tpl');
+    $result['content'] = $registry->design->fetch('cart.tpl');
 }
 header('Content-type: application/json; charset=UTF-8');
 header('Cache-Control: must-revalidate');

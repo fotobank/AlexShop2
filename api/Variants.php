@@ -2,7 +2,7 @@
 
 
 
-class Variants extends Okay {
+class Variants extends Registry {
     
     public function get_variants($filter = array()) {
         $product_id_filter = '';

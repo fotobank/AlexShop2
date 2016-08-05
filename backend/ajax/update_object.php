@@ -1,143 +1,144 @@
 <?php
 
 // Проверка сессии для защиты от xss
-if(!$okay->request->check_session()) {
+if(!$registry->request->check_session()) {
     trigger_error('Session expired', E_USER_WARNING);
     exit();
 }
 
-$id = intval($okay->request->post('id'));
-$object = $okay->request->post('object');
-$values = $okay->request->post('values');
+$id = (int)$registry->request->post('id');
+$object = $registry->request->post('object');
+$values = $registry->request->post('values');
+$result = null;
 
 switch ($object) {
     case 'product':
-        if($okay->managers->access('products')) {
-            $result = $okay->products->update_product($id, $values);
+        if($registry->managers->access('products')) {
+            $result = $registry->products->update_product($id, $values);
         }
         break;
     case 'variant':
-        if($okay->managers->access('products')) {
-            $result = $okay->variants->update_variant($id, $values);
+        if($registry->managers->access('products')) {
+            $result = $registry->variants->update_variant($id, $values);
         }
         break;
     case 'category':
-        if($okay->managers->access('categories')) {
-            $result = $okay->categories->update_category($id, $values);
+        if($registry->managers->access('categories')) {
+            $result = $registry->categories->update_category($id, $values);
         }
         break;
     case 'brands':
-        if($okay->managers->access('brands')) {
-            $result = $okay->brands->update_brand($id, $values);
+        if($registry->managers->access('brands')) {
+            $result = $registry->brands->update_brand($id, $values);
         }
         break;
     case 'feature':
-        if($okay->managers->access('features')) {
-            $result = $okay->features->update_feature($id, $values);
+        if($registry->managers->access('features')) {
+            $result = $registry->features->update_feature($id, $values);
         }
         break;
     case 'page':
-        if($okay->managers->access('pages')) {
-            $result = $okay->pages->update_page($id, $values);
+        if($registry->managers->access('pages')) {
+            $result = $registry->pages->update_page($id, $values);
         }
         break;
     case 'blog':
-        if($okay->managers->access('blog')) {
-            $result = $okay->blog->update_post($id, $values);
+        if($registry->managers->access('blog')) {
+            $result = $registry->blog->update_post($id, $values);
         }
         break;
     case 'delivery':
-        if($okay->managers->access('delivery')) {
-            $result = $okay->delivery->update_delivery($id, $values);
+        if($registry->managers->access('delivery')) {
+            $result = $registry->delivery->update_delivery($id, $values);
         }
         break;
     case 'payment':
-        if($okay->managers->access('payment')) {
-            $result = $okay->payment->update_payment_method($id, $values);
+        if($registry->managers->access('payment')) {
+            $result = $registry->payment->update_payment_method($id, $values);
         }
         break;
     case 'currency':
-        if($okay->managers->access('currency')) {
-            $result = $okay->money->update_currency($id, $values);
+        if($registry->managers->access('currency')) {
+            $result = $registry->money->update_currency($id, $values);
         }
         break;
     case 'comment':
-        if($okay->managers->access('comments')) {
-            $result = $okay->comments->update_comment($id, $values);
+        if($registry->managers->access('comments')) {
+            $result = $registry->comments->update_comment($id, $values);
         }
         break;
     case 'user':
-        if($okay->managers->access('users')) {
-            $result = $okay->users->update_user($id, $values);
+        if($registry->managers->access('users')) {
+            $result = $registry->users->update_user($id, $values);
         }
         break;
     case 'label':
-        if($okay->managers->access('labels')) {
-            $result = $okay->orders->update_label($id, $values);
+        if($registry->managers->access('labels')) {
+            $result = $registry->orders->update_label($id, $values);
         }
         break;
     case 'language':
-        if($okay->managers->access('languages')) {
-            $result = $okay->languages->update_language($id, $values);
+        if($registry->managers->access('languages')) {
+            $result = $registry->languages->update_language($id, $values);
         }
         break;
     case 'banner':
-        if($okay->managers->access('banners')) {
-            $result = $okay->banners->update_banner($id, $values);
+        if($registry->managers->access('banners')) {
+            $result = $registry->banners->update_banner($id, $values);
         }
         break;
 	case 'banners_image':
-        if($okay->managers->access('banners')) {
-            $result = $okay->banners->update_banners_image($id, $values);
+        if($registry->managers->access('banners')) {
+            $result = $registry->banners->update_banners_image($id, $values);
         }
         break;
     case 'callback':
-        if($okay->managers->access('callbacks')) {
-            $result = $okay->callbacks->update_callback($id, $values);
+        if($registry->managers->access('callbacks')) {
+            $result = $registry->callbacks->update_callback($id, $values);
         }
         break;
     case 'category_yandex':
-    	if($okay->managers->access('products')) {
-            $category = $okay->categories->get_category($id);
-            $q = $okay->db->placehold("select v.id from __categories c"
-                ." right join __products_categories pc on c.id=pc.category_id"
-                ." right join __variants v on v.product_id=pc.product_id"
-                ." where c.id in(?@)", $category->children);
-            $okay->db->query($q);
-            $vids = $okay->db->results('id');
+    	if($registry->managers->access('products')) {
+            $category = $registry->categories->get_category($id);
+            $q = $registry->db->placehold('select v.id from __categories c'
+                . ' right join __products_categories pc on c.id=pc.category_id'
+                . ' right join __variants v on v.product_id=pc.product_id'
+                . ' where c.id in(?@)', $category->children);
+            $registry->db->query($q);
+            $vids = $registry->db->results('id');
             if (count($vids) == 0) {
                 $result = -1;
                 break;
             }
-            $q = $okay->db->placehold("update __variants set yandex=? where id in(?@)", (int)$values['to_yandex'], $vids);
-            $result = (bool)$okay->db->query($q);
+            $q = $registry->db->placehold('update __variants set yandex=? where id in(?@)', (int)$values['to_yandex'], $vids);
+            $result = (bool)$registry->db->query($q);
     	}
         break;
     case 'brand_yandex':
-    	if($okay->managers->access('products')) {
-            $q = $okay->db->placehold("select v.id from __products p"
-                ." left join __variants v on v.product_id=p.id"
-                ." where p.brand_id in(?@)", array($id));
-            $okay->db->query($q);
-            $vids = $okay->db->results('id');
+    	if($registry->managers->access('products')) {
+            $q = $registry->db->placehold('select v.id from __products p'
+                . ' left join __variants v on v.product_id=p.id'
+                . ' where p.brand_id in(?@)', array($id));
+            $registry->db->query($q);
+            $vids = $registry->db->results('id');
             if (count($vids) == 0) {
                 $result = -1;
                 break;
             }
-            $q = $okay->db->placehold("update __variants set yandex=? where id in(?@)", (int)$values['to_yandex'], $vids);
-            $result = (bool)$okay->db->query($q);
+            $q = $registry->db->placehold('update __variants set yandex=? where id in(?@)', (int)$values['to_yandex'], $vids);
+            $result = (bool)$registry->db->query($q);
     	}
         break;
     case 'feedback':
-        if($okay->managers->access('feedbacks')) {
-            $result = $okay->feedbacks->update_feedback($id, $values);
+        if($registry->managers->access('feedbacks')) {
+            $result = $registry->feedbacks->update_feedback($id, $values);
         }
         break;
 }
 
-header("Content-type: application/json; charset=UTF-8");
-header("Cache-Control: must-revalidate");
-header("Pragma: no-cache");
-header("Expires: -1");
+header('Content-type: application/json; charset=UTF-8');
+header('Cache-Control: must-revalidate');
+header('Pragma: no-cache');
+header('Expires: -1');
 $json = json_encode($result);
 print $json;

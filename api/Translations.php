@@ -2,7 +2,7 @@
 
 
 
-class Translations extends Okay {
+class Translations extends Registry {
     
     private $vars = array();
 

@@ -9,7 +9,7 @@ function get_tag_val($xml, $name)
 // Работаем в корневой директории
 chdir ('../../');
 
-$okay = new Okay();
+$registry = new Registry();
 
 
 $xml_post = base64_decode(str_replace(' ', '+', $_REQUEST['xml']));
@@ -27,18 +27,18 @@ $err = '';
 ////////////////////////////////////////////////
 // Выберем заказ из базы
 ////////////////////////////////////////////////
-$order = $okay->orders->get_order(intval($order_id));
+$order = $registry->orders->get_order(intval($order_id));
 if(!empty($order))
 { 
   ////////////////////////////////////////////////
   // Выбираем из базы соответствующий метод оплаты
   ////////////////////////////////////////////////
-  $method = $okay->payment->get_payment_method(intval($order->payment_method_id));
+  $method = $registry->payment->get_payment_method(intval($order->payment_method_id));
   if(!empty($method))
   {
   	
     $settings = unserialize($method->settings);
-    $payment_currency = $okay->money->get_currency(intval($method->currency_id));
+    $payment_currency = $registry->money->get_currency(intval($method->currency_id));
     
     // Проверяем контрольную подпись
     $mysignature = md5($settings['pay2pay_hidden'].$xml_post.$settings['pay2pay_hidden']);
@@ -48,7 +48,7 @@ if(!empty($order))
       // Нельзя оплатить уже оплаченный заказ  
       if (!$order->paid)
       {
-        if($amount >= round($okay->money->convert($order->total_price, $method->currency_id, false), 2))
+        if($amount >= round($registry->money->convert($order->total_price, $method->currency_id, false), 2))
         {
           $currency = $payment_currency->code;
           if ($currency == 'RUR')
@@ -58,14 +58,14 @@ if(!empty($order))
             if($status == 'success')
             {
               // Установим статус оплачен
-              $okay->orders->update_order(intval($order->id), array('paid'=>1));
+              $registry->orders->update_order(intval($order->id), array('paid'=>1));
               
               // Отправим уведомление на email
-              $okay->notify->email_order_user(intval($order->id));
-              $okay->notify->email_order_admin(intval($order->id));
+              $registry->notify->email_order_user(intval($order->id));
+              $registry->notify->email_order_admin(intval($order->id));
               
               // Спишем товары  
-              $okay->orders->close(intval($order->id));
+              $registry->orders->close(intval($order->id));
             }
           }
           else

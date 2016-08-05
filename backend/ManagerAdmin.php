@@ -2,7 +2,7 @@
 
 
 
-class ManagerAdmin extends Okay {
+class ManagerAdmin extends Registry {
     
     public function fetch() {
         $manager = new stdClass();

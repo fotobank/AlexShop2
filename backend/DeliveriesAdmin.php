@@ -2,7 +2,7 @@
 
 
 
-class DeliveriesAdmin extends Okay {
+class DeliveriesAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

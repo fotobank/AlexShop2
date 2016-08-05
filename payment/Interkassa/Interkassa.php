@@ -2,7 +2,7 @@
 
 
 
-class Interkassa extends Okay
+class Interkassa extends Registry
 {	
 	public function checkout_form($order_id, $button_text = null)
 	{

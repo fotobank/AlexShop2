@@ -1,6 +1,6 @@
 <?php
 
-class ImportAjax extends Okay {
+class ImportAjax extends Registry {
 
     // Соответствие полей в базе и имён колонок в файле
     private $columns_names = array(
@@ -32,8 +32,7 @@ class ImportAjax extends Okay {
             return false;
         }
         session_write_close();
-        unset($_SESSION['lang_id']);
-        unset($_SESSION['admin_lang_id']);
+        unset($_SESSION['lang_id'], $_SESSION['admin_lang_id']);
 
         // Для корректной работы установим локаль UTF-8
         setlocale(LC_ALL, 'ru_RU.UTF-8');

@@ -2,7 +2,7 @@
 
 
 
-class MultiImportAdmin extends Okay {
+class MultiImportAdmin extends Registry {
 
     public $import_files_dir = 'backend/files/import/';
     public $import_file = 'multi_import.csv';

@@ -2,7 +2,7 @@
 
 
 
-class BannersImageAdmin extends Okay {
+class BannersImageAdmin extends Registry {
     
     private	$allowed_image_extentions = array('png', 'gif', 'jpg', 'jpeg', 'ico');
     

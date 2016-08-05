@@ -40,5 +40,5 @@
 </table>
 
 <div style="float: left;width: 800px; border: 2px dashed #41ade2; text-align: center;margin-top: 10px;padding: 5px">
-    Приятной работы с <a href='http://okay-cms.com'>Okay</a>!
+    Приятной работы с <a href='http://alexshop-sms.com'>AlexShop CMS</a>!
 </div>

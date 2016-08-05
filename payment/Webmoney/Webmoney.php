@@ -2,7 +2,7 @@
 
 
 
-class Webmoney extends Okay
+class Webmoney extends Registry
 {	
 	public function checkout_form($order_id, $button_text = null)
 	{

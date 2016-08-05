@@ -1,9 +1,9 @@
 <script>
 	/* Глобальный обьект */
 	/* все глобальные переменные добавляем в оъект и работаем с ним!!! */
-	var okay = {literal}{}{/literal};
+	var order = {literal}{}{/literal};
 	{* Предзаказ *}
-	okay.is_preorder = {$settings->is_preorder};
+    order.is_preorder = {$settings->is_preorder};
 	{* Ошибка при отправке комментария в посте *}
 	{if $smarty.get.module == 'BlogView' && $error}
 		{* Переход по якорю к форме *}

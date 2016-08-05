@@ -2,7 +2,7 @@
 
 
 
-class CategoryStatsAdmin extends Okay {
+class CategoryStatsAdmin extends Registry {
     
     public $total_price;
     public $total_amount;

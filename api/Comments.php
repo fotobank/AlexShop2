@@ -2,7 +2,7 @@
 
 
 
-class Comments extends Okay {
+class Comments extends Registry {
     
     public function get_comment($id) {
         if (empty($id)) {

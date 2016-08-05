@@ -84,7 +84,7 @@
             }
         </style>
         <div id="system_logo">
-            <img src="design/images/system_logo.png" alt="OkayCMS" />
+            <img src="design/images/system_logo.png" alt="AlexShop CMS" />
         </div>
         {if !$manager}
         <h2 class="heading">ВХОД В СИСТЕМУ</h2>

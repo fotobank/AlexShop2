@@ -1,6 +1,6 @@
 <?php
 
-class Brands extends Okay {
+class Brands extends Registry {
     
     public function get_brands($filter = []) {
         $category_id_filter = '';

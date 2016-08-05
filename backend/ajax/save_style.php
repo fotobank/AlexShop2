@@ -1,24 +1,24 @@
 <?php
 
-if(!$okay->managers->access('design')) {
+if(!$registry->managers->access('design')) {
     exit();
 }
 
 // Проверка сессии для защиты от xss
-if(!$okay->request->check_session()) {
+if(!$registry->request->check_session()) {
     trigger_error('Session expired', E_USER_WARNING);
     exit();
 }
-$content = $okay->request->post('content');
-$style = $okay->request->post('style');
-$theme = $okay->request->post('theme', 'string');
+$content = $registry->request->post('content');
+$style = $registry->request->post('style');
+$theme = $registry->request->post('theme', 'string');
 
 if(pathinfo($style, PATHINFO_EXTENSION) != 'css') {
     exit();
 }
 
-$file = $okay->config->root_dir.'design/'.$theme.'/css/'.$style;
-if(is_file($file) && is_writable($file) && !is_file($okay->config->root_dir.'design/'.$theme.'/locked')) {
+$file = $registry->config->root_dir.'design/'.$theme.'/css/'.$style;
+if(is_file($file) && is_writable($file) && !is_file($registry->config->root_dir.'design/'.$theme.'/locked')) {
     file_put_contents($file, $content);
 }
 

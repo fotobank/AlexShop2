@@ -2,7 +2,7 @@
 
 
 
-class ReportStat extends Okay {
+class ReportStat extends Registry {
     
     public function get_report_purchases($filter = array()) {
         // По умолчанию

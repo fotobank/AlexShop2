@@ -83,7 +83,7 @@
         </div>
         <div id="footer">
             <span>&copy; 2016</span>
-            <a href='http://okay-cms.com'>Okay {$config->version}</a>
+            <a href='http://alexshop-sms.com'>AlexShop SMS {$config->version}</a>
             <span>Вы вошли как {$manager->login}.</span>
             <a href='{$config->root_url}?logout' id="logout">Выход</a>
         </div>

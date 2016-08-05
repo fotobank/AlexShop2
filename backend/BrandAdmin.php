@@ -2,7 +2,7 @@
 
 
 
-class BrandAdmin extends Okay {
+class BrandAdmin extends Registry {
     
     public function fetch() {
         $brand = new stdClass;

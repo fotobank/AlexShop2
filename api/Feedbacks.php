@@ -2,7 +2,7 @@
 
 
 
-class Feedbacks extends Okay {
+class Feedbacks extends Registry {
     
     public function get_feedback($id) {
         if (empty($id)) {

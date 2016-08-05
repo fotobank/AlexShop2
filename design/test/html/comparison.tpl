@@ -16,7 +16,7 @@
 					<div class="fn-product fn-resize border-b-1-primary show-container">
 						{* Показать скрыть одинаковые характеристики *}
 						{if $comparison->products|count > 1}
-							<ul class="fn-show okaycms nav nav-tabs">
+							<ul class="fn-show alexshopcms nav nav-tabs">
 								<li class="nav-item">
 									<a href="#show_all" class="nav-link active" data-language="{$translate_id['comparison_all']}">{$lang->comparison_all}</a>
 								</li>
@@ -40,7 +40,7 @@
 					{/if}
 				</div>
 			</div>
-			<div class="col-lg-9 row fn-comparison_products okaycms" data-products="3">
+			<div class="col-lg-9 row fn-comparison_products alexshopcms" data-products="3">
 				{foreach $comparison->products as $id=>$product}
 					<div class="col-lg-4 p-a-0">
 						{include file="tiny_products.tpl"}

@@ -2,7 +2,7 @@
 
 
 
-class SubscribeMailingAdmin extends Okay {
+class SubscribeMailingAdmin extends Registry {
     
     private $export_files_dir = 'backend/files/export_users/';
     

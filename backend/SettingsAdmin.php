@@ -2,7 +2,7 @@
 
 
 
-class SettingsAdmin extends Okay {
+class SettingsAdmin extends Registry {
     
     private $allowed_image_extentions = array('png', 'gif', 'jpg', 'jpeg', 'ico');
     public $passwd_file_1c = "backend/cml/.passwd";

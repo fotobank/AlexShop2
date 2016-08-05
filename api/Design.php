@@ -1,10 +1,9 @@
 <?php
 
 use core\Alex;
-use proxy\Config;
 
 
-class Design extends Okay {
+class Design extends Registry {
 
     /**
      * @var Smarty() smarty

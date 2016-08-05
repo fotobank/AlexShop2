@@ -3,7 +3,7 @@
 
 
 ########################################
-class ReportStatsAdmin extends Okay {
+class ReportStatsAdmin extends Registry {
     
     public function fetch() {
         $filter = array();

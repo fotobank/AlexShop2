@@ -2,7 +2,7 @@
 
 
 
-class Subscribes extends Okay {
+class Subscribes extends Registry {
     
     public function get_subscribes($filter = array()) {
         $limit = 100;

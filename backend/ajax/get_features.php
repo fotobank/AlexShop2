@@ -1,21 +1,21 @@
 <?php
 
-    if(!$okay->managers->access('products')) {
+    if(!$registry->managers->access('products')) {
         exit();
     }
     
-    $category_id = $okay->request->get('category_id', 'integer');
-    $product_id = $okay->request->get('product_id', 'integer');
+    $category_id = $registry->request->get('category_id', 'integer');
+    $product_id = $registry->request->get('product_id', 'integer');
     
     if(!empty($category_id)) {
-        $features = $okay->features->get_features(array('category_id'=>$category_id));
+        $features = $registry->features->get_features(array('category_id'=>$category_id));
     } else {
-        $features = $okay->features->get_features();
+        $features = $registry->features->get_features();
     }
     
     $options = array();
     if(!empty($product_id)) {
-        $opts = $okay->features->get_product_options(array('product_id'=>$product_id));
+        $opts = $registry->features->get_product_options(array('product_id'=>$product_id));
         foreach($opts as $opt) {
             $options[$opt->feature_id] = $opt;
         }

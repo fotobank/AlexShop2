@@ -2,7 +2,7 @@
 
 
 
-class ExportUsersAdmin extends Okay {
+class ExportUsersAdmin extends Registry {
     
     private $export_files_dir = 'backend/files/export_users/';
     

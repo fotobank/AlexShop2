@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once __DIR__ . '/system/configs/define/config.php';
+require_once SYS_DIR . 'core' . DS . 'boot.php';
 ?>
 
 <html>
@@ -21,34 +22,33 @@ session_start();
 
 <?php
 
-$okay = new Okay();
+$registry = new Registry();
 
 // Если пришли по ссылке из письма
-if($c = $okay->request->get('code')) {
+if(!$c = $registry->request->get('code')) {
     // Код не совпадает - прекращяем работу
     if(empty($_SESSION['admin_password_recovery_code']) || empty($c) || $_SESSION['admin_password_recovery_code'] !== $c) {
-        header('Location:password.php');
-        exit();
+     //   header('Location:password.php');
+     //   exit();
     }
     
     // IP не совпадает - прекращяем работу
     if(empty($_SESSION['admin_password_recovery_ip'])|| empty($_SERVER['REMOTE_ADDR']) || $_SESSION['admin_password_recovery_ip'] !== $_SERVER['REMOTE_ADDR']) {
-        header('Location:password.php');
-        exit();
+     //   header('Location:password.php');
+     //   exit();
     }
     
     // Если запостили пароль
-    if($new_password = $okay->request->post('new_password')) {
+    if($new_password = $registry->request->post('new_password')) {
         // Удаляем из сесси код, чтобы больше никто не воспользовался ссылкой
-        unset($_SESSION['admin_password_recovery_code']);
-        unset($_SESSION['admin_password_recovery_ip']);
+        unset($_SESSION['admin_password_recovery_code'], $_SESSION['admin_password_recovery_ip']);
         
         // Новый логин и пароль
-        $new_login = $okay->request->post('new_login');
-        $new_password = $okay->request->post('new_password');
-        $manager = $okay->managers->get_manager($new_login);
-        if (!$okay->managers->update_manager($manager->id, array('password'=>$new_password, 'cnt_try'=>0, 'last_try'=>null))) {
-            $okay->managers->add_manager(array('login'=>$new_login, 'password'=>$new_password));
+        $new_login = $registry->request->post('new_login');
+        $new_password = $registry->request->post('new_password');
+        $manager = $registry->managers->get_manager($new_login);
+        if (!$registry->managers->update_manager($manager->id, array('password'=>$new_password, 'cnt_try'=>0, 'last_try'=>null))) {
+            $registry->managers->add_manager(array('login'=>$new_login, 'password'=>$new_password));
         }
 
         print "
@@ -57,11 +57,9 @@ if($c = $okay->request->get('code')) {
             Новый пароль установлен
             </p>
             <p>
-            <a href='".$okay->root_url."/backend/index.php?module=AuthAdmin'>Перейти в панель управления</a>
-            </p>
-        ";
+            <a href='" . $registry->root_url . "/backend/index.php?module=AuthAdmin'>Перейти в панель управления</a>";
     } else {
-    // Форма указалия нового логина и пароля
+    // Форма указания нового логина и пароля
         print "
             <h1>Восстановление пароля администратора</h1>
             <p>
@@ -78,26 +76,26 @@ if($c = $okay->request->get('code')) {
         <h1>Восстановление пароля администратора</h1>
         <p>
             Введите email администратора
-            <form method='post' action='".$okay->config->root_url."/password.php'>
+            <form method='post' action='".$registry->config->root_url."/password.php'>
             	<input type='text' name='email'>
             	<input type='submit' value='Восстановить пароль'>
             </form>
         </p>
     ";
     
-    $admin_email = $okay->settings->admin_email;
+    $admin_email = $registry->settings->admin_email;
     
     if(isset($_POST['email'])) {
         if($_POST['email'] === $admin_email) {
-            $code = $okay->config->token(mt_rand(1, mt_getrandmax()).mt_rand(1, mt_getrandmax()).mt_rand(1, mt_getrandmax()));
+            $code = $registry->config->token(mt_rand(1, mt_getrandmax()).mt_rand(1, mt_getrandmax()).mt_rand(1, mt_getrandmax()));
             $_SESSION['admin_password_recovery_code'] = $code;
             $_SESSION['admin_password_recovery_ip'] = $_SERVER['REMOTE_ADDR'];
             
             $message = 'Вы или кто-то другой запросил ссылку на восстановление пароля администратора.<br>';
-            $message .= 'Для смены пароля перейдите по ссылке '.$okay->config->root_url.'/password.php?code='.$code.'<br>';
+            $message .= 'Для смены пароля перейдите по ссылке '.$registry->config->root_url.'/password.php?code='.$code.'<br>';
             $message .= 'Если письмо пришло вам по ошибке, проигнорируйте его.';
             
-            $okay->notify->email($admin_email, 'Восстановление пароля администратора '.$okay->settings->site_name, $message, $okay->settings->notify_from_email);
+            $registry->notify->email($admin_email, 'Восстановление пароля администратора '.$registry->settings->site_name, $message, $registry->settings->notify_from_email);
         }
         print "Вам отправлена ссылка для восстановления пароля. Если письмо вам не пришло, значит вы неверно указали email или что-то не так с хостингом";
     }

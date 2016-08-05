@@ -1,6 +1,6 @@
 <?php
 
-class Blog extends Okay {
+class Blog extends Registry {
     
     public function get_post($id) {
         if (empty($id)) {

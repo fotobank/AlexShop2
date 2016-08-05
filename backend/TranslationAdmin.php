@@ -2,7 +2,7 @@
 
 
 
-class TranslationAdmin extends Okay {
+class TranslationAdmin extends Registry {
     
     public function fetch() {
         $languages = $this->languages->get_languages();
@@ -26,12 +26,12 @@ class TranslationAdmin extends Okay {
             $this->db->query("SELECT * FROM __translations WHERE label=? LIMIT 1", $translation->label);
             $exist_label = $this->db->result();
             
-            $okay_object = $this->{$translation->label};
+            $registry_object = $this->{$translation->label};
             if(!$translation->label) {
                 $this->design->assign('message_error', 'label_empty');
             } elseif($exist_label && $exist_label->id!=$translation->id) {
                 $this->design->assign('message_error', 'label_exists');
-            } elseif(!empty($okay_object)) {
+            } elseif(!empty($registry_object)) {
                 $this->design->assign('message_error', 'label_is_class');
             } else {
                 if(empty($translation->id)) {

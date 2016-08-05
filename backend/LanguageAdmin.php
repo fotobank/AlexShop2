@@ -2,7 +2,7 @@
 
 
 
-class LanguageAdmin extends Okay {
+class LanguageAdmin extends Registry {
     
     public function fetch() {
         $lang_list = $this->languages->lang_list();

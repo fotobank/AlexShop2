@@ -2,7 +2,7 @@
 
 
 
-class Receipt extends Okay
+class Receipt extends Registry
 {
 
 	public function checkout_form($order_id)

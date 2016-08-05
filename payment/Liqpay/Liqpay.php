@@ -2,7 +2,7 @@
 
 
 
-class Liqpay extends Okay
+class Liqpay extends Registry
 {	
 	public function checkout_form($order_id, $button_text = null)
 	{

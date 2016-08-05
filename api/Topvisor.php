@@ -2,7 +2,7 @@
 
 
 
-class Topvisor extends Okay {
+class Topvisor extends Registry {
     
     public $request_count = 0;
     

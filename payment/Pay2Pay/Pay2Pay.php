@@ -2,7 +2,7 @@
 
 
 
-class Pay2Pay extends Okay
+class Pay2Pay extends Registry
 {	
 	public function checkout_form($order_id, $button_text = null)
 	{

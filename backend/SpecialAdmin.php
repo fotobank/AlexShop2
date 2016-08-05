@@ -2,7 +2,7 @@
 
 
 
-class SpecialAdmin extends Okay {
+class SpecialAdmin extends Registry {
     
     public function fetch() {
         if($this->request->method('post')) {

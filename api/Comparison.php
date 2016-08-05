@@ -2,7 +2,7 @@
 
 
 
-class Comparison extends Okay {
+class Comparison extends Registry {
     
     public function get_comparison() {
         $comparison = new stdClass();

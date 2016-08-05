@@ -10,23 +10,26 @@ $full_update = true;
 $brand_option_name = 'Производитель';
 
 $start_time = microtime(true);
-$max_exec_time = min(30, @ini_get("max_execution_time"));
+$max_exec_time = min(30, @ini_get('max_execution_time'));
 if(empty($max_exec_time)) {
     $max_exec_time = 30;
 }
 
-session_start();
-chdir('../..');
-include_once('api/Okay.php');
-$okay = new Okay();
+include __DIR__ . '/../../system/configs/define/config.php';
+/** @noinspection PhpIncludeInspection */
+include SYS_DIR . 'core' . DS . 'boot.php';
 
-if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'checkauth') {
+chdir('../..');
+
+$registry = new Registry();
+
+if($registry->request->get('type') == 'sale' && $registry->request->get('mode') == 'checkauth') {
     print "success\n";
     print session_name()."\n";
     print session_id();
 }
 
-if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'init') {
+if($registry->request->get('type') == 'sale' && $registry->request->get('mode') == 'init') {
     $tmp_files = glob($dir.'*.*');
     if(is_array($tmp_files)) {
         foreach($tmp_files as $v) {
@@ -37,8 +40,8 @@ if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'init
     print "file_limit=1000000\n";
 }
 
-if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'file') {
-    $filename = $okay->request->get('filename');
+if($registry->request->get('type') == 'sale' && $registry->request->get('mode') == 'file') {
+    $filename = $registry->request->get('filename');
     
     
     $f = fopen($dir.$filename, 'ab');
@@ -51,7 +54,7 @@ if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'file
         $order = new stdClass;
         
         $order->id = $xml_order->Номер;
-        $existed_order = $okay->orders->get_order(intval($order->id));
+        $existed_order = $registry->orders->get_order(intval($order->id));
         
         $order->date = $xml_order->Дата.' '.$xml_order->Время;
         $order->name = $xml_order->Контрагенты->Контрагент->Наименование;
@@ -77,9 +80,9 @@ if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'file
         }
         
         if($existed_order) {
-            $okay->orders->update_order($order->id, $order);
+            $registry->orders->update_order($order->id, $order);
         } else {
-            $order->id = $okay->orders->add_order($order);
+            $order->id = $registry->orders->add_order($order);
         }
         
         $purchases_ids = array();
@@ -97,10 +100,10 @@ if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'file
             }
 
             // Ищем товар
-            $okay->db->query('SELECT id FROM __products WHERE external_id=?', $product_1c_id);
-            $product_id = $okay->db->result('id');
-            $okay->db->query('SELECT id FROM __variants WHERE external_id=? AND product_id=?', $variant_1c_id, $product_id);
-            $variant_id = $okay->db->result('id');
+            $registry->db->query('SELECT id FROM __products WHERE external_id=?', $product_1c_id);
+            $product_id = $registry->db->result('id');
+            $registry->db->query('SELECT id FROM __variants WHERE external_id=? AND product_id=?', $variant_1c_id, $product_id);
+            $variant_id = $registry->db->result('id');
 
             $purchase = new stdClass;
             $purchase->order_id = $order->id;
@@ -117,36 +120,36 @@ if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'file
                 $purchase->price = $purchase->price*(100-$discount)/100;
             }
             
-            $okay->db->query('SELECT id FROM __purchases WHERE order_id=? AND product_id=? AND variant_id=?', $order->id, $product_id, $variant_id);
-            $purchase_id = $okay->db->result('id');
+            $registry->db->query('SELECT id FROM __purchases WHERE order_id=? AND product_id=? AND variant_id=?', $order->id, $product_id, $variant_id);
+            $purchase_id = $registry->db->result('id');
             if(!empty($purchase_id)) {
-                $purchase_id = $okay->orders->update_purchase($purchase_id, $purchase);
+                $purchase_id = $registry->orders->update_purchase($purchase_id, $purchase);
             } else {
-                $purchase_id = $okay->orders->add_purchase($purchase);
+                $purchase_id = $registry->orders->add_purchase($purchase);
             }
             $purchases_ids[] = $purchase_id;
         }
         // Удалим покупки, которых нет в файле
-        foreach($okay->orders->get_purchases(array('order_id'=>intval($order->id))) as $purchase) {
+        foreach($registry->orders->get_purchases(array('order_id'=>intval($order->id))) as $purchase) {
             if(!in_array($purchase->id, $purchases_ids)) {
-                $okay->orders->delete_purchase($purchase->id);
+                $registry->orders->delete_purchase($purchase->id);
             }
         }
         
-        $okay->db->query('UPDATE __orders SET discount=0, total_price=? WHERE id=? LIMIT 1', $xml_order->Сумма, $order->id);
+        $registry->db->query('UPDATE __orders SET discount=0, total_price=? WHERE id=? LIMIT 1', $xml_order->Сумма, $order->id);
     }
     
     print "success";
-    $okay->settings->last_1c_orders_export_date = date("Y-m-d H:i:s");
+    $registry->settings->last_1c_orders_export_date = date("Y-m-d H:i:s");
 }
 
-if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'query') {
+if($registry->request->get('type') == 'sale' && $registry->request->get('mode') == 'query') {
     $no_spaces = '<?xml version="1.0" encoding="utf-8"?>
         <КоммерческаяИнформация ВерсияСхемы="2.04" ДатаФормирования="' . date ( 'Y-m-d' )  . '"></КоммерческаяИнформация>';
     $xml = new SimpleXMLElement ( $no_spaces );
     
-    $orders = $okay->orders->get_orders(array('modified_since'=>$okay->settings->last_1c_orders_export_date));
-    //$currency = $okay->money->get_currency();
+    $orders = $registry->orders->get_orders(array('modified_since'=>$registry->settings->last_1c_orders_export_date));
+    //$currency = $registry->money->get_currency();
     foreach($orders as $order) {
         $date = new DateTime($order->date);
 
@@ -197,21 +200,21 @@ if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'quer
         $cont->addChild ( 'Значение', $order->email );
 
 
-        $purchases = $okay->orders->get_purchases(array('order_id'=>intval($order->id)));
+        $purchases = $registry->orders->get_purchases(array('order_id'=> (int)$order->id));
 
         $t1 = $doc->addChild ( 'Товары' );
         foreach($purchases as $purchase) {
             if(!empty($purchase->product_id) && !empty($purchase->variant_id)) {
-                $okay->db->query('SELECT external_id FROM __products WHERE id=?', $purchase->product_id);
-                $id_p = $okay->db->result('external_id');
-                $okay->db->query('SELECT external_id FROM __variants WHERE id=?', $purchase->variant_id);
-                $id_v = $okay->db->result('external_id');
+                $registry->db->query('SELECT external_id FROM __products WHERE id=?', $purchase->product_id);
+                $id_p = $registry->db->result('external_id');
+                $registry->db->query('SELECT external_id FROM __variants WHERE id=?', $purchase->variant_id);
+                $id_v = $registry->db->result('external_id');
 
                 // Если нет внешнего ключа товара - указываем наш id
                 if(!empty($id_p)) {
                     $id = $id_p;
                 } else {
-                    $okay->db->query('UPDATE __products SET external_id=id WHERE id=?', $purchase->product_id);
+                    $registry->db->query('UPDATE __products SET external_id=id WHERE id=?', $purchase->product_id);
                     $id = $purchase->product_id;
                 }
 
@@ -219,7 +222,7 @@ if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'quer
                 if(!empty($id_v)) {
                     $id = $id.'#'.$id_v;
                 } else {
-                    $okay->db->query('UPDATE __variants SET external_id=id WHERE id=?', $purchase->variant_id);
+                    $registry->db->query('UPDATE __variants SET external_id=id WHERE id=?', $purchase->variant_id);
                     $id = $id.'#'.$purchase->variant_id;
                 }
 
@@ -281,8 +284,8 @@ if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'quer
         // Способ оплаты и доставки
         $s1_2 = $doc->addChild ( "ЗначенияРеквизитов");
 
-        $payment_method = $okay->payment->get_payment_method($order->payment_method_id);
-        $delivery = $okay->delivery->get_delivery($order->delivery_id);
+        $payment_method = $registry->payment->get_payment_method($order->payment_method_id);
+        $delivery = $registry->delivery->get_delivery($order->delivery_id);
 
         if($payment_method) {
             $s1_3 = $s1_2->addChild ( "ЗначениеРеквизита");
@@ -327,20 +330,20 @@ if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'quer
 
     print $xml->asXML ();
     //console_log($xml->asXML ());
-    $okay->settings->last_1c_orders_export_date = date("Y-m-d H:i:s");
+    $registry->settings->last_1c_orders_export_date = date("Y-m-d H:i:s");
 }
 
-if($okay->request->get('type') == 'sale' && $okay->request->get('mode') == 'success') {
-    $okay->settings->last_1c_orders_export_date = date("Y-m-d H:i:s");
+if($registry->request->get('type') == 'sale' && $registry->request->get('mode') == 'success') {
+    $registry->settings->last_1c_orders_export_date = date("Y-m-d H:i:s");
 }
 
-if($okay->request->get('type') == 'catalog' && $okay->request->get('mode') == 'checkauth') {
+if($registry->request->get('type') == 'catalog' && $registry->request->get('mode') == 'checkauth') {
     print "success\n";
     print session_name()."\n";
     print session_id();
 }
 
-if($okay->request->get('type') == 'catalog' && $okay->request->get('mode') == 'init') {
+if($registry->request->get('type') == 'catalog' && $registry->request->get('mode') == 'init') {
     $tmp_files = glob($dir.'*.*');
     if(is_array($tmp_files)) {
         foreach($tmp_files as $v){
@@ -356,16 +359,16 @@ if($okay->request->get('type') == 'catalog' && $okay->request->get('mode') == 'i
     print "file_limit=1000000\n";
 }
 
-if($okay->request->get('type') == 'catalog' && $okay->request->get('mode') == 'file') {
-    $filename = basename($okay->request->get('filename'));
+if($registry->request->get('type') == 'catalog' && $registry->request->get('mode') == 'file') {
+    $filename = basename($registry->request->get('filename'));
     $f = fopen($dir.$filename, 'ab');
     fwrite($f, file_get_contents('php://input'));
     fclose($f);
     print "success\n";
 }
 
-if($okay->request->get('type') == 'catalog' && $okay->request->get('mode') == 'import') {
-    $filename = basename($okay->request->get('filename'));
+if($registry->request->get('type') == 'catalog' && $registry->request->get('mode') == 'import') {
+    $filename = basename($registry->request->get('filename'));
 
     if($filename === 'import.xml') {
         // Категории и свойства (только в первом запросе пакетной передачи)
@@ -461,14 +464,14 @@ if($okay->request->get('type') == 'catalog' && $okay->request->get('mode') == 'i
 }
 
 function import_categories($xml, $parent_id = 0) {
-    global $okay;
+    global $registry;
     global $dir;
     if(isset($xml->Группы->Группа))
         foreach ($xml->Группы->Группа as $xml_group) {
-            $okay->db->query('SELECT id FROM __categories WHERE external_id=?', $xml_group->Ид);
-            $category_id = $okay->db->result('id');
+            $registry->db->query('SELECT id FROM __categories WHERE external_id=?', $xml_group->Ид);
+            $category_id = $registry->db->result('id');
             if(empty($category_id)) {
-                $category_id = $okay->categories->add_category(array('parent_id'=>$parent_id, 'external_id'=>$xml_group->Ид, 'url'=>translit($xml_group->Наименование), 'name'=>$xml_group->Наименование, 'meta_title'=>$xml_group->Наименование, 'meta_keywords'=>$xml_group->Наименование, 'meta_description'=>$xml_group->Наименование ));
+                $category_id = $registry->categories->add_category(array('parent_id'=>$parent_id, 'external_id'=>$xml_group->Ид, 'url'=>translit($xml_group->Наименование), 'name'=>$xml_group->Наименование, 'meta_title'=>$xml_group->Наименование, 'meta_keywords'=>$xml_group->Наименование, 'meta_description'=>$xml_group->Наименование ));
             }
             $_SESSION['categories_mapping'][strval($xml_group->Ид)] = $category_id;
             import_categories($xml_group, $category_id);
@@ -476,7 +479,7 @@ function import_categories($xml, $parent_id = 0) {
 }
 
 function import_features($xml) {
-    global $okay;
+    global $registry;
     global $dir;
     global $brand_option_name;
 
@@ -497,10 +500,10 @@ function import_features($xml) {
         }
         // Иначе обрабатываем как обычной свойство товара
         else {
-            $okay->db->query('SELECT id FROM __features WHERE name=?', strval($xml_feature->Наименование));
-            $feature_id = $okay->db->result('id');
+            $registry->db->query('SELECT id FROM __features WHERE name=?', strval($xml_feature->Наименование));
+            $feature_id = $registry->db->result('id');
             if(empty($feature_id)) {
-                $feature_id = $okay->features->add_feature(array('name'=>strval($xml_feature->Наименование)));
+                $feature_id = $registry->features->add_feature(array('name'=>strval($xml_feature->Наименование)));
             }
             $_SESSION['features_mapping'][strval($xml_feature->Ид)] = $feature_id;
             if($xml_feature->ТипЗначений == 'Справочник') {
@@ -513,7 +516,7 @@ function import_features($xml) {
 }
 
 function import_product($xml_product) {
-    global $okay;
+    global $registry;
     global $dir;
     global $brand_option_name;
     global $full_update;
@@ -548,11 +551,11 @@ function import_product($xml_product) {
     $variant->external_id = $variant_1c_id;
 
     // Ищем товар
-    $okay->db->query('SELECT id FROM __products WHERE external_id=?', $product_1c_id);
-    $product_id = $okay->db->result('id');
+    $registry->db->query('SELECT id FROM __products WHERE external_id=?', $product_1c_id);
+    $product_id = $registry->db->result('id');
     if(empty($product_id) && !empty($variant->sku)) {
-        $okay->db->query('SELECT product_id, id FROM __variants WHERE sku=?', $variant->sku);
-        $res = $okay->db->result();
+        $registry->db->query('SELECT product_id, id FROM __variants WHERE sku=?', $variant->sku);
+        $res = $registry->db->result();
         if(!empty($res)) {
             $product_id = $res->product_id;
             $variant_id = $res->id;
@@ -566,7 +569,7 @@ function import_product($xml_product) {
         if(!empty($xml_product->Описание)) {
             $description = $xml_product->Описание;
         }
-        $product_id = $okay->products->add_product(array(
+        $product_id = $registry->products->add_product(array(
             'external_id'=>$product_1c_id,
             'url'=>translit($xml_product->Наименование),
             'name'=>$xml_product->Наименование,
@@ -579,16 +582,16 @@ function import_product($xml_product) {
 
         // Добавляем товар в категории
         if(isset($category_id)) {
-            $okay->categories->add_product_category($product_id, $category_id);
+            $registry->categories->add_product_category($product_id, $category_id);
         }
 
         // Добавляем изображение товара
         if(isset($xml_product->Картинка)) {
             foreach($xml_product->Картинка as $img) {
                 $image = basename($img);
-                if(!empty($image) && is_file($dir.$image) && is_writable($okay->config->original_images_dir)) {
-                    rename($dir.$image, $okay->config->original_images_dir.$image);
-                    $okay->products->add_image($product_id, $image);
+                if(!empty($image) && is_file($dir.$image) && is_writable($registry->config->original_images_dir)) {
+                    rename($dir.$image, $registry->config->original_images_dir.$image);
+                    $registry->products->add_image($product_id, $image);
                 }
             }
         }
@@ -596,11 +599,11 @@ function import_product($xml_product) {
     //Если нашелся товар
     else {
         if(empty($variant_id) && !empty($variant_1c_id)) {
-            $okay->db->query('SELECT id FROM __variants WHERE external_id=? AND product_id=?', $variant_1c_id, $product_id);
-            $variant_id = $okay->db->result('id');
+            $registry->db->query('SELECT id FROM __variants WHERE external_id=? AND product_id=?', $variant_1c_id, $product_id);
+            $variant_id = $registry->db->result('id');
         } elseif(empty($variant_id) && empty($variant_1c_id)) {
-            $okay->db->query('SELECT id FROM __variants WHERE product_id=?', $product_id);
-            $variant_id = $okay->db->result('id');
+            $registry->db->query('SELECT id FROM __variants WHERE product_id=?', $product_id);
+            $variant_id = $registry->db->result('id');
         }
 
         // Обновляем товар
@@ -618,13 +621,13 @@ function import_product($xml_product) {
             $p->meta_title = $xml_product->Наименование;
             $p->meta_keywords = $xml_product->Наименование;
 
-            $product_id = $okay->products->update_product($product_id, $p);
+            $product_id = $registry->products->update_product($product_id, $p);
 
             // Обновляем категорию товара
             if(isset($category_id) && !empty($product_id)) {
-                $query = $okay->db->placehold('DELETE FROM __products_categories WHERE product_id=?', $product_id);
-                $okay->db->query($query);
-                $okay->categories->add_product_category($product_id, $category_id);
+                $query = $registry->db->placehold('DELETE FROM __products_categories WHERE product_id=?', $product_id);
+                $registry->db->query($query);
+                $registry->categories->add_product_category($product_id, $category_id);
             }
         }
 
@@ -632,14 +635,14 @@ function import_product($xml_product) {
         if(isset($xml_product->Картинка)) {
             foreach($xml_product->Картинка as $img) {
                 $image = basename($img);
-                if(!empty($image) && is_file($dir.$image) && is_writable($okay->config->original_images_dir)) {
-                    $okay->db->query('SELECT id FROM __images WHERE product_id=? ORDER BY position LIMIT 1', $product_id);
-                    $img_id = $okay->db->result('id');
+                if(!empty($image) && is_file($dir.$image) && is_writable($registry->config->original_images_dir)) {
+                    $registry->db->query('SELECT id FROM __images WHERE product_id=? ORDER BY position LIMIT 1', $product_id);
+                    $img_id = $registry->db->result('id');
                     if(!empty($img_id)) {
-                        $okay->products->delete_image($img_id);
+                        $registry->products->delete_image($img_id);
                     }
-                    rename($dir.$image, $okay->config->original_images_dir.$image);
-                    $okay->products->add_image($product_id, $image);
+                    rename($dir.$image, $registry->config->original_images_dir.$image);
+                    $registry->products->add_image($product_id, $image);
                 }
             }
         }
@@ -649,9 +652,9 @@ function import_product($xml_product) {
     if(empty($variant_id)) {
         $variant->product_id = $product_id;
         $variant->stock = 0;
-        $variant_id = $okay->variants->add_variant($variant);
+        $variant_id = $registry->variants->add_variant($variant);
     } elseif(!empty($variant_id)) {
-        $okay->variants->update_variant($variant_id, $variant);
+        $registry->variants->update_variant($variant_id, $variant);
     }
     // Свойства товара
     if(isset($xml_product->ЗначенияСвойств->ЗначенияСвойства)) {
@@ -659,7 +662,7 @@ function import_product($xml_product) {
             if(isset($_SESSION['features_mapping'][strval($xml_option->Ид)])) {
                 $feature_id = $_SESSION['features_mapping'][strval($xml_option->Ид)];
                 if(isset($category_id) && !empty($feature_id)) {
-                    $okay->features->add_feature_category($feature_id, $category_id);
+                    $registry->features->add_feature_category($feature_id, $category_id);
                     $values = array();
                     foreach($xml_option->Значение as $xml_value) {
                         if(isset($_SESSION['features_values'][strval($xml_value)])) {
@@ -668,7 +671,7 @@ function import_product($xml_product) {
                             $values[] = strval($xml_value);
                         }
                     }
-                    $okay->features->update_option($product_id, $feature_id, implode(' ,', $values));
+                    $registry->features->update_option($product_id, $feature_id, implode(' ,', $values));
                 }
             }
             // Если свойство оказалось названием бренда
@@ -676,13 +679,13 @@ function import_product($xml_product) {
                 $brand_name = strval($xml_option->Значение);
                 // Добавим бренд
                 // Найдем его по имени
-                $okay->db->query('SELECT id FROM __brands WHERE name=?', $brand_name);
-                if(!$brand_id = $okay->db->result('id')) {
+                $registry->db->query('SELECT id FROM __brands WHERE name=?', $brand_name);
+                if(!$brand_id = $registry->db->result('id')) {
                     // Создадим, если не найден
-                    $brand_id = $okay->brands->add_brand(array('name'=>$brand_name, 'meta_title'=>$brand_name, 'meta_keywords'=>$brand_name, 'meta_description'=>$brand_name, 'url'=>translit($brand_name)));
+                    $brand_id = $registry->brands->add_brand(array('name'=>$brand_name, 'meta_title'=>$brand_name, 'meta_keywords'=>$brand_name, 'meta_description'=>$brand_name, 'url'=>translit($brand_name)));
                 }
                 if(!empty($brand_id)) {
-                    $okay->products->update_product($product_id, array('brand_id'=>$brand_id));
+                    $registry->products->update_product($product_id, array('brand_id'=>$brand_id));
                 }
             }
         }
@@ -690,16 +693,16 @@ function import_product($xml_product) {
 
     // Если нужно - удаляем вариант или весь товар
     if($xml_product->Статус == 'Удален') {
-        $okay->variants->delete_variant($variant_id);
-        $okay->db->query('SELECT count(id) as variants_num FROM __variants WHERE product_id=?', $product_id);
-        if($okay->db->result('variants_num') == 0) {
-            $okay->products->delete_product($product_id);
+        $registry->variants->delete_variant($variant_id);
+        $registry->db->query('SELECT count(id) as variants_num FROM __variants WHERE product_id=?', $product_id);
+        if($registry->db->result('variants_num') == 0) {
+            $registry->products->delete_product($product_id);
         }
     }
 }
 
 function import_variant($xml_variant) {
-    global $okay;
+    global $registry;
     global $dir;
     $variant = new stdClass;
     //  Id товара и варианта (если есть) по 1С
@@ -711,12 +714,12 @@ function import_variant($xml_variant) {
         return false;
     }
 
-    $okay->db->query('SELECT v.id FROM __variants v WHERE v.external_id=? AND product_id=(SELECT p.id FROM __products p WHERE p.external_id=? LIMIT 1)', $variant_1c_id, $product_1c_id);
-    $variant_id = $okay->db->result('id');
+    $registry->db->query('SELECT v.id FROM __variants v WHERE v.external_id=? AND product_id=(SELECT p.id FROM __products p WHERE p.external_id=? LIMIT 1)', $variant_1c_id, $product_1c_id);
+    $variant_id = $registry->db->result('id');
 
-    $okay->db->query('SELECT p.id FROM __products p WHERE p.external_id=?', $product_1c_id);
+    $registry->db->query('SELECT p.id FROM __products p WHERE p.external_id=?', $product_1c_id);
     $variant->external_id = $variant_1c_id;
-    $variant->product_id = $okay->db->result('id');
+    $variant->product_id = $registry->db->result('id');
     if(empty($variant->product_id)) {
         return false;
     }
@@ -740,12 +743,12 @@ function import_variant($xml_variant) {
     // Конвертируем цену из валюты 1С в базовую валюту магазина
     if(!empty($xml_variant->Цены->Цена->Валюта)) {
         // Ищем валюту по коду
-        $okay->db->query("SELECT id, rate_from, rate_to FROM __currencies WHERE code like ?", $xml_variant->Цены->Цена->Валюта);
-        $variant_currency = $okay->db->result();
+        $registry->db->query("SELECT id, rate_from, rate_to FROM __currencies WHERE code like ?", $xml_variant->Цены->Цена->Валюта);
+        $variant_currency = $registry->db->result();
         // Если не нашли - ищем по обозначению
         if(empty($variant_currency)) {
-            $okay->db->query("SELECT id, rate_from, rate_to FROM __currencies WHERE sign like ?", $xml_variant->Цены->Цена->Валюта);
-            $variant_currency = $okay->db->result();
+            $registry->db->query("SELECT id, rate_from, rate_to FROM __currencies WHERE sign like ?", $xml_variant->Цены->Цена->Валюта);
+            $variant_currency = $registry->db->result();
         }
         // Если нашли валюту - конвертируем из нее в базовую
         if($variant_currency && $variant_currency->rate_from>0 && $variant_currency->rate_to>0) {
@@ -756,9 +759,9 @@ function import_variant($xml_variant) {
     $variant->stock = $xml_variant->Количество;
 
     if(empty($variant_id)) {
-        $okay->variants->add_variant($variant);
+        $registry->variants->add_variant($variant);
     } else {
-        $okay->variants->update_variant($variant_id, $variant);
+        $registry->variants->update_variant($variant_id, $variant);
     }
 }
 

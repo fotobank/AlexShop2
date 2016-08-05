@@ -1,7 +1,7 @@
 <?php
 
 
-class ProductsAdmin extends Okay {
+class ProductsAdmin extends Registry {
     
     public function fetch() {
         $filter = array();

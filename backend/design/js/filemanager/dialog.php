@@ -1,10 +1,13 @@
 <?php
-session_start();
+include __DIR__ . '/../../../../system/configs/define/config.php';
+/** @noinspection PhpIncludeInspection */
+include SYS_DIR . 'core' . DS . 'boot.php';
+
 chdir('../../../..');
 
 
-$okay = new Okay();
-$manager = $okay->managers->get_manager();
+$registry = new Registry();
+$manager = $registry->managers->get_manager();
 if (!$manager) {
 	die();
 }

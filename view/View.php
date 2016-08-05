@@ -2,7 +2,7 @@
 
 
 
-class View extends Okay {
+class View extends Registry {
     
     /* Смысл класса в доступности следующих переменных в любом View */
     public $currency;

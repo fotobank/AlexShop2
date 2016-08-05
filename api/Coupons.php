@@ -2,7 +2,7 @@
 
 
 
-class Coupons extends Okay {
+class Coupons extends Registry {
     
     public function get_coupon($id) {
         if (empty($id)) {

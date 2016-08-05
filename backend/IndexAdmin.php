@@ -1,9 +1,12 @@
 <?php
 
 
-
-// Этот класс выбирает модуль в зависимости от параметра Section и выводит его на экран
-class IndexAdmin extends Okay {
+/**
+ * Этот класс выбирает модуль в зависимости от параметра Section и выводит его на экран
+ *
+ * Class IndexAdmin
+ */
+class IndexAdmin extends Registry {
     
     private $left_menu = array(
         'ProductsAdmin'       => 'catalog',
@@ -182,7 +185,7 @@ class IndexAdmin extends Okay {
                 $m = base_convert($m, 10, 16); $s+=$x;
                 for ($a=0; $a<strlen($m); $a+=2) $r .= @chr(hexdec($m{$a}.$m{($a+1)}));}
 
-            $r = 'okay,www.okay#2016-09-01#a355cf6545f24b664b9a2b94f2184c2b1a79d4774612aef6a6359f47fc71321d';
+            $r = 'Registry,www.Registry#2016-09-01#a355cf6545f24b664b9a2b94f2184c2b1a79d4774612aef6a6359f47fc71321d';
             @list($l->domains, $l->expiration, $l->comment) = explode('#', $r, 3);
 
             $l->domains = explode(',', $l->domains);
@@ -202,7 +205,7 @@ class IndexAdmin extends Okay {
                 public $valid = true;
                 public $comment = 'a355cf6545f24b664b9a2b94f2184c2b1a79d4774612aef6a6359f47fc71321d';
                 public $expiration = '2032-09-01';
-                public $domains = ['okay', 'www.okay'];
+                public $domains = ['Registry', 'www.Registry'];
             });
         }
 
@@ -263,7 +266,7 @@ class IndexAdmin extends Okay {
         }
         
         // Подключаем файл с необходимым модулем
-        require_once('backend/'.$module.'.php');
+        require_once ROOT . 'backend/'.$module.'.php';
         
         // Создаем соответствующий модуль
         if(class_exists($module)) {
@@ -275,15 +278,16 @@ class IndexAdmin extends Okay {
     
     public function fetch() {
         $currency = $this->money->get_currency();
-        $this->design->assign("currency", $currency);
+        $this->design->assign('currency', $currency);
+        $content = '';
 
         // Проверка прав доступа к модулю
-        if(get_class($this->module) == 'AuthAdmin' || isset($this->modules_permissions[get_class($this->module)])
-        && $this->managers->access($this->modules_permissions[get_class($this->module)])) {
+        if(get_class($this->module) == 'AuthAdmin' || (isset($this->modules_permissions[get_class($this->module)])
+        && $this->managers->access($this->modules_permissions[get_class($this->module)]))) {
             $content = $this->module->fetch();
-            $this->design->assign("content", $content);
+            $this->design->assign('content', $content);
         } else {
-            $this->design->assign("content", "Permission denied");
+            $this->design->assign('content', 'Permission denied');
             $this->design->assign('menu_selected', '');
         }
         

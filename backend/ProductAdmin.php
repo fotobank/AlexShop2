@@ -2,7 +2,7 @@
 
 
 
-class ProductAdmin extends Okay {
+class ProductAdmin extends Registry {
     
     public function fetch() {
         $options = array();
@@ -422,7 +422,7 @@ class ProductAdmin extends Okay {
             }
         }
         else{
-            die('<a href="http://okay-cms.com">OkayCMS</a>');
+            die('<a href="http://Registry-cms.com">RegistryCMS</a>');
         }
     }
     

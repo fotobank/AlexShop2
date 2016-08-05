@@ -210,7 +210,7 @@
 		    <input type="hidden" name="cps_phone"      value="{$order->phone|escape}">
 		    <input type="hidden" name="customerNumber" value="{$order->id}">
             {$payment_type}
-		    <input type="hidden" name="cms_name"       value="okaycms"/>
+		    <input type="hidden" name="cms_name"       value="alexshopcms"/>
 		    <input type="submit" name="submit-button"  value="{$lang->form_to_pay}" class="btn btn-warning btn-block">
 	    </form>
     </div>

@@ -2,7 +2,7 @@
 
 
 
-class Platon extends Okay
+class Platon extends Registry
 {	
 	public function checkout_form($order_id, $button_text = null)
 	{

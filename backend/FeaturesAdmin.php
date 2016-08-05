@@ -2,7 +2,7 @@
 
 
 
-class FeaturesAdmin extends Okay {
+class FeaturesAdmin extends Registry {
     
     public function fetch() {
         if($this->request->method('post')) {

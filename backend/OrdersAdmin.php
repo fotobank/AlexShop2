@@ -2,7 +2,7 @@
 
 
 
-class OrdersAdmin extends Okay {
+class OrdersAdmin extends Registry {
     
     public function fetch() {
         $filter = array();

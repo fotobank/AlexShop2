@@ -141,7 +141,7 @@
 			<span data-language="{$translate_id['main_brands']}">{$lang->main_brands}</span>
 		</div>
 
-		<div class="fn-slick-carousel okaycms slick-carousel">
+		<div class="fn-slick-carousel alexshopcms slick-carousel">
 			{foreach $all_brands as $b}
 				{* Если у бренда есть изображение *}
 				{if $b->image}

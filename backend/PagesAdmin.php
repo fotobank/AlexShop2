@@ -3,7 +3,7 @@
 
 
 ########################################
-class PagesAdmin extends Okay {
+class PagesAdmin extends Registry {
     
     public function fetch() {
         // Меню

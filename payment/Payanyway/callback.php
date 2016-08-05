@@ -3,15 +3,15 @@
 // Работаем в корневой директории
 chdir ('../../');
 
-$okay = new Okay();
+$registry = new Registry();
 
 require_once(dirname(__FILE__).'/PawInvoiceView.php');
 $pawView = new PawInvoiceView();
 
 if (isset($_REQUEST['invoice']))
 {
-	$order = $okay->orders->get_order(intval($_REQUEST['MNT_TRANSACTION_ID']));
-	$method = $okay->payment->get_payment_method(intval($order->payment_method_id));
+	$order = $registry->orders->get_order(intval($_REQUEST['MNT_TRANSACTION_ID']));
+	$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
 	$settings = unserialize($method->settings);
 	
 	require_once (dirname(__FILE__).'/MonetaAPI/MonetaWebService.php');
@@ -116,11 +116,11 @@ else
 	   && isset($_REQUEST['MNT_AMOUNT']) && isset($_REQUEST['MNT_CURRENCY_CODE']) && isset($_REQUEST['MNT_TEST_MODE'])
 	   && isset($_REQUEST['MNT_SIGNATURE']))
 	{
-		$order = $okay->orders->get_order(intval($_REQUEST['MNT_TRANSACTION_ID']));
+		$order = $registry->orders->get_order(intval($_REQUEST['MNT_TRANSACTION_ID']));
 		if(empty($order))
 			die('FAIL');
 
-		$method = $okay->payment->get_payment_method(intval($order->payment_method_id));
+		$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
 		if(empty($method))
 			die("FAIL");
 
@@ -131,12 +131,12 @@ else
 		if ($_REQUEST['MNT_SIGNATURE'] == $mnt_sugnature)
 		{
 			// Установим статус оплачен
-			$okay->orders->update_order(intval($order->id), array('paid'=>1));
+			$registry->orders->update_order(intval($order->id), array('paid'=>1));
 
 			// Спишем товары
-			$okay->orders->close(intval($order->id));
-			$okay->notify->email_order_user(intval($order->id));
-			$okay->notify->email_order_admin(intval($order->id));
+			$registry->orders->close(intval($order->id));
+			$registry->notify->email_order_user(intval($order->id));
+			$registry->notify->email_order_admin(intval($order->id));
 
 			die('SUCCESS');
 		} 

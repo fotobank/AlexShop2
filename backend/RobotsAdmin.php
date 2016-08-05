@@ -2,7 +2,7 @@
 
 
 
-class RobotsAdmin extends Okay {
+class RobotsAdmin extends Registry {
 
     public function fetch() {
 

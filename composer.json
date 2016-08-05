@@ -1,9 +1,9 @@
 {
-  "name": "jurii/okay",
+  "name": "jurii/alex-shop",
   "description": "The Shopping Framework.",
   "keywords": [
     "framework",
-    "alexshop"
+    "alex-shop"
   ],
   "license": "MIT",
   "type": "project",

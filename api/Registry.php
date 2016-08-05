@@ -38,7 +38,7 @@ use proxy\Config;
  * @property ReportStat() reportstat
  * @property Topvisor() topvisor
  */
-class Okay {
+class Registry {
 
     /**
      * алиасы API
@@ -56,7 +56,7 @@ class Okay {
 
 
     /**
-     * Okay constructor.
+     * Registry constructor.
      */
     public function __construct() {
        //  $this->config = Config::getData('config');

@@ -2,7 +2,7 @@
 
 
 
-class Yandex extends Okay
+class Yandex extends Registry
 {
 
 	// Комиссия Яндекса, %

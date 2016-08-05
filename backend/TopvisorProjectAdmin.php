@@ -2,7 +2,7 @@
 
 
 
-class TopvisorProjectAdmin extends Okay {
+class TopvisorProjectAdmin extends Registry {
     
     public function fetch() {
         //print_r($_POST);return false;

@@ -2,7 +2,7 @@
 
 
 
-class DeliveryAdmin extends Okay {
+class DeliveryAdmin extends Registry {
     
     public function fetch() {
     	$delivery = new stdClass;

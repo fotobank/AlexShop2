@@ -70,7 +70,7 @@
 					<div class="purchase-row">
 						{* Количество *}
 						<div class="purchase-amount">
-							<div class="fn-product-amount{if $settings->is_preorder} fn-is_preorder{/if} okaycms text-xs-center text-md-left">
+							<div class="fn-product-amount{if $settings->is_preorder} fn-is_preorder{/if} alexshopcms text-xs-center text-md-left">
 								{* Кол-во товаров *}
 								<span class="minus">&minus;</span>
 								<input class="form-control" type="text" data-id="{$purchase->variant->id}" name="amounts[{$purchase->variant->id}]" value="{$purchase->amount}" onblur="ajax_change_amount(this, {$purchase->variant->id});" data-max="{$purchase->variant->stock}">
@@ -139,11 +139,11 @@
 			<div class="purchase-name border-b-1-info_md-down form-inline">
 				{* Купон *}
 				<div class="form-group">
-					<input type="text" name="coupon_code" value="{$cart->coupon->code|escape}" class="fn-coupon okaycms form-control"/>
+					<input type="text" name="coupon_code" value="{$cart->coupon->code|escape}" class="fn-coupon alexshopcms form-control"/>
 				</div>
 
 				<div class="form-group p-l-2">
-					<input class="fn-sub-coupon okaycms btn btn-success" type="button" value="{$lang->cart_purchases_coupon_apply}">
+					<input class="fn-sub-coupon alexshopcms btn btn-success" type="button" value="{$lang->cart_purchases_coupon_apply}">
 				</div>
 			</div>
 			<div class="purchase-price hidden-md-down"></div>

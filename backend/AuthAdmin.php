@@ -1,8 +1,6 @@
 <?php
 
-
-
-class AuthAdmin extends Okay {
+class AuthAdmin extends Registry {
 
     public function fetch() {
         if ($this->request->method('post')) {
@@ -43,5 +41,4 @@ class AuthAdmin extends Okay {
         }
         return $this->design->fetch('auth.tpl');
     }
-
 }

@@ -2,7 +2,7 @@
 
 
 
-class CategoriesAdmin extends Okay {
+class CategoriesAdmin extends Registry {
     
     public function fetch() {
         if($this->request->method('post')) {

@@ -2,7 +2,7 @@
 
 
 
-class CategoryAdmin extends Okay {
+class CategoryAdmin extends Registry {
     
     public function fetch() {
         $category = new stdClass;

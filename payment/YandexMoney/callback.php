@@ -4,22 +4,22 @@
 chdir ('../../');
 
 
-$okay = new Okay();
+$registry = new Registry();
 
-$order_id = $okay->request->post('customerNumber', 'integer');
-$invoice_id = $okay->request->post('invoiceId', 'string');
+$order_id = $registry->request->post('customerNumber', 'integer');
+$invoice_id = $registry->request->post('invoiceId', 'string');
 
 ////////////////////////////////////////////////
 // Выберем заказ из базы
 ////////////////////////////////////////////////
-$order = $okay->orders->get_order(intval($order_id));
+$order = $registry->orders->get_order(intval($order_id));
 if(empty($order))
 	print_error('Оплачиваемый заказ не найден');
  
 ////////////////////////////////////////////////
 // Выбираем из базы соответствующий метод оплаты
 ////////////////////////////////////////////////
-$method = $okay->payment->get_payment_method(intval($order->payment_method_id));
+$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
 if(empty($method))
 	print_error("Неизвестный метод оплаты");
  
@@ -47,7 +47,7 @@ if($md5 !== $_POST['md5'])
 ////////////////////////////////////
        
 // Сумма заказа у нас в магазине
-$order_amount = $okay->money->convert($order->total_price, $method->currency_id, false);
+$order_amount = $registry->money->convert($order->total_price, $method->currency_id, false);
        
 // Должна быть равна переданной сумме
 if(floatval($order_amount) !== floatval($_POST['orderSumAmount']))
@@ -56,10 +56,10 @@ if(floatval($order_amount) !== floatval($_POST['orderSumAmount']))
 ////////////////////////////////////
 // Проверка наличия товара
 ////////////////////////////////////
-$purchases = $okay->orders->get_purchases(array('order_id'=>intval($order->id)));
+$purchases = $registry->orders->get_purchases(array('order_id'=>intval($order->id)));
 foreach($purchases as $purchase)
 {
-	$variant = $okay->variants->get_variant(intval($purchase->variant_id));
+	$variant = $registry->variants->get_variant(intval($purchase->variant_id));
 	if(empty($variant) || (!$variant->infinity && $variant->stock < $purchase->amount))
 	{
 		print_error("Нехватка товара $purchase->product_name $purchase->variant_name");
@@ -70,12 +70,12 @@ foreach($purchases as $purchase)
 if($_POST['action'] == 'paymentAviso')
 {
 	// Установим статус оплачен
-	$okay->orders->update_order(intval($order->id), array('paid'=>1));
+	$registry->orders->update_order(intval($order->id), array('paid'=>1));
 
 	// Спишем товары  
-	$okay->orders->close(intval($order->id));
-	$okay->notify->email_order_user(intval($order->id));
-	$okay->notify->email_order_admin(intval($order->id));
+	$registry->orders->close(intval($order->id));
+	$registry->notify->email_order_user(intval($order->id));
+	$registry->notify->email_order_admin(intval($order->id));
 	
 	$datetime = new DateTime();
 	$performedDatetime = $datetime->format('c');

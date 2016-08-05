@@ -2,7 +2,7 @@
 
 
 
-class Lang extends Okay {
+class Lang extends Registry {
     
     public $tables = array('product'  => 'products',
         'variant'  => 'variants',

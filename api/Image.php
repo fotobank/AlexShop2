@@ -2,7 +2,7 @@
 
 
 
-class Image extends Okay {
+class Image extends Registry {
     
     private	$allowed_extentions = array('png', 'gif', 'jpg', 'jpeg', 'ico');
     

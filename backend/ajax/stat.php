@@ -1,6 +1,6 @@
 <?php
 
-class StatAjax extends Okay {
+class StatAjax extends Registry {
     
     public function fetch() {
         if(!$this->managers->access('stats')) {

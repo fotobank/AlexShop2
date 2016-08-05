@@ -2,7 +2,7 @@
 
 
 
-class Categories extends Okay {
+class Categories extends Registry {
     
     // Список указателей на категории в дереве категорий (ключ = id категории)
     private $all_categories;

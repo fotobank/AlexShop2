@@ -3,20 +3,20 @@
 // Работаем в корневой директории
 chdir ('../../');
 
-$okay = new Okay();
+$registry = new Registry();
 
 // Выбираем из xml нужные данные
-$public_key		 	= $okay->request->post('public_key');
-$amount				= $okay->request->post('amount');
-$currency			= $okay->request->post('currency');
-$description		= $okay->request->post('description');
-$liqpay_order_id	= $okay->request->post('order_id');
+$public_key		 	= $registry->request->post('public_key');
+$amount				= $registry->request->post('amount');
+$currency			= $registry->request->post('currency');
+$description		= $registry->request->post('description');
+$liqpay_order_id	= $registry->request->post('order_id');
 $order_id			= intval(substr($liqpay_order_id, 0, strpos($liqpay_order_id, '-')));
-$type				= $okay->request->post('type');
-$signature			= $okay->request->post('signature');
-$status				= $okay->request->post('status');
-$transaction_id		= $okay->request->post('transaction_id');
-$sender_phone		= $okay->request->post('sender_phone');
+$type				= $registry->request->post('type');
+$signature			= $registry->request->post('signature');
+$status				= $registry->request->post('status');
+$transaction_id		= $registry->request->post('transaction_id');
+$sender_phone		= $registry->request->post('sender_phone');
 
 if($status !== 'success')
 	die("bad status");
@@ -27,19 +27,19 @@ if($type !== 'buy')
 ////////////////////////////////////////////////
 // Выберем заказ из базы
 ////////////////////////////////////////////////
-$order = $okay->orders->get_order(intval($order_id));
+$order = $registry->orders->get_order(intval($order_id));
 if(empty($order))
 	die('Оплачиваемый заказ не найден');
  
 ////////////////////////////////////////////////
 // Выбираем из базы соответствующий метод оплаты
 ////////////////////////////////////////////////
-$method = $okay->payment->get_payment_method(intval($order->payment_method_id));
+$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
 if(empty($method))
 	die("Неизвестный метод оплаты");
 	
 $settings = unserialize($method->settings);
-$payment_currency = $okay->money->get_currency(intval($method->currency_id));
+$payment_currency = $registry->money->get_currency(intval($method->currency_id));
 
 // Валюта должна совпадать
 if($currency !== $payment_currency->code)
@@ -54,20 +54,20 @@ if($mysignature !== $signature)
 if($order->paid)
 	die('order already paid');
 
-if($amount != round($okay->money->convert($order->total_price, $method->currency_id, false), 2) || $amount<=0)
+if($amount != round($registry->money->convert($order->total_price, $method->currency_id, false), 2) || $amount<=0)
 	die("incorrect price");
 	       
 // Установим статус оплачен
-$okay->orders->update_order(intval($order->id), array('paid'=>1));
+$registry->orders->update_order(intval($order->id), array('paid'=>1));
 
 // Отправим уведомление на email
-$okay->notify->email_order_user(intval($order->id));
-$okay->notify->email_order_admin(intval($order->id));
+$registry->notify->email_order_user(intval($order->id));
+$registry->notify->email_order_admin(intval($order->id));
 
 // Спишем товары  
-$okay->orders->close(intval($order->id));
+$registry->orders->close(intval($order->id));
 
 // Перенаправим пользователя на страницу заказа
-// header('Location: '.$okay->config->root_url.'/order/'.$order->url);
+// header('Location: '.$registry->config->root_url.'/order/'.$order->url);
 
 exit();

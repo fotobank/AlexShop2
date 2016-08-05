@@ -2,7 +2,7 @@
 
 
 
-class StylesAdmin extends Okay {
+class StylesAdmin extends Registry {
     
     public function fetch() {
         $styles_dir = 'design/'.$this->settings->theme.'/css/';

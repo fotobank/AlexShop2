@@ -1,6 +1,6 @@
 <?php
 
-class Callbacks extends Okay {
+class Callbacks extends Registry {
 
     public function email_callback_admin($callback_id) {
         if(!($callback = $this->callbacks->get_callback((int)$callback_id))) {

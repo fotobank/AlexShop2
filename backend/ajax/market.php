@@ -1,20 +1,20 @@
 <?php
 
 // Проверка сессии для защиты от xss
-if(!$okay->request->check_session()) {
+if(!$registry->request->check_session()) {
     trigger_error('Session expired', E_USER_WARNING);
     exit();
 }
 
 $res = new stdClass();
-if($okay->managers->access('categories')) {
-    $module = $okay->request->post('module');
-    $module = (!$module ? $okay->request->get('module') : $module);
+if($registry->managers->access('categories')) {
+    $module = $registry->request->post('module');
+    $module = (!$module ? $registry->request->get('module') : $module);
     switch ($module) {
         case 'search_market': {
-            $keyword = $okay->request->get('query');
+            $keyword = $registry->request->get('query');
             $keywords = explode(' ', $keyword);
-            $categories = $okay->categories->get_market($keyword);
+            $categories = $registry->categories->get_market($keyword);
 
             $suggestions = array();
             foreach ($categories as $cats) {

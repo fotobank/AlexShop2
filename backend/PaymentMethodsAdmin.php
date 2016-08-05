@@ -2,7 +2,7 @@
 
 
 
-class PaymentMethodsAdmin extends Okay {
+class PaymentMethodsAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

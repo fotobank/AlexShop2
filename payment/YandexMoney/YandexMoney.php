@@ -2,7 +2,7 @@
 
 
 
-class YandexMoney extends Okay
+class YandexMoney extends Registry
 {
 	public function checkout_form($order_id, $button_text = null)
 	{
@@ -49,7 +49,7 @@ class YandexMoney extends Okay
 
 					<input type="hidden" name="customerNumber" value="'.$order->id.'">
 					'.$payment_type.'
-					<input type="hidden" name="cms_name" value="okaycms"/>
+					<input type="hidden" name="cms_name" value="Registrycms"/>
 					<input type="submit" name="submit-button" value="'.$button_text.'" class="checkout_button">
 					</form>';
 		return $res;

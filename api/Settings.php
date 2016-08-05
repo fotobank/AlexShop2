@@ -6,7 +6,7 @@
  */
 
 
-class Settings extends Okay {
+class Settings extends Registry {
     
     private $vars = array();
     

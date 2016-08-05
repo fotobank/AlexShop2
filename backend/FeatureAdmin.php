@@ -2,7 +2,7 @@
 
 
 
-class FeatureAdmin extends Okay {
+class FeatureAdmin extends Registry {
     
     public function fetch() {
         $feature = new stdClass;

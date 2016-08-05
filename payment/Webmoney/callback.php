@@ -4,7 +4,7 @@
 chdir ('../../');
 
 
-$okay = new Okay();
+$registry = new Registry();
 
 // Это предварительный запрос?
 if(isset($_POST['LMI_PREREQUEST']) && $_POST['LMI_PREREQUEST']==1)
@@ -97,7 +97,7 @@ $payment_method_id = $_POST['PAYMENT_METHOD_ID'];
 ////////////////////////////////////////////////
 // Выберем заказ из базы
 ////////////////////////////////////////////////
-$order = $okay->orders->get_order(intval($order_id));
+$order = $registry->orders->get_order(intval($order_id));
 if(empty($order))
 	die('Оплачиваемый заказ не найден');
  
@@ -108,7 +108,7 @@ if($order->paid)
 ////////////////////////////////////////////////
 // Выбираем из базы соответствующий метод оплаты
 ////////////////////////////////////////////////
-$method = $okay->payment->get_payment_method(intval($order->payment_method_id));
+$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
 if(empty($method))
 	die("Неизвестный метод оплаты");
  
@@ -146,7 +146,7 @@ if(($first_purse_letter = $merchant_purse_first_letter) != $payer_purse_first_le
 	die("Типы кошельков продавца и покупателя не совпадают");
 
 // Сумма заказа у нас в магазине
-$order_amount = $okay->money->convert($order->total_price, $method->currency_id, false);
+$order_amount = $registry->money->convert($order->total_price, $method->currency_id, false);
        
 // Должна быть равна переданной сумме
 if($order_amount != $amount || $amount<=0)
@@ -161,10 +161,10 @@ if($merchant_purse != $settings['purse'])
 ////////////////////////////////////
 // Проверка наличия товара
 ////////////////////////////////////
-$purchases = $okay->orders->get_purchases(array('order_id'=>intval($order->id)));
+$purchases = $registry->orders->get_purchases(array('order_id'=>intval($order->id)));
 foreach($purchases as $purchase)
 {
-	$variant = $okay->variants->get_variant(intval($purchase->variant_id));
+	$variant = $registry->variants->get_variant(intval($purchase->variant_id));
 	if(empty($variant) || (!$variant->infinity && $variant->stock < $purchase->amount))
 	{
 		die("Нехватка товара $purchase->product_name $purchase->variant_name");
@@ -175,16 +175,16 @@ foreach($purchases as $purchase)
 if(!$pre_request)
 {
 	// Установим статус оплачен
-	$okay->orders->update_order(intval($order->id), array('paid'=>1));
+	$registry->orders->update_order(intval($order->id), array('paid'=>1));
 
 	// Спишем товары  
-	$okay->orders->close(intval($order->id));
+	$registry->orders->close(intval($order->id));
 }
 
 if(!$pre_request)
 {
-	$okay->notify->email_order_user(intval($order->id));
-	$okay->notify->email_order_admin(intval($order->id));
+	$registry->notify->email_order_user(intval($order->id));
+	$registry->notify->email_order_admin(intval($order->id));
 }
 
 die("Yes");

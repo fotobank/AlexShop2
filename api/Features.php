@@ -2,7 +2,7 @@
 
 
 
-class Features extends Okay {
+class Features extends Registry {
     
     public function get_features($filter = array()) {
         $category_id_filter = '';

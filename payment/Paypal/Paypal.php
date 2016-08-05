@@ -2,7 +2,7 @@
 
 
 
-class Paypal extends Okay
+class Paypal extends Registry
 {	
 	public function checkout_form($order_id, $button_text = null)
 	{

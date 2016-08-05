@@ -2,7 +2,7 @@
 
 
 
-class Products extends Okay {
+class Products extends Registry {
     
     private $all_brands = array();
     

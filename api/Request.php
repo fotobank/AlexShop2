@@ -2,7 +2,7 @@
 
 
 
-class Request extends Okay {
+class Request extends Registry {
     
     public function __construct() {
         parent::__construct();
@@ -16,7 +16,7 @@ class Request extends Okay {
     * Если аргумент не задан, возвращает имя метода
     * Пример:
     *
-    *	if($okay->request->method('post'))
+    *	if($registry->request->method('post'))
     *		print 'Request method is POST';
     *
     */
@@ -95,7 +95,7 @@ class Request extends Okay {
     /**
     * Возвращает переменную _FILES
     * Обычно переменные _FILES являются двухмерными массивами, поэтому можно указать второй параметр,
-    * например, чтобы получить имя загруженного файла: $filename = $okay->request->files('myfile', 'name');
+    * например, чтобы получить имя загруженного файла: $filename = $registry->request->files('myfile', 'name');
     */
     public function files($name, $name2 = null) {
         if(!empty($name2) && !empty($_FILES[$name][$name2])) {
@@ -130,7 +130,7 @@ class Request extends Okay {
     * Проверка сессии
     */
     public function check_session() {
-        if(!empty($_POST)) {
+        if(isset($_POST, $_POST['session_id'])) {
             if(empty($_POST['session_id']) || $_POST['session_id'] != session_id()) {
                 unset($_POST);
                 return false;

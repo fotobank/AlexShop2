@@ -2,7 +2,7 @@
 
 
 
-class BrandsAdmin extends Okay {
+class BrandsAdmin extends Registry {
     
     public function fetch() {
         // Обработка действий

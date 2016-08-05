@@ -2,7 +2,7 @@
 
 
 
-class UserAdmin extends Okay {
+class UserAdmin extends Registry {
     
     public function fetch() {
         $user = new stdClass;

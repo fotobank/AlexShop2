@@ -2,7 +2,7 @@
 
 
 
-class CouponAdmin extends Okay {
+class CouponAdmin extends Registry {
     
     public function fetch() {
         $coupon = new stdClass;

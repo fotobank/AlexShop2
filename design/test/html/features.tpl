@@ -75,7 +75,7 @@
 			</div>
 		</div>
 		{* Слайдер цен *}
-		<div id="fn-slider-price" class="okaycms"></div>
+		<div id="fn-slider-price" class="alexshopcms"></div>
 	</div>
 {/if}
 

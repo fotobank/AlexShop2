@@ -8,16 +8,16 @@
 chdir ('../../');
 
 
-$okay = new Okay();
+$registry = new Registry();
 
 
 // Get the order
-$order = $okay->orders->get_order(intval($okay->request->post('invoice')));
+$order = $registry->orders->get_order(intval($registry->request->post('invoice')));
 if(empty($order))
 	die('Order not found');
  
 // Get payment method from this order
-$method = $okay->payment->get_payment_method(intval($order->payment_method_id));
+$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
 if(empty($method))
 	die("Unknown payment method");
 
@@ -48,11 +48,11 @@ if($_POST["payment_status"] != "Completed" )
 	die('Incorrect status '.$_POST["payment_status"].$_POST["pending_reason"]);
 
 // Verify merchant email
-if ($okay->request->post('receiver_email') != $settings['business']) 
+if ($registry->request->post('receiver_email') != $settings['business']) 
 	die("Incorrect merchant email"); 
 
 // Verify transaction type
-if ($okay->request->post('txn_type') != 'cart') 
+if ($registry->request->post('txn_type') != 'cart') 
 	die("Incorrect txn_type"); 
 
 // Is order already paid
@@ -66,10 +66,10 @@ if($order->paid)
 $total_price = 0;
 
 // Get order purchases
-$purchases = $okay->orders->get_purchases(array('order_id'=>intval($order->id)));
+$purchases = $registry->orders->get_purchases(array('order_id'=>intval($order->id)));
 foreach($purchases as $purchase)
 {			
-	$price = $okay->money->convert($purchase->price, $method->currency_id, false);
+	$price = $registry->money->convert($purchase->price, $method->currency_id, false);
 	$price = round($price, 2);
 	$total_price += $price*$purchase->amount;
 }
@@ -82,20 +82,20 @@ if($order->discount)
 // Adding delivery price
 if($order->delivery_id && !$order->separate_delivery && $order->delivery_price>0)
 {
-	$delivery_price = $okay->money->convert($order->delivery_price, $payment_method->currency_id, false);
+	$delivery_price = $registry->money->convert($order->delivery_price, $payment_method->currency_id, false);
 	$delivery_price =round($delivery_price, 2);
 	$total_price += $delivery_price;
 }
-if($total_price != $okay->request->post('mc_gross'))
-	die("Incorrect total price (".$total_price."!=".$okay->request->post('mc_gross').")");
+if($total_price != $registry->request->post('mc_gross'))
+	die("Incorrect total price (".$total_price."!=".$registry->request->post('mc_gross').")");
        
 // Set order status paid
-$okay->orders->update_order(intval($order->id), array('paid'=>1));
+$registry->orders->update_order(intval($order->id), array('paid'=>1));
 
 // Write off products
-$okay->orders->close(intval($order->id));
-$okay->notify->email_order_user(intval($order->id));
-$okay->notify->email_order_admin(intval($order->id));
+$registry->orders->close(intval($order->id));
+$registry->notify->email_order_user(intval($order->id));
+$registry->notify->email_order_admin(intval($order->id));
 
 
 function logg($str)

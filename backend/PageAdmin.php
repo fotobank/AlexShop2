@@ -2,7 +2,7 @@
 
 
 
-class PageAdmin extends Okay {
+class PageAdmin extends Registry {
     
     public function fetch() {
         $page = new stdClass;

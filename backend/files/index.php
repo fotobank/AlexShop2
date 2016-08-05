@@ -2,13 +2,13 @@
 include __DIR__ . '/../../system/configs/define/config.php';
 /** @noinspection PhpIncludeInspection */
 include SYS_DIR . 'core' . DS . 'boot.php';
-	$okay = new Okay();
-	$manager = $okay->managers->get_manager();
+	$registry = new Registry();
+	$manager = $registry->managers->get_manager();
 	if ($manager) {
-		$file = $okay->request->get('file', 'string');
+		$file = $registry->request->get('file', 'string');
 		$file = preg_replace("/[^A-Za-z0-9_]+/", '', $file);
-		$folder = $okay->request->get('folder', 'string');
-		$ext = $okay->request->get('ext', 'string');
+		$folder = $registry->request->get('folder', 'string');
+		$ext = $registry->request->get('ext', 'string');
 		if ($file && $folder && $ext) {
 			$file = $folder.'/'.$file.'.'.$ext;
 			if (file_exists($file)) {

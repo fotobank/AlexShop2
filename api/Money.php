@@ -1,6 +1,6 @@
 <?php
 
-class Money extends Okay {
+class Money extends Registry {
     
     private $currencies = array();
     private $currency;

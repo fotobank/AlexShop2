@@ -90,7 +90,7 @@ function translit(str)
         <span>
         {if $message_error == 'label_empty'}Переменная пуста{/if}
         {if $message_error == 'label_exists'}Переменная уже используется{/if}
-        {if $message_error == 'label_is_class'}Переменная с именем определённым в api/Okay.php не допустима!!!{/if}
+        {if $message_error == 'label_is_class'}Переменная с именем определённым в api/Registry.php не допустима!!!{/if}
         </span>
         <a class="button" href="{url module=TranslationsAdmin}">Вернуться</a>
     </div>

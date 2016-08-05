@@ -1,6 +1,6 @@
 <?php
 
-class ImportAjax extends Okay {
+class ImportAjax extends Registry {
     
     // Соответствие полей в базе и имён колонок в файле
     private $columns_names = array(
