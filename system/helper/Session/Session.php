@@ -125,10 +125,8 @@ class Session extends ArrayHelper
             $_SESSION[$cf] = md5($fingerprint);
             return false;
         }
-        if ($_SESSION[$cf] != md5($fingerprint)){
-            return true;
-        }
-        return false;
+
+        return ($_SESSION[$cf] != md5($fingerprint));
     }
 
 
@@ -240,13 +238,13 @@ class Session extends ArrayHelper
             );
         }
 
-        if (!preg_match('/^[a-zA-Z0-9]+$/', $name)) {
+        if (!ctype_alnum($name)) {
             throw new SessionException(
                 'Name provided contains invalid characters; must be alphanumeric only'
             );
         }
 
-        $this->name = $name;
+        $this->sessionName = $name;
         session_name($name);
         return $this;
     }
@@ -258,10 +256,7 @@ class Session extends ArrayHelper
      */
     public function sessionExists()
     {
-        if ($this->getId() || headers_sent()) {
-            return true;
-        }
-        return false;
+        return ($this->getId() || headers_sent());
     }
 
     /**
