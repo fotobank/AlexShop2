@@ -40,17 +40,25 @@ use exception\SessionException;
 class Session extends ArrayHelper
 {
 
-    /**
-     * @var string value returned by session_name()
-     */
-    protected $name;
+    protected $sessionName = '_encrypted';
+    protected $lifetime = 3600; // 3600 = 1 час
+    protected $checkIP = true;
+    protected $autoRegenerateID = true;
+    protected $running = false;
+
 
     /**
      * конструктор
      */
     public function __construct()
     {
+        ini_set('session.use_cookies', 1);
+        ini_set('session.use_only_cookies', 1);
+        ini_set('session.gc_maxlifetime', $this->lifetime);
+        ini_set('session.cookie_lifetime', 0); // 0 - пока браузер не закрыт
+
         $this->start();
+
         if(null !==$_SESSION)
         {
             $this->properties = &$_SESSION;
@@ -59,39 +67,89 @@ class Session extends ArrayHelper
     }
 
     /**
-     * Does a session started and is it currently active?
-     * @api
+     * Метод стартует сессию, проверяет время жизни сессии и идентификатор клиента
+     */
+    public function start()
+    {
+        $this->phpSessionInit();
+        if ($this->autoRegenerateID){
+            $this->regenerateId();
+        }
+        if ($this->isExpired() || $this->isWrongFingerprint()){
+            if (!$this->autoRegenerateID){
+                $this->regenerateId();
+            }
+            $_SESSION = [];
+            if(!headers_sent()){
+                header('location: index.php');
+                exit();
+            }
+        }
+        $this->running = true;
+    }
+
+    /**
      * @return bool
      */
-    public function sessionExists()
+    protected function isExpired()
     {
-        $sid = defined('SID') ? constant('SID') : false;
-        if ($sid !== false && $this->getId()) {
+        $la = '__lastActivity';
+        $now = time();
+        $limit = $now - $this->lifetime;
+
+        if (isset($_SESSION[$la]) && $_SESSION[$la] < $limit){
             return true;
         }
-        if (headers_sent()) {
+        $_SESSION[$la] = $now;
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isWrongFingerprint()
+    {
+        $cf = '__clientFingerprint';
+
+        $fingerprint = $_SERVER['HTTP_USER_AGENT'] .
+            $_SERVER['HTTP_ACCEPT_LANGUAGE'] .
+            $_SERVER['HTTP_ACCEPT_CHARSET'] .
+            $_SERVER['HTTP_ACCEPT_ENCODING'] .
+            $_SERVER['HTTP_CONNECTION'];
+
+        if ($this->checkIP){
+            $fingerprint .= $_SERVER['REMOTE_ADDR'];
+        }
+        if (!isset($_SESSION[$cf])){
+            $_SESSION[$cf] = md5($fingerprint);
+            return false;
+        }
+        if ($_SESSION[$cf] != md5($fingerprint)){
             return true;
         }
         return false;
     }
 
+
     /**
-     * Start session
-     *
-     * if No session currently exists, attempt to start it. Calls
-     * {@link isValid()} once session_start() is called, and raises an
-     * exception if validation fails.
-     *
-     * @api
-     * @return void
-     * @throws SessionException
+     * Метод инициализирует механизм сессий PHP
      */
-    public function start()
+    protected function phpSessionInit()
     {
         if ($this->sessionExists()) {
-            return;
+            $sn = session_name();
+            if ($sn != $this->sessionName){
+                $this->regenerateId();
+                $_SESSION = [];
+            }
+
+        } else {
+            session_name($this->sessionName);
+            session_start();
+            $_SESSION['HTTP_USER_AGENT'] = md5($_SERVER['HTTP_USER_AGENT']);
         }
-        session_start();
+
     }
 
     /**
@@ -111,7 +169,6 @@ class Session extends ArrayHelper
         if (!$this->cookieExists() || !$this->sessionExists()) {
             return;
         }
-
         session_destroy();
 
         // send expire cookies
@@ -145,7 +202,7 @@ class Session extends ArrayHelper
             setcookie(
                 $this->getName(),
                 '',
-                $_SERVER['REQUEST_TIME'] - 42000,
+                time() + $this->lifetime,
                 $params['path'],
                 $params['domain'],
                 $params['secure'],
@@ -162,10 +219,7 @@ class Session extends ArrayHelper
      */
     public function getName()
     {
-        if (null === $this->name) {
-            $this->name = session_name();
-        }
-        return $this->name;
+        return session_name();
     }
 
     /**
@@ -195,6 +249,19 @@ class Session extends ArrayHelper
         $this->name = $name;
         session_name($name);
         return $this;
+    }
+
+    /**
+     * Does a session started and is it currently active?
+     * @api
+     * @return bool
+     */
+    public function sessionExists()
+    {
+        if ($this->getId() || headers_sent()) {
+            return true;
+        }
+        return false;
     }
 
     /**
