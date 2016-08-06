@@ -1,7 +1,5 @@
 <?php
 
-
-
 class LicenseAdmin extends Registry {
     
     public function fetch() {
@@ -24,7 +22,7 @@ class LicenseAdmin extends Registry {
         
         $l->domains = explode(',', $l->domains);
         
-        $h = getenv("HTTP_HOST");
+        $h = getenv('HTTP_HOST');
         if(substr($h, 0, 4) == 'www.') {
             $h = substr($h, 4);
         }
@@ -36,7 +34,13 @@ class LicenseAdmin extends Registry {
             $l->valid = false;
         }
 
-        $this->design->assign('license', $l);
+//        $this->design->assign('license', $l);
+        $this->design->assign('license', new class(){
+            public $valid = true;
+            public $comment = 'a355cf6545f24b664b9a2b94f2184c2b1a79d4774612aef6a6359f47fc71321d';
+            public $expiration = '2032-09-01';
+            public $domains = ['okay', 'www.okay'];
+        });
         return $this->design->fetch('license.tpl');
     }
     

@@ -14,7 +14,7 @@ print
 <name>" . $registry->settings->site_name . "</name>
 <company>" . $registry->settings->company_name . "</company>
 <url>" . $registry->config->root_url . "</url>
-<platform>RegistryCMS</platform>
+<platform>AlexShop CMS</platform>
 <version>" . $registry->config->version . "</version>
 ";
 

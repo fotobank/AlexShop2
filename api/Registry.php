@@ -82,15 +82,16 @@ class Registry {
         if (isset(self::$objects[$class])){
             return self::$objects[$class];
         }
-        $file_class = __DIR__ . '/' . $class . '.php';
 
+        $file_class = __DIR__ . '/' . $class . '.php';
         if(is_readable($file_class)){
-            require_once $file_class;
+         //   require_once $file_class;
             self::$objects[$class] = new $class();
 
         } else {
             return null;
         }
+
         // Возвращаем созданный объект
         return self::$objects[$class];
 	}

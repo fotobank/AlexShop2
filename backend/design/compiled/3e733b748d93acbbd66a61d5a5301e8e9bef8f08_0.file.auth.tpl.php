@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-05 11:57:45
+/* Smarty version 3.1.29, created on 2016-08-07 00:03:43
   from "O:\domains\okay\backend\design\html\auth.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57a455098dd541_58848894',
+  'unifunc' => 'content_57a650af0847b9_35446545',
   'file_dependency' => 
   array (
     '3e733b748d93acbbd66a61d5a5301e8e9bef8f08' => 
     array (
       0 => 'O:\\domains\\okay\\backend\\design\\html\\auth.tpl',
-      1 => 1470387428,
+      1 => 1470517418,
       2 => 'file',
     ),
   ),
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_57a455098dd541_58848894 ($_smarty_tpl) {
+function content_57a650af0847b9_35446545 ($_smarty_tpl) {
 $_smarty_tpl->tpl_vars['wrapper'] = new Smarty_Variable('', null);
 $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, 'wrapper', 66);?>
 <html>
@@ -27,14 +27,23 @@ $_smarty_tpl->ext->_updateScope->updateScope($_smarty_tpl, 'wrapper', 66);?>
 <link rel="icon" href="design/images/favicon.png" type="image/x-icon">
     <body>
         <style type="text/css" scoped>
-            @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,cyrillic);
+            /*@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,cyrillic);*/
             body {
                 padding: 0;
                 margin: 0;
                 text-align: center;
-                font-size: 14px;
-                font-family: 'Roboto', sans-serif;
+                /*font-size: 14px;*/
+                /*font-family: 'Roboto', sans-serif;*/
                 background-color: #e4e5e5;
+
+                font-family: Verdana, sans-serif;
+                font-size: 13px;
+                font-weight: 400;
+                font-style: normal;
+                color: #000000;
+                line-height: 1.53em;
+                letter-spacing: 0;
+
             }
             #system_logo {
                 height: 120px;

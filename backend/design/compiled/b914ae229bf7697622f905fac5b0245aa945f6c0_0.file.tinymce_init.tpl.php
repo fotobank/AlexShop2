@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-05 14:51:35
+/* Smarty version 3.1.29, created on 2016-08-07 00:44:19
   from "O:\domains\okay\backend\design\html\tinymce_init.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57a47dc7964587_19229622',
+  'unifunc' => 'content_57a65a33141490_31394261',
   'file_dependency' => 
   array (
     'b914ae229bf7697622f905fac5b0245aa945f6c0' => 
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_57a47dc7964587_19229622 ($_smarty_tpl) {
+function content_57a65a33141490_31394261 ($_smarty_tpl) {
 if ($_smarty_tpl->tpl_vars['config']->value->subfolder != '/') {?>
     <?php echo '<script'; ?>
  type="text/javascript" src="/<?php echo $_smarty_tpl->tpl_vars['config']->value->subfolder;?>

@@ -1,7 +1,5 @@
 <?php
 
-require_once('View.php');
-
 class ProductView extends View {
     
     public function fetch() {

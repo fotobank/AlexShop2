@@ -42,8 +42,9 @@ class Session extends ArrayHelper
 
     protected $sessionName = '_encrypted';
     protected $lifetime = 3600; // 3600 = 1 час
-    protected $checkIP = true;
-    protected $autoRegenerateID = false;
+    protected $checkIP = false; // включить если у админа постоянный Ip
+    protected $autoRegenerateID = false; // всегда для этого сайта
+
     protected $running = false;
 
 

@@ -1,7 +1,5 @@
 <?php
 
-require_once('View.php');
-
 class RegisterView extends View {
     
     public function fetch() {

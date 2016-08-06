@@ -1,7 +1,5 @@
 <?php
 
-
-
 class Managers extends Registry {
     
     public $permissions_list = array('products', 'categories', 'brands', 'features', 'orders', 'labels',
@@ -13,11 +11,13 @@ class Managers extends Registry {
 
     private $all_managers = array();
     
-    public function __construct() {}
+    public function __construct() {
+        parent::__construct();
+    }
 
     private function init_managers() {
         $this->all_managers = array();
-        $this->db->query("SELECT * FROM __managers ORDER BY id");
+        $this->db->query('SELECT * FROM __managers ORDER BY id');
         foreach ($this->db->results() as $m) {
             $this->all_managers[$m->id] = $m;
             if (!is_null($m->permissions)) {
@@ -84,7 +84,7 @@ class Managers extends Registry {
                 $manager->permissions = null;
             }
         }
-        $this->db->query("INSERT INTO __managers SET ?%", $manager);
+        $this->db->query('INSERT INTO __managers SET ?%', $manager);
         $id = $this->db->insert_id();
         $this->init_managers();
         return $id;
@@ -106,14 +106,14 @@ class Managers extends Registry {
             }
         }
 
-        $this->db->query("UPDATE __managers SET ?% WHERE id=?", $manager, intval($id));
+        $this->db->query('UPDATE __managers SET ?% WHERE id=?', $manager, (int)$id);
         $this->init_managers();
         return $id;
     }
     
     public function delete_manager($id) {
         if (!empty($id)) {
-            $this->db->query("DELETE FROM __managers WHERE id=?", intval($id));
+            $this->db->query('DELETE FROM __managers WHERE id=?', (int)$id);
             $this->init_managers();
             return true;
         }

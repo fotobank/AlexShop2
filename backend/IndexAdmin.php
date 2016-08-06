@@ -1,5 +1,5 @@
 <?php
-
+use Whoops\Exception\ErrorException;
 
 /**
  * Этот класс выбирает модуль в зависимости от параметра Section и выводит его на экран
@@ -153,6 +153,8 @@ class IndexAdmin extends Registry {
         /*YaMetrika*/
         'RobotsAdmin'         => 'robots'
     );
+
+    protected $manager;
     
     // Конструктор
     public function __construct() {
@@ -205,7 +207,7 @@ class IndexAdmin extends Registry {
                 public $valid = true;
                 public $comment = 'a355cf6545f24b664b9a2b94f2184c2b1a79d4774612aef6a6359f47fc71321d';
                 public $expiration = '2032-09-01';
-                public $domains = ['Registry', 'www.Registry'];
+                public $domains = ['okay', 'www.okay'];
             });
         }
 
@@ -221,11 +223,11 @@ class IndexAdmin extends Registry {
         
         if (count($languages)) {
             $post_lang_id = $this->request->post('lang_id', 'integer');
-            $admin_lang_id = ($post_lang_id ? $post_lang_id : $this->request->get('lang_id', 'integer'));
+            $admin_lang_id = ($post_lang_id ?: $this->request->get('lang_id', 'integer'));
             if ($admin_lang_id) {
                 $_SESSION['admin_lang_id'] = $admin_lang_id;
             }
-            if (!isset($_SESSION['admin_lang_id']) || !isset($languages[$_SESSION['admin_lang_id']])) {
+            if (!isset($_SESSION['admin_lang_id'], $languages[$_SESSION['admin_lang_id']])) {
                 $l = reset($languages);
                 $_SESSION['admin_lang_id'] = $l->id;
             }
@@ -264,16 +266,8 @@ class IndexAdmin extends Registry {
         if (isset($this->left_menu[$module])) {
             $this->design->assign('menu_selected', $this->left_menu[$module]);
         }
-        
-        // Подключаем файл с необходимым модулем
-        require_once ROOT . 'backend/'.$module.'.php';
-        
-        // Создаем соответствующий модуль
-        if(class_exists($module)) {
-            $this->module = new $module();
-        } else {
-            die("Error creating $module class");
-        }
+        // создаем необходимый модуль
+        $this->module = new $module();
     }
     
     public function fetch() {
@@ -293,18 +287,18 @@ class IndexAdmin extends Registry {
         
         // Счетчики для верхнего меню
         $new_orders_counter = $this->orders->count_orders(array('status'=>0));
-        $this->design->assign("new_orders_counter", $new_orders_counter);
+        $this->design->assign('new_orders_counter', $new_orders_counter);
         
         $new_comments_counter = $this->comments->count_comments(array('approved'=>0));
-        $this->design->assign("new_comments_counter", $new_comments_counter);
+        $this->design->assign('new_comments_counter', $new_comments_counter);
 
         $new_feedbacks = $this->feedbacks->get_feedbacks(array('processed'=>0));
         $new_feedbacks_counter = count($new_feedbacks);
-        $this->design->assign("new_feedbacks_counter", $new_feedbacks_counter);
+        $this->design->assign('new_feedbacks_counter', $new_feedbacks_counter);
         
         $new_callbacks = $this->callbacks->get_callbacks(array('processed'=>0));
         $new_callbacks_counter = count($new_callbacks);
-        $this->design->assign("new_callbacks_counter", $new_callbacks_counter);
+        $this->design->assign('new_callbacks_counter', $new_callbacks_counter);
         
         // Создаем текущую обертку сайта (обычно index.tpl)
         $wrapper = $this->design->smarty->getTemplateVars('wrapper');

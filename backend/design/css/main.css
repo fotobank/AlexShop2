@@ -1,5 +1,4 @@
-@import url(https://fonts.googleapis.com/
-    css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic);
 
 body, html{
 	width: 100%;
@@ -8,13 +7,15 @@ body, html{
 body{
 	background-color: #ebebeb;
 	color: #243541;
-    font-family: 'Roboto', sans-serif;
-	font-weight: 300;
-	font-size: 14px;
+    /*font-family: 'Roboto', sans-serif;*/
+    font-family: Verdana, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
 }
 textarea{
-    font-family: "Roboto",​sans-serif;
-    font-size: 14px;
+    /*font-family: "Roboto", ​sans-serif, serif;*/
+    font-family: Verdana, sans-serif;
+    font-size: 13px;
     font-weight: 400;
     color: #353b3e;
 }
@@ -76,31 +77,31 @@ textarea{
     background-position: 0 -160px;
 }
 #main_menu .icon_orders{
-    background-position: 0px -280px;
+    background-position: 0 -280px;
 }
 #main_menu .icon_pages{
-    background-position: 0px -120px;
+    background-position: 0 -120px;
 }
 #main_menu .icon_blog{
-    background-position: 0px -320px;
+    background-position: 0 -320px;
 }
 #main_menu .icon_comments{
-    background-position: 0px -240px;
+    background-position: 0 -240px;
 }
 #main_menu .icon_automatic{
-    background-position: 0px -360px;
+    background-position: 0 -360px;
 }
 #main_menu .icon_statistic{
-    background-position: 0px -40px;
+    background-position: 0 -40px;
 }
 #main_menu .icon_design{
-    background-position: 0px -200px;
+    background-position: 0 -200px;
 }
 #main_menu i.icon_settings{
-     background-position: 0px -80px;
+     background-position: 0 -80px;
 }
 #main_menu .icon_banner{
-    background-position: 0px -500px;
+    background-position: 0 -500px;
 }
 #main_menu .icon_topvisor {
 	background-position: 1px -407px;
@@ -118,7 +119,7 @@ textarea{
 }
 #main_menu li:hover .icon_users, 
 #main_menu li.active .icon_users {
-    background-position: -40px 0px;
+    background-position: -40px 0;
 }
 #main_menu li:hover .icon_pages, 
 #main_menu li.active .icon_pages {
@@ -336,7 +337,7 @@ a.edit {
 	overflow:hidden;
 	background-color: #f7f7f7;
 	border: 1px solid #fff;
-    box-shadow: 0 0 0px 1px #dfdfdf;
+    box-shadow: 0 0 0 1px #dfdfdf;
 }
 #middle h1 {
 	font-size: 28px;
@@ -423,14 +424,17 @@ a:hover {
     text-decoration: none;
 }
 .dash_link {
+    font-family: 'Roboto', sans-serif;
+    /*letter-spacing: 0.05em;*/
 	cursor: pointer;
 	border-bottom: 1px dotted;
 	font-weight: normal;
 	font-style: normal;
 	color: #243541;
 	text-decoration: none;
-    padding: 5px 0px 0;
+    padding: 5px 0 0;
     display: inline-block;
+    font-size: 13px;
 }
 
 #add_variant .dash_link {
@@ -450,9 +454,14 @@ a:hover {
 .button_red, 
 .button_yellow{
     color: #243541;
-	font-family: 'Roboto', sans-serif;
+	/*font-family: 'Roboto', sans-serif;*/
     font-weight: 500;
 	font-size: 16px;
+    font-family: Verdana, sans-serif;
+    font-style: normal;
+    line-height: 1.53em;
+    letter-spacing: 0;
+
     background: #ffcc00;
     cursor: pointer;
     border-radius: 3px;
@@ -595,7 +604,7 @@ input[name*="check"] + label{
     margin-top: 1px;
 }
 input[name*="check"]:checked + label{
-   background-position: 0px 20px;
+   background-position: 0 20px;
 }
 /*стилизация всех чекбоксов в админке*/
 .yandex_list label {
@@ -667,4 +676,7 @@ input[name*="check"]:checked + label{
 }
 .dash_link:hover{
     border-bottom: none;
+}
+#cms_logo {
+    margin-top: 12px;
 }

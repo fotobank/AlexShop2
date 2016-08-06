@@ -4,14 +4,23 @@
 <link rel="icon" href="design/images/favicon.png" type="image/x-icon">
     <body>
         <style type="text/css" scoped>
-            @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,cyrillic);
+            /*@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,cyrillic);*/
             body {
                 padding: 0;
                 margin: 0;
                 text-align: center;
-                font-size: 14px;
-                font-family: 'Roboto', sans-serif;
+                /*font-size: 14px;*/
+                /*font-family: 'Roboto', sans-serif;*/
                 background-color: #e4e5e5;
+
+                font-family: Verdana, sans-serif;
+                font-size: 13px;
+                font-weight: 400;
+                font-style: normal;
+                color: #000000;
+                line-height: 1.53em;
+                letter-spacing: 0;
+
             }
             #system_logo {
                 height: 120px;

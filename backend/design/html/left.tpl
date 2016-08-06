@@ -1,5 +1,5 @@
 
-<div id="okay_logo">
+<div id="cms_logo">
      <a href='index.php?module=LicenseAdmin'><img src="design/images/logo.png" alt="AlexShop CMS"/></a>
 </div>
 
@@ -249,6 +249,3 @@
 	{/if}
 {/if}
 </div>
-
-
-

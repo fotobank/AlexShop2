@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-05 13:46:05
+/* Smarty version 3.1.29, created on 2016-08-06 18:06:35
   from "O:\domains\okay\backend\design\html\pagination.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57a46e6d6251d9_38781122',
+  'unifunc' => 'content_57a5fcfb9c16a6_04181564',
   'file_dependency' => 
   array (
     'e61496d249c9b36081d28e844da7cbbe94470475' => 
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_57a46e6d6251d9_38781122 ($_smarty_tpl) {
+function content_57a5fcfb9c16a6_04181564 ($_smarty_tpl) {
 if ($_smarty_tpl->tpl_vars['pages_count']->value > 1) {?>
 
 

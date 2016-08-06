@@ -49,7 +49,7 @@ class YandexMoney extends Registry
 
 					<input type="hidden" name="customerNumber" value="'.$order->id.'">
 					'.$payment_type.'
-					<input type="hidden" name="cms_name" value="Registrycms"/>
+					<input type="hidden" name="cms_name" value="AlexShop CMS"/>
 					<input type="submit" name="submit-button" value="'.$button_text.'" class="checkout_button">
 					</form>';
 		return $res;

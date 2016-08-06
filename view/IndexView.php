@@ -1,7 +1,5 @@
 <?php
 
-require_once('View.php');
-
 class IndexView extends View {
     
     public $modules_dir = 'view/';

@@ -1,6 +1,6 @@
 <?php
 
-require_once('View.php');
+
 
 class ProductsView extends View {
 

@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-05 13:46:05
+/* Smarty version 3.1.29, created on 2016-08-06 22:24:52
   from "O:\domains\okay\backend\design\html\index.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57a46e6d732a80_39039809',
+  'unifunc' => 'content_57a63984402264_43896063',
   'file_dependency' => 
   array (
     'c08f547b41df92a75ad7970a301bcf677555f93d' => 
     array (
       0 => 'O:\\domains\\okay\\backend\\design\\html\\index.tpl',
-      1 => 1470377883,
+      1 => 1470511469,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,8 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
     'file:left.tpl' => 1,
   ),
 ),false)) {
-function content_57a46e6d732a80_39039809 ($_smarty_tpl) {
+function content_57a63984402264_43896063 ($_smarty_tpl) {
+if (!is_callable('smarty_modifier_debug_print_var')) require_once 'O:\\domains\\okay\\vendor\\smarty\\smarty\\libs\\plugins\\modifier.debug_print_var.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -109,7 +110,7 @@ echo '<script'; ?>
 
     <div id="main">
         <ul id="tab_menu">
-            <?php echo (isset($_smarty_tpl->_cache['__smarty_capture']['tabs']) ? $_smarty_tpl->_cache['__smarty_capture']['tabs'] : null);?>
+            <?php echo smarty_modifier_debug_print_var((isset($_smarty_tpl->_cache['__smarty_capture']['tabs']) ? $_smarty_tpl->_cache['__smarty_capture']['tabs'] : null));?>
 
         </ul>
         <div id="middle">
@@ -132,7 +133,5 @@ echo '<script'; ?>
     <input class="button_green button_save" type="submit" name="" value="Сохранить"/>
 </div>
 </body>
-</html>
-
-<?php }
+</html><?php }
 }

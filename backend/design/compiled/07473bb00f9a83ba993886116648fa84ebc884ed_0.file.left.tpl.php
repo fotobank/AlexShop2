@@ -1,17 +1,17 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-05 13:46:06
+/* Smarty version 3.1.29, created on 2016-08-06 18:06:36
   from "O:\domains\okay\backend\design\html\left.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57a46e6e4779f3_51602148',
+  'unifunc' => 'content_57a5fcfc7e8f55_06755250',
   'file_dependency' => 
   array (
     '07473bb00f9a83ba993886116648fa84ebc884ed' => 
     array (
       0 => 'O:\\domains\\okay\\backend\\design\\html\\left.tpl',
-      1 => 1470387624,
+      1 => 1470486580,
       2 => 'file',
     ),
   ),
@@ -19,10 +19,10 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_57a46e6e4779f3_51602148 ($_smarty_tpl) {
+function content_57a5fcfc7e8f55_06755250 ($_smarty_tpl) {
 ?>
 
-<div id="okay_logo">
+<div id="cms_logo">
      <a href='index.php?module=LicenseAdmin'><img src="design/images/logo.png" alt="AlexShop CMS"/></a>
 </div>
 
@@ -319,9 +319,5 @@ $_smarty_tpl->tpl_vars['d'] = $__foreach_d_1_saved_item;
 		<span><a href='index.php?module=LicenseAdmin'>Лицензия</a> недействительна.</span>
 	<?php }
 }?>
-</div>
-
-
-
-<?php }
+</div><?php }
 }

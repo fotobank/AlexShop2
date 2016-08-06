@@ -40,12 +40,10 @@ new Autoloader();
 
 
 Session::start();
-//session_start();
 
 require SYS_DIR . 'inc/api_functions.php';
 require SYS_DIR . 'inc/functions.php';
 require SYS_DIR . 'inc/global.php';
-
 
 
 if(DEBUG_MODE || Session::get('logged') === true)

@@ -5,8 +5,7 @@ require_once SYS_DIR . 'core' . DS . 'boot.php';
 
     chdir('../../');
 
-
-
+/** todo доделать загрузку */
 	$registry = new Registry();
 	$manager = $registry->managers->get_manager();
 	if ($manager) {

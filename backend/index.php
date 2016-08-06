@@ -9,11 +9,8 @@ $time_start = microtime(true);
 require_once __DIR__ . '/../system/configs/define/config.php';
 require_once SYS_DIR . 'core' . DS . 'boot.php';
 
-$_SESSION['id'] = session_id();
-
+Session::set('id', session_id());
 chdir('..');
-
-require_once ROOT . 'backend/IndexAdmin.php';
 
 // Кеширование в админке нам не нужно
 header('Cache-Control: no-cache, must-revalidate');
@@ -25,7 +22,7 @@ $backend = new IndexAdmin();
 
 // Проверка id сессии для защиты от xss
 if(!Session::check_session()) {
-    Debugger::log(new Exception('XSS атака на admin адресс сайта: http://' . $_SERVER['SERVER_NAME'] .
+    Debugger::log(new Exception('XSS атака на admin адрес сайта: http://' . $_SERVER['SERVER_NAME'] .
         ' бот пришел из: ' . $_SERVER['HTTP_REFERER'] . ' Ip адресс: ' . $_SERVER['REMOTE_ADDR']), Debugger::ERROR);
 }
 

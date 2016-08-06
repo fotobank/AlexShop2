@@ -1,7 +1,5 @@
 <?php
 
-require_once('View.php');
-
 class BlogView extends View {
     
     public function fetch() {
