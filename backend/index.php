@@ -1,6 +1,9 @@
 <?php
 
 // Засекаем время
+use proxy\Session;
+use Tracy\Debugger;
+
 $time_start = microtime(true);
 
 require_once __DIR__ . '/../system/configs/define/config.php';
@@ -9,9 +12,6 @@ require_once SYS_DIR . 'core' . DS . 'boot.php';
 $_SESSION['id'] = session_id();
 
 chdir('..');
-
-@ini_set('session.gc_maxlifetime', 86400); // 86400 = 24 часа
-@ini_set('session.cookie_lifetime', 0); // 0 - пока браузер не закрыт
 
 require_once ROOT . 'backend/IndexAdmin.php';
 
@@ -22,10 +22,11 @@ header('Pragma: no-cache');
 
 $backend = new IndexAdmin();
 
+
 // Проверка id сессии для защиты от xss
-if(!$backend->request->check_session()) {
-    unset($_POST);
-    trigger_error('Session expired', E_USER_WARNING);
+if(!Session::check_session()) {
+    Debugger::log(new Exception('XSS атака на admin адресс сайта: http://' . $_SERVER['SERVER_NAME'] .
+        ' бот пришел из: ' . $_SERVER['HTTP_REFERER'] . ' Ip адресс: ' . $_SERVER['REMOTE_ADDR']), Debugger::ERROR);
 }
 
 

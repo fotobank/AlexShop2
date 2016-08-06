@@ -133,6 +133,10 @@ use helper\Session\Session as Instance;
  *
  * @method   static Session setId($id)
  * @see      proxy\Session::setId()
+ *
+ * @method   static Session check_session()
+ * @see      proxy\Session::check_session()
+ *
  */
 class Session extends AbstractProxy
 {

@@ -43,7 +43,7 @@ class Session extends ArrayHelper
     protected $sessionName = '_encrypted';
     protected $lifetime = 3600; // 3600 = 1 час
     protected $checkIP = true;
-    protected $autoRegenerateID = true;
+    protected $autoRegenerateID = false;
     protected $running = false;
 
 
@@ -72,18 +72,11 @@ class Session extends ArrayHelper
     public function start()
     {
         $this->phpSessionInit();
-        if ($this->autoRegenerateID){
-            $this->regenerateId();
-        }
+        // проверка времени работы сессии и на неправильный снимок
         if ($this->isExpired() || $this->isWrongFingerprint()){
-            if (!$this->autoRegenerateID){
-                $this->regenerateId();
-            }
-            $_SESSION = [];
-            if(!headers_sent()){
-                header('location: index.php');
-                exit();
-            }
+          //  if (!$this->autoRegenerateID){
+                 $this->regenerateId();
+          //  }
         }
         $this->running = true;
     }
@@ -115,7 +108,6 @@ class Session extends ArrayHelper
         $fingerprint = $_SERVER['HTTP_USER_AGENT'] .
             $_SERVER['HTTP_ACCEPT_LANGUAGE'] .
             $_SERVER['HTTP_ACCEPT_CHARSET'] .
-            $_SERVER['HTTP_ACCEPT_ENCODING'] .
             $_SERVER['HTTP_CONNECTION'];
 
         if ($this->checkIP){
@@ -137,15 +129,13 @@ class Session extends ArrayHelper
     {
         if ($this->sessionExists()) {
             $sn = session_name();
-            if ($sn != $this->sessionName){
+            if ($sn != $this->sessionName || $this->autoRegenerateID){
                 $this->regenerateId();
-                $_SESSION = [];
             }
 
         } else {
             session_name($this->sessionName);
             session_start();
-            $_SESSION['HTTP_USER_AGENT'] = md5($_SERVER['HTTP_USER_AGENT']);
         }
 
     }
@@ -164,7 +154,7 @@ class Session extends ArrayHelper
 
     public function destroy()
     {
-        if (!$this->cookieExists() || !$this->sessionExists()) {
+        if (!$this->sessionExists()) {
             return;
         }
         session_destroy();
@@ -208,6 +198,7 @@ class Session extends ArrayHelper
             );
         }
     }
+
     /**
      * Get session name
      *
@@ -256,7 +247,7 @@ class Session extends ArrayHelper
      */
     public function sessionExists()
     {
-        return ($this->getId() || headers_sent());
+        return  session_id() ? true : false;
     }
 
     /**
@@ -291,7 +282,9 @@ class Session extends ArrayHelper
     public function regenerateId($deleteOldSession = true)
     {
         if ($this->sessionExists()) {
-            return session_regenerate_id((bool) $deleteOldSession);
+            $ret =  session_regenerate_id((bool) $deleteOldSession);
+            $this->expireSessionCookie();
+            return $ret;
         } else {
             return false;
         }
@@ -314,5 +307,18 @@ class Session extends ArrayHelper
         }
         session_id($id);
         return $this;
+    }
+
+    /**
+     * Проверка id сессии для защиты от xss
+     */
+    public function check_session() {
+        if(isset($_POST, $_POST['session_id'])) {
+            if(empty($_POST['session_id']) || $_POST['session_id'] != session_id()) {
+                unset($_POST);
+                return false;
+            }
+        }
+        return true;
     }
 }
