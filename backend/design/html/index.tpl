@@ -76,6 +76,13 @@
 
     <div id="main">
         <ul id="tab_menu">
+
+    {if in_array($tab, $manager->permissions)}
+        <li {if $activity ne ""}class={$activity}{/if}>
+          <a href="index.php?module=GroupsAdmin">Группы</a>
+        </li>
+    {/if}
+
             {$smarty.capture.tabs}
 
         </ul>

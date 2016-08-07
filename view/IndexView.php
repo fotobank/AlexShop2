@@ -31,14 +31,14 @@ class IndexView extends View {
         // E-mail подписка
         if ($this->request->post('subscribe')) {
             $email = $this->request->post('subscribe_email');
-            $this->db->query("select count(id) as cnt from __subscribe_mailing where email=?", $email);
+            $this->db->query('select count(id) as cnt from __subscribe_mailing where email=?', $email);
             $cnt = $this->db->result('cnt');
             if (empty($email)) {
                 $this->design->assign('subscribe_error', 'empty_email');
             } elseif ($cnt > 0) {
                 $this->design->assign('subscribe_error', 'email_exist');
             } else {
-                $this->db->query("insert into __subscribe_mailing set email=?", $email);
+                $this->db->query('insert into __subscribe_mailing set email=?', $email);
                 $this->design->assign('subscribe_success', '1');
             }
         }
@@ -64,7 +64,7 @@ class IndexView extends View {
         
         // Текущий модуль (для отображения центрального блока)
         $module = $this->request->get('module', 'string');
-        $module = preg_replace("/[^A-Za-z0-9]+/", "", $module);
+        $module = preg_replace('/[^A-Za-z0-9]+/', '', $module);
         
         // Если не задан - берем из настроек
         if(empty($module)) {

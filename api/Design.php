@@ -15,6 +15,7 @@ class Design extends Registry {
         
         // Создаем и настраиваем Смарти
         $this->smarty = new Smarty();
+
         $this->smarty->compile_check = $this->config->smarty_compile_check;
         $this->smarty->caching = $this->config->smarty_caching;
         $this->smarty->cache_lifetime = $this->config->smarty_cache_lifetime;

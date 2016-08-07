@@ -280,13 +280,13 @@ class IndexAdmin extends Registry {
         // Проверка прав доступа к модулю
         if($class_module == 'AuthAdmin' || $this->managers->access($tpl_name)) {
             $content = $this->module->fetch();
-     $tabs = $this->design->smarty->getTemplateVars('tabs');
             $this->design->assign('content', $content);
         } else {
             $this->design->assign('content', 'Permission denied');
             $this->design->assign('menu_selected', '');
         }
-        
+
+
         // Счетчики для верхнего меню
         $new_orders_counter = $this->orders->count_orders(array('status'=>0));
         $this->design->assign('new_orders_counter', $new_orders_counter);
