@@ -1,5 +1,8 @@
 <?php
 
+use api\Registry;
+
+
 class UsersAdmin extends Registry {
     
     public function fetch() {

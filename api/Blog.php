@@ -1,5 +1,7 @@
 <?php
 
+namespace api;
+
 class Blog extends Registry {
     
     public function get_post($id) {

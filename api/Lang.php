@@ -1,6 +1,6 @@
 <?php
 
-
+namespace api;
 
 class Lang extends Registry {
     
@@ -85,8 +85,8 @@ class Lang extends Registry {
             $lang_join = '';
         }
         $lang_col = $f.'.'.implode(', '.$f.'.',$this->get_fields($this->tables[$object]));
-        
-        $result = new stdClass;
+
+        $result = new \stdClass;
         $result->join   = $lang_join;
         $result->fields = $lang_col;
         

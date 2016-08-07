@@ -1,5 +1,7 @@
 <?php
 
+namespace api;
+
 class Callbacks extends Registry {
 
     public function email_callback_admin($callback_id) {

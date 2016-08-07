@@ -1,5 +1,7 @@
 <?php
 
+namespace api;
+
 class Brands extends Registry {
     
     public function get_brands($filter = []) {

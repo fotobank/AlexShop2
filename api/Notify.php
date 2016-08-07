@@ -1,5 +1,7 @@
 <?php
 
+namespace api;
+
 class Notify extends Registry {
     
     public function email($to, $subject, $message, $from = '', $reply_to = '') {

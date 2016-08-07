@@ -5,6 +5,14 @@
  * В отличие от класса Settings, Config оперирует низкоуровневыми настройками, например найстройками базы данных.
  */
 
+namespace api;
+
+/**
+ * Class Config
+ *
+ * @property $this smarty_html_minify
+ *
+ */
 class Config
 {
 

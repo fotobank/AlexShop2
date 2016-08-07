@@ -1,8 +1,11 @@
 <?php
 
+use api\Registry;
 
 
-########################################
+/**
+ * Class PagesAdmin
+ */
 class PagesAdmin extends Registry {
     
     public function fetch() {

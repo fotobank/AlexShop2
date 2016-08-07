@@ -1,6 +1,6 @@
 <?php
 
-
+namespace api;
 
 class Payment extends Registry {
 	

@@ -1,4 +1,6 @@
 <?php
+namespace api;
+
 
 class Money extends Registry {
     

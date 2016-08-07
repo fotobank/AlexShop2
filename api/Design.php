@@ -1,6 +1,9 @@
 <?php
 
+namespace api;
+
 use core\Alex;
+use Smarty;
 
 
 class Design extends Registry {
@@ -293,7 +296,13 @@ class Design extends Registry {
     public function time_modifier($date, $format = null) {
         return date(empty($format)?'H:i':$format, strtotime($date));
     }
-    
+
+    /**
+     * @param         $params
+     * @param \Smarty $smarty
+     *
+     * @return bool
+     */
     public function api_plugin($params, &$smarty) {
         if(!isset($params['module'])) {
             return false;

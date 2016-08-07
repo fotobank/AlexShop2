@@ -1,6 +1,6 @@
 <?php
 
-
+namespace api;
 
 class Topvisor extends Registry {
     

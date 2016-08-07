@@ -1,5 +1,5 @@
 <?php
-
+namespace api;
 
 use exception\DbException;
 
@@ -39,7 +39,7 @@ class Database extends Registry
         } // Иначе устанавливаем соединение
         else {
 
-            $this->mysqli = new mysqli($this->config->db_server, $this->config->db_user,
+            $this->mysqli = new \mysqli($this->config->db_server, $this->config->db_user,
                 $this->config->db_password, $this->config->db_name);
         }
 

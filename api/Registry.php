@@ -1,42 +1,44 @@
 <?php
-use proxy\Config;
+
+namespace api;
+
 
 
 /**
  * Основной класс AlexShop для доступа к API CMS
  *
- * @property Config()     config
- * @property Request()    request
- * @property Database()   db
- * @property Settings()   settings
- * @property Design()     design
- * @property Products()   products
- * @property Variants()   variants
- * @property Categories() categories
- * @property Brands()     brands
- * @property Features()   features
- * @property Money()      money
- * @property Pages()      pages
- * @property Blog()       blog
- * @property Cart()       cart
- * @property Image()      image
- * @property Delivery()   delivery
- * @property Payment()    payment
- * @property Orders()     orders
- * @property Users()      users
- * @property Coupons()    coupons
- * @property Comments()   comments
- * @property Feedbacks()  feedbacks
- * @property Notify()     notify
- * @property Managers()   managers
- * @property Lang() languages
- * @property Translations() translations
- * @property Comparison() comparison
- * @property Subscribes() subscribes
- * @property Banners() banners
- * @property Callbacks() callbacks
- * @property ReportStat() reportstat
- * @property Topvisor() topvisor
+ * @property \api\Config()     config
+ * @property \api\Request()    request
+ * @property \api\Database()   db
+ * @property \api\Settings()   settings
+ * @property \api\Design()     design
+ * @property \api\Products()   products
+ * @property \api\Variants()   variants
+ * @property \api\Categories() categories
+ * @property \api\Brands()     brands
+ * @property \api\Features()   features
+ * @property \api\Money()      money
+ * @property \api\Pages()      pages
+ * @property \api\Blog()       blog
+ * @property \api\Cart()       cart
+ * @property \api\Image()      image
+ * @property \api\Delivery()   delivery
+ * @property \api\Payment()    payment
+ * @property \api\Orders()     orders
+ * @property \api\Users()      users
+ * @property \api\Coupons()    coupons
+ * @property \api\Comments()   comments
+ * @property \api\Feedbacks()  feedbacks
+ * @property \api\Notify()     notify
+ * @property \api\Managers()   managers
+ * @property \api\Lang() languages
+ * @property \api\Translations() translations
+ * @property \api\Comparison() comparison
+ * @property \api\Subscribes() subscribes
+ * @property \api\Banners() banners
+ * @property \api\Callbacks() callbacks
+ * @property \api\ReportStat() reportstat
+ * @property \api\Topvisor() topvisor
  */
 class Registry {
 
@@ -85,8 +87,9 @@ class Registry {
 
         $file_class = __DIR__ . '/' . $class . '.php';
         if(is_readable($file_class)){
+            $name = "api\\$class";
          //   require_once $file_class;
-            self::$objects[$class] = new $class();
+            self::$objects[$class] = new $name();
 
         } else {
             return null;

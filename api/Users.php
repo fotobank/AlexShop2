@@ -1,6 +1,6 @@
 <?php
 
-
+namespace api;
 
 class Users extends Registry {
     

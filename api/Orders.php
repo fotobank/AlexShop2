@@ -1,5 +1,5 @@
 <?php
-
+namespace api;
 
 /**
  * Class Orders

@@ -1,6 +1,6 @@
 <?php
 
-
+namespace api;
 
 class Subscribes extends Registry {
     
