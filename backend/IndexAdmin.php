@@ -1,5 +1,5 @@
 <?php
-use Whoops\Exception\ErrorException;
+
 
 /**
  * Этот класс выбирает модуль в зависимости от параметра Section и выводит его на экран
@@ -163,7 +163,7 @@ class IndexAdmin extends Registry {
 
         // Берем название модуля из get-запроса
         $module = $this->request->get('module', 'string');
-        $module = preg_replace("/[^A-Za-z0-9]+/", "", $module);
+        $module = preg_replace('/[^A-Za-z0-9]+/', '', $module);
 
         // Администратор
         $this->manager = $this->managers->get_manager();
@@ -214,7 +214,7 @@ class IndexAdmin extends Registry {
         $this->design->set_templates_dir('backend/design/html');
         $this->design->set_compiled_dir('backend/design/compiled');
 
-        $this->design->assign('settings',	$this->settings);
+        $this->design->assign('settings', $this->settings);
         $this->design->assign('config',	$this->config);
         
         // Язык
@@ -252,7 +252,7 @@ class IndexAdmin extends Registry {
         $this->design->assign('lang_link', $lang_link);
         
         // Если не запросили модуль - используем модуль первый из разрешенных
-        if(empty($module) || !is_file('backend/'.$module.'.php')) {
+        if(null === $module || !is_file('backend/'.$module.'.php')) {
             foreach($this->modules_permissions as $m=>$p) {
                 if($this->managers->access($p)) {
                     $module = $m;
@@ -274,11 +274,13 @@ class IndexAdmin extends Registry {
         $currency = $this->money->get_currency();
         $this->design->assign('currency', $currency);
         $content = '';
+        $class_module = get_class($this->module);
+        $tpl_name = $this->modules_permissions[get_class($this->module)] ?? false;
 
         // Проверка прав доступа к модулю
-        if(get_class($this->module) == 'AuthAdmin' || (isset($this->modules_permissions[get_class($this->module)])
-        && $this->managers->access($this->modules_permissions[get_class($this->module)]))) {
+        if($class_module == 'AuthAdmin' || $this->managers->access($tpl_name)) {
             $content = $this->module->fetch();
+     $tabs = $this->design->smarty->getTemplateVars('tabs');
             $this->design->assign('content', $content);
         } else {
             $this->design->assign('content', 'Permission denied');
@@ -299,7 +301,8 @@ class IndexAdmin extends Registry {
         $new_callbacks = $this->callbacks->get_callbacks(array('processed'=>0));
         $new_callbacks_counter = count($new_callbacks);
         $this->design->assign('new_callbacks_counter', $new_callbacks_counter);
-        
+
+
         // Создаем текущую обертку сайта (обычно index.tpl)
         $wrapper = $this->design->smarty->getTemplateVars('wrapper');
         if(is_null($wrapper)) {
@@ -312,5 +315,4 @@ class IndexAdmin extends Registry {
             return $this->body = $content;
         }
     }
-    
 }

@@ -76,7 +76,8 @@
 
     <div id="main">
         <ul id="tab_menu">
-            {$smarty.capture.tabs|@debug_print_var}
+            {$smarty.capture.tabs}
+
         </ul>
         <div id="middle">
             {$content}

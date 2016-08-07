@@ -154,7 +154,7 @@ class Managers extends Registry {
     public function access($module) {
         $manager = $this->get_manager();
         if(is_array($manager->permissions)) {
-            return in_array($module, $manager->permissions);
+            return in_array($module, $manager->permissions, true);
         } else {
             return false;
         }

@@ -42,18 +42,14 @@ use exception\ComponentException;
 
 /**
  * Proxy to Config
- *
  * Example of usage
  *     use proxy\Config;
- *
  *     if (!Config::getData('db')) {
  *          throw new Exception('Configuration for `db` is missed');
  *     }
- *
+ * @property  string $root_url
  * @package  Proxy
- *
  * @method   Config static Instance getInstance()
- *
  * @method   static array getData($key = null, $section = null)
  * @see      proxy\Config\Config::getData()
  */

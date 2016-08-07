@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.29, created on 2016-08-06 18:06:36
+/* Smarty version 3.1.29, created on 2016-08-07 03:56:26
   from "O:\domains\okay\backend\design\html\left.tpl" */
 
 if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl, array (
   'has_nocache_code' => false,
   'version' => '3.1.29',
-  'unifunc' => 'content_57a5fcfc7e8f55_06755250',
+  'unifunc' => 'content_57a6873a97c138_47295558',
   'file_dependency' => 
   array (
     '07473bb00f9a83ba993886116648fa84ebc884ed' => 
@@ -19,7 +19,7 @@ if ($_smarty_tpl->smarty->ext->_validateCompiled->decodeProperties($_smarty_tpl,
   array (
   ),
 ),false)) {
-function content_57a5fcfc7e8f55_06755250 ($_smarty_tpl) {
+function content_57a6873a97c138_47295558 ($_smarty_tpl) {
 ?>
 
 <div id="cms_logo">

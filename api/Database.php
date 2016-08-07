@@ -276,7 +276,7 @@ class Database extends Registry
                 if ($type === '#'){
                     $repl = @constant($key);
                     if (null === $repl)
-                        $error = $errmsg = "UNKNOWN_CONSTANT_$key";
+                        {$error = $errmsg = "UNKNOWN_CONSTANT_$key";}
                     break;
                 }
                 // Обрабатываем ошибку.

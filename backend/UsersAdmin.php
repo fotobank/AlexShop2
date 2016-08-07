@@ -78,5 +78,4 @@ class UsersAdmin extends Registry {
         $this->design->assign('users_count', $users_count);
         return $this->body = $this->design->fetch('users.tpl');
     }
-    
 }

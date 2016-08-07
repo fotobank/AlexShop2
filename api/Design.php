@@ -304,9 +304,7 @@ class Design extends Registry {
         $module = $params['module'];
         $method = $params['method'];
         $var = $params['var'];
-        unset($params['module']);
-        unset($params['method']);
-        unset($params['var']);
+        unset($params['module'], $params['method'], $params['var']);
         $res = $this->$module->$method($params);
         $smarty->assign($var, $res);
     }
