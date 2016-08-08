@@ -192,7 +192,7 @@ class Request extends Registry {
      *
      * @return bool|string
      */
-    public function create(IndexView $view){
+    public function create($view){
 
         $res = $view->fetch();
         if($res !== false) {

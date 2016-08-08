@@ -9,7 +9,7 @@ class UserView extends View {
         }
 
         if($this->request->method('post') && $this->request->post('name')) {
-            $user = new stdClass();
+            $user = new \stdClass();
             $user->name	    = $this->request->post('name');
             $user->email	= $this->request->post('email');
             $user->phone    = $this->request->post('phone');

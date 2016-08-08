@@ -226,7 +226,7 @@
 				{
 					feature = data[i];
 					
-					line = $("<li><label class=property></label><input class='okay_inp option_value' type='text'/><input style='margin-left:175px;margin-top:2px;' readonly class='okay_inp grey_translit' type='text'/></li>");
+					line = $("<li><label class=property></label><input class='order_inp option_value' type='text'/><input style='margin-left:175px;margin-top:2px;' readonly class='order_inp grey_translit' type='text'/></li>");
 					var new_line = line.clone(true);
 					new_line.find("label.property").text(feature.name);
 					new_line.find("input.option_value").attr('name', "options["+feature.id+"][value]").val(feature.value);
@@ -660,7 +660,7 @@ $(function(){
                         </div>
                     </label>
 
-                    <input name="meta_title" class="okay_inp word_count" type="text" value="{$product->meta_title|escape}"/>
+                    <input name="meta_title" class="order_inp word_count" type="text" value="{$product->meta_title|escape}"/>
                 </li>
                 <li>
                     <label class=property>Keywords (<span class="count_keywords_symbol"></span>/<span class="word_keywords"></span>)
@@ -672,7 +672,7 @@ $(function(){
                             </div>
                         </div>
                     </label>
-                    <input name="meta_keywords" class="okay_inp word_count" type="text" value="{$product->meta_keywords|escape}"/>
+                    <input name="meta_keywords" class="order_inp word_count" type="text" value="{$product->meta_keywords|escape}"/>
                 </li>
                 <li>
                     <label class=property>Description (<span class="count_desc_symbol"></span>/<span class="word_desc"></span>)
@@ -685,7 +685,7 @@ $(function(){
                             </div>
                         </div>
                     </label>
-                    <textarea name="meta_description" class="okay_inp">{$product->meta_description|escape}</textarea>
+                    <textarea name="meta_description" class="order_inp">{$product->meta_description|escape}</textarea>
                 </li>
             </ul>
         </div>
@@ -694,11 +694,11 @@ $(function(){
             <ul>
                 <li>
                     <label class=property>Рейтинг: </label>
-                    <input class="okay_inp" type="text" name="rating" value="{$product->rating}"/>
+                    <input class="order_inp" type="text" name="rating" value="{$product->rating}"/>
                 </li>
                 <li>
                     <label class=property>Количество голосов: </label>
-                    <input class="okay_inp" type="text" name="votes" value="{$product->votes}"/>
+                    <input class="order_inp" type="text" name="votes" value="{$product->votes}"/>
                 </li>
             </ul>
         </div>
@@ -721,15 +721,15 @@ $(function(){
                     {assign var=feature_id value=$feature->id}
                     <li feature_id="{$feature_id}">
                         <label class="property">{$feature->name}</label>
-                        <input class="okay_inp option_value" type="text" name="options[{$feature_id}][value]" value="{$options.$feature_id->value|escape}"/>
-                        <input class="okay_inp grey_translit" style="margin-left:175px;margin-top:2px;" type="text" name="options[{$feature_id}][translit]" readonly="" value="{$options.$feature_id->translit|escape}"/>
+                        <input class="order_inp option_value" type="text" name="options[{$feature_id}][value]" value="{$options.$feature_id->value|escape}"/>
+                        <input class="order_inp grey_translit" style="margin-left:175px;margin-top:2px;" type="text" name="options[{$feature_id}][translit]" readonly="" value="{$options.$feature_id->translit|escape}"/>
                     </li>
                 {/foreach}
             </ul>
             <ul class=new_features>
                 <li id=new_feature>
-                    <label class=property><input type=text class="okay_inp" name=new_features_names[]></label>
-                    <input class="okay_inp" type="text" name=new_features_values[]/>
+                    <label class=property><input type=text class="order_inp" name=new_features_names[]></label>
+                    <input class="order_inp" type="text" name=new_features_values[]/>
                 </li>
             </ul>
             <span class="add"><i class="dash_link" id="add_new_feature">Добавить новое свойство</i></span>

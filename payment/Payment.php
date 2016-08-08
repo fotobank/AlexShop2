@@ -1,7 +1,6 @@
 <?php
 
-
-
+use api\Registry;
 
 class PaymentModule extends Registry
 {

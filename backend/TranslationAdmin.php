@@ -1,13 +1,13 @@
 <?php
 
-
+use api\Registry;
 
 class TranslationAdmin extends Registry {
     
     public function fetch() {
         $languages = $this->languages->get_languages();
         
-        $translation = new stdClass();
+        $translation = new \stdClass();
         if($this->request->method('post')) {
             $translation->id    = $this->request->post('id', 'intgeger');
             

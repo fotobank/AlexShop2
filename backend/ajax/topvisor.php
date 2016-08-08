@@ -5,7 +5,7 @@
         exit();
     }
     
-    $res = new stdClass();
+    $res = new \stdClass();
     if($registry->managers->access('topvisor')) {
         $module = $registry->request->post('module');
         $module = (!$module ? $registry->request->get('module') : $module);
@@ -45,7 +45,7 @@
                 
                 $suggestions = array();
                 foreach ($regions as $key=>$region) {
-                    $suggestion = new stdClass();
+                    $suggestion = new \stdClass();
                     $suggestion->value = $region;
                     $suggestion->data = $key;
                     $suggestions[] = $suggestion;

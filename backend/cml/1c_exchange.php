@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 // Папка для хранения временных файлов синхронизации
 $dir = 'backend/cml/temp/';
 
@@ -608,7 +610,7 @@ function import_product($xml_product) {
 
         // Обновляем товар
         if($full_update) {
-            $p = new stdClass();
+            $p = new \stdClass();
             if(!empty($xml_product->Описание)) {
                 $description = strval($xml_product->Описание);
                 $p->meta_description = $description;

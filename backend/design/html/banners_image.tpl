@@ -81,10 +81,10 @@ $(function() {
 		<div class="block layer">
 			<h2>Параметры баннера</h2>
 			<ul>
-				<li><label class=property>Адрес (URL)</label><input name="url" class="okay_inp" type="text" value="{$banners_image->url|escape}" /></li>
-				<li><label class=property>Alt изображения</label><input name="alt" class="okay_inp" type="text" value="{$banners_image->alt|escape}" /></li>
-				<li><label class=property>Title изображения</label><input name="title" class="okay_inp" type="text" value="{$banners_image->title|escape}" /></li>
-				<li><label class=property>Описание</label><textarea name="description" class="okay_inp" >{$banners_image->description|escape}</textarea></li>
+				<li><label class=property>Адрес (URL)</label><input name="url" class="order_inp" type="text" value="{$banners_image->url|escape}" /></li>
+				<li><label class=property>Alt изображения</label><input name="alt" class="order_inp" type="text" value="{$banners_image->alt|escape}" /></li>
+				<li><label class=property>Title изображения</label><input name="title" class="order_inp" type="text" value="{$banners_image->title|escape}" /></li>
+				<li><label class=property>Описание</label><textarea name="description" class="order_inp" >{$banners_image->description|escape}</textarea></li>
 			</ul>
 		</div>
 		<!-- Параметры страницы (The End)-->

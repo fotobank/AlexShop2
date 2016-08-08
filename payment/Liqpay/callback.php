@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 // Работаем в корневой директории
 chdir ('../../');
 
@@ -11,7 +13,7 @@ $amount				= $registry->request->post('amount');
 $currency			= $registry->request->post('currency');
 $description		= $registry->request->post('description');
 $liqpay_order_id	= $registry->request->post('order_id');
-$order_id			= intval(substr($liqpay_order_id, 0, strpos($liqpay_order_id, '-')));
+$order_id			= (int)substr($liqpay_order_id, 0, strpos($liqpay_order_id, '-'));
 $type				= $registry->request->post('type');
 $signature			= $registry->request->post('signature');
 $status				= $registry->request->post('status');

@@ -118,11 +118,11 @@ function translit(str)
                             </div>
                         </div>
                     </label>
-                    <input name="label" class="okay_inp" type="text" value="{$translation->label}" /></li>
+                    <input name="label" class="order_inp" type="text" value="{$translation->label}" /></li>
                 {foreach $languages as $lang}
 				<li>
                     <label class=property>{$lang->name}</label>
-                    <textarea name="lang_{$lang->label}" class="okay_inp">{$translation->lang_{$lang->label}}</textarea>
+                    <textarea name="lang_{$lang->label}" class="order_inp">{$translation->lang_{$lang->label}}</textarea>
                 </li>
                 {/foreach}
 			</ul>

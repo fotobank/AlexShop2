@@ -13,7 +13,7 @@ namespace api;
 class Cart extends Registry {
     
     public function get_cart() {
-        $cart = new stdClass();
+        $cart = new \stdClass();
         $cart->purchases = array();
         $cart->total_price = 0;
         $cart->total_products = 0;
@@ -28,7 +28,7 @@ class Cart extends Registry {
             $variants = $this->variants->get_variants(array('id'=>array_keys($session_items)));
             if(!empty($variants)) {
                 foreach($variants as $variant) {
-                    $items[$variant->id] = new stdClass();
+                    $items[$variant->id] = new \stdClass();
                     $items[$variant->id]->variant = $variant;
                     $items[$variant->id]->amount = $session_items[$variant->id];
                     $products_ids[] = $variant->product_id;
@@ -47,7 +47,7 @@ class Cart extends Registry {
                 foreach($items as $variant_id=>$item) {
                     $purchase = null;
                     if(!empty($products[$item->variant->product_id])) {
-                        $purchase = new stdClass();
+                        $purchase = new \stdClass();
                         $purchase->product = $products[$item->variant->product_id];
                         $purchase->variant = $item->variant;
                         $purchase->amount = $item->amount;

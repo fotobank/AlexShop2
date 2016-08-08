@@ -16,7 +16,7 @@ $xml_post = base64_decode(str_replace(' ', '+', $_REQUEST['xml']));
 $sign_post = base64_decode(str_replace(' ', '+', $_REQUEST['sign']));
 
 // Выбираем из xml нужные данные
-$order_id      = intval(get_tag_val($xml_post, 'order_id'));
+$order_id      = (int)get_tag_val($xml_post, 'order_id');
 $merchant_id   = get_tag_val($xml_post, 'merchant_id'); 
 $amount        = get_tag_val($xml_post, 'amount'); 
 $currency_code = get_tag_val($xml_post, 'currency'); 
@@ -27,18 +27,18 @@ $err = '';
 ////////////////////////////////////////////////
 // Выберем заказ из базы
 ////////////////////////////////////////////////
-$order = $registry->orders->get_order(intval($order_id));
+$order = $registry->orders->get_order((int)$order_id);
 if(!empty($order))
 { 
   ////////////////////////////////////////////////
   // Выбираем из базы соответствующий метод оплаты
   ////////////////////////////////////////////////
-  $method = $registry->payment->get_payment_method(intval($order->payment_method_id));
+  $method = $registry->payment->get_payment_method((int)$order->payment_method_id);
   if(!empty($method))
   {
   	
     $settings = unserialize($method->settings);
-    $payment_currency = $registry->money->get_currency(intval($method->currency_id));
+    $payment_currency = $registry->money->get_currency((int)$method->currency_id);
     
     // Проверяем контрольную подпись
     $mysignature = md5($settings['pay2pay_hidden'].$xml_post.$settings['pay2pay_hidden']);
@@ -58,33 +58,33 @@ if(!empty($order))
             if($status == 'success')
             {
               // Установим статус оплачен
-              $registry->orders->update_order(intval($order->id), array('paid'=>1));
+              $registry->orders->update_order((int)$order->id, array('paid'=>1));
               
               // Отправим уведомление на email
-              $registry->notify->email_order_user(intval($order->id));
-              $registry->notify->email_order_admin(intval($order->id));
+              $registry->notify->email_order_user((int)$order->id);
+              $registry->notify->email_order_admin((int)$order->id);
               
               // Спишем товары  
-              $registry->orders->close(intval($order->id));
+              $registry->orders->close((int)$order->id);
             }
           }
           else
-            $err = "Currency check failed";
+            $err = 'Currency check failed';
         }
         else
-          $err = "Amount check failed";  
+          $err = 'Amount check failed';
       }
       //else
       //  $err = 'Order is paid';
     }
     else
-      $err = "Security check failed";
+      $err = 'Security check failed';
   }
   else
-    $err = "Unknown payment method";
+    $err = 'Unknown payment method';
 }
 else
-  $err = "Unknown OrderId";
+  $err = 'Unknown OrderId';
 
 if ($err != '')
   die("<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><status>no</status><err_msg>$err</err_msg></response>");

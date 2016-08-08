@@ -1,6 +1,7 @@
 <?php
 
- 
+use api\Registry;
+
 class  MetrikaAjax extends Registry
 {
 

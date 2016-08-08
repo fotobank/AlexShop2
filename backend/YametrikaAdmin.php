@@ -1,5 +1,7 @@
 <?PHP
 
+use api\Registry;
+
 class YametrikaAdmin extends Registry
 {
  

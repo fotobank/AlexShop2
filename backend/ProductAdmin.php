@@ -1,5 +1,6 @@
 <?php
 
+use api\Registry;
 
 class ProductAdmin extends Registry
 {
@@ -320,7 +321,7 @@ class ProductAdmin extends Registry
 
         if (empty($product_categories)){
             if ($category_id = $this->request->get('category_id')){
-                $product_categories[0] = new stdClass();
+                $product_categories[0] = new \stdClass();
                 $product_categories[0]->id = $category_id;
             } else {
                 $product_categories = [1];

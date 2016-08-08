@@ -1,6 +1,6 @@
 <?php
 
-
+use api\Registry;
 
 class FeaturesAdmin extends Registry {
     

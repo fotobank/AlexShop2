@@ -4,7 +4,7 @@
         trigger_error('Session expired', E_USER_WARNING);
         exit();
     }
-    $res = new stdClass();
+    $res = new \stdClass();
     
     if($registry->managers->access('topvisor')) {
         $registry->design->set_templates_dir('backend/design/html');
@@ -21,7 +21,7 @@
         $date1 = date('Y-m-d', strtotime($dates[0]));
         $date2 = date('Y-m-d', strtotime($dates[1]));
         
-        $res = new stdClass();
+        $res = new \stdClass();
         $queries_dynamics = $registry->topvisor->get_queries_dynamics($project_id, $searcher, $region_key, $region_lang, $group_id, $date1, $date2, $page);
         $queries_dynamics->scheme->dates = array_reverse($queries_dynamics->scheme->dates);
         foreach ($queries_dynamics->phrases as $phrase) {

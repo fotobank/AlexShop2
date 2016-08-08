@@ -216,7 +216,7 @@
                             </div>
                         </div>
                     </label>
-                    <input name="meta_title" class="okay_inp" type="text" value="{$brand->meta_title|escape}" />
+                    <input name="meta_title" class="order_inp" type="text" value="{$brand->meta_title|escape}" />
                 </li>
 				<li>
                     <label class=property>Keywords (<span class="count_keywords_symbol"></span>/<span class="word_keywords"></span>)
@@ -228,7 +228,7 @@
                             </div>
                         </div>
                     </label>
-                    <input name="meta_keywords" class="okay_inp" type="text" value="{$brand->meta_keywords|escape}" />
+                    <input name="meta_keywords" class="order_inp" type="text" value="{$brand->meta_keywords|escape}" />
                 </li>
 				<li>
                     <label class=property>Description (<span class="count_desc_symbol"></span>/<span class="word_desc"></span>)
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                     </label>
-                    <textarea name="meta_description" class="okay_inp">{$brand->meta_description|escape}</textarea>
+                    <textarea name="meta_description" class="order_inp">{$brand->meta_description|escape}</textarea>
                 </li>
 			</ul>
 		</div>

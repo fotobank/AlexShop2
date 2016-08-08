@@ -22,7 +22,7 @@
 <form id="topvisor_key_form" method="post">
     <input type="hidden" name="session_id" value="{$smarty.session.id}"/>
     <label class="property">API key</label>
-    <input name="topvisor_key" class="okay_inp" type="text" value="{$settings->topvisor_key|escape}" />
+    <input name="topvisor_key" class="order_inp" type="text" value="{$settings->topvisor_key|escape}" />
     <input class="button" type="submit" value="Сохранить" name="api_settings"/>
 
     <a class="topvisor_link" href="https://topvisor.ru/?inv=64152" target="_blank">Перейти в Топвизор</a>
@@ -123,7 +123,7 @@
                 <div class="row">
                     <div class="cell">
                         <label>Введите сайт: </label>
-                        <input class="okay_inp" type="text" name="new_site" value=""/>
+                        <input class="order_inp" type="text" name="new_site" value=""/>
                     </div>
                     <div class="icons cell brand">
                         <input class="button" type="submit" name="add_project" value="Добавить проект"/>

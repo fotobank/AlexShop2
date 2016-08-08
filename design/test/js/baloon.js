@@ -1,5 +1,3 @@
-// (C) Netlogic, 2003
-
 function CreateBaloon() {
 	baloon = document.createElement('DIV');
 	baloon.setAttribute('id', 'baloon');
@@ -69,7 +67,6 @@ function ShowBaloon(i) {
 }
 
 
-// (C) Netlogic, 2003
 
 function ValidateForms() {
 	for (i = 0; i < document.forms.length; i++) {

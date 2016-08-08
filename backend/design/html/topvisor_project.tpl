@@ -195,7 +195,7 @@
                             <div class="row">
                                 
                                 <label>Введите имя группы: </label>
-                                <input class="okay_inp" type="text" name="new_group"/>
+                                <input class="order_inp" type="text" name="new_group"/>
                                 <input class="button" type="submit" name="add_group" value="Добавить группу"/>
                                
                                 <div class="clear"></div>

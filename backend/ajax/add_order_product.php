@@ -42,9 +42,12 @@
         ORDER BY $px.name 
         LIMIT ?
     ", $limit);
-    
+
+    $products = null;
     foreach($registry->db->results() as $product) {
-        $products[$product->id] = $product;
+        // отсеиваем товар без названия
+        if(null !== $product->name)
+        {$products[$product->id] = $product;}
     }
     
     $lang_sql = $registry->languages->get_query(array('object'=>'variant', 'px'=>'pv'));
@@ -73,7 +76,7 @@
     foreach($variants as $variant) {
         if(isset($products[$variant->product_id])) {
             $products[$variant->product_id]->variants[] = $variant;
-            if ($variant->currency_id && ($currency = $registry->money->get_currency(intval($variant->currency_id)))) {
+            if ($variant->currency_id && ($currency = $registry->money->get_currency((int)$variant->currency_id))) {
                 if ($currency->rate_from != $currency->rate_to) {
                     $variant->price = $variant->price*$currency->rate_to/$currency->rate_from;
                     $variant->compare_price = $variant->compare_price*$currency->rate_to/$currency->rate_from;
@@ -98,8 +101,8 @@
     $res = new \stdClass;
     $res->query = $keyword;
     $res->suggestions = $suggestions;
-    header("Content-type: application/json; charset=UTF-8");
-    header("Cache-Control: must-revalidate");
-    header("Pragma: no-cache");
-    header("Expires: -1");
+    header('Content-type: application/json; charset=UTF-8');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: no-cache');
+    header('Expires: -1');
     print json_encode($res);

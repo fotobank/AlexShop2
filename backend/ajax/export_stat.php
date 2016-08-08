@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 class ExportAjax extends Registry {
     
     public $total_price;

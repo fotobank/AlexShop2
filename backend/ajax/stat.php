@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 class StatAjax extends Registry {
     
     public function fetch() {

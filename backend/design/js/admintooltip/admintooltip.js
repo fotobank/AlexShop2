@@ -1,4 +1,4 @@
-$(function() {
+;$(function() {
     $("<div class='admTools'>\
     <a href='javascript:void(0);' class='openTools'></a>\
     <p>Инструмент настройки позволяет включить/выключить инструменты редактирования и войти в админ-панель.</p>\
@@ -152,7 +152,6 @@ function SetTooltips() {
         }
     }
 }
-
 
 function ShowTooltip(i, content) {
 

@@ -1,6 +1,6 @@
 <?php
 
-
+use api\Registry;
 
 class BannersAdmin extends Registry {
     public function fetch() {

@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 /**
  * IPN Script for Paypal
  */

@@ -166,7 +166,7 @@ function translit(str)
 			<ul>
 				<li>
                     <label class=property>Название пункта в меню</label>
-                    <input name="name" class="okay_inp" type="text" value="{$page->name|escape}" />
+                    <input name="name" class="order_inp" type="text" value="{$page->name|escape}" />
                 </li>
 				<li>
                     <label class=property>Меню</label>
@@ -214,7 +214,7 @@ function translit(str)
                             </div>
                         </div>
                     </label>
-                    <input name="meta_title" class="okay_inp" type="text" value="{$page->meta_title|escape}" />
+                    <input name="meta_title" class="order_inp" type="text" value="{$page->meta_title|escape}" />
                 </li>
 				<li>
                     <label class=property>Keywords (<span class="count_keywords_symbol"></span>/<span class="word_keywords"></span>)
@@ -226,7 +226,7 @@ function translit(str)
                             </div>
                         </div>
                     </label>
-                    <input name="meta_keywords" class="okay_inp" type="text" value="{$page->meta_keywords|escape}" />
+                    <input name="meta_keywords" class="order_inp" type="text" value="{$page->meta_keywords|escape}" />
                 </li>
 				<li>
                     <label class=property>Description (<span class="count_desc_symbol"></span>/<span class="word_desc"></span>)
@@ -239,7 +239,7 @@ function translit(str)
                             </div>
                         </div>
                     </label>
-                    <textarea name="meta_description" class="okay_inp">{$page->meta_description|escape}</textarea>
+                    <textarea name="meta_description" class="order_inp">{$page->meta_description|escape}</textarea>
                 </li>
 			</ul>
 		</div>

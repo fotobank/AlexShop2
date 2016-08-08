@@ -86,7 +86,7 @@ $(function() {
 		<input name=id type="hidden" value="{$label->id|escape}"/> 
 		<div class="checkbox">
 			<span id="color_icon" style="background-color:#{$label->color};" class="order_label_big"></span>
-			<input id="color_input" name="color" class="okay_inp" type="hidden" value="{$label->color|escape}" />
+			<input id="color_input" name="color" class="order_inp" type="hidden" value="{$label->color|escape}" />
 		</div>
 	<input class="button_green button_save" type="submit" name="" value="Сохранить" />
 	</div>

@@ -1,6 +1,6 @@
 <?php
 
-
+use api\Registry;
 
 ########################################
 class CommentsAdmin extends Registry {
@@ -28,7 +28,7 @@ class CommentsAdmin extends Registry {
         // Обработка действий
         if($this->request->method('post')) {
             if ($this->request->post('comment_answer', 'boolean') && ($parent_comment = $this->comments->get_comment($this->request->post('parent_id', 'integer')))) {
-                $comment = new stdClass();
+                $comment = new \stdClass();
                 $comment->parent_id = $parent_comment->id;
                 $comment->type = $parent_comment->type;
                 $comment->object_id = $parent_comment->object_id;

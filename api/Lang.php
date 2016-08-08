@@ -337,7 +337,7 @@ class Lang extends Registry {
                     unset($data->$f);
                 }
             }
-            $result = new stdClass();
+            $result = new \stdClass();
             $result->description = $description;
             return $result;
         }

@@ -61,7 +61,7 @@
 		<!-- Параметры страницы -->
 		<div class="block">
 			<ul>
-				<li><label class=property>Скидка</label><input name="discount" class="okay_inp" type="text" value="{$group->discount|escape}" />%</li>
+				<li><label class=property>Скидка</label><input name="discount" class="order_inp" type="text" value="{$group->discount|escape}" />%</li>
 			</ul>
 		</div>
 		<!-- Параметры страницы (The End)-->

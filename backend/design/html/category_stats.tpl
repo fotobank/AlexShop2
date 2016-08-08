@@ -143,12 +143,12 @@
                 </div>
                 <div class="form_group">
                     <label for="from_date">C</label>
-                    <input id="from_date" class="okay_inp" type=text name=date_from value='{$date_from}' />
+                    <input id="from_date" class="order_inp" type=text name=date_from value='{$date_from}' />
                 </div>
 
                 <div class="form_group">
                     <label for="to_date">По</label>
-                    <input id="to_date" class="okay_inp" type=text name=date_to value='{$date_to}' />
+                    <input id="to_date" class="order_inp" type=text name=date_to value='{$date_to}' />
                 </div>
 
                 <input type="hidden" name="module" value="CategoryStatsAdmin" />

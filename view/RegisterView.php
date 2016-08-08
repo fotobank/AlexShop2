@@ -4,7 +4,7 @@ class RegisterView extends View {
     
     public function fetch() {
         if($this->request->method('post') && $this->request->post('register')) {
-            $user = new stdClass();
+            $user = new \stdClass();
             $user->enabled  = 1; // Активен ли пользователь сразу после регистрации (0 или 1)
             $user->last_ip  = $_SERVER['REMOTE_ADDR'];
             $user->name     = $this->request->post('name');

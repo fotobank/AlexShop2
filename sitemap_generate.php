@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 //for cron!
 //chdir('/home/path/example.com/www');
 

@@ -123,11 +123,11 @@ function translit(str) {
             <ul>
                 <li>
                     <label class="property">ID свойства</label>
-                    <input name="auto_name_id" class="okay_inp" type="text" value="{$feature->auto_name_id|escape}"/>
+                    <input name="auto_name_id" class="order_inp" type="text" value="{$feature->auto_name_id|escape}"/>
                 </li>
                 <li>
                     <label class="property">ID значения</label>
-                    <input name="auto_value_id" class="okay_inp" type="text" value="{$feature->auto_value_id|escape}"/>
+                    <input name="auto_value_id" class="order_inp" type="text" value="{$feature->auto_value_id|escape}"/>
                 </li>
             </ul>
         </div>

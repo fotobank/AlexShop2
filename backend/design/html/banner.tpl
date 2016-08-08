@@ -51,7 +51,7 @@
 		<div class="block layer">
 			<h2>Описание</h2>
 			<ul>
-				<li><textarea name="description" class="okay_inp">{$banner->description|escape}</textarea></li>
+				<li><textarea name="description" class="order_inp">{$banner->description|escape}</textarea></li>
 			</ul>
 		</div>
 		<!-- Параметры страницы (The End)-->

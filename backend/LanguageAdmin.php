@@ -1,12 +1,12 @@
 <?php
 
-
+use api\Registry;
 
 class LanguageAdmin extends Registry {
     
     public function fetch() {
         $lang_list = $this->languages->lang_list();
-        $language = new stdClass();
+        $language = new \stdClass();
         if($this->request->method('post')) {
             $lang = $lang_list[$this->request->post('lang')];
             

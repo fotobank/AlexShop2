@@ -235,7 +235,7 @@
                             </div>
                         </div>
                     </label>
-                    <input name="name_h1" class="okay_inp" type="text" value="{$category->name_h1|escape}" />
+                    <input name="name_h1" class="order_inp" type="text" value="{$category->name_h1|escape}" />
                 </li>
                 <li>
                     <label class="property">Имя для Я.Маркета
@@ -264,7 +264,7 @@
                             </div>
                         </div>
                     </label>
-                    <input name="meta_title" class="okay_inp" type="text" value="{$category->meta_title|escape}" />
+                    <input name="meta_title" class="order_inp" type="text" value="{$category->meta_title|escape}" />
                 </li>
 				<li>
                     <label class=property>Keywords (<span class="count_keywords_symbol"></span>/<span class="word_keywords"></span>)
@@ -276,7 +276,7 @@
                             </div>
                         </div>
                     </label>
-                    <input name="meta_keywords" class="okay_inp" type="text" value="{$category->meta_keywords|escape}" />
+                    <input name="meta_keywords" class="order_inp" type="text" value="{$category->meta_keywords|escape}" />
                 </li>
 				<li>
                     <label class=property>Description (<span class="count_desc_symbol"></span>/<span class="word_desc"></span>)
@@ -288,7 +288,7 @@
                             </div>
                         </div>
                     </label>
-                    <textarea name="meta_description" class="okay_inp">{$category->meta_description|escape}</textarea>
+                    <textarea name="meta_description" class="order_inp">{$category->meta_description|escape}</textarea>
                 </li>
 			</ul>
 		</div>
@@ -354,9 +354,9 @@
                 {/foreach}
             </ul>
     		<ul>
-                <li><label class="property">Title</label><textarea name="auto_meta_title" class="okay_inp">{$category->auto_meta_title|escape}</textarea></li>
-                <li><label class="property">Keywords</label><textarea name="auto_meta_keywords" class="okay_inp">{$category->auto_meta_keywords|escape}</textarea></li>
-    			<li><label class="property">Description</label><textarea name="auto_meta_desc" class="okay_inp">{$category->auto_meta_desc|escape}</textarea></li>
+                <li><label class="property">Title</label><textarea name="auto_meta_title" class="order_inp">{$category->auto_meta_title|escape}</textarea></li>
+                <li><label class="property">Keywords</label><textarea name="auto_meta_keywords" class="order_inp">{$category->auto_meta_keywords|escape}</textarea></li>
+    			<li><label class="property">Description</label><textarea name="auto_meta_desc" class="order_inp">{$category->auto_meta_desc|escape}</textarea></li>
     		</ul>
     	</div>
     </div>

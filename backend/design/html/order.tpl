@@ -113,7 +113,7 @@
 		<li>
 			<label class=property>Имя</label> 
 			<div class="edit_order_detail" style='display:none;'>
-				<input name="name" class="okay_inp" type="text" value="{$order->name|escape}" />
+				<input name="name" class="order_inp" type="text" value="{$order->name|escape}" />
 			</div>
 			<div class="view_order_detail">
 				{$order->name|escape}
@@ -122,7 +122,7 @@
 		<li>
 			<label class=property>Email</label>
 			<div class="edit_order_detail" style='display:none;'>
-				<input name="email" class="okay_inp" type="text" value="{$order->email|escape}" />
+				<input name="email" class="order_inp" type="text" value="{$order->email|escape}" />
 			</div>
 			<div class="view_order_detail">
 				<a href="mailto:{$order->email|escape}?subject=Заказ%20№{$order->id}">{$order->email|escape}</a>
@@ -131,7 +131,7 @@
 		<li>
 			<label class=property>Телефон</label>
 			<div class="edit_order_detail" style='display:none;'>
-				<input name="phone" class="okay_inp " type="text" value="{$order->phone|escape}" />
+				<input name="phone" class="order_inp " type="text" value="{$order->phone|escape}" />
 			</div>
 			<div class="view_order_detail">
 				{if $order->phone}

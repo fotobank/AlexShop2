@@ -1,6 +1,6 @@
 <?php
 
-
+use api\Registry;
 
 class OrdersLabelAdmin extends Registry {
     

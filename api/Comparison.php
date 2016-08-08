@@ -13,7 +13,7 @@ namespace api;
 class Comparison extends Registry {
     
     public function get_comparison() {
-        $comparison = new stdClass();
+        $comparison = new \stdClass();
         $comparison->products = array();
         $comparison->features = array();
         $comparison->ids = array();

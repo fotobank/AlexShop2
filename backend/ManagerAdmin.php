@@ -1,11 +1,11 @@
 <?php
 
-
+use api\Registry;
 
 class ManagerAdmin extends Registry {
     
     public function fetch() {
-        $manager = new stdClass();
+        $manager = new \stdClass();
         if($this->request->method('post')) {
             $manager->id = $this->request->post('id', 'integer');
             if ($this->request->post('unlock_manager')) {

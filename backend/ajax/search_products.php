@@ -46,7 +46,7 @@
             $product->image = $registry->design->resize_modifier($product->image, 35, 35);
         }
         
-        $suggestion = new stdClass();
+        $suggestion = new \stdClass();
         $suggestion->value = $product->name;
         $suggestion->data = $product;
         $suggestions[] = $suggestion;

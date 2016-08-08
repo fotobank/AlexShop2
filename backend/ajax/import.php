@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 class ImportAjax extends Registry
 {
 
@@ -67,7 +69,7 @@ class ImportAjax extends Registry
         $diff = array_diff($required_fields, $import_fields);
         if (count($diff)){
             fclose($f);
-            $result = new stdClass();
+            $result = new \stdClass();
             $result->error = 1;
             $result->missing_fields = [];
             foreach ($diff as $field){

@@ -1,6 +1,6 @@
 <?php
 
-
+use api\Registry;
 
 class CategoriesAdmin extends Registry {
     

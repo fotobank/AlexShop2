@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 include __DIR__ . '/../system/configs/define/config.php';
 /** @noinspection PhpIncludeInspection */
 include SYS_DIR . 'core' . DS . 'boot.php';
@@ -79,7 +81,7 @@ if (0 !== count($products)){
 
     foreach ($products as $product){
 
-        $suggestion = new stdClass();
+        $suggestion = new \stdClass();
         if (null !== $product->image){
             $product->image = $registry->design->resize_modifier($product->image, 35, 35);
         }

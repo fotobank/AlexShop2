@@ -716,7 +716,7 @@ class Products extends Registry {
                     //Product
                     if (!empty($prd_fields)) {
                         $old_prd = $this->get_product($id);
-                        $upd_prd = new stdClass();
+                        $upd_prd = new \stdClass();
                         foreach($prd_fields as $field) {
                             $upd_prd->{$field} = $old_prd->{$field};
                         }
@@ -728,7 +728,7 @@ class Products extends Registry {
                         $variants = $this->variants->get_variants(array('product_id'=>$new_id));
                         $old_variants = $this->variants->get_variants(array('product_id'=>$id));
                         foreach($old_variants as $i=>$old_variant) {
-                            $upd_variant = new stdClass();
+                            $upd_variant = new \stdClass();
                             foreach ($variant_fields as $field) {
                                 $upd_variant->{$field} = $old_variant->{$field};
                             }

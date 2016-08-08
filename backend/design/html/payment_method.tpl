@@ -146,13 +146,13 @@ $(function() {
                         {$option = $setting->options|@first}
                         <li>
                             <label class="property" for="{$setting->variable}">{$setting->name|escape}</label>
-                            <input name="payment_settings[{$setting->variable}]" class="okay_inp" type="checkbox" value="{$option->value|escape}" {if $option->value==$payment_settings[$setting->variable]}checked{/if} id="{$setting->variable}" />
+                            <input name="payment_settings[{$setting->variable}]" class="order_inp" type="checkbox" value="{$option->value|escape}" {if $option->value==$payment_settings[$setting->variable]}checked{/if} id="{$setting->variable}" />
                             <label for="{$setting->variable}">{$option->name}</label>
                         </li>
                     {else}
                         <li>
                             <label class="property" for="{$setting->variable}">{$setting->name|escape}</label>
-                            <input name="payment_settings[{$setting->variable}]" class="okay_inp" type="text" value="{$payment_settings[$setting->variable]|escape}" id="{$setting->variable}"/>
+                            <input name="payment_settings[{$setting->variable}]" class="order_inp" type="text" value="{$payment_settings[$setting->variable]|escape}" id="{$setting->variable}"/>
                         </li>
                     {/if}
                 {/foreach}

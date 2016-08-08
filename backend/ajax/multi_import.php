@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 class ImportAjax extends Registry {
 
     // Соответствие полей в базе и имён колонок в файле
@@ -56,7 +58,7 @@ class ImportAjax extends Registry {
         $diff = array_diff($required_fields, $import_fields);
         if (count($diff)) {
             fclose($f);
-            $result = new stdClass();
+            $result = new \stdClass();
             $result->error = 1;
             $result->missing_fields = array();
             foreach ($diff as $field) {
@@ -119,7 +121,7 @@ class ImportAjax extends Registry {
 
     // Импорт одного товара $item[column_name] = value;
     private function import_item($item) {
-        $imported_item = new stdClass();
+        $imported_item = new \stdClass();
 
         // Проверим не пустое ли название и артинкул (должно быть хоть что-то из них)
         if(empty($item['name']) || empty($item['variant_id'])) {

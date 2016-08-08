@@ -1,6 +1,6 @@
 <?php
 
-
+use api\Registry;
 
 class BannerAdmin extends Registry {
     

@@ -56,7 +56,7 @@ class MonetaWebService extends MonetaWebServiceConnector
 		
 		// Для того чтобы выразить тег <UserNameToken> с вложенными внутри него тегами <Username> и <Password>, 
 		// мы должны определить промежуточный класс			
-		$tmp = new stdClass();
+		$tmp = new \stdClass();
 		$tmp->Username = $username;
 		$tmp->Password = $password;	
 
@@ -65,7 +65,7 @@ class MonetaWebService extends MonetaWebServiceConnector
 		$authData = new SoapVar($tmp, SOAP_ENC_OBJECT, null, $sns, 'wsse:UsernameToken', $sns);
 		
 		// формируем содержимое тега Security , т.е. сам UsernameToken
-		$tmp = new stdClass();
+		$tmp = new \stdClass();
 		$tmp->UsernameToken = $authData;
 		
 		$usernameToken = new SoapVar($tmp, SOAP_ENC_OBJECT, null, $sns, 'wsse:UsernameToken', $sns);

@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 // Подключаем SOAP
 require_once('nusoap/nusoap.php');
 $server = new nusoap_server;

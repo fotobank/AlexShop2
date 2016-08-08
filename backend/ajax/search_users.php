@@ -22,7 +22,7 @@
     
     $suggestions = array();
     foreach($users as $user) {
-        $suggestion = new stdClass();
+        $suggestion = new \stdClass();
         $suggestion->value = $user->name." ($user->email)";
         $suggestion->data = $user;
         $suggestions[] = $suggestion;

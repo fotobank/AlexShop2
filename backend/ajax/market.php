@@ -6,7 +6,7 @@ if(!$registry->request->check_session()) {
     exit();
 }
 
-$res = new stdClass();
+$res = new \stdClass();
 if($registry->managers->access('categories')) {
     $module = $registry->request->post('module');
     $module = (!$module ? $registry->request->get('module') : $module);
@@ -18,7 +18,7 @@ if($registry->managers->access('categories')) {
 
             $suggestions = array();
             foreach ($categories as $cats) {
-                $suggestion = new stdClass();
+                $suggestion = new \stdClass();
                 $suggestion->data = $cats;
                 $suggestion->value = $cats;
                 $suggestions[] = $suggestion;

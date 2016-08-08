@@ -62,7 +62,7 @@ class Managers extends Registry {
                 $id = $_SESSION['admin'];
             }/* else {
                 // Тестовый менеджер, если отключена авторизация
-                $m = new stdClass();
+                $m = new \stdClass();
                 $m->login = 'manager';
                 $m->permissions = $this->permissions_list;
                 return $m;

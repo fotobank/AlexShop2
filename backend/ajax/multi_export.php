@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 class ExportAjax extends Registry {
 
     private $columns_names = array(

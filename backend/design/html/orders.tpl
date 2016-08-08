@@ -206,11 +206,11 @@
         </div>
         <div class="form_group">
            <label for="from_date">C</label>
-            <input class="okay_inp" type="text" id="from_date" name="from_date" value="{$from_date}" autocomplete="off"> 
+            <input class="order_inp" type="text" id="from_date" name="from_date" value="{$from_date}" autocomplete="off">
         </div>
          <div class="form_group">
             <label for="to_date">По</label>
-            <input class="okay_inp" type="text" id="to_date" name="to_date" value="{$to_date}" autocomplete="off">
+            <input class="order_inp" type="text" id="to_date" name="to_date" value="{$to_date}" autocomplete="off">
          </div>
         <input class="button" type="submit" value="Показать"/>
     </form>

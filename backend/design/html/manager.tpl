@@ -148,7 +148,7 @@ $(function() {
 				{foreach $perms as $p=>$name}
 				    <li>
                         <label class=property for="{$p}">{$name}</label>
-				    <input id="{$p}" name="permissions[]" class="okay_inp" type="checkbox" value="{$p}" {if $m->permissions && in_array($p, $m->permissions)}checked{/if} {if $m->id==$manager->id}disabled{/if}/>
+				    <input id="{$p}" name="permissions[]" class="order_inp" type="checkbox" value="{$p}" {if $m->permissions && in_array($p, $m->permissions)}checked{/if} {if $m->id==$manager->id}disabled{/if}/>
                     </li>
 				{/foreach}
 			</ul>

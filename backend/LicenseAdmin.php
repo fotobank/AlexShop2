@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 class LicenseAdmin extends Registry {
     
     public function fetch() {
