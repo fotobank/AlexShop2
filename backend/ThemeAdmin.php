@@ -67,7 +67,7 @@ class ThemeAdmin extends Registry {
             $this->design->assign('message_error', 'permissions');
         }
         
-        $current_theme = new stdClass;
+        $current_theme = new \stdClass;
         $current_theme->name = $this->settings->theme;
         $current_theme->locked = is_file($this->themes_dir.$current_theme->name.'/locked');
         $this->design->assign('theme', $current_theme);
@@ -115,7 +115,7 @@ class ThemeAdmin extends Registry {
         if($handle = opendir($this->themes_dir)) {
             while(false !== ($file = readdir($handle))) {
                 if(is_dir($this->themes_dir.'/'.$file) && $file[0] != '.') {
-                    $theme = new stdClass;
+                    $theme = new \stdClass;
                     $theme->name = $file;
                     $theme->locked = is_file($this->themes_dir.$file.'/locked');
                     $themes[] = $theme;

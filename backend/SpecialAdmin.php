@@ -41,7 +41,7 @@ class SpecialAdmin extends Registry {
                 foreach($this->request->post('special') as $field_name=>$values) {
                     foreach($values as $id=>$value) {
                         if(empty($specials[$id])) {
-                            $specials[$id] = new stdClass;
+                            $specials[$id] = new \stdClass;
                         }
                         $specials[$id]->$field_name = $value;
                     }

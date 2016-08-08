@@ -28,7 +28,7 @@
         $suggestions[] = $suggestion;
     }
     
-    $res = new stdClass;
+    $res = new \stdClass;
     $res->query = $keyword;
     $res->suggestions = $suggestions;
     header("Content-type: application/json; charset=UTF-8");

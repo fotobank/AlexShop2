@@ -5,7 +5,7 @@
 class PaymentMethodAdmin extends Registry {
     
     public function fetch() {
-        $payment_method = new stdClass;
+        $payment_method = new \stdClass;
         if($this->request->method('post')) {
             $payment_method->id 			= $this->request->post('id', 'intgeger');
             $payment_method->enabled 		= $this->request->post('enabled', 'boolean');

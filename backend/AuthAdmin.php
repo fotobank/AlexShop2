@@ -1,5 +1,7 @@
 <?php
 
+use api\Registry;
+
 class AuthAdmin extends Registry {
 
     public function fetch() {

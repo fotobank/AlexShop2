@@ -37,7 +37,7 @@ class ImportAjax extends Registry {
         // Для корректной работы установим локаль UTF-8
         setlocale(LC_ALL, 'ru_RU.UTF-8');
 
-        $result = new stdClass;
+        $result = new \stdClass;
 
         // Определяем колонки из первой строки файла
         $f = fopen($this->import_files_dir.$this->import_file, 'r');

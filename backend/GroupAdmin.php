@@ -5,7 +5,7 @@
 class GroupAdmin extends Registry {
     
     public function fetch() {
-        $group = new stdClass;
+        $group = new \stdClass;
         if($this->request->method('post')) {
             $group->id = $this->request->post('id', 'integer');
             $group->name = $this->request->post('name');

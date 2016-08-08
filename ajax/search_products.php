@@ -58,7 +58,7 @@ $products = $registry->db->results();
 $suggestions = [];
 $ids = [];
 $variants = [];
-$res = new stdClass;
+$res = new \stdClass;
 $res->query = $keyword;
 
 if (0 !== count($products)){

@@ -1,4 +1,13 @@
 <?php
+/*************************************************
+  Framework Component
+  name      AlexShop_CMS
+  created   by Alex production
+  version   1.0
+  author    Alex Jurii <alexjurii@gmail.com>
+  Copyright (c) 2016
+ ************************************************/
+
 namespace api;
 
 /**

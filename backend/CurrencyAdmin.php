@@ -10,7 +10,7 @@ class CurrencyAdmin extends Registry {
             foreach($this->request->post('currency') as $n=>$va) {
                 foreach($va as $i=>$v) {
                     if(empty($currencies[$i])) {
-                        $currencies[$i] = new stdClass;
+                        $currencies[$i] = new \stdClass;
                     }
                     $currencies[$i]->$n = $v;
                 }

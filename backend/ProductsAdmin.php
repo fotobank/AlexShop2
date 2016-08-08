@@ -1,5 +1,6 @@
 <?php
 
+use api\Registry;
 
 class ProductsAdmin extends Registry {
     

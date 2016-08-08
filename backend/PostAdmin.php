@@ -6,7 +6,7 @@ class PostAdmin extends Registry {
     
     public function fetch() {
         $related_products = array();
-        $post = new stdClass;
+        $post = new \stdClass;
         if($this->request->method('post')) {
             $post->id = $this->request->post('id', 'integer');
             $post->name = $this->request->post('name');
@@ -25,7 +25,7 @@ class PostAdmin extends Registry {
             // Связанные товары
             if(is_array($this->request->post('related_products'))) {
                 foreach($this->request->post('related_products') as $p) {
-                    $rp[$p] = new stdClass;
+                    $rp[$p] = new \stdClass;
                     $rp[$p]->post_id = $post->id;
                     $rp[$p]->related_id = $p;
                 }
@@ -81,7 +81,7 @@ class PostAdmin extends Registry {
         }
         
         if(empty($post)) {
-            $post = new stdClass;
+            $post = new \stdClass;
             $post->date = date($this->settings->date_format, time());
         }
 

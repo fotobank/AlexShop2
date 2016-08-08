@@ -9,7 +9,7 @@ $registry = new Registry();
 $variant_id = $registry->request->post('variant', 'integer');
 $amount = $registry->request->post('amount', 'integer');
 
-$order = new stdClass;
+$order = new \stdClass;
 $order->name = sanitize($registry->request->post('name', 'string'));
 $order->phone = sanitize($registry->request->post('phone', 'string'));
 $order->ip = ip();

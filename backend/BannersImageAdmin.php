@@ -7,7 +7,7 @@ class BannersImageAdmin extends Registry {
     private	$allowed_image_extentions = array('png', 'gif', 'jpg', 'jpeg', 'ico');
     
     public function fetch() {
-        $banners_image = new stdClass;
+        $banners_image = new \stdClass;
         if($this->request->method('post')) {
             $banners_image->id = $this->request->post('id', 'integer');
             $banners_image->name = $this->request->post('name');

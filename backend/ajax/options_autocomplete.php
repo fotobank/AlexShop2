@@ -21,7 +21,7 @@
     
     $options = $registry->db->results('value');
     
-    $res = new stdClass;
+    $res = new \stdClass;
     $res->query = $keyword;
     $res->suggestions = $options;
     header("Content-type: application/json; charset=UTF-8");

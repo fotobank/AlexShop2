@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright (c)
+ */
+
+use api\Registry;
 
 class View extends Registry {
     

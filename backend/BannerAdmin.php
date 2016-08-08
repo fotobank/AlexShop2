@@ -9,7 +9,7 @@ class BannerAdmin extends Registry {
         $brands     = $this->brands->get_brands();
         $pages      = $this->pages->get_pages();
         $products = $this->products->get_products(array('limit' => 100000, 'order' => 'name'));
-        $banner = new stdClass;
+        $banner = new \stdClass;
         if($this->request->method('POST')) {
             $banner->id = $this->request->post('id', 'integer');
             $banner->name = $this->request->post('name');

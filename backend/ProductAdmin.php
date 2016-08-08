@@ -14,7 +14,7 @@ class ProductAdmin extends Registry
         $related_products = [];
 
         if ($this->request->method('post') && !empty($_POST)){
-            $product = new stdClass;
+            $product = new \stdClass;
             $product->id = $this->request->post('id', 'integer');
             $product->name = $this->request->post('name');
             $product->visible = $this->request->post('visible', 'boolean');
@@ -36,7 +36,7 @@ class ProductAdmin extends Registry
                 foreach ($this->request->post('variants') as $n => $va){
                     foreach ($va as $i => $v){
                         if (empty($variants[$i])){
-                            $variants[$i] = new stdClass;
+                            $variants[$i] = new \stdClass;
                         }
                         $variants[$i]->$n = $v;
                     }
@@ -47,7 +47,7 @@ class ProductAdmin extends Registry
             $product_categories = $this->request->post('categories');
             if (is_array($product_categories)){
                 foreach ($product_categories as $c){
-                    $x = new stdClass;
+                    $x = new \stdClass;
                     $x->id = $c;
                     $pc[] = $x;
                 }
@@ -58,7 +58,7 @@ class ProductAdmin extends Registry
             $options = $this->request->post('options');
             if (is_array($options)){
                 foreach ($options as $f_id => $val){
-                    $po[$f_id] = new stdClass;
+                    $po[$f_id] = new \stdClass;
                     $po[$f_id]->feature_id = $f_id;
                     $po[$f_id]->value = $val['value'];
                     $po[$f_id]->translit = $val['translit'];
@@ -69,7 +69,7 @@ class ProductAdmin extends Registry
             // Связанные товары
             if (is_array($this->request->post('related_products'))){
                 foreach ($this->request->post('related_products') as $p){
-                    $rp[$p] = new stdClass;
+                    $rp[$p] = new \stdClass;
                     $rp[$p]->product_id = $product->id;
                     $rp[$p]->related_id = $p;
                 }
@@ -309,7 +309,7 @@ class ProductAdmin extends Registry
                 $related_products = $this->products->get_related_products(['product_id' => $product->id]);
             } else {
                 // Сразу активен
-                $product = new stdClass;
+                $product = new \stdClass;
                 $product->visible = 1;
             }
         }

@@ -490,7 +490,7 @@ class ProductsView extends View {
         $this->design->assign('prices', $prices);
         if($this->request->get('ajax','boolean')) {
             $this->design->assign('ajax', 1);
-            $result = new StdClass;
+            $result = new \stdClass;
             $result->products_content = $this->design->fetch('products_content.tpl');
             $result->products_pagination = $this->design->fetch('chpu_pagination.tpl');
             $result->products_sort = $this->design->fetch('products_sort.tpl');

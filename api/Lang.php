@@ -1,4 +1,12 @@
 <?php
+/*************************************************
+  Framework Component
+  name      AlexShop_CMS
+  created   by Alex production
+  version   1.0
+  author    Alex Jurii <alexjurii@gmail.com>
+  Copyright (c) 2016
+ ************************************************/
 
 namespace api;
 
@@ -320,7 +328,7 @@ class Lang extends Registry {
         $intersect   = array_intersect($fields, array_keys((array)$data));
         
         if(!empty($intersect)) {
-            $description = new stdClass;
+            $description = new \stdClass;
             foreach($fields as $f) {
                 if (isset($data->$f)) {
                     $description->$f = $data->$f;

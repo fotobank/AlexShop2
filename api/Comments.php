@@ -1,4 +1,12 @@
 <?php
+/*************************************************
+  Framework Component
+  name      AlexShop_CMS
+  created   by Alex production
+  version   1.0
+  author    Alex Jurii <alexjurii@gmail.com>
+  Copyright (c) 2016
+ ************************************************/
 
 namespace api;
 
@@ -45,18 +53,18 @@ class Comments extends Registry {
         $has_parent_filter = '';
         
         if(isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
         
         if(isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         
         if(isset($filter['ip'])) {
             $ip = $this->db->placehold("OR c.ip=?", $filter['ip']);
         }
         if(isset($filter['approved'])) {
-            $approved_filter = $this->db->placehold("AND (c.approved=? $ip)", intval($filter['approved']));
+            $approved_filter = $this->db->placehold("AND (c.approved=? $ip)", (int)$filter['approved']);
         }
         
         $sql_limit = ($limit ? $this->db->placehold(' LIMIT ?, ? ', ($page-1)*$limit, $limit) : '');
@@ -129,7 +137,7 @@ class Comments extends Registry {
         }
         
         if(isset($filter['approved'])) {
-            $approved_filter = $this->db->placehold('AND c.approved=?', intval($filter['approved']));
+            $approved_filter = $this->db->placehold('AND c.approved=?', (int)$filter['approved']);
         }
 
         if (isset($filter['has_parent'])) {
@@ -171,9 +179,9 @@ class Comments extends Registry {
         $comment = (array)$comment;
         if ($comment['approved'] == 1 && $comment['object_id']) {
             if ($comment['type'] == 'blog') {
-                $this->db->query('update __blog set last_modify=now() where id=?', intval($comment['object_id']));
+                $this->db->query('update __blog set last_modify=now() where id=?', (int)$comment['object_id']);
             } elseif ($comment['type'] == 'product') {
-                $this->db->query('update __products set last_modify=now() where id=?', intval($comment['object_id']));
+                $this->db->query('update __products set last_modify=now() where id=?', (int)$comment['object_id']);
             }
         }
         
@@ -192,12 +200,12 @@ class Comments extends Registry {
         
         $comment = (array)$comment;
         if ($comment['approved'] == 1) {
-            $this->db->query('select object_id, type from __comments where id=?', intval($id));
+            $this->db->query('select object_id, type from __comments where id=?', (int)$id);
             $c = $this->db->result();
             if ($c->type == 'blog') {
-                $this->db->query('update __blog set last_modify=now() where id=?', intval($c->object_id));
+                $this->db->query('update __blog set last_modify=now() where id=?', (int)$c->object_id);
             } elseif ($c->type == 'product') {
-                $this->db->query('update __products set last_modify=now() where id=?', intval($c->object_id));
+                $this->db->query('update __products set last_modify=now() where id=?', (int)$c->object_id);
             }
         }
         
@@ -206,25 +214,24 @@ class Comments extends Registry {
     
     public function delete_comment($id) {
         if(!empty($id)) {
-            $this->db->query('select object_id, type, approved from __comments where id=?', intval($id));
+            $this->db->query('select object_id, type, approved from __comments where id=?', (int)$id);
             $c = $this->db->result();
             if ($c->approved == 1) {
                 if ($c->type == 'blog') {
-                    $this->db->query('update __blog set last_modify=now() where id=?', intval($c->object_id));
+                    $this->db->query('update __blog set last_modify=now() where id=?', (int)$c->object_id);
                 } elseif ($c->type == 'product') {
-                    $this->db->query('update __products set last_modify=now() where id=?', intval($c->object_id));
+                    $this->db->query('update __products set last_modify=now() where id=?', (int)$c->object_id);
                 }
             }
 
-            $this->db->query('SELECT id from __comments where parent_id=?', intval($id));
+            $this->db->query('SELECT id from __comments where parent_id=?', (int)$id);
             $children = $this->db->results('id');
             foreach($children as $child_id) {
                 $this->delete_comment($child_id);
             }
             
-            $query = $this->db->placehold("DELETE FROM __comments WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __comments WHERE id=? LIMIT 1", (int)$id);
             $this->db->query($query);
         }
     }
-    
 }

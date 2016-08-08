@@ -25,7 +25,7 @@ class CartView extends View
 
         // Если нажали оформить заказ
         if (isset($_POST['checkout'])){
-            $order = new stdClass;
+            $order = new \stdClass;
             $order->payment_method_id = $this->request->post('payment_method_id', 'integer');
             $order->delivery_id = $this->request->post('delivery_id', 'integer');
             $order->name = $this->request->post('name');

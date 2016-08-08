@@ -1,7 +1,19 @@
 <?php
+/*************************************************
+  Framework Component
+  name      AlexShop_CMS
+  created   by Alex production
+  version   1.0
+  author    Alex Jurii <alexjurii@gmail.com>
+  Copyright (c) 2016
+ ************************************************/
 
 namespace api;
 
+/**
+ * Class Categories
+ * @package api
+ */
 class Categories extends Registry {
     
     // Список указателей на категории в дереве категорий (ключ = id категории)
@@ -15,7 +27,7 @@ class Categories extends Registry {
         }
         
         if(!empty($filter['product_id'])) {
-            $query = $this->db->placehold("SELECT category_id FROM __products_categories WHERE product_id in(?@) ORDER BY position", (array)$filter['product_id']);
+            $query = $this->db->placehold('SELECT category_id FROM __products_categories WHERE product_id in(?@) ORDER BY position', (array)$filter['product_id']);
             $this->db->query($query);
             $categories_ids = $this->db->results('category_id');
             $result = array();
@@ -167,13 +179,13 @@ class Categories extends Registry {
         
         unset($this->categories_tree);
         unset($this->all_categories);
-        return intval($id);
+        return (int)$id;
     }
     
     public function delete_category($ids) {
         $ids = (array) $ids;
         foreach($ids as $id) {
-            if($category = $this->get_category(intval($id))) {
+            if($category = $this->get_category((int)$id)) {
                 if(!empty($category->children)) {
                     foreach ($category->children as $cid) {
                         $this->image->delete_image($cid, 'image', 'categories', $this->config->original_categories_dir, $this->config->resized_categories_dir);
@@ -192,20 +204,20 @@ class Categories extends Registry {
     }
     
     public function add_product_category($product_id, $category_id, $position=0) {
-        $this->db->query("update __categories set last_modify=now() where id=?", intval($category_id));
-        $query = $this->db->placehold("INSERT IGNORE INTO __products_categories SET product_id=?, category_id=?, position=?", $product_id, $category_id, $position);
+        $this->db->query('update __categories set last_modify=now() where id=?', intval($category_id));
+        $query = $this->db->placehold('INSERT IGNORE INTO __products_categories SET product_id=?, category_id=?, position=?', $product_id, $category_id, $position);
         $this->db->query($query);
     }
     
     public function delete_product_category($product_id, $category_id) {
-        $this->db->query("update __categories set last_modify=now() where id=?", intval($category_id));
-        $query = $this->db->placehold("DELETE FROM __products_categories WHERE product_id=? AND category_id=? LIMIT 1", intval($product_id), intval($category_id));
+        $this->db->query('update __categories set last_modify=now() where id=?', intval($category_id));
+        $query = $this->db->placehold('DELETE FROM __products_categories WHERE product_id=? AND category_id=? LIMIT 1', (int)$product_id, (int)$category_id);
         $this->db->query($query);
     }
     
     private function init_categories() {
         // Дерево категорий
-        $tree = new stdClass();
+        $tree = new \stdClass();
         $tree->subcategories = array();
         
         // Указатели на узлы дерева
