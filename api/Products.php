@@ -514,11 +514,11 @@ class Products extends Registry {
         
         //lastModify
         if ($product->brand_id > 0) {
-            $this->db->query('update __brands set last_modify=now() where id=?', intval($product->brand_id));
+            $this->db->query('update __brands set last_modify=now() where id=?', (int)$product->brand_id);
         }
         
         // Очищаем url
-        $this->db->query('UPDATE __products SET url="" WHERE id=?', $new_id);
+        $this->db->query('UPDATE __products SET url="new" WHERE id=?', $new_id);
         
         // Дублируем категории
         $categories = $this->categories->get_product_categories($id);

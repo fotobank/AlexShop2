@@ -133,7 +133,7 @@ class ProductsAdmin extends Registry {
                     }
                     case 'duplicate': {
                         foreach($ids as $id) {
-                            $this->products->duplicate_product(intval($id));
+                            $this->products->duplicate_product((int)$id);
                         }
                         break;
                     }
