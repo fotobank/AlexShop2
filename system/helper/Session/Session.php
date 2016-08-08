@@ -40,10 +40,12 @@ use exception\SessionException;
 class Session extends ArrayHelper
 {
 
-    protected $sessionName = '_encrypted';
-    protected $lifetime = 3600; // 3600 = 1 час
-    protected $checkIP = false; // включить если у админа постоянный Ip
-    protected $autoRegenerateID = false; // всегда для этого сайта
+    protected $session_name = '_encrypted';
+    protected $old_id;
+    protected $life_time = 3600; // 3600 = 1 час
+    protected $check_ip = false; // включить если у админа постоянный Ip
+    protected $auto_life_time_regenerate_id = true; // регенерировать ли сессию если время life_time вышло
+    protected $auto_regenerate_id = true; // при каждом обновлении страницы менять session Id
 
     protected $running = false;
 
@@ -55,7 +57,7 @@ class Session extends ArrayHelper
     {
         ini_set('session.use_cookies', 1);
         ini_set('session.use_only_cookies', 1);
-        ini_set('session.gc_maxlifetime', $this->lifetime);
+        ini_set('session.gc_maxlifetime', $this->life_time);
         ini_set('session.cookie_lifetime', 0); // 0 - пока браузер не закрыт
 
         $this->start();
@@ -73,12 +75,14 @@ class Session extends ArrayHelper
     public function start()
     {
         $this->phpSessionInit();
-        // проверка времени работы сессии и на неправильный снимок
-        if ($this->isExpired() || $this->isWrongFingerprint()){
-          //  if (!$this->autoRegenerateID){
-                 $this->regenerateId();
-          //  }
+
+        // продление времени работы сессии если пользователь online
+        if ($this->auto_life_time_regenerate_id && $this->isExpired()){
+
+            $this->regenerateId();
         }
+        // проверка на неправильный снимок сесии
+        $this->isWrongFingerprint();
         $this->running = true;
     }
 
@@ -89,7 +93,7 @@ class Session extends ArrayHelper
     {
         $la = '__lastActivity';
         $now = time();
-        $limit = $now - $this->lifetime;
+        $limit = $now - $this->life_time;
 
         if (isset($_SESSION[$la]) && $_SESSION[$la] < $limit){
             return true;
@@ -101,6 +105,7 @@ class Session extends ArrayHelper
 
     /**
      * @return bool
+     * защмта от кражи сессии подменой браузера или ip
      */
     protected function isWrongFingerprint()
     {
@@ -111,15 +116,17 @@ class Session extends ArrayHelper
             $_SERVER['HTTP_ACCEPT_CHARSET'] .
             $_SERVER['HTTP_CONNECTION'];
 
-        if ($this->checkIP){
+        if ($this->check_ip){
             $fingerprint .= $_SERVER['REMOTE_ADDR'];
         }
         if (!isset($_SESSION[$cf])){
             $_SESSION[$cf] = md5($fingerprint);
             return false;
         }
-
-        return ($_SESSION[$cf] != md5($fingerprint));
+        if($_SESSION[$cf] != md5($fingerprint)){
+            // уничтожаем сессию
+            $this->destroy();
+        }
     }
 
 
@@ -130,13 +137,18 @@ class Session extends ArrayHelper
     {
         if ($this->sessionExists()) {
             $sn = session_name();
-            if ($sn != $this->sessionName || $this->autoRegenerateID){
+            if ($sn != $this->session_name || $this->auto_regenerate_id){
                 $this->regenerateId();
             }
 
         } else {
-            session_name($this->sessionName);
+            session_name($this->session_name);
             session_start();
+            $this->old_id = session_id();
+        }
+        // сохраняем в сессию откуда пришел пользователь
+        if (!isset($_SESSION['origURL'])) {
+            $_SESSION['origURL'] = $_SERVER['HTTP_REFERER'];
         }
 
     }
@@ -159,10 +171,8 @@ class Session extends ArrayHelper
             return;
         }
         session_destroy();
-
         // send expire cookies
         $this->expireSessionCookie();
-
         // clear session data
         unset($_SESSION);
     }
@@ -191,7 +201,7 @@ class Session extends ArrayHelper
             setcookie(
                 $this->getName(),
                 '',
-                time() + $this->lifetime,
+                time() + $this->life_time,
                 $params['path'],
                 $params['domain'],
                 $params['secure'],
@@ -236,7 +246,7 @@ class Session extends ArrayHelper
             );
         }
 
-        $this->sessionName = $name;
+        $this->session_name = $name;
         session_name($name);
         return $this;
     }
@@ -283,7 +293,8 @@ class Session extends ArrayHelper
     public function regenerateId($deleteOldSession = true)
     {
         if ($this->sessionExists()) {
-            $ret =  session_regenerate_id((bool) $deleteOldSession);
+            $this->old_id = session_id();
+            $ret = session_regenerate_id((bool) $deleteOldSession);
             $this->expireSessionCookie();
             return $ret;
         } else {
@@ -315,7 +326,7 @@ class Session extends ArrayHelper
      */
     public function check_session() {
         if(isset($_POST, $_POST['session_id'])) {
-            if(empty($_POST['session_id']) || $_POST['session_id'] != session_id()) {
+            if(empty($_POST['session_id']) || $_POST['session_id'] != $this->old_id) {
                 unset($_POST);
                 return false;
             }

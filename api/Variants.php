@@ -120,7 +120,7 @@ class Variants extends Registry {
         
         $v = (array)$variant;
         if (!empty($v)) {
-            $query = $this->db->placehold("UPDATE __variants SET ?% WHERE id=? LIMIT 1", $variant, intval($id));
+            $query = $this->db->placehold('UPDATE __variants SET ?% WHERE id=? LIMIT 1', $variant, (int)$id);
             $this->db->query($query);
         }
         

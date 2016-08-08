@@ -56,6 +56,7 @@ class ProductAdmin extends Registry
             }
 
             // Свойства товара
+            $po = null;
             $options = $this->request->post('options');
             if (is_array($options)){
                 foreach ($options as $f_id => $val){
@@ -68,6 +69,7 @@ class ProductAdmin extends Registry
             }
 
             // Связанные товары
+            $rp = null;
             if (is_array($this->request->post('related_products'))){
                 foreach ($this->request->post('related_products') as $p){
                     $rp[$p] = new \stdClass;

@@ -392,7 +392,7 @@ class Products extends Registry {
         $result = $this->languages->get_description($product, 'product');
         
         $product->last_modify = date("Y-m-d H:i:s");
-        $query = $this->db->placehold("UPDATE __products SET ?% WHERE id in (?@) LIMIT ?", $product, (array)$id, count((array)$id));
+        $query = $this->db->placehold('UPDATE __products SET ?% WHERE id in (?@) LIMIT ?', $product, (array)$id, count((array)$id));
         if($this->db->query($query)) {
             if(!empty($result->description)) {
                 $this->languages->action_description($id, $result->description, 'product', $this->languages->lang_id());
@@ -518,7 +518,7 @@ class Products extends Registry {
         }
         
         // Очищаем url
-        $this->db->query('UPDATE __products SET url="new" WHERE id=?', $new_id);
+        $this->db->query('UPDATE __products SET url="" WHERE id=?', $new_id);
         
         // Дублируем категории
         $categories = $this->categories->get_product_categories($id);
@@ -540,8 +540,7 @@ class Products extends Registry {
             if($variant->infinity) {
                 $variant->stock = null;
             }
-            unset($variant->infinity);
-            unset($variant->rate_from);unset($variant->rate_to);
+            unset($variant->infinity, $variant->rate_from, $variant->rate_to);
             $variant->external_id = '';
             $this->variants->add_variant($variant);
         }

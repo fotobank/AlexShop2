@@ -23,7 +23,7 @@ $backend = new IndexAdmin();
 // Проверка id сессии для защиты от xss
 if(!Session::check_session()) {
     Debugger::log(new Exception('XSS атака на admin адрес сайта: http://' . $_SERVER['SERVER_NAME'] .
-        ' бот пришел из: ' . $_SERVER['HTTP_REFERER'] . ' Ip адресс: ' . $_SERVER['REMOTE_ADDR']), Debugger::ERROR);
+        ' пользователь пришел из: ' . Session::get('origURL') . ' Ip адрес пользователя: ' . $_SERVER['REMOTE_ADDR']), Debugger::ERROR);
 }
 
 
