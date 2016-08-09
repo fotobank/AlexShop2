@@ -10,10 +10,22 @@
 
 namespace api;
 
+/**
+ * Class Products
+ * @package api
+ */
 class Products extends Registry {
-    
+
+    /**
+     * @var array
+     */
     private $all_brands = array();
-    
+
+    /**
+     * @param array $filter
+     *
+     * @return array
+     */
     public function get_products($filter = array()) {
         // По умолчанию
         $limit = 100;
@@ -36,11 +48,11 @@ class Products extends Registry {
         $px = ($lang_id ? 'l' : 'p');
         
         if(isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
         
         if(isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         
         $sql_limit = $this->db->placehold(' LIMIT ?, ? ', ($page-1)*$limit, $limit);
@@ -59,23 +71,23 @@ class Products extends Registry {
         }
         
         if(isset($filter['featured'])) {
-            $is_featured_filter = $this->db->placehold('AND p.featured=?', intval($filter['featured']));
+            $is_featured_filter = $this->db->placehold('AND p.featured=?', (int)$filter['featured']);
         }
         
         if(isset($filter['discounted'])) {
-            $discounted_filter = $this->db->placehold('AND (SELECT 1 FROM __variants pv WHERE pv.product_id=p.id AND pv.compare_price>0 LIMIT 1) = ?', intval($filter['discounted']));
+            $discounted_filter = $this->db->placehold('AND (SELECT 1 FROM __variants pv WHERE pv.product_id=p.id AND pv.compare_price>0 LIMIT 1) = ?', (int)$filter['discounted']);
         }
         
         if(isset($filter['in_stock'])) {
-            $in_stock_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __variants pv WHERE pv.product_id=p.id AND (pv.stock IS NULL OR pv.stock>0) LIMIT 1) = ?', intval($filter['in_stock']));
+            $in_stock_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __variants pv WHERE pv.product_id=p.id AND (pv.stock IS NULL OR pv.stock>0) LIMIT 1) = ?', (int)$filter['in_stock']);
         }
 
         if(isset($filter['has_images'])) {
-            $has_images_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __images pi WHERE pi.product_id=p.id LIMIT 1) = ?', intval($filter['has_images']));
+            $has_images_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __images pi WHERE pi.product_id=p.id LIMIT 1) = ?', (int)$filter['has_images']);
         }
         
         if(isset($filter['yandex'])) {
-            $yandex_filter = $this->db->placehold('inner join __variants v on v.product_id=p.id and v.yandex=?', intval($filter['yandex']));
+            $yandex_filter = $this->db->placehold('inner join __variants v on v.product_id=p.id and v.yandex=?', (int)$filter['yandex']);
         }
         $price_filter = '';
         $variant_join = '';
@@ -85,7 +97,7 @@ class Products extends Registry {
         $first_currency = reset($first_currency);
         $coef = 1;
         if(isset($_SESSION['currency_id']) && $first_currency->id != $_SESSION['currency_id']) {
-            $currency = $this->money->get_currency(intval($_SESSION['currency_id']));
+            $currency = $this->money->get_currency((int)$_SESSION['currency_id']);
             $coef = $currency->rate_from / $currency->rate_to;
         }
         if(isset($filter['price'])) {
@@ -100,7 +112,7 @@ class Products extends Registry {
         }
         
         if(isset($filter['visible'])) {
-            $visible_filter = $this->db->placehold('AND p.visible=?', intval($filter['visible']));
+            $visible_filter = $this->db->placehold('AND p.visible=?', (int)$filter['visible']);
         }
         
         if(!empty($filter['sort'])) {
@@ -220,8 +232,14 @@ class Products extends Registry {
         }*/
         return $products;
     }
-    
-    public function count_products($filter = array()) {
+
+    /**
+     * @param array $filter
+     *
+     * @return bool|int
+     */
+    public function count_products(array $filter = [])
+    {
         $category_id_filter = '';
         $brand_id_filter = '';
         $product_id_filter = '';
@@ -264,19 +282,19 @@ class Products extends Registry {
         }
         
         if(isset($filter['featured'])) {
-            $is_featured_filter = $this->db->placehold('AND p.featured=?', intval($filter['featured']));
+            $is_featured_filter = $this->db->placehold('AND p.featured=?', (int)$filter['featured']);
         }
         
         if(isset($filter['in_stock'])) {
-            $in_stock_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __variants pv WHERE pv.product_id=p.id AND (pv.stock IS NULL OR pv.stock>0) LIMIT 1) = ?', intval($filter['in_stock']));
+            $in_stock_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __variants pv WHERE pv.product_id=p.id AND (pv.stock IS NULL OR pv.stock>0) LIMIT 1) = ?', (int)$filter['in_stock']);
         }
 
         if(isset($filter['has_images'])) {
-            $has_images_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __images pi WHERE pi.product_id=p.id LIMIT 1) = ?', intval($filter['has_images']));
+            $has_images_filter = $this->db->placehold('AND (SELECT count(*)>0 FROM __images pi WHERE pi.product_id=p.id LIMIT 1) = ?', (int)$filter['has_images']);
         }
         
         if(isset($filter['yandex'])) {
-            $yandex_filter = $this->db->placehold('inner join __variants v on v.product_id=p.id and v.yandex=?', intval($filter['yandex']));
+            $yandex_filter = $this->db->placehold('inner join __variants v on v.product_id=p.id and v.yandex=?', (int)$filter['yandex']);
         }
         $price_filter = '';
         $variant_join = '';
@@ -287,7 +305,7 @@ class Products extends Registry {
         $first_currency = reset($first_currency);
         $coef = 1;
         if(isset($_SESSION['currency_id']) && $first_currency->id != $_SESSION['currency_id']) {
-            $currency = $this->money->get_currency(intval($_SESSION['currency_id']));
+            $currency = $this->money->get_currency((int)$_SESSION['currency_id']);
             $coef = $currency->rate_from / $currency->rate_to;
         }
         if(isset($filter['get_price'])) {
@@ -309,11 +327,11 @@ class Products extends Registry {
         }
         
         if(isset($filter['discounted'])) {
-            $discounted_filter = $this->db->placehold('AND (SELECT 1 FROM __variants pv WHERE pv.product_id=p.id AND pv.compare_price>0 LIMIT 1) = ?', intval($filter['discounted']));
+            $discounted_filter = $this->db->placehold('AND (SELECT 1 FROM __variants pv WHERE pv.product_id=p.id AND pv.compare_price>0 LIMIT 1) = ?', (int)$filter['discounted']);
         }
         
         if(isset($filter['visible'])) {
-            $visible_filter = $this->db->placehold('AND p.visible=?', intval($filter['visible']));
+            $visible_filter = $this->db->placehold('AND p.visible=?', (int)$filter['visible']);
         }
         
         if(!empty($filter['features']) && !empty($filter['features'])) {
@@ -350,7 +368,12 @@ class Products extends Registry {
             return $this->db->result('count');
         }
     }
-    
+
+    /**
+     * @param $id
+     *
+     * @return bool|int
+     */
     public function get_product($id) {
         if (empty($id)) {
             return false;
@@ -386,7 +409,13 @@ class Products extends Registry {
         $product = $this->db->result();
         return $product;
     }
-    
+
+    /**
+     * @param $id
+     * @param $product
+     *
+     * @return bool
+     */
     public function update_product($id, $product) {
         $product = (object)$product;
         $result = $this->languages->get_description($product, 'product');
@@ -402,7 +431,12 @@ class Products extends Registry {
             return false;
         }
     }
-    
+
+    /**
+     * @param $product
+     *
+     * @return bool
+     */
     public function add_product($product) {
         $product = (array) $product;
         if(empty($product['url'])) {
@@ -423,9 +457,9 @@ class Products extends Registry {
         $result = $this->languages->get_description($product, 'product');
         
         $product->last_modify = date("Y-m-d H:i:s");
-        if($this->db->query("INSERT INTO __products SET ?%", $product)) {
+        if($this->db->query('INSERT INTO __products SET ?%', $product)) {
             $id = $this->db->insert_id();
-            $this->db->query("UPDATE __products SET position=id WHERE id=?", $id);
+            $this->db->query('UPDATE __products SET position=id WHERE id=?', $id);
             
             if(!empty($result->description)) {
                 $this->languages->action_description($id, $result->description, 'product');
@@ -435,7 +469,12 @@ class Products extends Registry {
             return false;
         }
     }
-    
+
+    /**
+     * @param $id
+     *
+     * @return bool
+     */
     public function delete_product($id) {
         if(!empty($id)) {
             // Удаляем варианты
@@ -500,7 +539,12 @@ class Products extends Registry {
         }
         return false;
     }
-    
+
+    /**
+     * @param $id
+     *
+     * @return bool
+     */
     public function duplicate_product($id) {
         $product = $this->get_product($id);
         $product->id = null;
@@ -560,7 +604,12 @@ class Products extends Registry {
         $this->multi_duplicate_product($id, $new_id);
         return $new_id;
     }
-    
+
+    /**
+     * @param array $product_id
+     *
+     * @return array
+     */
     public function get_related_products($product_id = array()) {
         if(empty($product_id)) {
             return array();
@@ -581,18 +630,34 @@ class Products extends Registry {
         $this->db->query($query);
         return $this->db->results();
     }
-    
+
+    /**
+     * @param     $product_id
+     * @param     $related_id
+     * @param int $position
+     *
+     * @return mixed
+     */
     public function add_related_product($product_id, $related_id, $position=0) {
-        $query = $this->db->placehold("INSERT IGNORE INTO __related_products SET product_id=?, related_id=?, position=?", $product_id, $related_id, $position);
+        $query = $this->db->placehold('INSERT IGNORE INTO __related_products SET product_id=?, related_id=?, position=?', $product_id, $related_id, $position);
         $this->db->query($query);
         return $related_id;
     }
-    
+
+    /**
+     * @param $product_id
+     * @param $related_id
+     */
     public function delete_related_product($product_id, $related_id) {
-        $query = $this->db->placehold("DELETE FROM __related_products WHERE product_id=? AND related_id=? LIMIT 1", intval($product_id), intval($related_id));
+        $query = $this->db->placehold('DELETE FROM __related_products WHERE product_id=? AND related_id=? LIMIT 1', (int)$product_id, (int)$related_id);
         $this->db->query($query);
     }
-    
+
+    /**
+     * @param array $filter
+     *
+     * @return array
+     */
     public function get_images($filter = array()) {
         $product_id_filter = '';
         if(!empty($filter['product_id'])) {
@@ -615,34 +680,50 @@ class Products extends Registry {
         $this->db->query($query);
         return $this->db->results();
     }
-    
+
+    /**
+     * @param        $product_id
+     * @param        $filename
+     * @param string $name
+     *
+     * @return bool|int
+     */
     public function add_image($product_id, $filename, $name = '') {
-        $query = $this->db->placehold("SELECT id FROM __images WHERE product_id=? AND filename=?", $product_id, $filename);
+        $query = $this->db->placehold('SELECT id FROM __images WHERE product_id=? AND filename=?', $product_id, $filename);
         $this->db->query($query);
         $id = $this->db->result('id');
         if(empty($id)) {
-            $query = $this->db->placehold("INSERT INTO __images SET product_id=?, filename=?", $product_id, $filename);
+            $query = $this->db->placehold('INSERT INTO __images SET product_id=?, filename=?', $product_id, $filename);
             $this->db->query($query);
             $id = $this->db->insert_id();
-            $query = $this->db->placehold("UPDATE __images SET position=id WHERE id=?", $id);
+            $query = $this->db->placehold('UPDATE __images SET position=id WHERE id=?', $id);
             $this->db->query($query);
         }
         return($id);
     }
-    
+
+    /**
+     * @param $id
+     * @param $image
+     *
+     * @return mixed
+     */
     public function update_image($id, $image) {
-        $query = $this->db->placehold("UPDATE __images SET ?% WHERE id=?", $image, $id);
+        $query = $this->db->placehold('UPDATE __images SET ?% WHERE id=?', $image, $id);
         $this->db->query($query);
         return($id);
     }
-    
+
+    /**
+     * @param $id
+     */
     public function delete_image($id) {
-        $query = $this->db->placehold("SELECT filename FROM __images WHERE id=?", $id);
+        $query = $this->db->placehold('SELECT filename FROM __images WHERE id=?', $id);
         $this->db->query($query);
         $filename = $this->db->result('filename');
-        $query = $this->db->placehold("DELETE FROM __images WHERE id=? LIMIT 1", $id);
+        $query = $this->db->placehold('DELETE FROM __images WHERE id=? LIMIT 1', $id);
         $this->db->query($query);
-        $query = $this->db->placehold("SELECT count(*) as count FROM __images WHERE filename=? LIMIT 1", $filename);
+        $query = $this->db->placehold('SELECT count(*) as count FROM __images WHERE filename=? LIMIT 1', $filename);
         $this->db->query($query);
         $count = $this->db->result('count');
         if($count == 0) {
@@ -661,6 +742,12 @@ class Products extends Registry {
         }
     }
 
+    /**
+     * @param $category_id
+     * @param $position
+     *
+     * @return array
+     */
     public function get_neighbors_products($category_id, $position) {
         $pids = array();
         // следующий товар
@@ -703,6 +790,10 @@ class Products extends Registry {
         return $result;
     }
 
+    /**
+     * @param $id
+     * @param $new_id
+     */
     public function multi_duplicate_product($id, $new_id) {
         $lang_id = $this->languages->lang_id();
         if (!empty($lang_id)) {

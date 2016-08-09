@@ -12,10 +12,20 @@ namespace api;
 
 use exception\DbException;
 
+/**
+ * Class Database
+ * @package api
+ */
 class Database extends Registry
 {
 
+    /**
+     * @var \Mysqli $mysqli
+     */
     private $mysqli;
+    /**
+     * @var \mysqli_result|boolean $res
+     */
     private $res;
 
     /**
@@ -43,7 +53,7 @@ class Database extends Registry
     public function connect()
     {
         // При повторном вызове возвращаем существующий линк
-        if (!empty($this->mysqli)){
+        if (null !== ($this->mysqli)){
             return $this->mysqli;
         } // Иначе устанавливаем соединение
         else {
@@ -59,11 +69,11 @@ class Database extends Registry
         } // Или настраиваем соединение
         else {
             if ($this->config->db_charset)
-                $this->mysqli->query('SET NAMES ' . $this->config->db_charset);
+               { $this->mysqli->query('SET NAMES ' . $this->config->db_charset);}
             if ($this->config->db_sql_mode)
-                $this->mysqli->query('SET SESSION SQL_MODE = "' . $this->config->db_sql_mode . '"');
+               { $this->mysqli->query('SET SESSION SQL_MODE = "' . $this->config->db_sql_mode . '"');}
             if ($this->config->db_timezone)
-                $this->mysqli->query('SET time_zone = "' . $this->config->db_timezone . '"');
+                {$this->mysqli->query('SET time_zone = "' . $this->config->db_timezone . '"');}
         }
 
         return $this->mysqli;
@@ -75,24 +85,59 @@ class Database extends Registry
     public function disconnect()
     {
         if (!@$this->mysqli->close())
-            return true;
+            {return true;}
         else
-            return false;
+           { return false;}
     }
 
     /**
      * Запрос к базе. Обазятелен первый аргумент - текст запроса.
      * При указании других аргументов автоматически выполняется placehold() для запроса с подстановкой этих аргументов
      */
-    public function query()
+    public function query_old()
     {
         if (is_object($this->res))
-            $this->res->free();
+           { $this->res->free();}
 
         $args = func_get_args();
         $q = call_user_func_array([$this, 'placehold'], $args);
 
         return $this->res = $this->mysqli->query($q);
+    }
+
+    /**
+     * Запрос к базе. Обязателен первый аргумент - текст запроса.
+     * При указании других аргументов автоматически выполняется placehold() для запроса с подстановкой этих аргументов
+     *
+     * @param array $args
+     *
+     * @return bool|\mysqli_result
+     * @throws \exception\DbException
+     */
+    public function query(...$args)
+    {
+        if (is_object($this->res))
+            {
+                $this->res->free();
+            }
+
+        $q = $this->placehold(...$args);
+        $this->res = $this->mysqli->query($q);
+
+        // вывод ошибок
+        if('' !== $this->mysqli->error || 0 !== count($this->mysqli->error_list)) {
+            throw new DbException('Ошибка '. $this->mysqli->error.' в запросе: ' . $q);
+        }
+        // вывод предупреждений
+        if ($this->mysqli->warning_count) {
+            if ($result = $this->mysqli->query('SHOW WARNINGS')) {
+                $row = $result->fetch_row();
+                printf("%s (%d): %s\n", $row[0], $row[1], $row[2]);
+                $result->close();
+            }
+        }
+
+        return $this->res;
     }
 
     /**
@@ -113,6 +158,7 @@ class Database extends Registry
         // Заменяем все __ на префикс, но только необрамленные кавычками
         $tmpl = preg_replace('/([^"\'0-9a-z_])__([a-z_]+[^"\'])/i', "\$1" . $this->config->db_prefix . "\$2", $tmpl);
         if (!empty($args)){
+            // формирование запроса
             $result = $this->sql_placeholder_ex($tmpl, $args, $error);
             if ($result === false){
                 $error = "Placeholder substitution error. Diagnostics: \"$error\"";
@@ -316,7 +362,7 @@ class Database extends Registry
                     // Это список.
                     foreach ($a as $v){
                         if (is_null($v)){
-                            $r = "NULL";
+                            $r = 'NULL';
                         } else {
                             $r = "'" . @addslashes($v) . "'";
                         }
@@ -346,18 +392,18 @@ class Database extends Registry
                         $repl = '';
                         foreach ($a as $k => $v){
                             if (isset($lerror[$k])){
-                                $repl .= ($repl === '' ? "" : ", ") . $lerror[$k];
+                                $repl .= ($repl === '' ? '' : ', ') . $lerror[$k];
                             } else {
                                 $k = preg_replace('/[^a-zA-Z0-9_-]/', '_', $k);
-                                $repl .= ($repl === '' ? "" : ", ") . $k . "=?";
+                                $repl .= ($repl === '' ? '' : ', ') . $k . '=?';
                             }
                         }
                         $error = $errmsg = $repl;
                     }
                 }
             } while (false);
-            if ($errmsg) $compiled[$num]['error'] = $errmsg;
-            if (!$error) $out .= $repl;
+            if ($errmsg) {$compiled[$num]['error'] = $errmsg;}
+            if (!$error) {$out .= $repl;}
         }
         $out .= substr($tmpl, $p);
 
@@ -389,6 +435,9 @@ class Database extends Registry
         }
     }
 
+    /**
+     * @param $filename
+     */
     public function dump($filename)
     {
         $h = fopen($filename, 'w');
@@ -401,6 +450,9 @@ class Database extends Registry
         fclose($h);
     }
 
+    /**
+     * @param $filename
+     */
     public function restore($filename)
     {
         $templine = '';
@@ -427,6 +479,10 @@ class Database extends Registry
         fclose($h);
     }
 
+    /**
+     * @param $table
+     * @param $h
+     */
     public function dump_table($table, $h)
     {
         $sql = "SELECT * FROM `$table`;";

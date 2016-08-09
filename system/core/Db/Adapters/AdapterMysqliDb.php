@@ -25,7 +25,7 @@
 namespace core\Db\Adapters;
 
 use core\Db\MysqliDb\MysqliDb;
-use exception\Db_Exception;
+use exception\DbException;
 use lib\Config\Config;
 
 /** @noinspection RealpathOnRelativePathsInspection */
@@ -62,7 +62,7 @@ class AdapterMysqliDb  implements InterfaceDbAdapters
         $connectSettings = $configs->getData('db');
         
         if (!is_array($connectSettings)){
-            throw new Db_Exception('ошибка в файле конфигурации базы данных', 500);
+            throw new DbException('ошибка в файле конфигурации базы данных', 500);
         }
         // if params were passed as array
         if (is_array($connectSettings['dbhost'])){
@@ -195,6 +195,11 @@ class AdapterMysqliDb  implements InterfaceDbAdapters
     public function __get($name)
     {
         return $this->mysqliDb->$name;
+    }
+
+    public function __isset($name)
+    {
+       return isset($this->mysqliDb->$name) ?? null;
     }
 
     /**

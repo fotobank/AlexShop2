@@ -33,7 +33,7 @@ class CallbacksAdmin extends Registry {
         $filter['limit'] = 40;
         
         
-        //$callbacks_count = $this->callbacks->count_callbacks($filter);
+        $callbacks_count = $this->callbacks->count_callbacks();
         // Показать все страницы сразу
         if($this->request->get('page') == 'all') {
             $filter['limit'] = $callbacks_count;
@@ -51,5 +51,3 @@ class CallbacksAdmin extends Registry {
     }
     
 }
-
-?>

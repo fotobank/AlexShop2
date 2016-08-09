@@ -298,9 +298,16 @@ class Lang extends Registry {
             return false;
         }
         
-        $this->db->query('SELECT count(*) as count FROM __lang_' .$this->tables[$object]. ' WHERE lang_id=? AND ' .$object."_id=? LIMIT 1", $data->lang_id, $object_id);
+        $this->db->query('
+             SELECT count(*) as count FROM __lang_' .$this->tables[$object]. ' 
+             WHERE lang_id=? 
+             AND ' .$object. '_id=? 
+             LIMIT 1', $data->lang_id, $object_id
+        );
         $data_lang = $this->db->result('count');
-        
+        $result = '';
+
+        // вставить или обновить перевод
         if($data_lang == 0) {
             $object_fild   = $object.'_id';
             $data->$object_fild = $object_id;
@@ -308,7 +315,8 @@ class Lang extends Registry {
             $this->db->query($query);
             $result = 'add';
         } elseif($data_lang == 1) {
-            $this->db->query("UPDATE __lang_".$this->tables[$object]." SET ?% WHERE lang_id=? AND ".$object."_id=?", $data, $data->lang_id, $object_id);
+            $this->db->query('UPDATE __lang_' .$this->tables[$object]. ' SET ?% WHERE lang_id=? AND ' .
+                $object. '_id=?', $data, $data->lang_id, $object_id);
             $result = 'update';
         }
         return $result;

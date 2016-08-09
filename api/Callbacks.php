@@ -35,7 +35,7 @@ class Callbacks extends Registry {
             FROM __callbacks c 
             WHERE id=? 
             LIMIT 1
-        ", intval($id));
+        ", (int)$id);
         
         if($this->db->query($query)) {
             return $this->db->result();
@@ -119,6 +119,11 @@ class Callbacks extends Registry {
             $query = $this->db->placehold('DELETE FROM __callbacks WHERE id=? LIMIT 1', (int)$id);
             $this->db->query($query);
         }
+    }
+
+    public function count_callbacks() {
+        $query = $this->db->placehold('SELECT COUNT(1) FROM __callbacks');
+        $this->db->query($query);
     }
     
 }

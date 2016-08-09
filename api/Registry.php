@@ -54,9 +54,10 @@ class Registry {
      * алиасы API
      * @var array
      */
-    private $alias = [
+    private static $alias = [
         'db' => 'Database',
         'languages'  => 'Lang',
+        'reportstat' => 'ReportStat',
     ];
     /**
      * Созданные объекты
@@ -85,8 +86,8 @@ class Registry {
         $name = lcfirst ($name);
         $class = ucfirst($name);
         // Проверка алиаса в API
-        if (isset($this->alias[$name])){
-            $class = $this->alias[$name];
+        if (isset(self::$alias[$name])){
+            $class = self::$alias[$name];
         }
         // Если такой объект уже существует, возвращаем его
         if (isset(self::$objects[$class])){
@@ -96,7 +97,7 @@ class Registry {
         $file_class = __DIR__ . '/' . $class . '.php';
         if(is_readable($file_class)){
             $name = "api\\$class";
-         //   require_once $file_class;
+        //    require_once $file_class;
             self::$objects[$class] = new $name();
 
         } else {

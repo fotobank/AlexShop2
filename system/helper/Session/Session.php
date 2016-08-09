@@ -45,7 +45,7 @@ class Session extends ArrayHelper
     protected $life_time = 3600; // 3600 = 1 час
     protected $check_ip = false; // включить если у админа постоянный Ip
     protected $auto_life_time_regenerate_id = true; // регенерировать ли сессию если время life_time вышло
-    protected $auto_regenerate_id = true; // при каждом обновлении страницы менять session Id
+    protected $auto_regenerate_id = false; // при каждом обновлении страницы менять session Id
 
     protected $running = false;
 
@@ -76,11 +76,11 @@ class Session extends ArrayHelper
     {
         $this->phpSessionInit();
 
-        // продление времени работы сессии если пользователь online
+        // продление времени работы сессии если пользователь ещё в online
         if ($this->auto_life_time_regenerate_id && $this->isExpired()){
-
             $this->regenerateId();
         }
+
         // проверка на неправильный снимок сесии
         $this->isWrongFingerprint();
         $this->running = true;
@@ -105,7 +105,7 @@ class Session extends ArrayHelper
 
     /**
      * @return bool
-     * защмта от кражи сессии подменой браузера или ip
+     * защита от кражи сессии подменой браузера или ip
      */
     protected function isWrongFingerprint()
     {
@@ -188,29 +188,6 @@ class Session extends ArrayHelper
     }
 
     /**
-     * Expire the session cookie
-     *
-     * Sends a session cookie with no value, and with an expiry in the past.
-     *
-     * @return void
-     */
-    public function expireSessionCookie()
-    {
-        if (ini_get('session.use_cookies')) {
-            $params = session_get_cookie_params();
-            setcookie(
-                $this->getName(),
-                '',
-                time() + $this->life_time,
-                $params['path'],
-                $params['domain'],
-                $params['secure'],
-                $params['httponly']
-            );
-        }
-    }
-
-    /**
      * Get session name
      *
      * Proxies to {@link session_name()}.
@@ -274,10 +251,32 @@ class Session extends ArrayHelper
     {
         // Set new cookie TTL
         session_set_cookie_params($ttl);
-
         if ($this->sessionExists()) {
             // There is a running session so we'll regenerate id to send a new cookie
             $this->regenerateId();
+        }
+    }
+
+    /**
+     * Expire the session cookie
+     *
+     * Sends a session cookie with no value, and with an expiry in the past.
+     *
+     * @return void
+     */
+    public function expireSessionCookie()
+    {
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
+            setcookie(
+                $this->getName(),
+                '',
+                time() + $this->life_time,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
+            );
         }
     }
 
@@ -294,11 +293,7 @@ class Session extends ArrayHelper
     {
         if ($this->sessionExists()) {
             $this->old_id = session_id();
-            $ret = session_regenerate_id((bool) $deleteOldSession);
-            $this->expireSessionCookie();
-            return $ret;
-        } else {
-            return false;
+            session_regenerate_id((bool) $deleteOldSession);
         }
     }
     /**

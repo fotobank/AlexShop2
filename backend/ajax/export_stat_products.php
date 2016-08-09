@@ -99,8 +99,7 @@ class ExportAjax extends Registry {
         $filter['limit'] = 40;
         
         $temp_filter = $filter;
-        unset($temp_filter['limit']);
-        unset($temp_filter['page']);
+        unset($temp_filter['limit'], $temp_filter['page']);
         $total_count = $this->reportstat->get_report_purchases_count($temp_filter);
         
         if($this->request->get('page') == 'all') {
@@ -122,13 +121,14 @@ class ExportAjax extends Registry {
             }
         }*/
         $cat_filter = $this->request->get('category');
-        $cat = $this->categories->get_category(intval($filter['category_id']));
+        $cat = isset($filter['category_id']) ? $this->categories->get_category((int)$filter['category_id']) : null;
         foreach ($report_stat_purchases as $id=>$r) {
             if (!empty($r->product_id)) {
                 $tmp_cat = $this->categories->get_categories(array('product_id' => $r->product_id));
                 $tmp_cat = reset($tmp_cat);
 
-                if (!empty($cat_filter) && !in_array($cat_filter,(array)$tmp_cat->path[$cat->level_depth-1]->children)) {
+                if (!empty($cat_filter) && isset($cat) &&
+                    !in_array($cat_filter,(array)$tmp_cat->path[$cat->level_depth-1]->children)) {
                     unset($report_stat_purchases[$id]);
                 } else {
                     $report_stat_purchases[$id]->category_name = $tmp_cat->name;
@@ -162,10 +162,10 @@ class ExportAjax extends Registry {
 $export_ajax = new ExportAjax();
 $data = $export_ajax->fetch();
 if ($data) {
-    header("Content-type: application/json; charset=utf-8");
-    header("Cache-Control: must-revalidate");
-    header("Pragma: no-cache");
-    header("Expires: -1");
+    header('Content-type: application/json; charset=utf-8');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: no-cache');
+    header('Expires: -1');
     $json = json_encode($data);
     print $json;
 }

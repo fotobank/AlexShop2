@@ -43,10 +43,10 @@ class ReportStat extends Registry {
         $page = 1;
         
         if (isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
         if (isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         $sql_limit = $this->db->placehold(' LIMIT ?, ? ', ($page-1)*$limit, $limit);
         
@@ -98,7 +98,7 @@ class ReportStat extends Registry {
         $status_filter = '';
         
         if (isset($filter['status'])) {
-            $status_filter = $this->db->placehold('AND o.status = ?', intval($filter['status']));
+            $status_filter = $this->db->placehold('AND o.status = ?', (int)$filter['status']);
         }
         
         if (isset($filter['date_from']) && !isset($filter['date_to'])) {
