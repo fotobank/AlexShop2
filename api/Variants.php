@@ -115,12 +115,12 @@ class Variants extends Registry {
     }
     
     public function update_variant($id, $variant) {
-        $variant = (object)$variant;
-        $result = $this->languages->get_description($variant, 'variant');
-        
-        $v = (array)$variant;
-        if (!empty($v)) {
-            $query = $this->db->placehold('UPDATE __variants SET ?% WHERE id=? LIMIT 1', $variant, (int)$id);
+
+        $result = $this->languages->get_description((object)$variant, 'variant');
+        $variant = (array)$variant;
+        $variant = array_diff($variant, array(''));
+        if (0 !== ($variant)) {
+            $query = $this->db->placehold('UPDATE __variants SET ?% WHERE id=? LIMIT 1', (object)$variant, (int)$id);
             $this->db->query($query);
         }
         
@@ -132,10 +132,12 @@ class Variants extends Registry {
     }
     
     public function add_variant($variant) {
+        // очищаем от пустых значений
+        $variant = array_diff((array)$variant, array(''));
         $variant = (object)$variant;
         $result = $this->languages->get_description($variant, 'variant');
         
-        $query = $this->db->placehold("INSERT INTO __variants SET ?%", $variant);
+        $query = $this->db->placehold('INSERT INTO __variants SET ?%', $variant);
         $this->db->query($query);
         $variant_id = $this->db->insert_id();
         

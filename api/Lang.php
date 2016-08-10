@@ -208,15 +208,15 @@ class Lang extends Registry {
         
         $language = $this->get_language($id);
         
-        if($data->is_default) {
-            $this->db->query("UPDATE __languages SET is_default=0 WHERE is_default=1");
+        if(isset($data->is_default)) {
+            $this->db->query('UPDATE __languages SET is_default=0 WHERE is_default=1');
             $this->settings->lang_default = $id;
         }
         
-        $query = $this->db->placehold("UPDATE __languages SET ?% WHERE id in(?@)", $data, (array)$id);
+        $query = $this->db->placehold('UPDATE __languages SET ?% WHERE id in(?@)', $data, (array)$id);
         $this->db->query($query);
         
-        if($data->label && !empty($language) && $language->label!==$data->label) {
+        if(isset($data->label) && !empty($language) && $language->label!==$data->label) {
             foreach($this->tables as $table) {
                 $this->db->query("UPDATE __lang_".$table." SET lang_label=? WHERE lang_id=?", $data->label, $id);
             }

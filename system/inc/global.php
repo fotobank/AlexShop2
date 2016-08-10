@@ -872,7 +872,7 @@ function modAccess($mod)
  */
 function writeInLog($msg, $type)
 {
-    $dir = ROOT . 'tmp/log/';
+    $dir = SYS_DIR . 'assests/log/';
     if (!is_dir($dir)) {
         mkdir($dir, 0777);
         @chmod_R($dir, 0777);

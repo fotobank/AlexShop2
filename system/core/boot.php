@@ -76,15 +76,14 @@ $config = Config::getData('debugger');
 Alex::checkDir(SYS_DIR . $config['logDir'], 0777);
 
 /** PRODUCTION or DEVELOPMENT or DETECT */
-Debugger::enable(Debugger::DETECT, SYS_DIR . $config['logDir']);
+Debugger::enable(Debugger::DETECT, SYS_DIR . $config['logDir'], $config['email']);
 /** выводить нотисы в строке
  * true - вызов Exception
  */
 Debugger::$strictMode = $config['strictMode'];
 Debugger::$logSeverity = $config['logSeverity'];
-Debugger::$email      = $config['email'];
 Debugger::$maxDepth   = $config['maxDepth']; // default: 3
-Debugger::$maxLen     = $config['maxLen']; // default: 150
+Debugger::$maxLength     = $config['maxLen']; // default: 150
 Debugger::$showLocation = $config['showLocation'];
 Debugger::$errorTemplate = SYS_DIR . $config['errorTemplate'];
 //Debugger::barDump(get_defined_vars());

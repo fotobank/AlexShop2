@@ -42,6 +42,7 @@ class DataBase implements InterfaceDataBase
 {
 
     /**
+     *
      * @var InterfaceDataBaseCache | InterfaceDataBaseSelectTypeStrategy $Db подключаемая с кэшем или без база данных
      */
     protected $Db;

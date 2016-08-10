@@ -94,6 +94,10 @@ class DataBaseSelectType implements InterfaceDataBaseSelectTypeStrategy
         return $this->currentDb->$name = $value;
     }
 
+    public function __isset($name) {
+        return isset($this->currentDb->$name);
+    }
+
     /**
      * @return mixed
      */
