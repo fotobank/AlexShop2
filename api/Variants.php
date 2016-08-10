@@ -77,7 +77,7 @@ class Variants extends Registry {
         if(empty($id)) {
             return false;
         }
-        $variant_id_filter = $this->db->placehold('AND v.id=?', intval($id));
+        $variant_id_filter = $this->db->placehold('AND v.id=?', (int)$id);
         
         $lang_sql = $this->languages->get_query(array('object'=>'variant'));
         $query = $this->db->placehold("SELECT 

@@ -161,7 +161,7 @@ class View extends Registry {
         }
     }
     
-    function fetch() {
+    public function fetch() {
         return false;
     }
     

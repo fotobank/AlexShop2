@@ -1,37 +1,19 @@
 <?php
-/**
- * Framework Component
- * @name      ALEX_CMS
- * @author    Alex Jurii <jurii@mail.ru>
- *
- * The MIT License (MIT)
- *
- * Copyright (c) 2016
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+/*************************************************
+  Framework Component
+  name      AlexShop_CMS
+  created   by Alex production
+  version   1.0
+  author    Alex Jurii <alexjurii@gmail.com>
+  Copyright (c) 2013 - 2016
+ ************************************************/
 
 namespace helper\Session;
 
 use helper\ArrayHelper\ArrayHelper;
 use proxy;
 use exception\SessionException;
+use lib\Config\Config;
 
 
 /**
@@ -39,34 +21,40 @@ use exception\SessionException;
  */
 class Session extends ArrayHelper
 {
+    public $version = 1.2;
 
-    protected $session_name = '_encrypted';
+    protected $session_name;
+    protected $life_time; // время жизни сессии
+    protected $check_ip; // включить если у админа постоянный Ip
+    protected $auto_life_time_regenerate_id; // регенерировать ли сессию если время life_time вышло
+    protected $auto_regenerate_id; // при каждом обновлении страницы менять session Id
+
     protected $old_id;
-    protected $life_time = 3600; // 3600 = 1 час
-    protected $check_ip = false; // включить если у админа постоянный Ip
-    protected $auto_life_time_regenerate_id = true; // регенерировать ли сессию если время life_time вышло
-    protected $auto_regenerate_id = false; // при каждом обновлении страницы менять session Id
-
     protected $running = false;
 
 
     /**
      * конструктор
+     *
+     * @param Config $config
+     *
+     * @throws \exception\SessionException
      */
-    public function __construct()
+    public function __construct(Config $config)
     {
+        $config = $config->getData('session');
+        foreach($config as $key => $value){
+
+            if(property_exists($this, $key)){
+                $this->$key = $value;
+            } else {
+                throw new SessionException('Свойство класса "helper\Session" -> "$'.$key.'" не найдено!');
+            }
+        }
         ini_set('session.use_cookies', 1);
         ini_set('session.use_only_cookies', 1);
         ini_set('session.gc_maxlifetime', $this->life_time);
         ini_set('session.cookie_lifetime', 0); // 0 - пока браузер не закрыт
-
-        $this->start();
-
-        if(null !==$_SESSION)
-        {
-            $this->properties = &$_SESSION;
-        }
-
     }
 
     /**
@@ -120,10 +108,10 @@ class Session extends ArrayHelper
             $fingerprint .= $_SERVER['REMOTE_ADDR'];
         }
         if (!isset($_SESSION[$cf])){
+
             $_SESSION[$cf] = md5($fingerprint);
-            return false;
-        }
-        if($_SESSION[$cf] != md5($fingerprint)){
+
+        } elseif($_SESSION[$cf] != md5($fingerprint)){
             // уничтожаем сессию
             $this->destroy();
         }
@@ -145,6 +133,7 @@ class Session extends ArrayHelper
             session_name($this->session_name);
             session_start();
             $this->old_id = session_id();
+            $this->properties = &$_SESSION;
         }
         // сохраняем в сессию откуда пришел пользователь
         if (!isset($_SESSION['origURL'])) {
@@ -289,11 +278,12 @@ class Session extends ArrayHelper
      * @param  bool $deleteOldSession
      * @return bool
      */
-    public function regenerateId($deleteOldSession = true)
+    public function regenerateId($deleteOldSession = false)
     {
         if ($this->sessionExists()) {
             $this->old_id = session_id();
             session_regenerate_id((bool) $deleteOldSession);
+            $this->properties = &$_SESSION;
         }
     }
     /**

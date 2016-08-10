@@ -142,11 +142,11 @@ class Session extends AbstractProxy
 {
     /**
      * Init instance
-     *
      * @return Instance
+     * @throws \exception\ComponentException
      */
     protected static function initInstance()
     {
-        return new Instance();
+        return new Instance(Config::getInstance());
     }
 }

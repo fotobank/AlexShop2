@@ -12,7 +12,7 @@ $view = new IndexView();
 
 if(isset($_GET['logout'])) {
     unset($_SESSION['admin']);
-    header('location: ' . $view->config->root_url);
+    header('location: ' . $view->config->root_url . '/admin');
     exit();
 }
 

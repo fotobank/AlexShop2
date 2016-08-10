@@ -1,11 +1,11 @@
 <?php
 /*************************************************
-  Framework Component
-  name      AlexShop_CMS
-  created   by Alex production
-  version   1.0
-  author    Alex Jurii <alexjurii@gmail.com>
-  Copyright (c) 2016
+ * Framework Component
+ * name      AlexShop_CMS
+ * created   by Alex production
+ * version   1.0
+ * author    Alex Jurii <alexjurii@gmail.com>
+ * Copyright (c) 2016
  ************************************************/
 
 namespace api;
@@ -58,7 +58,7 @@ class Database extends Registry
      */
     public function connect()
     {
-//        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         // При повторном вызове возвращаем существующий линк
         if (null !== ($this->mysqli)){
@@ -75,12 +75,15 @@ class Database extends Registry
 
         } // Или настраиваем соединение
         else {
-            if ($this->config->db_charset)
-               { $this->mysqli->query('SET NAMES ' . $this->config->db_charset);}
-            if ($this->config->db_sql_mode)
-               { $this->mysqli->query('SET SESSION SQL_MODE = "' . $this->config->db_sql_mode . '"');}
-            if ($this->config->db_timezone)
-                {$this->mysqli->query('SET time_zone = "' . $this->config->db_timezone . '"');}
+            if ($this->config->db_charset){
+                $this->mysqli->query('SET NAMES ' . $this->config->db_charset);
+            }
+            if ($this->config->db_sql_mode){
+                $this->mysqli->query('SET SESSION SQL_MODE = "' . $this->config->db_sql_mode . '"');
+            }
+            if ($this->config->db_timezone){
+                $this->mysqli->query('SET time_zone = "' . $this->config->db_timezone . '"');
+            }
         }
 
         return $this->mysqli;
@@ -91,23 +94,12 @@ class Database extends Registry
      */
     public function disconnect()
     {
-        if (!@$this->mysqli->close())
-            {return true;}
-        else
-           { return false;}
+        if (!@$this->mysqli->close()){
+            return true;
+        } else {
+            return false;
+        }
     }
-
-
-    /*public function query_old()
-    {
-        if (is_object($this->res))
-           { $this->res->free();}
-
-        $args = func_get_args();
-        $q = call_user_func_array([$this, 'placehold'], $args);
-
-        return $this->res = $this->mysqli->query($q);
-    }*/
 
     /**
      * Запрос к базе. Обязателен первый аргумент - текст запроса.
@@ -120,38 +112,28 @@ class Database extends Registry
      */
     public function query(...$args)
     {
-        $timer = microtime(1);
-
-        if (is_object($this->res))
-            {
+        try {
+            $timer = microtime(1);
+            if (is_object($this->res)){
                 $this->res->free();
             }
+            $query = $this->placehold(...$args);
+            $this->res = $this->mysqli->query($query);
 
-        $query= $this->placehold(...$args);
-        $this->res = $this->mysqli->query($query);
-
-        $this->timeQuery += microtime(1) - $timer;
-        $this->timeQueries += $this->timeQuery;
-        $this->numQueries++;
-
-        if (DEBUG_MODE){
-            $this->listQueries[$this->numQueries] = [$query, $this->timeQuery];
-
-            // вывод ошибок
-            if ('' !== $this->mysqli->error || 0 !== count($this->mysqli->error_list)){
-                throw new DbException('Ошибка ' . $this->mysqli->error . ' в запросе: ' . $query);
+            $this->timeQuery += microtime(1) - $timer;
+            $this->timeQueries += $this->timeQuery;
+            $this->numQueries++;
+            if (DEBUG_MODE){
+                $this->listQueries[$this->numQueries] = [$query, $this->timeQuery];
             }
-            // вывод предупреждений
-            if ($this->mysqli->warning_count){
-                if ($result = $this->mysqli->query('SHOW WARNINGS')){
-                    $row = $result->fetch_row();
-                    printf("%s (%d): %s\n", $row[0], $row[1], $row[2]);
-                    $result->close();
-                }
+        } catch (\mysqli_sql_exception $e) {
+            $sql = $query ?? null;
+            Debugger::log(new \Exception('[Ошибка в базе данных] - запрос: ' . $sql), 'err_db_query');
+            if (DEBUG_MODE){
+                throw new DbException('Ошибка: ' . $this->mysqli->error . ' в запросе: ' . $sql);
             }
-        } else {
-            Debugger::log(new \Exception('[Ошибка в базе данных] - запрос: ' . $query), 'err_db_query');
         }
+
         return $this->res;
     }
 
@@ -167,11 +149,14 @@ class Database extends Registry
     /**
      * Плейсхолдер для запросов.
      * Пример работы: $query = $db->placehold('SELECT name FROM products WHERE id=?', $id);
+     *
+     * @param array $args
+     *
+     * @return bool|mixed|string
      * @throws \exception\DbException
      */
-    public function placehold()
+    public function placehold(... $args)
     {
-        $args = func_get_args();
         $tmpl = array_shift($args);
         // Заменяем все __ на префикс, но только необрамленные кавычками
         $tmpl = preg_replace('/([^"\'0-9a-z_])__([a-z_]+[^"\'])/i', "\$1" . $this->config->db_prefix . "\$2", $tmpl);
@@ -179,11 +164,13 @@ class Database extends Registry
             // формирование запроса
             $result = $this->sql_placeholder_ex($tmpl, $args, $error);
             if ($result === false){
-                if(DEBUG_MODE) {
+                if (DEBUG_MODE){
                     throw new DbException("Placeholder substitution error. Diagnostics: \"$error\"");
                 }
+
                 return false;
             }
+
             return $result;
         } else {
             return $tmpl;
@@ -276,7 +263,7 @@ class Database extends Registry
         $p = 0;     // текущая позиция в строке
         $i = 0;     // счетчик placeholder-ов
         $has_named = false;
-        while (false !== ($start = $p = strpos($tmpl, "?", $p))){
+        while (false !== ($start = $p = strpos($tmpl, '?', $p))){
             // Определяем тип placeholder-а.
             switch ($c = substr($tmpl, ++$p, 1)) {
                 case '%':
@@ -353,8 +340,9 @@ class Database extends Registry
                 // Это placeholder-константа?
                 if ($type === '#'){
                     $repl = @constant($key);
-                    if (null === $repl)
-                        {$error = $errmsg = "UNKNOWN_CONSTANT_$key";}
+                    if (null === $repl){
+                        $error = $errmsg = "UNKNOWN_CONSTANT_$key";
+                    }
                     break;
                 }
                 // Обрабатываем ошибку.
@@ -374,8 +362,9 @@ class Database extends Registry
                     break;
                 }
                 // Иначе это массив или список.
-                if (is_object($a))
-                    {$a = get_object_vars($a);}
+                if (is_object($a)){
+                    $a = get_object_vars($a);
+                }
 
                 if (!is_array($a)){
                     $error = $errmsg = "NOT_AN_ARRAY_PLACEHOLDER_$key";
@@ -425,8 +414,12 @@ class Database extends Registry
                     }
                 }
             } while (false);
-            if ($errmsg) {$compiled[$num]['error'] = $errmsg;}
-            if (!$error) {$out .= $repl;}
+            if ($errmsg){
+                $compiled[$num]['error'] = $errmsg;
+            }
+            if (!$error){
+                $out .= $repl;
+            }
         }
         $out .= substr($tmpl, $p);
 
@@ -469,8 +462,9 @@ class Database extends Registry
         $q = $this->placehold("SHOW FULL TABLES LIKE '__%';");
         $result = $this->mysqli->query($q);
         while ($row = $result->fetch_row()){
-            if ($row[1] == 'BASE TABLE')
-               { $this->dump_table($row[0], $h);}
+            if ($row[1] == 'BASE TABLE'){
+                $this->dump_table($row[0], $h);
+            }
         }
         fclose($h);
     }
@@ -533,9 +527,9 @@ class Database extends Registry
                 while ($row = $result->fetch_row()){
                     fwrite($h, '(');
                     for ($i = 0; $i < $num_fields; $i++){
-                        if (is_null($row[$i]))
-                           { fwrite($h, 'null');}
-                        else {
+                        if (is_null($row[$i])){
+                            fwrite($h, 'null');
+                        } else {
                             switch ($field_type[$i]) {
                                 case 'int':
                                     fwrite($h, $row[$i]);
@@ -546,15 +540,17 @@ class Database extends Registry
                                     fwrite($h, "'" . $this->mysqli->real_escape_string($row[$i]) . "'");
                             }
                         }
-                        if ($i < $num_fields - 1)
-                            {fwrite($h, ',');}
+                        if ($i < $num_fields - 1){
+                            fwrite($h, ',');
+                        }
                     }
                     fwrite($h, ')');
 
-                    if ($index < $num_rows - 1)
-                        {fwrite($h, ',');}
-                    else
-                        {fwrite($h, ';');}
+                    if ($index < $num_rows - 1){
+                        fwrite($h, ',');
+                    } else {
+                        fwrite($h, ';');
+                    }
                     fwrite($h, "\n");
 
                     $index++;

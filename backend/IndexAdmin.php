@@ -170,6 +170,7 @@ class IndexAdmin extends Registry {
         // Администратор
         $this->manager = $this->managers->get_manager();
         $this->design->assign('mаnаgеr', $this->manager);
+        // авторизация
         if (!$this->manager && $module!='AuthAdmin') {
             header('location: '.$this->config->root_url.'/backend/index.php?module=AuthAdmin');
             exit();

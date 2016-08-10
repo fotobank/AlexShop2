@@ -1,0 +1,5 @@
+session_name: '_encrypted'
+life_time: 86400 # 1 на сутки - время жизни
+check_ip: false # добавить проверку пользователя по Ip - включить если у админа постоянный Ip
+auto_life_time_regenerate_id: true # регенерировать ли сессию если время life_time вышло, а пользователь еще онлайн
+auto_regenerate_id: true # при каждом обновлении страницы менять session Id для защиты сайта
