@@ -45,5 +45,3 @@ class PaymentMethodsAdmin extends Registry {
     }
     
 }
-
-?>

@@ -85,7 +85,9 @@ class IndexAdmin extends Registry {
     );
     
     // Соответсвие модулей и названий соответствующих прав
-    private $modules_permissions = array(
+    private $modules_permissions = [
+        'CommentAdmin'        => 'comment',
+        'CommentEditAdmin'    => 'comment_edit',
         'ProductsAdmin'       => 'products',
         'ProductAdmin'        => 'products',
         'CategoriesAdmin'     => 'categories',
@@ -154,7 +156,7 @@ class IndexAdmin extends Registry {
         'YametrikaAdmin'      => 'yametrika',
         /*YaMetrika*/
         'RobotsAdmin'         => 'robots'
-    );
+    ];
 
     protected $manager;
     
@@ -180,6 +182,7 @@ class IndexAdmin extends Registry {
         }
         
         if ($module != 'AuthAdmin') {
+            // лицензия
             /*$p=13; $g=3; $x=5; $r = ''; $s = $x;
             $bs = explode(' ', $this->config->license);
             foreach($bs as $bl){

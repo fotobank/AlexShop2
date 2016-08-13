@@ -16,7 +16,7 @@ class Comments extends Registry {
         if (empty($id)) {
             return false;
         }
-        $comment_id_filter = $this->db->placehold('AND c.id=?', intval($id));
+        $comment_id_filter = $this->db->placehold('AND c.id=?', (int)$id);
         $query = $this->db->placehold("SELECT 
                 c.id,
                 c.parent_id,
@@ -27,7 +27,8 @@ class Comments extends Registry {
                 c.type, 
                 c.text, 
                 c.date, 
-                c.approved 
+                c.approved,
+                c.admin, c.rate_up, c.rate_down
             FROM __comments c 
             WHERE 
                 1 
@@ -41,7 +42,7 @@ class Comments extends Registry {
             return false;
         }
     }
-    
+    // Возвращает комментарии, удовлетворяющие фильтру
     public function get_comments($filter = array()) {	
         // По умолчанию
         $limit = 0;
@@ -51,7 +52,11 @@ class Comments extends Registry {
         $keyword_filter = '';
         $approved_filter = '';
         $has_parent_filter = '';
-        
+        $parent_filter = '';
+
+        if(isset($filter['parent']))
+           { $parent_filter = $this->db->placehold('AND c.parent_id=?', (int)$filter['parent']);}
+
         if(isset($filter['limit'])) {
             $limit = max(1, (int)$filter['limit']);
         }
@@ -104,7 +109,8 @@ class Comments extends Registry {
                 c.text, 
                 c.type, 
                 c.date, 
-                c.approved
+                c.approved,
+                c.admin, c.rate_up, c.rate_down
             FROM __comments c 
             WHERE 
                 1 
@@ -118,15 +124,44 @@ class Comments extends Registry {
         ");
         
         $this->db->query($query);
-        return $this->db->results();
+        $comments = $this->db->results();
+        return $this->buildTree($comments);
     }
-    
+
+    /**
+     * @param array $elements
+     * @param int   $parentId
+     *
+     * @return array
+     */
+    private function buildTree(array &$elements, $parentId = 0) {
+        $comments_tree = array();
+        foreach ($elements as $element) {
+            if ($element->parent == $parentId) {
+                $children = $this->buildTree($elements, $element->id);
+                if ($children) {
+                    $element->children = $children;
+                }
+                $comments_tree[$element->id] = $element;
+                unset($elements[$element->id]);
+            }
+        }
+        return $comments_tree;
+    }
+
+    // Количество комментариев, удовлетворяющих фильтру
     public function count_comments($filter = array()) {	
         $object_id_filter = '';
         $type_filter = '';
         $approved_filter = '';
         $keyword_filter = '';
+        $parent_filter = '';
         $has_parent_filter = '';
+
+        if(isset($filter['parent']))
+            {
+                $parent_filter = $this->db->placehold('AND c.parent_id=?', (int)$filter['parent']);
+            }
         
         if(!empty($filter['object_id'])) {
             $object_id_filter = $this->db->placehold('AND c.object_id in(?@)', (array)$filter['object_id']);
@@ -154,18 +189,20 @@ class Comments extends Registry {
                     ) ');
             }
         }
-        
-        $query = $this->db->placehold("SELECT count(distinct c.id) as count
-            FROM __comments c 
-            WHERE 
-                1 
-                $object_id_filter 
-                $type_filter
-                $has_parent_filter
-                $keyword_filter 
-                $approved_filter
-        ");
+
+        $query = $this->db->placehold("SELECT count(distinct c.id) as count 
+             FROM __comments c 
+             WHERE 1 
+                   $object_id_filter 
+                   $type_filter 
+                   $keyword_filter 
+                   $approved_filter 
+                   $parent_filter",
+                   $this->settings->date_format
+                   );
+
         $this->db->query($query);
+
         return $this->db->result('count');
     }
     

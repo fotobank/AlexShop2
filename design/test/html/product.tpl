@@ -348,6 +348,13 @@
                    href = "#comments" role = "tab"
                    data-language = "{$translate_id['product_comments']}">{$lang->product_comments}</a>
 			</li>
+            <li class = "nav-item">
+                <a class = "nav-link{if !$product->features && !$product->body} active{/if}" data-toggle = "tab"
+                   href = "#comments" role = "tab"
+                   data-language = "{$translate_id['product_comments']}">{include file="comments/comments.tpl"}
+            <div class="ajax-content" data-url="ajax/comment.form.php?parent=0&type=product&object_id={$product->id}">
+            </div></a>
+            </li>
 		</ul>
         {* Навигация табов *}
         {* Контент табов *}

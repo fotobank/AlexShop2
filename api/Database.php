@@ -160,7 +160,7 @@ class Database extends Registry
         $tmpl = array_shift($args);
         // Заменяем все __ на префикс, но только необрамленные кавычками
         $tmpl = preg_replace('/([^"\'0-9a-z_])__([a-z_]+[^"\'])/i', "\$1" . $this->config->db_prefix . "\$2", $tmpl);
-        if (!empty($args)){
+        if (0 !== count($args)){
             // формирование запроса
             $result = $this->sql_placeholder_ex($tmpl, $args, $error);
             if ($result === false){
@@ -365,6 +365,11 @@ class Database extends Registry
                 if (is_object($a)){
                     $a = get_object_vars($a);
                 }
+                // удаляем пустые строковые значения
+                // для sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+                /*$a = array_filter($a, function($element) {
+                    return ('' !== $element);
+                });*/
 
                 if (!is_array($a)){
                     $error = $errmsg = "NOT_AN_ARRAY_PLACEHOLDER_$key";
@@ -392,12 +397,16 @@ class Database extends Registry
                         }
 
                         if (is_null($v)){
-                            $r = "=NULL";
+                            $r = '=NULL';
+                        /*} elseif (true === $v) {
+                            $r = '=' . 1;
+                        } elseif (false === $v) {
+                            $r = '=' . 0;*/
                         } else {
                             $r = "='" . @addslashes($v) . "'";
                         }
 
-                        $repl .= ($repl === '' ? "" : ", ") . $k . $r;
+                        $repl .= ($repl === '' ? '' : ', ') . $k . $r;
                     }
                     // Если была ошибка, составляем сообщение.
                     if (count($lerror)){

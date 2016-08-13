@@ -24,9 +24,41 @@ class Notify extends Registry {
         
         @mail($to, $subject, $message, $headers);
     }
+
+    /**
+     * отправка уведомления пользователю при ответе на комментарий
+     *
+     * @param $comment_id
+     *
+     * @return bool
+     *
+     *
+     */
+    public function email_comment_user($comment_id)
+    {
+        if(!($comment = $this->comments->get_comment((int)$comment_id)))
+            {return false;}
+
+        if($comment->type == 'product')
+            {$comment->product = $this->products->get_product((int)$comment->object_id);}
+        if($comment->type == 'blog')
+            {$comment->post = $this->blog->get_post((int)$comment->object_id);}
+
+        $user_comment = $this->comments->get_comment((int)$comment->parent);
+
+        $this->design->assign('comment', $comment);
+        $this->design->assign('user_comment', $user_comment);
+
+        $this->design->assign('name', $user_name);
+
+        // Отправляем письмо
+        $email_template = $this->design->fetch($this->config->root_dir.'design/'.$this->settings->theme.'/html/comments/email_comment_user.tpl');
+        $subject = $this->design->get_var('subject');
+        $this->email($user_comment->email, $subject, $email_template, $this->settings->notify_from_email);
+    }
     
     public function email_order_user($order_id) {
-        if(!($order = $this->orders->get_order(intval($order_id))) || empty($order->email)) {
+        if(!($order = $this->orders->get_order((int)$order_id)) || empty($order->email)) {
             return false;
         }
         

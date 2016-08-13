@@ -158,11 +158,24 @@ class View extends Registry {
             $this->design->smarty->registerPlugin("function", "get_discounted_products",	array($this, 'get_discounted_products_plugin'));
             $this->design->smarty->registerPlugin("function", "get_categories",             array($this, 'get_categories_plugin'));
             $this->design->smarty->registerPlugin("function", "get_banner",                 array($this, 'get_banner_plugin'));
+            $this->design->smarty->registerPlugin("function", "get_comments",  array($this, 'get_comments_plugin'));
         }
     }
     
     public function fetch() {
         return false;
+    }
+
+    public function get_comments_plugin($params, &$smarty)
+    {
+        if(!isset($params['approved']))
+           {
+               $params['approved'] = 1;
+           }
+        if(!empty($params['var']))
+            {
+                $smarty->assign($params['var'], $this->comments->get_comments($params));
+            }
     }
     
     public function get_categories_plugin($params, &$smarty) {

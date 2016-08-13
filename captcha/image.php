@@ -1,18 +1,16 @@
 <?php
 
 	header('Content-type: image/jpeg');
-
 	session_start();
 
 // image config
-
 	$code = random_int(10000,99999);
 	$color_r = $color_g = $color_b = 150;
 
-	$_SESSION["captcha_code"] = $code;
+	$_SESSION['captcha_code'] = $code;
 
-	$bg_image = "blank.jpg";
-	$font = "./maturasc.ttf";
+	$bg_image = 'blank.jpg';
+	$font = './maturasc.ttf';
 
 	$size = 14+random_int(0,10);
 	$rotation = random_int(-5,10);

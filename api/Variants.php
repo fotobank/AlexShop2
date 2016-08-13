@@ -118,7 +118,9 @@ class Variants extends Registry {
 
         $result = $this->languages->get_description((object)$variant, 'variant');
         $variant = (array)$variant;
-        $variant = array_diff($variant, array(''));
+        $variant = array_filter($variant, function($element) {
+            return ('' !== $element);
+        });
         if (0 !== ($variant)) {
             $query = $this->db->placehold('UPDATE __variants SET ?% WHERE id=? LIMIT 1', (object)$variant, (int)$id);
             $this->db->query($query);
@@ -133,7 +135,9 @@ class Variants extends Registry {
     
     public function add_variant($variant) {
         // очищаем от пустых значений
-        $variant = array_diff((array)$variant, array(''));
+        $variant = array_filter((array)$variant, function($element) {
+            return ('' !== $element);
+        });
         $variant = (object)$variant;
         $result = $this->languages->get_description($variant, 'variant');
         
