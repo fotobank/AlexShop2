@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+		<head>
+				<!-- Meta, title, CSS, favicons, etc. -->
+				<meta charset="utf-8">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<meta name="description" content="A Documentation for ContentLock.">
+				<meta name="author" content="Aleksej Vukomanovic">
+
+				<title>Documentation - Getting Started</title>
+
+				<!-- Bootstrap core CSS -->
+				<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+				<!-- Documentation extras -->
+				<link href="assets/css/docs.min.css" rel="stylesheet">
+				<link href="assets/css/prism.css" rel="stylesheet">
+
+				<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+				<!--[if lt IE 9]>
+						<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+						<script src="https://oss.maxcdn.com/libs/respond.assets/js/1.4.2/respond.min.js"></script>
+				<![endif]-->
+        <style>
+          .file {
+              background-color: #F0F0F0;
+              padding: 2px 8px;
+              font-weight: bold;
+              border-radius: 3px;
+          }
+          ul.spaced > li {
+              margin-top: 12px;
+          }
+          table td{
+              border: 1px solid #f7f7f7;
+              padding: 5px;
+            }
+            table tr:nth-child(1){
+              text-transform: uppercase;
+              font-weight: bold;
+            }
+            table tr:nth-child(odd){
+              background: #f4f4f4;
+            }
+            .navbar-brand{padding: 0;}
+        </style>
+		</head>
+
+		<body>
+				<a class="sr-only" href="#content">Skip to main content</a>
+
+				<!-- Docs master nav -->
+				<header class="navbar navbar-inverse navbar-static-top bs-docs-nav" role="banner">
+						<div class="container">
+								<div class="navbar-header">
+										<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+												<span class="sr-only">Toggle navigation</span>
+												<span class="icon-bar"></span>
+												<span class="icon-bar"></span>
+												<span class="icon-bar"></span>
+										</button>
+										<a href="index.html" class="navbar-brand"><img width="150" height="50" src="assets/images/logo.png"/></a>
+								</div>
+								<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+										<ul class="nav navbar-nav">
+												<li>
+													<a href="http://themeflection.com/">ThemeFlection</a>
+												</li>
+												<li>
+													<a href="http://themeflection.com/support/">Support</a>
+												</li>
+										</ul>
+								</nav>
+						</div>
+				</header>
+
+
+<!-- Docs page layout -->
+<div class="bs-header" id="content" style="background-color: #196075;">
+	<div class="container">
+		<h1>ContentLock Documentation</h1>
+	</div>
+</div>
+
+<div class="container bs-docs-container">
+
+	<div class="row">
+		<div class="col-md-9" role="main">
+
+			<!-- Introduction
+================================================== -->
+<div class="bs-docs-section">
+<h1 id="introduction" class="page-header">Introduction</h1>
+<p>First of all, let me say thanks you for choosing my product! Feel free to ask any question you might have regarding ContentLock.</p>
+
+<p><strong>ContentLock</strong> is universal content locking solution. Covered with powerful back-end admin dashboard where you can organize your locks, email them to selected users, or multiple recepients, or to all subscribers. You can monitor your statistics and collect new leads with simple content locking.</p>
+<p>Ask your visitors to subscribe (provide you an email address) in order to receive password for locked content. Subscribe form with automatic password sending is implemented with ContentLock plugin.</p>
+<p>Create single Locks for individual content, or create a group lock, one password for multiple content.</p>
+<p>Lock Any Content on web page - paragraphs (text), images, videos, downloads, or even web page itself.</p>
+<p>Simple built-in support for locking downloads.</p>
+<p>Fully automated system for collecting new subscribers.</p> 
+
+</div>
+
+
+<!-- What's included
+================================================== -->
+<div class="bs-docs-section">
+<h3 id="whats-included" class="page-header">What's included</h3>
+
+<ul class="spaced">
+  <li>
+    <span class="file">Admin</span> folder: Contains the back-end files that will be used to install and use ContentLock Admin Dashboard.
+  </li>
+  <li><span class="file">Source</span> folder: Contains the main front-end scripts and styles that will be applied to your web site when locking the content.
+      <ul class="spaced">
+        <li><span class="file">js</span> folder: Contains the main ContentLock javascript.</li>
+        <li><span class="file">css</span> folder: Contains the main ContentLock stylesheet</li>
+        <li><span class="file">images</span> folder: Contains the main image for the ContentLock front-end display.</li>
+      </ul>
+    </li>
+     <li><span class="file">Documentation</span> folder: Contains the ContentLock documentation file.</li>
+     <li>
+    <span class="file">Example</span> folder: Contains the example implementation of ContentLock.
+  </li>
+    <li><span class="file">Readme.txt</span> file: Contains quick instructions and general information for faster and easier access.</li>
+</ul> 
+
+
+</div>
+
+
+<!-- Browser compatibility
+================================================== -->
+<div class="bs-docs-section">
+<h3 id="compatibility" class="page-header">Browser compatibility</h3>
+
+<p>ContentLock is fully compatible with latest Chrome, Safari, Firefox and IE10+.</p>
+
+</div>
+
+
+			<!-- Dependencies
+================================================== -->
+<div class="bs-docs-section">
+<h1 class="page-header" id="depend">Dependencies</h1>
+
+<h3 id="css">CSS</h3>
+<p>
+        You need to include main stylesheet:
+        <div class="section"><pre><code class="language-markup">
+&lt;link rel="stylesheet" type="text/css" href="css/contentlock.css" /&gt;
+        </code></pre></div>
+        Javascript dependecies are following:
+</p>     
+
+<h3 id="js">javascript</h3>
+        <ul>
+          <li>jQuery library - version 1.9.1 or above</li>
+          <li>And main plugin jQuery</li>
+        </ul>
+<p>
+        <div class="section"><pre><code class="language-markup">
+&lt;script type="text/javascript" src="js/jquery-1.9.1.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="js/contentlock.js"&gt;&lt;/script&gt; 
+        </code></pre></div>
+</p>
+
+</div>
+
+
+      <!-- HTML Markup
+================================================== -->
+<div class="bs-docs-section">
+<h1 id="html" class="page-header">HTML Markup</h1>
+
+<h3 id="basics">Basic Guidliness</h3>
+<p>To lock any content, all you need to do is to pass it's parent or wrapper ID, or class when initializng ContentLock plugin, and add it <code>data</code> attribute for the lock or group ID. There is no any special html markup that needs to be applied here. Everything is done through automatically.</p>
+<p>However there are few options that can be modified through the <code>data</code> attributes:</p>
+<ul>
+  <li><code>data-cl</code> This is how you will assing a custom lock ID you created to any parent element you want to lock.</li>
+  <li><code>data-group</code> This is how you will assing a custom group lock ID you created to any parent element you want to lock.</li>
+  <li><code>data-subox="true"</code> If you want to include subscribe box in the locked data, just add mentioned attribute and pass it <code>true</code> argument. This will append subscribe box where visitor can enter his/her email that will be stored in you database and he/she will automatically receive email with requested password to unlock desired content.</li>
+  <li><code>data-dwn="url-to-file"</code>. If you want to lock a download, all you need to do is to pass the download url to this data attribute, so after unlocking, it can start automatically. You can add some confirmation message instead of standard button or link that will show after unlocking.</li>
+</ul>
+<p>Example usage - for locking a simple content for which you want to include subscribe box, and assign it a lock ID - clo356nu - which you previously created from the admin dashboard, this would be the markup:</p>
+<p>
+  <pre><code class="language-markup">
+     &lt;div id="someId" data-cl=&quot;clo356nu&quot; data-subox="true"&gt;
+        &lt;h3&gt;This is A Locked Title&lt;/h3&gt;
+        &lt;p&gt;Some content that visitor can read after unlocking this whole div&lt;/p&gt;
+        &lt;p&gt;Everything that falls inside #someID div will be locked. &lt;/p&gt;
+     &lt;/div&gt;
+  </code></pre>
+</p>
+<p>Another example for video:</p>
+<p>
+  <pre><code class="language-markup">
+     &lt;div id="someId" data-cl=&quot;clo356nu&quot; data-subox="true"&gt;
+        &lt;iframe width="420" height="315" src="https://www.youtube.com/embed/tOJsUW5IWWE" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+     &lt;/div&gt;   
+  </code></pre>
+</p>
+<p>Or for download:</p>
+<pre><code class="language-markup">
+  &lt;div id="someID" data-cl=&quot;clo356nu&quot; data-subox="true" data-dwn="http://samplesite.com/download-url.rar"&gt;
+      &lt;p&gt;Your Download will start in a moment&lt;/p&gt;
+  &lt;/div&gt; 
+</code></pre>
+
+</div>
+
+
+<!-- Initializing
+================================================== -->
+<div class="bs-docs-section">
+<h1 id="init" class="page-header">Initializing</h1>
+
+ <p>To initialize ContentLock, call it on <code>body</code> element and pass it the #ID's of the containers that are holding the content you want to lock. There are few parameters that you can pass when initializing content lock. And there are two that are required - url parameter and containers whose content yo uwant to lock. If you do not upload admin folder in the same directorium where your site resides you have to specify url location of the admin folder that has to be placed somewhere on your server. And already mentioned - <code>container</code> parameter where you will apss ID's of the containers you want to lock.</p>
+
+  <h4>Initializing with required arguments: (example)</h4>
+  <pre><code class="language-javascript">
+    $('body').contentLock({
+       url : 'path-to-admin-folder',
+       container : '#someID'
+    });
+  </code></pre>
+     
+    
+   <div class="bs-callout bs-callout-warning">
+      <p>You must pass the right path to the admin folder if you have uploaded it somewhere outside your current directorium (in which your site resides) that has to be placed somewhere on your server. ContentLock jQuery front-end cannot operate without it's back-end.</p>
+   </div>
+  
+  <div class="bs-callout bs-callout-info">
+    <p>For a full list of available options - go to <a href="#options">options</a> section of this documentation</p>
+  </div>
+
+</div>
+
+<!-- Options
+================================================== -->
+<div class="bs-docs-section">
+<h1 id="options" class="page-header">Options</h1>
+
+<p>
+  <table>
+    <tr>
+      <td>Option</td>
+      <td>Default</td>
+      <td>Description</td>
+    </tr> 
+    <tr>
+      <td>url</td>
+      <td>"admin"</td>
+      <td>PATH to the location where you have put admin folder. This is required argument as all main functions are proccessed in the back-end. Do not use full address like http://yoursite.com, use relative path like "admin" - if it resides in your current directorium (default), or "../admin" - if it is outside your current directorium, etc.</td>
+    </tr>
+    <tr>
+      <td>content</td>
+      <td>""</td>
+      <td>ID's of the Containers that hold content you want to lock. You can add single ID, or multiple comma-separated ID's. For example: <code>container: '#id, #id2, #id3'</code>. This is also <strong>required</strong> argument</td>
+    </tr>
+    <tr>
+      <td>heading</td>
+      <td>"This Content Is Locked"</td>
+      <td>Heading that will be shown in the locked area beneath the lock icon.</td>
+    </tr>
+    <tr>
+      <td>unlockText</td>
+      <td>"Enter a password to unlock it:"</td>
+      <td>As it's name suggests this is a text to display as 'unlock' text next to the password field on the locked area.</td>
+    </tr>
+    <tr>
+    <tr>
+      <td>subContainer</td>
+      <td>""</td>
+      <td>Custom subscribe box container. If you want to place subscribe box inside sidebar or some other elemnet on your web page, just pass that container #id as <code>subContainer</code> argument when initializing.</td>
+    </tr>
+    <tr>
+      <td>subText</td>
+      <td>"Subscribe to unlock this content. <small class="cl-small">Password will be automatically emailed to you.</small>"</td>
+      <td>Main text to appear next to the email image in the subscribe box.</td>
+    </tr>
+    <tr>
+      <td>subCall</td>
+      <td>"GET IT"</td>
+      <td>Button, or 'Call to action' text for the submit on the subscribe box.</td>
+    </tr>
+    <tr>
+      <td>subPlaceholder</td>
+      <td>"Enter your email"</td>
+      <td>Placeholder for the email field in the subscribe box.</td>
+    </tr>
+    <tr>
+      <td>successMsg</td>
+      <td>"Thanks. Password Has been emailed to you."</td>
+      <td>Message to show after visitor has successfuly opt-ed in for password.</td>
+    </tr>
+    <tr>
+    <tr>
+      <td>failMsg</td>
+      <td>"Please, check your email address again, you must enter propper email."</td>
+      <td>Message to show if visitor has entered incorect email in subscribe box.</td>
+    </tr>
+    <tr>
+      <td>sendSucc</td>
+      <td>"Sent"</td>
+      <td>Text to display on the submit button of the subscribe box, at the moment that visitor has successfully subscribed.</td>
+    </tr>
+    <tr>
+      <td>sent</td>
+      <td>"Send Again"</td>
+      <td>Text to display on the submit button of the subscribe box, after visitor successfully subscribed. This text will be shown after <code>sendSucc</code> text which is shown at the moment visitor is subscribed.</td>
+    </tr>
+    <tr>
+      <td>sendAnimation</td>
+      <td>true</td>
+      <td>Enable/Disable sending animation for the submit button on subscribe box when user subscribes to get password for selected lock.</td>
+    </tr>
+    <tr>
+      <td>subscribeBox</td>
+      <td>""</td>
+      <td>Your custom markup for the subscribe box. If you want to replace default subscribe box with you own, you can add your HTML code here.</td>
+    </tr>
+    <tr>
+      <td>beforeSubmit</td>
+      <td>function(){}</td>
+      <td>Callback function that fires the moment visitor clicks subscribe button but <em>before</em> success response is returned</td>
+    </tr>
+    <tr>
+      <td>onSuccess</td>
+      <td>function(){}</td>
+      <td>Callback function that fires after success response is returned (from subscribe form)</td>
+    </tr>
+    <tr>
+      <td>passChecked</td>
+      <td>function(){}</td>
+      <td>Callback function that fires after content is unlocked.</td>
+    </tr>
+  </table>
+</p>    
+
+   
+
+</div>
+
+<!-- Subscribe Box
+================================================== -->
+<div class="bs-docs-section">
+<h1 id="illustration" class="page-header">Subscribe Box</h1>
+  <img class="img-responsive" src="assets/images/subscribebox.png" alt="subscribe box"/>
+  <p>You can edit most of the elements by passing those arguments when initializing plugin. Or you can create your custom subscribe box markup, but you must keep two things:
+  <ul>
+    <li>Email input must have <code>class="cl-mail"</code> and</li>
+    <li>button must have <code>cl-call</code> class in order for plugin to work propertelly.</li>
+  </ul>
+  You also need to include empty element with <code>cl-succ</code> class where you want success/fail messages to show.
+  </p>
+</div>
+
+
+<!-- Dashboard
+================================================== -->
+<div class="bs-docs-section">
+<h1 id="admin" class="page-header">Admin Dashboard</h1>
+<p>ContentLock back-end is essential for fully functioning of ContentLock plugin. You need to upload <strong>admin</strong> folder to your server, and copy it's location (path to it's residing place) that will be passed as <em>url</em> argument when initializing ContentLock Plugin.</p>
+<h2 id="install" class="page-header">Installation</h2>
+<p>To start installation navigate to the <strong>http://your-site.com/path-to-admin-folder/</strong> or go directly to the <strong>http://your-site.com/path-to-admin-folder/install</strong>/</p>
+<h3>01. Permissions Check</h3>
+<p>ContentLock requires <strong>inc</strong> and <strong>upload</strong> folders and /inc/config.php file (all located inside <em>admin</em> folder) to be writable, please ensure they are writable before proceeding with the installation. </p>
+<img class="img-responsive" src="assets/images/install_01.png" alt="install 01"/>
+<br/>
+<p>If your installation screen matches the above, your folder permissions are correct. If there are errors, please CHMOD the required folders, or files to 777 to ensure they can be written to.</p> 
+<br/>
+<h3>02. Database Setup</h3>
+<p>Enter your MySQL information and hit <strong>next</strong>. This requires <strong>inc</strong> folder to be writtable.</p>
+<img class="img-responsive" src="assets/images/install_02.png" alt="install 02"/>
+<br/>
+<h3>03. Create Admin Account</h3>
+<p>Create your Admin account that will have access to the ContentLock dashboard.</p>
+<img class="img-responsive" src="assets/images/install_03.png" alt="install 03"/>
+<br/>
+<h3>Installed</h3>
+<p>If you have done everything right, you will see installation successfull message like the one in the image..</p>
+<img class="img-responsive" src="assets/images/install_04.png" alt="install 04"/>
+<br/>
+<br/>
+<p>By following provided link or by going to http://your-site-name.com/path-to-admin-folder/ you will be able to login to ContentLock dahsboard.</p>
+<img class="img-responsive" src="assets/images/login.png" alt="login"/>
+<br/>
+
+<h2 id="start" class="page-header">Getting Started</h2>
+<p>Once you log in to your admin dashboard, first thing you need to do is to configure the <strong>settings</strong> so you can send password in emails, and use subscribe box to automatically email password to the subscriber. You can either click on the link that is displayed in message or click on <strong>settings</strong> on the left from the dashboard menu.</p>
+<img class="img-responsive" src="assets/images/start_01.png" alt="dashboard"/>
+<br/>
+<h4>Configuring The Settings</h4>
+<p>Fill in the neccessary information and hit <em>Save Changes</em> button.</p>
+<img class="img-responsive" src="assets/images/settings.png" alt="settings"/>
+<br/>
+<p>That's it! You have set everything up and now you can navigate around ContentLock Dashboard. You can monitor your monthly performance - number of unlocks and new subscribers statistcs, or send passwords from <em>Send password</em> section, or create new locks - from <em>single locks</em> and <em>groups</em> sections.</p>
+<div class="bs-callout bs-callout-danger">
+  <h4>Note</h4>
+  You must configure <strong>email settings</strong> if you want to send password and add subscribe box. Emails can't be sent unless you add your email information. This has been been tested with <strong>gmail</strong> but I can't guarantee it will work with other providers.
+</div> 
+
+
+
+</div>
+
+
+<!-- Credits
+================================================== -->
+<div class="bs-docs-section">
+<h1 id="credits" class="page-header">Credits</h1>
+
+<p class="lead">List of the resources used with ContentLock</p>
+<ul>
+    <li><a href="https://github.com/ircmaxell/password_compat/blob/master/lib/password.php">Simplified password hashing API</a></li>
+    <li><a href="http://swiftmailer.org/">swiftmailer</a></li>
+    <li><a href="http://www.iconarchive.com/artist/oxygen-icons.org.html">Oxygen Icons</a></li>
+    <li><a href="http://shapebootstrap.net/">Parts for admin dashboard used from ShapeBootstrap.com</a></li>
+</ul>
+
+
+</div>
+
+		</div>
+		<div class="col-md-3">
+			<div class="bs-sidebar hidden-print" role="complementary">
+				<ul class="nav bs-sidenav">			
+          <li>
+          <a href="#introduction">Introduction</a>
+          <ul class="nav">
+          <li><a href="#whats-included">What's included</a></li>
+          <li><a href="#compatibility">Browser compatibility</a></li>
+          </ul>
+          </li>
+          <li>
+          <a href="#depend">Dependencies</a>
+          <ul class="nav">
+          <li><a href="#css">CSS</a></li>
+          <li><a href="#js">javascript</a></li>
+          </ul>
+          </li>
+          <li>
+            <a href="#html">HTML Markup</a>
+          </li>
+          <li><a href="#init">Initializing</a></li>
+          <li><a href="#options">Options</a></li>
+          <li><a href="#illustration">Subscribe Box</a></li>
+          <li>
+              <a href="#admin">Admin Dashboard</a>
+              <ul class="nav">
+                 <li><a href="#install">Installation</a></li>
+                 <li><a href="#start">Getting Started</a></li>
+              </ul>
+          </li>
+          <li><a href="#credits">Credits</a></li>
+				</ul>
+        <a id="top" href="#content" style="font-size: 0.8em; display: block;margin-top: 15px;">To Top</span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- Footer
+================================================== -->
+<button class="to-top"></button>
+<footer class="bs-footer" role="contentinfo">
+<div class="container">
+
+<p>Designed and coded with love by Aleksej Vukomanovic</p>
+
+<ul class="footer-links muted">
+	<li>Currently v1.0</li>
+	<li>&middot;</li>
+	<li><a href="http://themeflection.com">ThemeFlection</a></li>
+	<li>&middot;</li>
+	<li><a href="http://themeflection.com/support/">Support</a></li>
+</ul>
+</div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/docs.min.js"></script>
+<script src="assets/js/prism.js"></script>
+
+</body>
+</html>

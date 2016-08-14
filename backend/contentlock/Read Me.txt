@@ -1,0 +1,42 @@
+
+ContentLock
+Copyright (c) Themeflection
+support@themeflection.com
+www.themeflection.com
+------------------------------
+
+WELCOME
+-------
+This is an introductory into what this project contains and how to use it.
+
+The project contains the following files:
+
+"Example" folder: Contains the example implementation of ContentLock.
+
+"Documentation" folder: Contains the ContentLock documentation file.
+
+"Admin" folder: Contains the back-end files that will be used to install and use ContentLock Admin Dashboard.
+
+"source" folder: Contains only the main plugin files. 
+
+
+HOW TO IMPLEMENT CONTENTLOCK
+---------------------------
+This section offers basic instructions, for complete information and instructions about the implementation see documentation.
+There is no any special HTML markup, all you need to add is data attribute that will hold the created lock, and passing the parent container (of the content you want 	to lock) ID attribute when initializing the plugin. 
+
+You will need to assign ID to the container if you do not have it already. Also if you want multiple elements to get locked, just wrap them with some container, like DIV, or SECTION and assing it an ID that will be passed when initializing the plugin. To assign single lock to the container add it as data-cl attribute, and to assign it group lock add it as data-group attribute. If you want to include Subscribe Box in the lock so that user can automatically receive password when subscribed, add data-subox="true" attribute. 
+
+For downloads add data-dwn attribute and pass it the url to the file that will be downloaded. If you want to lock complete page just add appropriate data attribute for the type of lock you want to use and assing an ID if you do not have one already to the main page wrapper, and then pass it's ID to the container parameter when initializing the plugin.  Open example HTML file in an HTML editor or a text editor and you will see these information applied.
+
+If you have any questions or clarifications that the example files or the user guide cannot answer, please contact me at support@themeflection.com.
+
+
+ABOUT ME
+--------
+If you like this product and find it useful, there may be other projects that you may find valuable as well. You can follow us on CodeCanyon by going to our profile page (http://codecanyon.net/user/themeflection) and clicking the "Follow" button so that when I launch new products they will neatly be displayed on your CodeCanyon front page. You can as well view my existing projects in my CodeCanyon portfolio (http://codecanyon.net/user/themeflection/portfolio) where you may find some other useful things that we have already created.
+
+You can also visit my site at www.themefelction.com and follow me on google plus (https://www.google.com/+Themeflectionthemeflection), and twitter @themeflection (https://twitter.com/themeflection).
+
+
+Thank you!

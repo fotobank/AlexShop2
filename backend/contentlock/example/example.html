@@ -1,0 +1,76 @@
+<!DOCTYPE>
+<html lang="en-US">
+<head>
+	 <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Demo</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/contentlock.css" />
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <!--
+    	This is a demo example of how to implement ContentLock into your project
+		There is no any special HTML markup, all you need to add is data attribute
+		that will hold the created lock, and passing the parent container (of the content you want 
+		to lock) ID attribute when initializing the plugin. You will need to assign ID to the container if
+		you do not have it already. Also if you want multiple elements to get locked, just wrap them with some
+		container, like DIV, or SECTION and assing it an ID that will be passed when initializing the plugin.
+		To assign single lock to the container add it as data-cl attribute, and to assign it group lock add it
+		as data-group attribute, like shown in code below. If you want to include Subscribe Box in the lock
+		so that user can automatically receive password when subscribed, add data-subox="true" attribute. For
+		downloads add data-dwn attribute and pass it the url to the file that will be downloaded. If you want
+		to lock complete page just add appropriate data attribute for the type of lock you want to use and assing
+		an ID if you do not have one already to the main page wrapper, and then pass it's ID to the container
+		parameter when initializing the plugin. 
+    -->
+
+	<div id="lock" data-group="group-lock" data-dwn="url-location-to-your-file">
+
+		<h3>Thank You</h2>
+		<p>Your Downlaod will start in a moment.</p>
+
+	</div>
+
+	<div id="lock2" data-group="group-lock" data-dwn="url-location-to-your-file">
+
+		<h3>Thank You</h2>
+		<p>Your Downlaod will start in a moment.</p>
+
+	</div>
+
+	<div id="lock3" data-cl="single-lock"  data-subox="true">
+
+		<h2>ContentLock Features</h2>
+		<ul>
+		<li>Ask your visitors to subscribe (provide you an email address) in order to receive password for locked content. Subscribe form with automatic password sending is implemented with ContentLock plugin</li>
+		<li>Create single Locks for individual content, or create a group lock, one password for multiple content.</li>
+		<li>Lock Any Content on web page - paragraphs (text), images, videos, downloads, or even web page itself.</li>
+		<li>Simple built-in support for locking downloads</li>
+		<li>Fully automated system for collecting new subscribers.</li>
+		</ul>
+
+	</div>
+
+
+
+<script src="assets/js/jquery-1.9.1.min.js"></script>
+<script src="assets/js/contentlock.js"></script>
+<script type="text/javascript">
+	(function($) {
+		// ContentLock - In this example I will be locking #lock , #lock2 and #lock3
+		// So I will pass them into container parameter when initializing the plugin
+		$('body').contentlock({url: 'admin',container: '#lock, #lock2, #lock3'});
+	})(jQuery);
+</script>
+</body>
+</html>
