@@ -4,9 +4,9 @@ composer.phar
 /arhiv/
 /simpla_source/
 /compiled/
-branches/
-cache/
+/branches/
 composer.lock
 files/uploads/
 plugins/
-simpla/design/compiled/
+/simpla/design/compiled/
+/system/assests/

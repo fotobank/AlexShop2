@@ -393,6 +393,8 @@
 					{* Список с комментариями *}
                     <div class = "col-lg-7">
 						{if $comments}
+                        {$comments|@debug_print_var}
+
                             {function name=comments_tree level=0}
                                 {foreach $comments as $comment}
                                      {*Якорь комментария *}
@@ -411,8 +413,7 @@
                                              {*Статус комментария *}
                                             {if !$comment->approved}
                                                 <span class = "font-weight-bold text-muted"
-                                                      data-language = "{$translate_id['post_comment_status']}">({$lang->post_comment_status}
-                                                                                                               )</span>
+                                                      data-language = "{$translate_id['post_comment_status']}">({$lang->post_comment_status})</span>
                                             {/if}
 
                                         </div>
@@ -433,13 +434,13 @@
                         {/if}
 					</div>
                      {*Список с комментариями *}
-                    <div class = "col-lg-5 bg-info p-y-1">
+                    {*<div class = "col-lg-5 bg-info p-y-1">
 						<!--Форма отправления комментария-->
 						<form class = "form comment_form" method = "post">
 							<div class = "h3 text-xs-center">
 								<span data-language = "{$translate_id['product_write_comment']}">{$lang->product_write_comment}</span>
 							</div>
-                             {*Вывод ошибок формы *}
+                             *}{*Вывод ошибок формы *}{*
                             {if $error}
                                 <div class = "p-x-1 p-y-05 m-b-1 text-red">
 									{if $error=='captcha'}
@@ -457,7 +458,7 @@
                             {/if}
 
                             <div class = "row m-b-1">
-								 {*Имя комментария *}
+								 *}{*Имя комментария *}{*
                                 <div class = "col-lg-6 form-group">
 									<input class = "form-control" type = "text" name = "name"
                                            value = "{$comment_name|escape}" data-format = ".+"
@@ -473,7 +474,7 @@
                                 </div>
 
 							</div>
-                             {*Текст комментария *}
+                             *}{*Текст комментария *}{*
                             <div class = "form-group">
 								<textarea class = "form-control" rows = "3" name = "text" data-format = ".+"
                                           data-notice = "{$lang->form_enter_comment}"
@@ -483,13 +484,13 @@
 
                             {if $settings->captcha_product}
                                 <div class = "col-xs-12 col-lg-7 form-inline m-b-1-md_down p-l-0">
-                                     {*Изображение капчи *}
+                                     *}{*Изображение капчи *}{*
                                     <div class = "form-group">
                                         <img class = "brad-3" src = "captcha/image.php?{math equation='rand(10,10000)'}"
                                              alt = 'captcha'/>
                                     </div>
 
-                                     {*Поле ввода капчи *}
+                                     *}{*Поле ввода капчи *}{*
                                     <div class = "form-group">
                                         <input class = "form-control" type = "text" name = "captcha_code" value = ""
                                                data-format = "\d\d\d\d\d" data-notice = "{$lang->form_enter_captcha}"
@@ -498,13 +499,13 @@
                                     </div>
                                 </div>
                             {/if}
-                             {*Кнопка отправки формы *}
+                             *}{*Кнопка отправки формы *}{*
                             <div class = "text-xs-right">
 								<input class = "btn btn-warning" type = "submit" name = "comment"
                                        data-language = "{$translate_id['form_send']}" value = "{$lang->form_send}"/>
 							</div>
 						</form>
-					</div>
+					</div>*}
 
                     {include file="comments/comments.tpl"}
                <div class="ajax-content col-lg-5 bg-info p-y-1"
