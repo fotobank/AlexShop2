@@ -17,4 +17,5 @@ if(isset($_GET['logout'])) {
 }
 
 $page = $view->request->create($view);
-print Optimize::html($page);
+//print Optimize::html($page);
+print $page;

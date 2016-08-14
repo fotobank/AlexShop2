@@ -10,6 +10,8 @@
 
 namespace api;
 
+use proxy\Session;
+
 class Comparison extends Registry {
     
     public function get_comparison() {
@@ -92,7 +94,8 @@ class Comparison extends Registry {
     }
     
     public function add_item($product_id) {
-        if(is_array($_SESSION['comparison']) && !in_array($product_id,$_SESSION['comparison'])) {
+        $comparison = Session::get('comparison');
+        if(is_array($comparison) && !in_array($product_id, $comparison)) {
             $_SESSION['comparison'][] = $product_id;
             if($this->settings->comparison_count && $this->settings->comparison_count < count($_SESSION['comparison'])) {
                 array_shift($_SESSION['comparison']);

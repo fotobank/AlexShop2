@@ -1,0 +1,85 @@
+/*
+ *  Framework Component
+ *  name      AlexShop_CMS
+ *  created   by Alex production
+ *  version   1.0
+ *  author    Alex Jurii <alexjurii@gmail.com>
+ *  Copyright (c) 2013 - 2016
+ */
+
+body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+}
+a[href], input[type='submit'], input[type='image'], label[for], select, button, .pointer {
+    cursor: pointer;
+}
+
+/*------------------ Change Autocomplete styles in Chrome---------*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border: 1px solid green;
+    -webkit-text-fill-color: green;
+    -webkit-box-shadow: 0 0 0 1000px #000 inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/*-----------------коментарии к товару-------------------------*/
+#comments .fa-ul {
+    margin-left: 0;
+}
+
+.fa-ul comments {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.3em;
+    letter-spacing: 0;
+}
+
+#comments .name {
+    padding-right: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+#comments .date {
+    position: absolute;
+}
+#comments .date, #comments .comment-rate {
+    top: 5px;
+    color: #C2C2C2;
+}
+
+#comments .comment-rate {
+    color: #666666;
+}
+
+#comments .comment-rate a span {
+    font-size: 15px;
+    font-weight: 700;
+    color: #F11100;
+}
+
+#comments .text {
+    margin-left: 22px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    color: #243541;
+}
+
+#comments .foot {
+    margin-left: 18px;
+}
+#comments .name i, #comments .date i {
+    padding-right: 4px;
+}
+/*--------------------коментарии--------------------------*/

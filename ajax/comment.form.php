@@ -1,16 +1,17 @@
 <?php
 
 use api\Registry;
+use proxy\Session;
+
+include __DIR__ . '/../system/configs/define/config.php';
+/** @noinspection PhpIncludeInspection */
+include SYS_DIR . 'core' . DS . 'boot.php';
 
 header("Content-type: application/json; charset=UTF-8");
 header("Cache-Control: must-revalidate");
 //header("Pragma: no-cache");
 header("Expires: -1");
 
-
-include __DIR__ . '/../system/configs/define/config.php';
-/** @noinspection PhpIncludeInspection */
-include SYS_DIR . 'core' . DS . 'boot.php';
 
 $registry = new Registry();
 
@@ -25,6 +26,7 @@ $comment_id = 0;
 if(!empty($registry->user))
 	{$registry->design->assign('comment_name', $registry->user->name);}
 
+$registry->design->assign('lang', $registry->translations);
 
 // Принимаем комментарий
 if ($registry->request->method('post') && $registry->request->post('comment'))
@@ -38,7 +40,7 @@ if ($registry->request->method('post') && $registry->request->post('comment'))
 	$registry->design->assign('comment', $comment);
 	
 	// Проверяем капчу и заполнение формы
-	if ($_SESSION['captcha_code'] != $captcha_code || empty($captcha_code))
+	if (empty($captcha_code) || Session::get('captcha_code') != $captcha_code)
 	{
 		$registry->design->assign('error', 'captcha');
 	}
@@ -76,13 +78,11 @@ if ($registry->request->method('post') && $registry->request->post('comment'))
 		echo json_encode($output);
 		
 		// Приберем сохраненную капчу, иначе можно отключить загрузку рисунков и постить старую
-        if(isset($_SESSION['captcha_code'])) {
-            unset($_SESSION['captcha_code']);
-        }
+        Session::del('captcha_code');
         return false;
 	}
 
 }
-$output = $registry->design->fetch('view/ajax/comment.form.tpl');
+$output = $registry->design->fetch('ajax/comment.form.tpl');
 echo json_encode($output);
 return false;

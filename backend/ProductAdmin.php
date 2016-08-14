@@ -293,7 +293,7 @@ class ProductAdmin extends Registry
             }
         } else {
             $id = $this->request->get('id', 'integer');
-            $product = $this->products->get_product(intval($id));
+            $product = $this->products->get_product((int)$id);
 
             if ($product){
                 // Категории товара
@@ -440,8 +440,7 @@ class ProductAdmin extends Registry
                 return $license_result;
             }
         } else {
-            die('<a href="http://alexshop-cms.com">AlexShop CMS</a>');
+            die('<a href="' . $this->config->root_url . '">AlexShop CMS</a>');
         }
     }
-
 }

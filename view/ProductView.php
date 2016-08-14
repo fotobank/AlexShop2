@@ -77,7 +77,7 @@ class ProductView extends View {
                 $comment->ip        = $_SERVER['REMOTE_ADDR'];
                 
                 // Если были одобренные комментарии от текущего ip, одобряем сразу
-                $this->db->query("SELECT 1 FROM __comments WHERE approved=1 AND ip=? LIMIT 1", $comment->ip);
+                $this->db->query('SELECT 1 FROM __comments WHERE approved=1 AND ip=? LIMIT 1', $comment->ip);
                 if($this->db->num_rows()>0) {
                     $comment->approved = 1;
                 }

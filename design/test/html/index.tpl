@@ -84,6 +84,8 @@
 	<link href="design/{$settings->theme}/images/favicon.png" type="image/x-icon" rel="icon"/>
 	<link href="design/{$settings->theme}/images/favicon.png" type="image/x-icon" rel="shortcut icon"/>
 
+    <noscript>For full functionality of this page it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com" target="_blank"> instructions how to enable JavaScript in your web browser</a></noscript>
+
 	{* JQuery *}
 	<script src="design/{$settings->theme}/js/jquery-2.1.4.min.js"></script>
 
@@ -104,10 +106,14 @@
 	{if $smarty.get.module == 'ProductView' || $smarty.get.module == "BlogView"}
 		<script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
 		<script type="text/javascript" src="//yastatic.net/share2/share.js"></script>
+        {* коментарии *}
+	    <script src="design/{$settings->theme}/js/comment.js"></script>
 	{/if}
 
 	{* Стили *}
-	<link href="design/{$settings->theme|escape}/css/bootstrap.css" rel="stylesheet"/>
+    <link href="design/{$settings->theme|escape}/css/font-awesome.css" rel="stylesheet"/>
+    <link href="design/{$settings->theme|escape}/css/bootstrap.css" rel="stylesheet"/>
+    <link href="design/{$settings->theme|escape}/css/custom.css" rel="stylesheet"/>
 	<script src="design/{$settings->theme|escape}/js/bootstrap.min.js"></script>
 
 	{* Order *}
@@ -452,7 +458,7 @@
 </div>
 {* Копирайт *}
 <div class="container p-y-1">
-	© {$smarty.now|date_format:"%Y"}. <a class="link-black" href="http://alexshop-sms.com" target="_blank"><span data-language="{$translate_id['index_copyright']}">{$lang->index_copyright}</span></a>
+	© {$smarty.now|date_format:"%Y"}. <a class="link-black" href="{$config->root_url}" target="_blank"><span data-language="{$translate_id['index_copyright']}">{$lang->index_copyright}</span></a>
 </div>
 {* Форма обратного звонка *}
 {include file='callback.tpl'}

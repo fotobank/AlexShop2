@@ -1,7 +1,10 @@
 <?php
 
+require_once __DIR__ . '/../system/configs/define/config.php';
+require_once SYS_DIR . 'core' . DS . 'boot.php';
+
 	header('Content-type: image/jpeg');
-	session_start();
+
 
 // image config
 	$code = random_int(10000,99999);
