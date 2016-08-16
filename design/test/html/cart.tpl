@@ -10,7 +10,7 @@
 	<h1 class="m-b-1"><span data-language="{$translate_id['cart_header']}">{$lang->cart_header}</span></h1>
 
 	{if $cart->purchases}
-		<form method="post" name="cart">
+		<form method="post" name="cart" class="order_form">
             <input name="checkout" value="1" type="hidden">
 			{* Список покупок *}
 			<div id="fn-purchases" class="h6 m-b-2">
@@ -53,14 +53,12 @@
 
 						{* Телефон клиента *}
 						<div class="form-group user_phone">
-
-							<input class="form-control" name="phone" type="tel" value="{$phone|escape}" required
+							<input class="form-control rfield" name="phone" type="tel" value="{$phone|escape}" required
                                    data-language="{$translate_id['form_phone']}" pattern="[0-9_-]{10}"
                                    placeholder="{$lang->form_phone}"
                                    id="user_phone" title="Формат: (067) 999 99 99"/>
-
-
 						</div>
+
 						{* Почта клиента *}
 						<div class="form-group">
 							<input class="form-control" name="email" type="email"

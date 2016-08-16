@@ -1,3 +1,4 @@
+// автодополнеение email
 $(document).ready(function () {
     new Awesomplete('input[type="email"]', {
         list: ["aol.com", "att.net", "comcast.net", "facebook.com", "gmail.com", "gmx.com", "googlemail.com", "google.com", "hotmail.com", "hotmail.co.uk", "mac.com", "me.com", "mail.com", "msn.com", "live.com", "sbcglobal.net", "verizon.net", "yahoo.com", "yahoo.co.uk", "mail.ru"],
@@ -8,36 +9,35 @@ $(document).ready(function () {
     });
 });
 
+// маска для номера телефона
 (function( $ ){
-    //// ---> Проверка на существование элемента на странице
+    // --> Проверка на существование элемента на странице
     jQuery.fn.exists = function() {
         return jQuery(this).length;
     };
     //	Phone Mask
     $(function() {
-
         if(!is_mobile()){
-            if($('#user_phone').exists()){
+            var phone = $('#user_phone');
+            if(phone.exists()){
 
-                $('#user_phone').each(function(){
+                $(phone).each(function(){
                     $(this).mask("(999) 999-99-99");
                 });
-                $('#user_phone')
-                    .addClass('rfield')
-                    .removeAttr('required')
-                    .removeAttr('pattern')
-                    .removeAttr('title');
-                    // .attr({'placeholder':'(___) ___ __ __'});
+                phone.addClass('rfield')
+                     .removeAttr('required')
+                     .removeAttr('pattern')
+                     .removeAttr('title');
+                     // .attr({'placeholder':'(___) ___ __ __'});
             }
-            if($('.phone_form').exists()){
-
-                var form = $('.phone_form'),
+            var form = $('.order_form');
+            if(form.exists()){
                     btn = form.find('.btn_submit');
 
                 form.find('.rfield').addClass('empty_field');
 
                 setInterval(function(){
-                    if($('#user_phone').exists()){
+                    if(phone.exists()){
                         var pmc = $('#user_phone');
                         if ( (pmc.val().indexOf("_") != -1) || pmc.val() == '' ) {
                             pmc.addClass('empty_field');
@@ -56,7 +56,7 @@ $(document).ready(function () {
                         btn.removeClass('disabled')
                     }
 
-                },200);
+                }, 200);
                 btn.click(function(){
                     if($(this).hasClass('disabled')){
                         return false
