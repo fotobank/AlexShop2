@@ -1,4 +1,6 @@
 <?php
+use api\Registry;
+
 require_once __DIR__ . '/system/configs/define/config.php';
 require_once SYS_DIR . 'core' . DS . 'boot.php';
 ?>
@@ -21,6 +23,7 @@ require_once SYS_DIR . 'core' . DS . 'boot.php';
   <div class="maindiv">
 
 <?php
+
 
 $registry = new Registry();
 

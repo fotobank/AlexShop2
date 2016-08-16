@@ -39,21 +39,22 @@ class Design extends Registry
         $theme = $this->settings->theme;
 
         // Создаем папку для скомпилированных шаблонов текущей темы
-        if (!is_dir($this->smarty->compile_dir)){
-            Alex::checkDir($this->smarty->compile_dir, 0777);
-        }
-        $this->smarty->compile_dir = SYS_DIR . 'assests/compiled/smarty/' . $theme;
-
-        // указываем папку шаблонов
-        $template_dir = $this->config->root_dir . 'design/' . $theme . '/html';
-        $this->smarty->template_dir = [$template_dir];
+        $this->set_compiled_dir(SYS_DIR . 'assests/compiled/smarty/' . $theme);
 
         // кеш smarty
-        if (!is_dir(SYS_DIR . 'assests/cache/smarty')){
-            Alex::checkDir(SYS_DIR . 'assests/cache/smarty', 0777);
-        }
         $this->smarty->cache_dir = SYS_DIR . 'assests/cache/smarty';
+        if (!is_dir( $this->smarty->cache_dir)){
+            Alex::checkDir( $this->smarty->cache_dir, 0777);
+        }
 
+        // добавляем директорию плагинов
+        $this->smarty->addPluginsDir(SYS_DIR . 'lib/Smarty/plugins');
+
+        // указываем папку шаблонов
+        $template_dir = ROOT . 'design/' . $theme . '/html';
+        $this->smarty->template_dir = [$template_dir];
+
+        // регистрация плагинов
         $this->smarty->registerPlugin('modifier', 'resize', [$this, 'resize_modifier']);
         $this->smarty->registerPlugin('modifier', 'token', [$this, 'token_modifier']);
         $this->smarty->registerPlugin('modifier', 'plural', [$this, 'plural_modifier']);
@@ -63,6 +64,8 @@ class Design extends Registry
         $this->smarty->registerPlugin('modifier', 'date', [$this, 'date_modifier']);
         $this->smarty->registerPlugin('modifier', 'time', [$this, 'time_modifier']);
         $this->smarty->registerPlugin('function', 'api', [$this, 'api_plugin']);
+        $this->smarty->registerPlugin('modifier', 'bdump', 'bdump');
+        $this->smarty->registerPlugin('modifier', 'dump', 'dump');
 
         if ($this->config->smarty_html_minify){
             $this->smarty->loadFilter('output', 'trimwhitespace');
@@ -90,6 +93,9 @@ class Design extends Registry
 
     public function set_compiled_dir($dir)
     {
+        if (!is_dir($dir)){
+            Alex::checkDir($dir, 0777);
+        }
         $this->smarty->compile_dir = $dir;
     }
 

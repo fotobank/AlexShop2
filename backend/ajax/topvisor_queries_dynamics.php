@@ -8,7 +8,7 @@
     
     if($registry->managers->access('topvisor')) {
         $registry->design->set_templates_dir('backend/design/html');
-        $registry->design->set_compiled_dir('backend/design/compiled');
+        $registry->design->set_compiled_dir(SYS_DIR . 'assests/compiled/smarty/' . $theme);
         
         $project_id = $registry->request->post('project_id', 'integer');
         $searcher = $registry->request->post('searcher');

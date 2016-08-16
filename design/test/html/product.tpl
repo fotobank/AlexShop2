@@ -393,7 +393,7 @@
 					{* Список с комментариями *}
                     <div class = "col-lg-7">
 						{if $comments}
-                        {$comments|@debug_print_var}
+                        {$comments|bdump}
 
                             {function name=comments_tree level=0}
                                 {foreach $comments as $comment}

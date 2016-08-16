@@ -31,7 +31,7 @@
 				</div>
 			{/if}
 			<div class="form-group">
-				{* E-mail для восстановления *}
+				{* email для восстановления *}
 				<label class="m-b-0">
 					<span data-language="{$translate_id['password_remind_enter_your_email']}">{$lang->password_remind_enter_your_email}</span>
 					<input class="form-control m-t-1" type="text" name="email" data-format="email" data-notice="{$lang->form_enter_email}" value="{$email|escape}" data-language="{$translate_id['form_email']}" placeholder="{$lang->form_email}*"/>

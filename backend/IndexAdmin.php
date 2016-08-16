@@ -2,6 +2,7 @@
 
 
 use api\Registry;
+use core\Alex;
 
 /**
  * Этот класс выбирает модуль в зависимости от параметра Section и выводит его на экран
@@ -218,7 +219,11 @@ class IndexAdmin extends Registry {
         }
 
         $this->design->set_templates_dir('backend/design/html');
-        $this->design->set_compiled_dir('backend/design/compiled');
+        $compile_dir = SYS_DIR . 'assests/compiled/smarty/backend';
+        if (!is_dir($compile_dir)){
+            Alex::checkDir(SYS_DIR . 'assests/cache/smarty', 0777);
+        }
+        $this->design->set_compiled_dir($compile_dir);
 
         $this->design->assign('settings', $this->settings);
         $this->design->assign('config',	$this->config);

@@ -104,8 +104,9 @@
 
 	{* Карточка товаров, поделиться в соц. сетях *}
 	{if $smarty.get.module == 'ProductView' || $smarty.get.module == "BlogView"}
-		<script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
-		<script type="text/javascript" src="//yastatic.net/share2/share.js"></script>
+        {*@todo включить на продакшене*}
+		{*<script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>*}
+		{*<script type="text/javascript" src="//yastatic.net/share2/share.js"></script>*}
         {* коментарии *}
 	    <script src="design/{$settings->theme}/js/comment.js"></script>
 	{/if}
@@ -113,10 +114,13 @@
 	{* Стили *}
     <link href="design/{$settings->theme|escape}/css/font-awesome.css" rel="stylesheet"/>
     <link href="design/{$settings->theme|escape}/css/bootstrap.css" rel="stylesheet"/>
+    <link href="design/{$settings->theme|escape}/css/awesomplete.css" rel="stylesheet"/>
     <link href="design/{$settings->theme|escape}/css/custom.css" rel="stylesheet"/>
 	<script src="design/{$settings->theme|escape}/js/bootstrap.min.js"></script>
 
+
 	{* Order *}
+    {*AIzaSyD9W-7TgJedXyMEM1EDuoKgEsHxg5VTDd8*}
 	{include file="scripts.tpl"}
 	<script src="design/{$settings->theme}/js/order.js"></script>
 
@@ -127,7 +131,13 @@
 	{/if}
 
 	{* js-проверка форм *}
+    <script src="design/{$settings->theme}/js/jquery.maskedinput.min.js"></script>
+    <script src="design/{$settings->theme}/js/is.mobile.js"></script>
 	<script src="design/{$settings->theme}/js/baloon.js"></script>
+    {*автоподбор email в форме ввода*}
+    <script src="design/{$settings->theme|escape}/js/awesomplete.js"></script>
+    {*запуск проверок и автоподбора*}
+    <script src="design/{$settings->theme|escape}/js/form.js"></script>
 
     {if $settings->g_analytics}
     {literal}

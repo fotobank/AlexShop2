@@ -46,22 +46,36 @@
 
 						{* Имя клиента *}
 						<div class="form-group">
-							<input class="form-control" name="name" type="text" value="{$name|escape}" data-format=".+" data-notice="{$lang->form_enter_name}" data-language="{$translate_id['form_name']}" placeholder="{$lang->form_name}*"/>
+							<input class="form-control" name="name" type="text" value="{$name|escape}" required
+                                   data-format=".+" data-notice="{$lang->form_enter_name}" maxlength="50"
+                                   data-language="{$translate_id['form_name']}" placeholder="{$lang->form_name}*"/>
 						</div>
 
 						{* Телефон клиента *}
-						<div class="form-group">
-							<input class="form-control" name="phone" type="text" value="{$phone|escape}" data-language="{$translate_id['form_phone']}" placeholder="{$lang->form_phone}"/>
-						</div>
+						<div class="form-group user_phone">
 
+							<input class="form-control" name="phone" type="tel" value="{$phone|escape}" required
+                                   data-language="{$translate_id['form_phone']}" pattern="[0-9_-]{10}"
+                                   placeholder="{$lang->form_phone}"
+                                   id="user_phone" title="Формат: (067) 999 99 99"/>
+
+
+						</div>
 						{* Почта клиента *}
 						<div class="form-group">
-							<input class="form-control" name="email" type="text" value="{$email|escape}" data-format="email" data-notice="{$lang->form_enter_email}" data-language="{$translate_id['form_email']}" placeholder="{$lang->form_email}*"/>
+							<input class="form-control" name="email" type="email"
+                                   value="{$email|escape}" data-format="email"
+                                   data-notice="{$lang->form_enter_email}"
+                                   data-language="{$translate_id['form_email']}"
+                                   placeholder="{$lang->form_email}*"
+                                   pattern="^\S+@\S+\.\S+$"
+                                   title="Допустимы любые латинские буквы, цифры и подчеркивание."/>
 						</div>
 
 						{* Адрес доставки *}
 						<div class="form-group">
-							<input class="form-control" name="address" type="text" value="{$address|escape}" data-language="{$translate_id['form_address']}" placeholder="{$lang->form_address}"/>
+							<input id="address" class="form-control" name="address" type="text" required
+                                   value="{$address|escape}" data-language="{$translate_id['form_address']}" placeholder="{$lang->form_address}"/>
 						</div>
 
 						<div class="form-group">
@@ -83,7 +97,7 @@
 									</div>
 								{/if}
 								{* Кнопка отправки формы *}
-                                <input class="btn btn-warning" type="submit" name="checkout_fake" data-language="{$translate_id['cart_checkout']}" value="{$lang->cart_checkout}"/>
+                                <input class="btn btn-warning btn_submit disabled" type="submit" name="checkout_fake" data-language="{$translate_id['cart_checkout']}" value="{$lang->cart_checkout}"/>
 							</div>
 						</div>
 					</div>

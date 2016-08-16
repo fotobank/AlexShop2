@@ -49,7 +49,7 @@
             <span>2.    Имя покупателя</span>
             <span>3.    Телефон</span>
             <span>4.    Адрес</span>
-            <span>5.    E-mail</span>
+            <span>5.    Email</span>
             <span>6.    Название товара или название варианта товара в заказе</span>
         </div>
     </div> 

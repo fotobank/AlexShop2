@@ -27,7 +27,7 @@
     {if $comment->email}
         <tr style="border-bottom: 2px solid #2c6f95;">
             <td style="padding:6px; width:170px; background-color:#41ade2;font-family:arial;">
-                E-mail
+                e-mail
             </td>
             <td style="padding:6px; width:330px; background-color:#ffffff;font-family:arial;">
                 {$comment->email|escape}

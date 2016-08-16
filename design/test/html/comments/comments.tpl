@@ -32,7 +32,6 @@
 		</ul>
 	{/if}
 {/function}
-    {$comments|@debug_print_var}
 {comments_tree comments=$comments}
 {if !$comments}<ul class="ul comments"><small>Пока что комментариев нет. Будьте первыми!</small></ul>{/if}
 </div>
