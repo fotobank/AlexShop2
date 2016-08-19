@@ -14,9 +14,11 @@ body {
 a[href], input[type='submit'], input[type='image'], label[for], select, button, .pointer {
     cursor: pointer;
 }
-
+/*удаляем пунктир при нажатии*/
+a {outline: none;}
 
 /*------------------ Change Autocomplete styles in Chrome для товаров---------*/
+input {outline: none;}
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -27,10 +29,9 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-    border: 1px solid green;
-    -webkit-text-fill-color: green;
-    -webkit-box-shadow: 0 0 0 1000px #9c9c9c inset;
-    transition: background-color 5000s ease-in-out 0s;
+    -webkit-box-shadow: inset 0 0 0 50px #fff !important; /* Цвет фона */
+    -webkit-text-fill-color: #999 !important; /* цвет текста */
+    color: #999 !important; /* цвет текста */
 }
 
 /*-----------------коментарии к товару-------------------------*/
@@ -91,16 +92,16 @@ select:-webkit-autofill:focus {
 :focus:-ms-input-placeholder      { color: transparent; }
 
 /*проверка телефона в форме*/
-input #user_phone:-moz-placeholder {
+input .user-phone:-moz-placeholder {
     color: #363636;
 }
-input #user_phone::-webkit-input-placeholder {
+input .user-phone::-webkit-input-placeholder {
     color: #363636;
 }
-.user_phone {
+.user-phone {
     position: relative;
 }
-.user_phone:before {
+.user-phone:before {
     /*content: "+38";*/
     display: block;
     height: 40px;
@@ -109,15 +110,75 @@ input #user_phone::-webkit-input-placeholder {
     top: 6px;
     font-size: 16px;
 }
-.btn_submit {
-    background: #363636;
+.btn-submit {
+    background-color: #5CB85C;
+    border-color: #7ec993;
     color: #fff;
     cursor: pointer;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
 }
-.btn_submit.disabled {
+.btn-submit.disabled {
     color: #363636;
     background: #ccc;
+}
+
+/*рассылка*/
+#subscribe-container {
+    width: 300px;
+    font: normal normal normal normal 14px / 20px HelveticaNeue-Light, "Helvetica Neue Light","Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 15px 0 0;
+}
+.subscription-tape {
+    height: 14px;
+    background: rgba(0, 0, 0, 0) url(../images/mail-post-line.png) repeat-x scroll 0 0 / auto padding-box border-box;
+}
+#subscribe-wrapper {
+    background: rgb(233, 246, 241) url(../images/mailru.jpg) no-repeat scroll 100% 0 / auto padding-box border-box;
+    border: 0 none rgb(85, 85, 85);
+    border-radius: 2px 2px 2px 2px;
+    margin: -10px 0 0;
+}
+#subscription-submit {
+    width: 280px;
+    column-rule-color: rgb(255, 255, 255);
+    background: rgb(59, 134, 196) none repeat scroll 0 0 / auto padding-box border-box;
+    border: 0 none rgb(255, 255, 255);
+    font-size: 14px;
+    margin: 0 0 5px 10px;
+    padding: 5px;
+}
+#subscription-p {
+    height: 40px;
+    margin: 0 10px;
+}
+#subscription-input {
+    box-sizing: content-box;
+    color: rgb(85, 85, 85);
+    width: 266px;
+    height: 21px;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 2px 2px 2px 2px;
+    padding: 4px 6px;
+}
+.subscription-title {
+    color: rgb(85, 85, 85);
+    margin: 5px 10px;
+}
+
+/*форма*/
+.send-ok, .send-ok-1{
+    width: 260px;
+    height: 140px;
+    position: absolute;
+    padding: 10px;
+    border: 0 solid #e4e4e4;
+    background: #fff;
+    color: #d0181b;
+    font-size: 15px;
+    margin: -50px 0 0 -2px;
+    text-align: center;
+    display: none;
+    z-index: 10;
 }

@@ -114,7 +114,31 @@ class Request extends Registry {
             return null;
         }
     }
-    
+
+
+    /**
+     * Функция экранирования переменных
+     * $info = $Database->prepare("SELECT money FROM users WHERE text = '".quoteSmart($_POST["text"])."'");
+     *
+     * @param $value
+     *
+     * @return string
+     */
+    public function quoteSmart($value)
+    {
+        // если magic_quotes_gpc включена - используем stripslashes
+        if (get_magic_quotes_gpc()) {
+            $value = stripslashes($value);
+        }
+        // Если переменная - число, то экранировать её не нужно
+        // если нет - то окружем её кавычками, и экранируем
+        if (!is_numeric($value)) {
+            $value = $this->mysqli->real_escape_string($value);
+        }
+        return $value;
+    }
+
+
     /**
      * Рекурсивная чистка магических слешей
      */
@@ -137,7 +161,7 @@ class Request extends Registry {
     /**
     * Проверка сессии
     */
-    public function check_session() {
+    public function checkSession() {
         if(isset($_POST, $_POST['session_id'])) {
             if(empty($_POST['session_id']) || $_POST['session_id'] != session_id()) {
                 unset($_POST);

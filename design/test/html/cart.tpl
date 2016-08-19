@@ -44,6 +44,9 @@
 							</div>
 						{/if}
 
+                        <div class="p-x-1 p-y-05 text-success bg-faded m-b-1 send-ok-1">{$lang->callback_sent_header}!<br>
+                            {$lang->callback_sent_text}.</div>
+
 						{* Имя клиента *}
 						<div class="form-group">
 							<input class="form-control" name="name" type="text" value="{$name|escape}" required
@@ -51,17 +54,24 @@
                                    data-language="{$translate_id['form_name']}" placeholder="{$lang->form_name}*"/>
 						</div>
 
+                        {* Фамилия клиента *}
+                        <div class="form-group">
+							<input class="form-control" name="fam" type="text" value="{$fam|escape}" required
+                                   data-format=".+" data-notice="{$lang->form_enter_fam}" maxlength="50"
+                                   data-language="{$translate_id['form_fam']}" placeholder="{$lang->form_fam}*"/>
+						</div>
+
 						{* Телефон клиента *}
-						<div class="form-group user_phone">
-							<input class="form-control rfield" name="phone" type="tel" value="{$phone|escape}" required
-                                   data-language="{$translate_id['form_phone']}" pattern="[0-9_-]{10}"
-                                   placeholder="{$lang->form_phone}"
-                                   id="user_phone" title="Формат: (067) 999 99 99"/>
+						<div class="form-group">
+							<input class="form-control user-phone" name="phone" type="tel" value="{$phone|escape}" required
+                                   data-language="{$translate_id['form_phone']}" pattern="[0-9_-\(\)]{10}"
+                                   placeholder="{$lang->form_phone}*"
+                                   id="user-phone" title="Формат: (067) 999 99 99"/>
 						</div>
 
 						{* Почта клиента *}
 						<div class="form-group">
-							<input class="form-control" name="email" type="email"
+							<input class="form-control" name="email" type="email" required
                                    value="{$email|escape}" data-format="email"
                                    data-notice="{$lang->form_enter_email}"
                                    data-language="{$translate_id['form_email']}"
@@ -72,12 +82,15 @@
 
 						{* Адрес доставки *}
 						<div class="form-group">
-							<input id="address" class="form-control" name="address" type="text" required
-                                   value="{$address|escape}" data-language="{$translate_id['form_address']}" placeholder="{$lang->form_address}"/>
+							<textarea id="address" class="form-control" name="address"
+                                   data-language="{$translate_id['form_address']}"
+                                   placeholder="{$lang->form_address}">{$address|escape}</textarea>
 						</div>
-
+                        {*коментарий*}
 						<div class="form-group">
-							<textarea class="form-control" name="comment" data-language="{$translate_id['cart_order_comment']}" placeholder="{$lang->cart_order_comment}">{$comment|escape}</textarea>
+							<textarea class="form-control" name="comment"
+                                      data-language="{$translate_id['cart_order_comment']}"
+                                      placeholder="{$lang->cart_order_comment}">{$comment|escape}</textarea>
 						</div>
 						<div class="row">
 							<div class="col-xs-12 form-inline m-b-1-md_down text-xs-center">
@@ -90,7 +103,10 @@
 
 										{* Поле ввода капчи *}
 										<div class="form-group">
-											<input class="form-control" type="text" name="captcha_code" value="" data-format="\d\d\d\d\d" data-notice="{$lang->form_enter_captcha}" data-language="{$translate_id['form_enter_captcha']}" placeholder="{$lang->form_enter_captcha}*"/>
+											<input class="form-control" type="text" name="captcha_code" required value=""
+                                                   data-format="\d\d\d\d\d" data-notice="{$lang->form_enter_captcha}"
+                                                   data-language="{$translate_id['form_enter_captcha']}"
+                                                   placeholder="{$lang->form_enter_captcha}*"/>
 										</div>
 									</div>
 								{/if}

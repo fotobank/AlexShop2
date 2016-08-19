@@ -5,7 +5,7 @@ if(!$registry->managers->access('design')) {
 }
 
 // Проверка сессии для защиты от xss
-if(!$registry->request->check_session()) {
+if(!$registry->request->checkSession()) {
     trigger_error('Session expired', E_USER_WARNING);
     exit();
 }

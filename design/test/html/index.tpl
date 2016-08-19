@@ -120,7 +120,6 @@
 
 
 	{* Order *}
-    {*AIzaSyD9W-7TgJedXyMEM1EDuoKgEsHxg5VTDd8*}
 	{include file="scripts.tpl"}
 	<script src="design/{$settings->theme}/js/order.js"></script>
 
@@ -133,11 +132,16 @@
 	{* js-проверка форм *}
     <script src="design/{$settings->theme}/js/jquery.maskedinput.min.js"></script>
     <script src="design/{$settings->theme}/js/is.mobile.js"></script>
-	<script src="design/{$settings->theme}/js/baloon.js"></script>
+	<script src="design/{$settings->theme}/js/validatr.min.js"></script>
+
     {*автоподбор email в форме ввода*}
     <script src="design/{$settings->theme|escape}/js/awesomplete.js"></script>
     {*запуск проверок и автоподбора*}
-    <script src="design/{$settings->theme|escape}/js/form.js"></script>
+    <script src="design/{$settings->theme}/js/baloon.js"></script>
+    <script src="design/{$settings->theme}/js/function.js"></script>
+
+    {*автообновление стилей * загружать после всех CSS*}
+    <script src="design/{$settings->theme}/js/cssrefresh.js"></script>
 
     {if $settings->g_analytics}
     {literal}
@@ -374,9 +378,9 @@
 {* Футер сайта *}
 <div class="bg-blue p-y-1">
 	<div class="container">
-		<div class="row text-white">
+		<aside class="row text-white">
 			{* Меню сайта *}
-			<div class="col-xs-6 col-lg-3 l-h-1_7 m-b-1-md_down">
+			<section class="col-xs-6 col-lg-3 l-h-1_7 m-b-1-md_down">
 				<div class="h5">
 					<span data-language="{$translate_id['index_about_store']}">{$lang->index_about_store}</span>
 				</div>
@@ -388,10 +392,10 @@
 						</div>
 					{/if}
 				{/foreach}
-			</div>
+			</section>
 
 			{* Каталог *}
-			<div class="col-xs-6 col-lg-3 l-h-1_7 m-b-1-md_down">
+			<section class="col-xs-6 col-lg-3 l-h-1_7 m-b-1-md_down">
 				<div class="h5">
 					<span data-language="{$translate_id['login_enter']}">{$lang->index_catalog}</span>
 				</div>
@@ -402,10 +406,10 @@
                         </div>
                     {/if}
 				{/foreach}
-			</div>
+			</section>
             <div class="clearfix hidden-lg-up"></div>
 			{* Контакты *}
-			<div class="col-xs-6 col-lg-3 l-h-1_7">
+			<section class="col-xs-6 col-lg-3 l-h-1_7">
 				<div class="h5">
 					<span data-language="{$translate_id['index_contacts']}">{$lang->index_contacts}</span>
 				</div>
@@ -415,9 +419,10 @@
                 тел. {$settings->phone3}<br>
 				{$lang->index_contacts_body}
                 </div>
-			</div>
-			{* Соц. сети *}
+			</section>
 			<div class="col-xs-6 col-lg-3">
+                {* Соц. сети *}
+                <section>
 				<div class="h5">
 					<span data-language="{$translate_id['index_in_networks']}">{$lang->index_in_networks}</span>
 				</div>
@@ -426,13 +431,19 @@
 					<a class="i-soc i-vk" href="{$lang_link}#" target="_blank"></a>
 					<a class="i-soc i-tw" href="{$lang_link}#" target="_blank"></a>
 				</div>
+                </section>
 				{* Подписка на емейл рассылку *}
-				<div id="subscribe_container">
-					<div class="subscribe-title">{$lang->index_subscribe}</div>
+				<section id="subscribe-container">
+                    <div id="subscribe-wrapper">
 					<form method="post">
+                        <div class="subscription-tape"></div>
+                        <div class="subscription-title">{$lang->index_subscribe}</div>
 						<input type="hidden" name="subscribe" value="1"/>
-						<input class="form-control subscribe-control form-control-sm" type="email" name="subscribe_email" value="" data-format="email" data-notice="{$lang->form_enter_email}" placeholder="{$lang->form_email}"/>
-						<input class="btn btn-warning btn-block" type="submit" value="{$lang->index_to_subscribe}"/>
+                        <p id="subscription-p">
+						<input id="subscription-input" type="email" name="subscribe_email" value="" data-format="email"
+                               data-notice="{$lang->form_enter_email}" placeholder="{$lang->form_enter_email}"/>
+                        </p>
+						<input id="subscription-submit" class="btn btn-warning btn-block" type="submit" value="{$lang->index_to_subscribe}"/>
 						{if $subscribe_error}
 							<div id="subscribe_error" class="p-x-1 p-y-05 text-white font-weight-bold border-b-1-white m-t-1">
 								{if $subscribe_error == 'email_exist'}
@@ -460,10 +471,11 @@
 								</div>
 							</div>
 						{/if}
+                        <div class="subscription-tape"></div>
 					</form>
-				</div>
-			</div>
-		</div>
+                    </div>
+				</section>
+		</aside>
 	</div>
 </div>
 {* Копирайт *}
@@ -507,5 +519,6 @@
     <!-- /Yandex.Metrika counter -->
 {/literal}
 {/if}
+
 </body>
 </html>
