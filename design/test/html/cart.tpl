@@ -34,6 +34,10 @@
 							<div class="p-x-1 p-y-05 text-red m-b-1">
 								{if $error == 'empty_name'}
 									<span data-language="{$translate_id['form_enter_name']}">{$lang->form_enter_name}</span>
+								{/if}{if $error == 'empty_fam'}
+									<span data-language="{$translate_id['form_enter_fam']}">{$lang->form_enter_fam}</span>
+								{/if}{if $error == 'empty_phone'}
+									<span data-language="{$translate_id['form_enter_phone']}">{$lang->form_enter_phone}</span>
 								{/if}
 								{if $error == 'empty_email'}
 									<span data-language="{$translate_id['form_enter_email']}">{$lang->form_enter_email}</span>
@@ -56,15 +60,15 @@
 
                         {* Фамилия клиента *}
                         <div class="form-group">
-							<input class="form-control" name="fam" type="text" value="{$fam|escape}" required
-                                   data-format=".+" data-notice="{$lang->form_enter_fam}" maxlength="50"
-                                   data-language="{$translate_id['form_fam']}" placeholder="{$lang->form_fam}*"/>
+							<input class="form-control" name="surname" type="text" value="{$fam|escape}" required
+                                   data-format=".+" data-notice="{$lang->form_enter_surname}" maxlength="50"
+                                   data-language="{$translate_id['form_surname']}" placeholder="{$lang->form_surname}*"/>
 						</div>
 
 						{* Телефон клиента *}
 						<div class="form-group">
 							<input class="form-control user-phone" name="phone" type="tel" value="{$phone|escape}" required
-                                   data-language="{$translate_id['form_phone']}" pattern="[0-9_-\(\)]{10}"
+                                   data-language="{$translate_id['form_phone']}" pattern="[\d_-\(\)]{10}"
                                    placeholder="{$lang->form_phone}*"
                                    id="user-phone" title="Формат: (067) 999 99 99"/>
 						</div>

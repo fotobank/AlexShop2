@@ -29,17 +29,20 @@ class CartView extends View
             $order->payment_method_id = $this->request->post('payment_method_id', 'integer');
             $order->delivery_id = $this->request->post('delivery_id', 'integer');
             $order->name = $this->request->post('name');
-            $order->email = $this->request->post('email');
-            $order->address = $this->request->post('address');
+            $order->fam = $this->request->post('fam');
             $order->phone = $this->request->post('phone');
-            $order->comment = $this->request->post('comment');
+            $order->email = $this->request->post('email');
+            $order->address = $this->request->post('address', 'string');
+            $order->comment = $this->request->post('comment', 'string');
             $order->ip = $_SERVER['REMOTE_ADDR'];
 
             $this->design->assign('delivery_id', $order->delivery_id);
             $this->design->assign('name', $order->name);
+            $this->design->assign('fam', $order->fam);
             $this->design->assign('email', $order->email);
             $this->design->assign('phone', $order->phone);
             $this->design->assign('address', $order->address);
+            $this->design->assign('comment', $order->comment);
 
             $captcha_code = $this->request->post('captcha_code', 'string');
 
@@ -56,11 +59,29 @@ class CartView extends View
                 $order->user_id = $this->user->id;
             }
 
-            if (empty($order->name)){
+
+            if (!filter_var($order->name, FILTER_VALIDATE_REGEXP, [
+                'options' => [
+                    'regexp' => '/^[а-яa-z\s\-]+$/i',
+                ],
+            ])){
                 $this->design->assign('error', 'empty_name');
-            } elseif (empty($order->email)) {
+            } elseif(!filter_var($order->fam, FILTER_VALIDATE_REGEXP, [
+                'options' => [
+                    'regexp' => '/^[а-яa-z\s\-]+$/i',
+                ],
+            ])){
+                $this->design->assign('error', 'empty_fam');
+            } elseif(!filter_var($order->phone, FILTER_VALIDATE_REGEXP, [
+                'options' => [
+                    'regexp' => '/\(\d{3}\)\d{3}\-\d{2}\-\d{2}$/',
+                ],
+            ])){
+                $this->design->assign('error', 'empty_phone');
+            } elseif(!filter_var($order->email, FILTER_VALIDATE_EMAIL)) {
                 $this->design->assign('error', 'empty_email');
-            } elseif ($this->settings->captcha_cart && (($_SESSION['captcha_code'] != $captcha_code || empty($captcha_code)) || empty($_SESSION['captcha_code']))) {
+            } elseif($this->settings->captcha_cart && (($_SESSION['captcha_code'] != $captcha_code ||
+                        empty($captcha_code)) || empty($_SESSION['captcha_code']))) {
                 $this->design->assign('error', 'captcha');
             } else {
                 // Добавляем заказ в базу
