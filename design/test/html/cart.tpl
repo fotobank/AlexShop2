@@ -34,8 +34,8 @@
 							<div class="p-x-1 p-y-05 text-red m-b-1">
 								{if $error == 'empty_name'}
 									<span data-language="{$translate_id['form_enter_name']}">{$lang->form_enter_name}</span>
-								{/if}{if $error == 'empty_fam'}
-									<span data-language="{$translate_id['form_enter_fam']}">{$lang->form_enter_fam}</span>
+								{/if}{if $error == 'empty_surname'}
+									<span data-language="{$translate_id['form_enter_surname']}">{$lang->form_enter_surname}</span>
 								{/if}{if $error == 'empty_phone'}
 									<span data-language="{$translate_id['form_enter_phone']}">{$lang->form_enter_phone}</span>
 								{/if}
@@ -52,35 +52,39 @@
                             {$lang->callback_sent_text}.</div>
 
 						{* Имя клиента *}
-						<div class="form-group">
-							<input class="form-control" name="name" type="text" value="{$name|escape}" required
+						<div class="form-group has-error has-feedback">
+							<input class="form-control" name="name" type="text" value="{$name|escape}"
+                                   data-validata="required,minLength[2],maxLength[15]"
                                    data-format=".+" data-notice="{$lang->form_enter_name}" maxlength="50"
                                    data-language="{$translate_id['form_name']}" placeholder="{$lang->form_name}*"/>
 						</div>
 
                         {* Фамилия клиента *}
                         <div class="form-group">
-							<input class="form-control" name="surname" type="text" value="{$fam|escape}" required
+							<input class="form-control" name="surname" type="text" value="{$surname|escape}"
+                                   data-location="top" data-validata="required,minLength[2],maxLength[15]"
                                    data-format=".+" data-notice="{$lang->form_enter_surname}" maxlength="50"
-                                   data-language="{$translate_id['form_surname']}" placeholder="{$lang->form_surname}*"/>
+                                   data-language="{$translate_id['form_surname']}"
+                                   placeholder="{$lang->form_surname}*"/>
 						</div>
 
 						{* Телефон клиента *}
 						<div class="form-group">
-							<input class="form-control user-phone" name="phone" type="tel" value="{$phone|escape}" required
-                                   data-language="{$translate_id['form_phone']}" pattern="[\d_-\(\)]{10}"
+							<input class="form-control user-phone" name="phone" type="tel" value="{$phone|escape}"
+                                   data-validata="required,tel"
+                                   data-language="{$translate_id['form_phone']}"
                                    placeholder="{$lang->form_phone}*"
-                                   id="user-phone" title="Формат: (067) 999 99 99"/>
+                                   id="user-phone" title="Формат: (097) 777-77-77"/>
 						</div>
 
 						{* Почта клиента *}
 						<div class="form-group">
-							<input class="form-control" name="email" type="email" required
+							<input class="form-control" name="email" type="email"
+                                   data-validata="email"
                                    value="{$email|escape}" data-format="email"
                                    data-notice="{$lang->form_enter_email}"
                                    data-language="{$translate_id['form_email']}"
                                    placeholder="{$lang->form_email}*"
-                                   pattern="^\S+@\S+\.\S+$"
                                    title="Допустимы любые латинские буквы, цифры и подчеркивание."/>
 						</div>
 

@@ -196,6 +196,6 @@ INSERT INTO `s_translations` (`id`, `template`, `in_config`, `label`, `lang_ru`,
 ('272','','0','wishlist_title','Избранные товары','Favorites','Вибрані товари','',''),
 ('273','','0','yandex_map_lang','ru_RU','en_US','uk_UA','',''),
 ('274','','0','product_related_post','Рекомендуемые статьи','Related articles','Рекомендовані статті','',''),
-('276','','0','form_enter_fam','Введите фамилию','Enter surname','Введіть прізвище','',''),
-('277','','0','form_fam','Фамилия','Surname','Прізвище','','');
+('276','','0','form_enter_surname','Введите фамилию','Enter surname','Введіть прізвище','',''),
+('277','','0','form_surname','Фамилия','Surname','Прізвище','','');
 

@@ -113,10 +113,11 @@
 
 	{* Стили *}
     <link href="design/{$settings->theme|escape}/css/font-awesome.css" rel="stylesheet"/>
-    <link href="design/{$settings->theme|escape}/css/bootstrap.css" rel="stylesheet"/>
+    {*<link href="design/{$settings->theme|escape}/css/bootstrap.css" rel="stylesheet"/>*}
+    <link href="design/{$settings->theme|escape}/css/bootstrap_main.css" rel="stylesheet"/>
     <link href="design/{$settings->theme|escape}/css/awesomplete.css" rel="stylesheet"/>
     <link href="design/{$settings->theme|escape}/css/custom.css" rel="stylesheet"/>
-	<script src="design/{$settings->theme|escape}/js/bootstrap.min.js"></script>
+	{*<script src="design/{$settings->theme|escape}/js/bootstrap.min.js"></script>*}
 
 
 	{* Order *}
@@ -132,12 +133,13 @@
 	{* js-проверка форм *}
     <script src="design/{$settings->theme}/js/jquery.maskedinput.min.js"></script>
     <script src="design/{$settings->theme}/js/is.mobile.js"></script>
-	<script src="design/{$settings->theme}/js/validatr.min.js"></script>
+	<script src="design/{$settings->theme}/js/validata.js"></script>
+	<script src="design/{$settings->theme}/js/localization/validataLangRU.js"></script>
 
     {*автоподбор email в форме ввода*}
     <script src="design/{$settings->theme|escape}/js/awesomplete.js"></script>
     {*запуск проверок и автоподбора*}
-    <script src="design/{$settings->theme}/js/baloon.js"></script>
+    {*<script src="design/{$settings->theme}/js/baloon.js"></script>*}
     <script src="design/{$settings->theme}/js/function.js"></script>
 
     {*автообновление стилей * загружать после всех CSS*}

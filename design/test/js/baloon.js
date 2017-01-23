@@ -29,8 +29,9 @@ function CreateBaloon() {
 }
 
 function ShowBaloon(i) {
-	baloon = document.getElementById('baloon');
 
+	baloon = document.getElementById('baloon');
+alert(baloon);
 	document.getElementById('baloonBody').innerHTML = i.getAttribute('data-notice') && i.getAttribute('data-notice').length ? i.getAttribute('data-notice') : 'ERROR';
 	baloon.style.display = 'block';
 
@@ -176,11 +177,9 @@ function ValidateForms() {
 						break;
 				}
 			}
-
 			return true;
 		}
 	}
-
 }
 
 function isUrl(str) {
@@ -231,7 +230,7 @@ function init_balloon()
 }
 
 // маска для номера телефона и проверка полей
-function checkForm2() {
+function checkForm() {
 
     (function ($) {
         // --> Проверка на существование элемента на странице
@@ -242,26 +241,18 @@ function checkForm2() {
         //	Phone Mask
         $(function () {
             if (!is_mobile()) {
-                var phone = $('.user-phone');
 
-                phone.mask("(999) 999-99-99");
-
-                phone.removeAttr('required')
-                    .removeAttr('pattern')
-                    .removeAttr('title');
-                phone.addClass('empty_field');
+                $('.user-phone').mask("(999) 999-99-99");
 
                 // Помечаем поля. Добавляем каждому проверяемому полю  с required, указание что поле пустое
                 function checkInput() {
                     $('.order_form').find('.form-control').each(function () {
-                        if ($(this).prop('required') && $(this).val() == '') {
-                            if ((phone.val().indexOf("_") != -1) || $(this).val() == '') {
-                                log(phone.val().indexOf("_"));
+                        if ($(this).prop('required') && (($(this).val().indexOf("_") != -1) || $(this).val() == '')) {
+                            if (($(this).val().indexOf("_") != -1) || $(this).val() == '') {
                                 $(this).addClass('empty_field');
-                            } else {
-                                log('remove empty_field');
-                                $(this).removeClass('empty_field');
                             }
+                        } else {
+                            $(this).removeClass('empty_field');
                         }
                     });
                 }
@@ -291,9 +282,9 @@ function checkForm2() {
 
                         form.find('.empty_field').css({'border': '2px solid #d8512d'});
                         // Через полсекунды удаляем подсветку
-                        // setTimeout(function () {
-                        //     form.find('.empty_field').removeAttr('style');
-                        // }, 100);
+                        setTimeout(function () {
+                            form.find('.empty_field').removeAttr('style');
+                        }, 2000);
                     }
 
                     // Проверка в режиме реального времени
@@ -322,7 +313,10 @@ function checkForm2() {
                             return false
                         } else {
                             // запуск валидатора HTML
-                            form.validatr();
+                            // form.validatr();
+                            form.validatr({
+                                defaultOptions: {location: 'top'}
+                            });
                         }
                     });
                 });
@@ -339,19 +333,3 @@ function checkForm2() {
 	document.addEventListener("DOMContentLoaded", init_balloon, false);
 }*/
 
-// автодополнеение email
-$(document).ready(function () {
-    new Awesomplete('input[type="email"]', {
-        list: ["aol.com", "att.net", "i.ua", "yandex.ru", "rambler.ru", "comcast.net", "facebook.com", "gmail.com", "gmx.com", "googlemail.com", "google.com", "hotmail.com", "hotmail.co.uk", "mac.com", "me.com", "mail.com", "msn.com", "live.com", "sbcglobal.net", "verizon.net", "yahoo.com", "yahoo.co.uk", "mail.ru"],
-        data: function (text, input) {
-            return input.slice(0, input.indexOf("@")) + "@" + text;
-        },
-        filter: Awesomplete.FILTER_STARTSWITH
-    });
-});
-
-function log() {
-    var msg = "[jquery.form] " + Array.prototype.join.call(arguments, "");
-    if (window.console && window.console.log) window.console.log(msg);
-    else if (window.opera && window.opera.postError) window.opera.postError(msg)
-}

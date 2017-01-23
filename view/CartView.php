@@ -29,7 +29,7 @@ class CartView extends View
             $order->payment_method_id = $this->request->post('payment_method_id', 'integer');
             $order->delivery_id = $this->request->post('delivery_id', 'integer');
             $order->name = $this->request->post('name');
-            $order->fam = $this->request->post('fam');
+            $order->surname = $this->request->post('surname');
             $order->phone = $this->request->post('phone');
             $order->email = $this->request->post('email');
             $order->address = $this->request->post('address', 'string');
@@ -38,7 +38,7 @@ class CartView extends View
 
             $this->design->assign('delivery_id', $order->delivery_id);
             $this->design->assign('name', $order->name);
-            $this->design->assign('fam', $order->fam);
+            $this->design->assign('surname', $order->surname);
             $this->design->assign('email', $order->email);
             $this->design->assign('phone', $order->phone);
             $this->design->assign('address', $order->address);
@@ -57,26 +57,11 @@ class CartView extends View
 
             if (!empty($this->user->id)){
                 $order->user_id = $this->user->id;
-            }
-
-
-            if (!filter_var($order->name, FILTER_VALIDATE_REGEXP, [
-                'options' => [
-                    'regexp' => '/^[а-яa-z\s\-]+$/i',
-                ],
-            ])){
+            } elseif(!preg_match('/^[\d\wа-я\s\-]{2,40}$/i', $order->name)){
                 $this->design->assign('error', 'empty_name');
-            } elseif(!filter_var($order->fam, FILTER_VALIDATE_REGEXP, [
-                'options' => [
-                    'regexp' => '/^[а-яa-z\s\-]+$/i',
-                ],
-            ])){
-                $this->design->assign('error', 'empty_fam');
-            } elseif(!filter_var($order->phone, FILTER_VALIDATE_REGEXP, [
-                'options' => [
-                    'regexp' => '/\(\d{3}\)\d{3}\-\d{2}\-\d{2}$/',
-                ],
-            ])){
+            } elseif(!preg_match('/^[\d\wа-я\s\-]{2,40}$/i', $order->surname)){
+                $this->design->assign('error', 'empty_surname');
+            } elseif(!preg_match('/^[\d\wа-я\s\-]{2,40}$/i', $order->phone)){
                 $this->design->assign('error', 'empty_phone');
             } elseif(!filter_var($order->email, FILTER_VALIDATE_EMAIL)) {
                 $this->design->assign('error', 'empty_email');
