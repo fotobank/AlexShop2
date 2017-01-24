@@ -1,118 +1,26 @@
 <?php
 use api\Registry;
 
+if (!empty($_SERVER['HTTP_USER_AGENT'])){
+    session_name(md5($_SERVER['HTTP_USER_AGENT']));
+}
+session_start();
+
 require_once __DIR__ . '/system/configs/define/config.php';
 require_once SYS_DIR . 'core' . DS . 'boot.php';
 ?>
 
 <html>
 <head>
-	<title>Восстановления пароля администратора</title>
-	<meta http-equiv = "Content-Type" content = "text/html; charset=utf8"/>
-	<meta http-equiv = "Content-Language" content = "ru"/>
+    <meta http-equiv = "Content-Type" content = "text/html; charset=UTF-8"/>
+    <meta http-equiv = "Content-Language" content = "ru"/>
+    <meta http-equiv = "pragma" content = "no-cache">
+    <meta http-equiv = "cache-control" content = "no-cache">
+    <meta http-equiv = "expires" content = "-1">
+    <title>Восстановления пароля администратора</title>
+    <link rel = "icon" href = "/backend/design/images/favicon.png" type = "image/x-icon">
+    <link href = "/backend/design/css/auth.css" rel = "stylesheet" type = "text/css"/>
 </head>
-<style>
-
-     body {
-         padding: 0;
-         margin: 0;
-         text-align: center;
-         /*font-size: 14px;*/
-         /*font-family: 'Roboto', sans-serif;*/
-         background-color: #e4e5e5;
-
-         font-family: Verdana, sans-serif;
-         font-size: 13px;
-         font-weight: 400;
-         font-style: normal;
-         color: #000000;
-         line-height: 1.53em;
-         letter-spacing: 0;
-
-     }
-     h1, h2 {
-         display: block;
-         font-weight: bold;
-         color: #243541;
-     }
-     h1 {
-         font-size: 24px;
-         margin: 34px 0 25px;
-     }
-     h2 {
-         font-size: 20px;
-         color: #243541;
-         margin: 30px 0 25px;
-     }
-
-     #system_logo {
-         height: 120px;
-         background-color: #091A33;
-     }
-
-     form {
-         display: inline-block;
-         background-color: #f7f7f7;
-         padding: 22px 25px;
-         border: 1px solid #56b9ff;
-         margin-bottom: 15px;
-         /*width: 300px;*/
-     }
-     .form_group {
-         text-align: left;
-         margin-bottom: 12px;
-     }
-     .form_group label {
-         display: inline-block;
-         width: auto;
-         margin-right: 20px;
-         font-weight: 300;
-         float: right;
-     }
-     .form_group input {
-         height: 24px;
-         width: 100%;
-         padding: 0 5px;
-         background: #fff;
-         border: 1px solid #d0d0d0;
-     }
-     input:focus {
-         outline: none;
-     }
-     .button {
-         background: #ffcc00;
-         margin-top: 10px;
-         border: none;
-         border-radius: 2px;
-         padding: 9px 20px;
-         font-size: 16px;
-         color:#353b3e;
-         cursor: pointer;
-         -webkit-transition: all 0.3s ease;
-         -moz-transition: all 0.3s ease;
-         -o-transition: all 0.3s ease;
-         transition: all 0.3s ease;
-     }
-     .button:hover {
-         color: #fff;
-         background: #56b9ff;
-     }
-     .message_error {
-         background-color: #a70606;
-         padding: 12px;
-         color: #fff;
-         margin-bottom: 20px;
-     }
-     .recovery {
-         color: #243541;
-         margin-right: 5px;
-     }
-
-    p {
-        font-size: 19px;
-    }
-</style>
-
 <body>
 <div style = 'width:100%; height:100%;'>
 
@@ -123,14 +31,14 @@ $registry = new Registry();
 if ($c = $registry->request->get('code')){
     // Код не совпадает - прекращяем работу
     if (empty($_SESSION['admin_password_recovery_code']) || empty($c) || $_SESSION['admin_password_recovery_code'] !== $c){
-           header('Location:password.php');
-           exit();
+        header('Location:password.php');
+        exit();
     }
 
     // IP не совпадает - прекращяем работу
     if (empty($_SESSION['admin_password_recovery_ip']) || empty($_SERVER['REMOTE_ADDR']) || $_SESSION['admin_password_recovery_ip'] !== $_SERVER['REMOTE_ADDR']){
-           header('Location:password.php');
-           exit();
+        header('Location:password.php');
+        exit();
     }
 
     // Если запостили пароль
@@ -167,15 +75,19 @@ if ($c = $registry->request->get('code')){
             <h1>Восстановление пароля администратора</h1>
             <form method="post">
             <div class="form_group">
-                <label>Новый логин:</label>
+                <label>Новый логин:&nbsp;&nbsp;</label>
+                 <div class="inner">
             	<input type="text" name="new_login">
+            	</div> 
              </div> 
              <div class="form_group">
                 <label>Новый пароль:</label>
+                 <div class="inner">
             	<input type="password" name="new_password">
+            	</div> 
              </div> 
              <a class="recovery" href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
-            	<input class="button" type="submit" value="Сохранить логин и пароль"> 
+            	<input class="button" type="submit" value="Сохранить"> 
             </form>
         ';
     }
@@ -187,15 +99,16 @@ if ($c = $registry->request->get('code')){
         </div>
         <h1>Восстановление пароля администратора</h1>
         <p>
-            <h2>Введите email администратора</h2>
             <form method="post" action="' . $registry->config->root_url . '/password.php" >
+            <div class="form_group">Введите email администратора:</div>
             <div class="form_group">
                 <label>Email:</label>
-            	<input type="text" name="email">
+                <div class="inner">
+            	  <input type="text" name="email">
+            	</div>
              </div> 
              <a class="recovery" href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
-            	<input class="button" type="submit" value="Восстановить пароль">
-             	
+                <input class="button" type="submit" value="Восстановить">
             </form>
         </p>
     ';
@@ -219,7 +132,10 @@ if ($c = $registry->request->get('code')){
 }
 ?>
 
-
 </div>
 </body>
+<head>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv = "cache-control" content = "no-cache">
+</head>
 </html>

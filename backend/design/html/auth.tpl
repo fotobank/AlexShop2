@@ -1,104 +1,27 @@
 {$wrapper = '' scope=parent}
 <html>
-<title>Административная панель</title>
-<link rel="icon" href="design/images/favicon.png" type="image/x-icon">
-    <body>
-        <style type="text/css" scoped>
-            /*@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,cyrillic);*/
-            body {
-                padding: 0;
-                margin: 0;
-                text-align: center;
-                /*font-size: 14px;*/
-                /*font-family: 'Roboto', sans-serif;*/
-                background-color: #e4e5e5;
 
-                font-family: Verdana, sans-serif;
-                font-size: 13px;
-                font-weight: 400;
-                font-style: normal;
-                color: #000000;
-                line-height: 1.53em;
-                letter-spacing: 0;
 
-            }
-            #system_logo {
-                height: 120px;
-                background-color: #091A33;
-            }
-            .heading {
-                display: block;
-                font-weight: bold;
-                font-size: 24px;
-                color: #243541;
-                margin: 24px 0 17px;
-            }
-            form {
-                display: inline-block;
-                background-color: #f7f7f7;
-                padding: 22px 25px;
-                border: 1px solid #56b9ff;
-                margin-bottom: 15px;
-                width: 250px;
-            }
-            .form_group {
-                text-align: left;
-                margin-bottom: 12px;
-            }
-            .form_group label {
-                display: inline-block;
-                width: 60px;
-                font-weight: 300;
-            }
-            .form_group input {
-                height: 24px;
-                width: 180px;
-                padding: 0 5px;
-                background: #fff;
-                border: 1px solid #d0d0d0;
-            }
-            input:focus {
-                outline: none;
-            }
-            .button {
-                background: #ffcc00;
-                margin-top: 10px;
-                border: none;
-                border-radius: 2px;
-                padding: 9px 31px;
-                font-size: 16px;
-                color:#353b3e;
-                cursor: pointer;
-                -webkit-transition: all 0.3s ease;
-                -moz-transition: all 0.3s ease;
-                -o-transition: all 0.3s ease;
-                transition: all 0.3s ease;
-            }
-            .button:hover {
-                color: #fff;
-                background: #56b9ff;
-            }
-            .message_error {
-                background-color: #a70606;
-                padding: 12px;
-                color: #fff;
-                margin-bottom: 20px;
-            }
-            .recovery {
-                color: #243541;
-                margin-right: 5px;
-            }
-            .recovery:hover {
-                text-decoration: none;
-            }
-        </style>
-        <div id="system_logo">
-            <img src="design/images/system_logo.png" alt="AlexShop CMS" />
+<head>
+    <meta http-equiv = "Content-Type" content = "text/html; charset=UTF-8"/>
+    <meta http-equiv = "Content-Language" content = "ru"/>
+    <meta http-equiv = "pragma" content = "no-cache">
+    <meta http-equiv = "cache-control" content = "no-cache">
+    <meta http-equiv = "expires" content = "-1">
+    <title>Административная панель</title>
+    <link rel = "icon" href = "/backend/design/images/favicon.png" type = "image/x-icon">
+    <link href = "/backend/design/css/auth.css" rel = "stylesheet" type = "text/css"/>
+
+</head>
+<body>
+        <div id = "system_logo">
+            <img src = "/backend/design/images/system_logo.png" alt = "AlexShop CMS"/>
         </div>
         {if !$manager}
-        <h2 class="heading">ВХОД В СИСТЕМУ</h2>
-        {if $error_message}
-            <div class="message_error">
+            <h1>ВХОД В СИСТЕМУ</h1>
+
+                        {if $error_message}
+            <div class = "message_error">
                 {if $error_message == 'auth_wrong'}
                     Неверно введены логин или пароль.
                     {if $limit_cnt}<br>Осталось {$limit_cnt} попыт{$limit_cnt|plural:'ка':'ок':'ки'}{/if}
@@ -107,25 +30,41 @@
                 {/if}
             </div>
         {/if}
-        <form method="post">
-            <input type=hidden name="session_id" value="{$smarty.session.id}">
-            <div class="form_group">
-                <label>Логин:</label>
-                <input type="text" name="login" value="{$login}" autofocus="" tabindex="1">
+
+            <form method = "post">
+            <input type = hidden name = "session_id" value = "{$smarty.session.id}">
+            <div class = "form_group">
+                <label for = "autx_login">Логин:&nbsp;&nbsp;</label>
+                <div class = "inner">
+                <input id = "autx_login" type = "text" name = "login" value = "{$login}" autofocus = "" tabindex = "1">
+                 </div>
             </div>
-            <div class="form_group">
-                <label>Пароль:</label>
-                <input type="password" name="password" value="" tabindex="2">
+            <div class = "form_group">
+                <label for = "autx_password">Пароль:</label>
+                <div class = "inner">
+                <input id = "autx_password" type = "password" name = "password" value = "" tabindex = "2">
+                </div>
             </div>
             <div>
-                <a class="recovery" href="{$config->root_url}/password.php">Напомнить пароль</a>
-                <input class="button" type="submit" value="Войти" tabindex="3">
+                <a class = "recovery" href = "{$config->root_url}/password.php">Напомнить пароль</a>
+                <input class = "button" type = "submit" value = "Войти" tabindex = "3">
             </div>
             
         </form>
-        
-    {else}
-        <a href="javascript:;">Выйти ...</a>
-    {/if}
+
+
+                    {else}
+
+            <a href = "javascript:">Выйти ...</a>
+        {/if}
+
+        <div id = "footer">
+            <span>&copy; 2016</span>
+            <a href = 'http://alexshop-sms.com'>AlexShop CMS</a>
+        </div>
     </body>
+<head>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv = "cache-control" content = "no-cache">
+</head>
 </html>
