@@ -5,7 +5,8 @@ class CommentEditAdmin extends Registry
 {	
 
 	public function fetch()
-	{	
+	{
+        $comment = new \stdClass();
 		if($this->request->method('post'))
 		{
 			$comment->id 			= $this->request->post('id', 'integer');

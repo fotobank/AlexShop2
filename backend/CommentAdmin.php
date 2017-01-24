@@ -6,11 +6,12 @@ class CommentAdmin extends Registry
 
 	public function fetch()
 	{
+        // Создаем комментарий
+        $comment = new \stdClass();
 		if($this->request->method('post'))
 		{
 			$parent_id = $this->request->get('id', 'integer');
 			$parent_comment = $this->comments->get_comment($parent_id);
-			// Создаем комментарий
 			$comment->object_id = $parent_comment->object_id;
 			$comment->parent_id 	= $parent_id;
 			$comment->type      = $parent_comment->type;

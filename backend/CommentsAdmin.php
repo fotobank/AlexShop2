@@ -120,5 +120,3 @@ class CommentsAdmin extends Registry {
     }
     
 }
-
-?>
