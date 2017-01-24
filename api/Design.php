@@ -1,11 +1,11 @@
 <?php
 /*************************************************
- * Framework Component
- * name      AlexShop_CMS
- * created   by Alex production
- * version   1.0
- * author    Alex Jurii <alexjurii@gmail.com>
- * Copyright (c) 2016
+  Framework Component
+  name      AlexShop_CMS
+  created   by Alex production
+  version   1.0
+  author    Alex Jurii <alexjurii@gmail.com>
+  Copyright (c) 2013 - 2016
  ************************************************/
 
 namespace api;
@@ -13,7 +13,11 @@ namespace api;
 use core\Alex;
 use Smarty;
 
-
+/**
+ * Дизайн
+ * Class Design
+ * @package api
+ */
 class Design extends Registry
 {
 
@@ -22,6 +26,9 @@ class Design extends Registry
      */
     public $smarty;
 
+    /**
+     * Design constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -72,11 +79,23 @@ class Design extends Registry
         }
     }
 
+    /**
+     * @param $var
+     * @param $value
+     *
+     * @return \Smarty_Internal_Data
+     */
     public function assign($var, $value)
     {
         return $this->smarty->assign($var, $value);
     }
 
+    /**
+     * @param $template
+     *
+     * @return string
+     * @throws \Exception
+     */
     public function fetch($template)
     {
         // Передаем в дизайн то, что может понадобиться в нем
@@ -86,11 +105,17 @@ class Design extends Registry
         return $this->smarty->fetch($template);
     }
 
+    /**
+     * @param $dir
+     */
     public function set_templates_dir($dir)
     {
         $this->smarty->template_dir = $dir;
     }
 
+    /**
+     * @param $dir
+     */
     public function set_compiled_dir($dir)
     {
         if (!is_dir($dir)){

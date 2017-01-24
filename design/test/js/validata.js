@@ -14,17 +14,15 @@
         // RegExp for input validate rules
         RRULE = new RegExp(/^(minChecked|maxChecked|minSelected|maxSelected|minLength|maxLength|equalTo|different|regExp|remote|callback)\[(\w{1,15})\]/i),
         // RegExp for mail control method
-        // @from ( http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29 )
-        RMAIL = new RegExp(/^(|(([\w\d]+_+)|([\w\d]+\-+)|([\w\d]+\.+)|([\w\d]+\++))*[\w\d]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[\w]{2,6})$/i),
+        RMAIL = new RegExp(/^[-0-9a-z_\.]+@[-0-9a-z_\.]+\.[a-z]{2,6}$/i),
         //RegExp for input number control method
         RNUMBER = new RegExp(/^[\-\+]?(\d+|\d+\.?\d+)$/),
         // RegExp for phone
-        RTEL = new RegExp(/\(\d{3}\)\s\d{3}\-\d{2}\-\d{2}$/),
+        RTEL = new RegExp(/^\(?\d{3}\)?-?\s?\d{3}(-\d{2}){2}$/),
         // RegExp for adress
-        RADRESS = new RegExp(/^[а-я\w\d\s\-\/\'\"\.\,\(\)]+$/i),
-        RCOMMENT = new RegExp(/^[а-я\w\d\s\-\/\'\"\.\,\(\)]+$/i),
-        RNAME = new RegExp(/^[\d\wа-я\s\-]$/i),
-        RSURNAME = new RegExp(/^[\d\wа-я\s\-]$/i),
+        RADRESS = new RegExp(/^[а-я\w\s_\-\/\'\"\.\,\(\)]+$/i),
+        RCOMMENT = new RegExp(/^[а-я\w\s_\-\/\'\"\.\,\(\)]+$/i),
+        RNAME = new RegExp(/^[а-я\w\s_\-\/\'\"\.\,\(\)]{2,40}$/i),
         RINDEX = new RegExp(/^[\d]+$/i),
 
         /**
@@ -221,6 +219,7 @@
      * @return {method} events
      */
     Validata = function (form, options) {
+
         /**
          *  Public  Properties
          *  @property {mixed} handler It is used to stop or resume submit event handler
@@ -233,12 +232,29 @@
         this.form = form;
         this.xhr = {};
         this.events();
+
+        // var err_count = $(this.form).find('.' + this.options.errorClass).length;
+        // var btn_submit = $(this.form).find('[type=submit]');
+        // console.log("err_count = " + err_count);
+        // console.log("btn_submit = " + btn_submit);
+        /* btn_submit.on('submit',(function(){
+         if(err_count > 0) {
+         if (btn_submit.hasClass('disabled')) {
+         event.preventDefault();
+         return false
+         } else {
+         btn_submit.addClass('disabled');
+         event.preventDefault();
+         }
+         } else {
+         btn_submit.removeClass('disabled')
+         }
+         }));*/
     };
 
     Validata.prototype = {
 
         constructor: Validata,
-
         /**
          * This is the method of handling events
          *
@@ -282,11 +298,30 @@
          * @return {mixed}
          */
         init: function (e) {
+
+            // количество ошибок
+            var err_count = $(this.form).find('.' + this.options.errorClass).length,
+                btn_submit = $(this.form).find('[type=submit]');
             // Reset error windows from all elements
             this.reset(FIELDS);
             // Start control each elements
             this.checkFields(e);
-            if (e.type !== 'submit') return; // if event type is not submit, break
+            btn_submit.mouseenter(function(){
+                if (err_count > 0) {
+                    if (btn_submit.hasClass('disabled')) {
+                        event.preventDefault();
+                        return false
+                    } else {
+                        btn_submit.addClass('disabled');
+                        event.preventDefault();
+                    }
+                } else {
+                    btn_submit.removeClass('disabled')
+                }
+            });
+
+            // if event type is not submit, break
+            if (e.type !== 'submit') return;
             // This is for when running remote request, return false and wait request response
             else if (this.handler === 'pending') return false;
             // if event type is submit and handler is true, break submit and call onError() function
@@ -294,7 +329,9 @@
                 this.options.onError.call(this, e);
                 return false;
             }
-            else return this.options.onValid.call(this, e); // if form is valid call onValid() function
+            else
+            // if form is valid call onValid() function
+                return this.options.onValid.call(this, e);
         },
 
         /**

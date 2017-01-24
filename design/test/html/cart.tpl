@@ -80,7 +80,7 @@
 						{* Почта клиента *}
 						<div class="form-group">
 							<input class="form-control" name="email" type="email"
-                                   data-validata="email"
+                                   data-validata="required,email"
                                    value="{$email|escape}" data-format="email"
                                    data-notice="{$lang->form_enter_email}"
                                    data-language="{$translate_id['form_email']}"
@@ -111,7 +111,8 @@
 
 										{* Поле ввода капчи *}
 										<div class="form-group">
-											<input class="form-control" type="text" name="captcha_code" required value=""
+											<input class="form-control" type="text" name="captcha_code"
+                                                   value="" data-validata="required"
                                                    data-format="\d\d\d\d\d" data-notice="{$lang->form_enter_captcha}"
                                                    data-language="{$translate_id['form_enter_captcha']}"
                                                    placeholder="{$lang->form_enter_captcha}*"/>

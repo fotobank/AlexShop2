@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // маска для номера телефона
-    // $('.user-phone').mask("(999) 999-99-99");
+    $('.user-phone').mask("(999) 999-99-99");
 
     // автодополнеение email
     $(document).ready(function () {

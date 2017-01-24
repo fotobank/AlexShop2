@@ -55,15 +55,16 @@ class CartView extends View
                 $order->coupon_code = $cart->coupon->code;
             }
 
+            //валидатор входящих данных
             if (!empty($this->user->id)){
                 $order->user_id = $this->user->id;
-            } elseif(!preg_match('/^[\d\wа-я\s\-]{2,40}$/i', $order->name)){
+            } elseif(!preg_match('/^[а-я\w\s_\-\/\'\"\.\,\(\)]{2,40}$/i', $order->name)){
                 $this->design->assign('error', 'empty_name');
-            } elseif(!preg_match('/^[\d\wа-я\s\-]{2,40}$/i', $order->surname)){
+            } elseif(!preg_match('/^[а-я\w\s_\-\/\'\"\.\,\(\)]{2,40}$/i', $order->surname)){
                 $this->design->assign('error', 'empty_surname');
-            } elseif(!preg_match('/^[\d\wа-я\s\-]{2,40}$/i', $order->phone)){
+            } elseif(!preg_match('/^\(?\d{3}\)?-?\s?\d{3}(-\d{2}){2}$/', $order->phone)){
                 $this->design->assign('error', 'empty_phone');
-            } elseif(!filter_var($order->email, FILTER_VALIDATE_EMAIL)) {
+            } elseif(!preg_match('/^[-0-9a-z_\.]+@[-0-9a-z_\.]+\.[a-z]{2,6}$/i',$order->email)) {
                 $this->design->assign('error', 'empty_email');
             } elseif($this->settings->captcha_cart && (($_SESSION['captcha_code'] != $captcha_code ||
                         empty($captcha_code)) || empty($_SESSION['captcha_code']))) {

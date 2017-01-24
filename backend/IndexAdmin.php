@@ -87,8 +87,6 @@ class IndexAdmin extends Registry {
     
     // Соответсвие модулей и названий соответствующих прав
     private $modules_permissions = [
-        'CommentAdmin'        => 'comment',
-        'CommentEditAdmin'    => 'comment_edit',
         'ProductsAdmin'       => 'products',
         'ProductAdmin'        => 'products',
         'CategoriesAdmin'     => 'categories',
@@ -140,6 +138,9 @@ class IndexAdmin extends Registry {
 		'BannersImageAdmin'   => 'banners',
         'SpecialAdmin'        => 'special',
         'CallbacksAdmin'      => 'callbacks',
+
+        'CommentAdmin'        => 'comment',
+        'CommentEditAdmin'    => 'comment_edit',
         
         /* Мультиязычность start */
         'LanguageAdmin'       => 'languages',
