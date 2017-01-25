@@ -49,12 +49,9 @@
                 <a class = "recovery" href = "{$config->root_url}/password.php">Напомнить пароль</a>
                 <input class = "button" type = "submit" value = "Войти" tabindex = "3">
             </div>
-            
         </form>
 
-
-                    {else}
-
+        {else}
             <a href = "javascript:">Выйти ...</a>
         {/if}
 

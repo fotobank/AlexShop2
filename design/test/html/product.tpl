@@ -187,7 +187,7 @@
             margin-top: 8px;
         }
 	</style>
-                                <script>
+    <script>
 	$(function () {
 
         $(".various").fancybox({

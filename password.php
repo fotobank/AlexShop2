@@ -59,12 +59,10 @@ if ($c){
         echo $head,
             '
             <h1>Восстановление пароля администратора</h1>
-            <p>
-            Новый пароль установлен
-            </p>
-            <p>
+            <div class = "message_ok">
+            <p>Новый пароль установлен</p>
+            </div>   
             <a href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
-            </p>
             ';
     } else {
         // Форма указания нового логина и пароля

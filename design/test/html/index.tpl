@@ -116,8 +116,10 @@
     {*<link href="design/{$settings->theme|escape}/css/bootstrap.css" rel="stylesheet"/>*}
     <link href="design/{$settings->theme|escape}/css/bootstrap_main.css" rel="stylesheet"/>
     <link href="design/{$settings->theme|escape}/css/awesomplete.css" rel="stylesheet"/>
+    <link href="design/{$settings->theme|escape}/css/tether.min.css" rel="stylesheet"/>
     <link href="design/{$settings->theme|escape}/css/custom.css" rel="stylesheet"/>
-	{*<script src="design/{$settings->theme|escape}/js/bootstrap.min.js"></script>*}
+	<script src="design/{$settings->theme|escape}/js/tether.min.js"></script>
+	<script src="design/{$settings->theme|escape}/js/bootstrap.min.js"></script>
 
 
 	{* Order *}
@@ -143,7 +145,7 @@
     <script src="design/{$settings->theme}/js/function.js"></script>
 
     {*автообновление стилей * загружать после всех CSS*}
-    <script src="design/{$settings->theme}/js/cssrefresh.js"></script>
+    {*<script src="design/{$settings->theme}/js/cssrefresh.js"></script>*}
 
     {if $settings->g_analytics}
     {literal}

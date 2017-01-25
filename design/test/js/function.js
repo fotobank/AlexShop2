@@ -2,8 +2,9 @@ $(document).ready(function () {
     // маска для номера телефона
     $('.user-phone').mask("(999) 999-99-99");
 
-    // автодополнеение email
+
     $(document).ready(function () {
+        // автодополнеение email
         new Awesomplete('input[type="email"]', {
             list: ["aol.com", "att.net", "i.ua", "yandex.ru", "rambler.ru", "comcast.net", "facebook.com", "gmail.com", "gmx.com", "googlemail.com", "google.com", "hotmail.com", "hotmail.co.uk", "mac.com", "me.com", "mail.com", "msn.com", "live.com", "sbcglobal.net", "verizon.net", "yahoo.com", "yahoo.co.uk", "mail.ru"],
             data: function (text, input) {
@@ -11,6 +12,7 @@ $(document).ready(function () {
             },
             filter: Awesomplete.FILTER_STARTSWITH
         });
+        // валидация формы корзины
         $(".order_form").validata({
             showErrorMessages : true, // If you dont want to display error messages set this option false
             /** You can display errors as inline or bubble */
