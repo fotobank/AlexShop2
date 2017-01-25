@@ -75,11 +75,16 @@ input:focus {
     color: #fff;
     background: #56b9ff;
 }
-.message_error {
-    background-color: #a70606;
+.message_error, .message_ok {
     padding: 12px;
     color: #fff;
     margin-bottom: 20px;
+}
+.message_error {
+    background-color: #a70606;
+}
+.message_ok {
+    background-color: #137725;
 }
 .recovery {
     color: #243541;

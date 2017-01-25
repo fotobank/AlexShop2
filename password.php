@@ -126,13 +126,25 @@ if ($c = $registry->request->get('code')){
             $message .= 'Если письмо пришло вам по ошибке, проигнорируйте его.';
 
             $registry->notify->email($admin_email, 'Восстановление пароля администратора ' . $registry->settings->site_name, $message, $registry->settings->notify_from_email);
+            print '
+            <div class = "message_ok">
+            Вам отправлена ссылка для восстановления пароля. Если письмо вам не пришло, значит вы неверно указали email или что-то не так с хостингом.
+            </div>';
+        } else {
+            print '
+            <div class = "message_error">
+                Email не существует!
+            </div>';
         }
-        print 'Вам отправлена ссылка для восстановления пароля. Если письмо вам не пришло, значит вы неверно указали email или что-то не так с хостингом';
     }
 }
 ?>
 
 </div>
+        <div id = "footer">
+            <span>&copy; 2016</span>
+            <a href = 'http://alexshop-sms.com'>AlexShop CMS</a>
+        </div>
 </body>
 <head>
 <meta http-equiv="pragma" content="no-cache">
