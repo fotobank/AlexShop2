@@ -17,7 +17,16 @@
  * =============================================================================
  */
 
+use api\Registry;
+use proxy\Config;
+
+require_once(__DIR__ . '/../system/configs/define/config.php');
+/** @noinspection PhpIncludeInspection */
+require_once SYS_DIR . 'core' . DS . 'boot.php';
+
 /**
+ * Class AntiShell
+ * 
  * Команды для выполнения через cron (Скопируйте одну и вставьте в планировщик):
  * Через wget: /usr/bin/wget -O - -q "http://anti/backend/AntiShell.php"
  * Через php: /usr/bin/php -f O:/domains/Anti/backend/AntiShell.php
@@ -27,95 +36,20 @@
  * Если ресурсы хостинга позволяют - раз в час.
  * Так вы отловите зловредный код или просто изменения в файлах очеь быстро.
  */
-/////////// Настройки скрипта ///////////
-$config = [
-    // Вкл/выкл
-    // Настройка по большому счёту не нужная, но мало ли, вдруг нужно будет отрубить временно скрипт, тогда ставим 'on' => false;
-    'on' => true,
-
-    // Кодровка cайта
-    // Задаётся для отправки писем
-    'charset' => 'utf-8',
-
-    // Корень сайта
-    'root_dir' => 'O:/domains/Anti',
-
-    // Название сайта
-    // Будет указано в качестве имени автора письма
-    'sitename' => 'AntiShell: AlexShop CMS',
-
-    // Начальный путь проверки. '' - корень сайта
-    // Для сканирования отдельной папки: '/folderName'
-    'path' => '',
-
-    // Куда сохранять результат скана системы.
-    // Путь от корня сайта.
-    'scanfile' => '/system/assests/log/anti-shell.log',
-
-    // Создавать снимок сразу по окочании сканирования
-    // Для отключения необходимо заменить на false
-    // Для ручного создания снимка при отключенном автоматическом создании нужно запустить скрипт с параметром snap=y (http://site.com/antishell.php?snap=y)
-    'allowsnap' => 1,
-
-    // Список расширений файлов, которые необходимо проверять. '' - означает любые расширения. Расширения указывать без точек через запятую
-    // Например, 'php,cgi,pl,perl,php3,php4,php5,php6,tpl,js,htaccess,htm,html,css,swf,txt,db,lng',
-    'ext' => '',
-
-    // Список расширений файлов, которые не надо учитывать при проверке. Расширения указывать без точек через запятую
-    // А также можно указывать имена файлов, которые тоже не надо учитывать. Например, 'skipfile' => 'index.php,jpg', - здесь не будут учитываться файлы с именами 'index.php' и все файлы с расширением JPG
-    // В этот список автоматически добавляется файл снимка.
-    // 'skipfile' => 'jpg,jpeg,gif,bmp,png,rar,zip,tmp,gz,xml,flv,exe,txt,doc,pdf,avi,mp3,mp4,wmv,m4v,m4a,mov,3gp,f4v,3gp,mpg,mpeg',
-    'skipfile' => 'jpg,jpeg,gif,bmp,png,rar,zip,tmp,gz,xml,flv,exe,txt,doc,pdf,avi,mp3,mp4,wmv,m4v,m4a,mov,3gp,f4v,3gp,mpg,mpeg',
-
-    // Список папок, которые не надо проверять. Путь указывается относительно значения переменной 'path'. Перечилять папки через запятую
-    // Например, 'skipdir' => '/folder,/files/web',
-    'skipdir' => '/system/assests',
-
-    // Email, на который отправлять отчеты
-    // Можно указывать несколько адресов через запятую, на каждый адрес будет выслано отдельное письмо
-    'email' => 'alexjurii@gmail.com',
-
-    // Email отправителя
-    // Если не задан - будет взят из предыдущего параметра
-    'from_email' => 'robot@alexshop.cms',
-
-    // Отображать на экране статистику проверки? На почту в любом случае будет отправляться.
-    'showtext' => 1,
-
-    // Путь к файлу с картинками-индикаторами
-    // Можно скопировать файл себе на хостинг и вставить сылку на него сюда.
-    'icon_url' => '/backend/design/images/as_sprite.png',
-
-];
-///////// Конец настроек скрипта /////////
-
-
-/**
- * ВНИМАНИЕ!
- * Если не знаете что делаете - не трогайте код ниже!
- */
-
-if (!$config['on']) die('Wat?');
-
-$config['makesnap'] = (isset($_GET['snap'])) ? true : false;
-
-/**
- * Class AntiShell
- */
-class AntiShell
+class AntiShell extends Registry
 {
 
     /**
      * Версия скрипта
      * @var string
      */
-    public $version = "1.21";
+    public $version = '1.21';
 
     /**
      * Массив с конфигурацией скрипта
      * @var array
      */
-    public $config;
+    public $conf;
 
     /**
      * Засечка времени для статистики
@@ -138,13 +72,14 @@ class AntiShell
     /**
      * Конструктор класса
      *
-     * @param array $arConfig
      */
-    public function __construct(array $arConfig = [])
+    public function __construct()
     {
+        parent::__construct();
         $this->timeStart = $this->timer();
         $this->memoryStart = $this->getMemory();
-        $this->config = $arConfig;
+        $this->conf = Config::getData('antivirus');
+        $this->conf['makesnap'] = (isset($_GET['snap']) && trim($_GET['snap']) == 'y');
     }
 
     /**
@@ -156,8 +91,7 @@ class AntiShell
      */
     public function setConfig(array $arConfig = [])
     {
-        $this->config = $arConfig;
-
+        $this->conf = $arConfig;
         return $this;
     }
 
@@ -173,7 +107,7 @@ class AntiShell
 
     public function str2array($array, $delimiter = ',')
     {
-        if (!$array OR $array == '*'){
+        if (!$array or $array == '*'){
             return false;
         }
         $arOld = explode($delimiter, $array);
@@ -184,8 +118,16 @@ class AntiShell
                 $arNew[] = $v;
             }
         }
-
         return $arNew;
+    }
+
+    /**
+     * @param $path
+     * @return mixed
+     */
+    protected function setDirSep($path)
+    {
+        return str_replace(['\\', '/'], DS, $path);
     }
 
     /**
@@ -218,15 +160,15 @@ class AntiShell
     public function run()
     {
         // Определяем файл снимка
-        $this->snapFile = $this->config['root_dir'] . $this->config['scanfile'];
+        $this->snapFile = $this->setDirSep($this->config->root_dir . $this->conf['scanfile']);
 
         // Преобразуем нужные строки конфига в массив для дальнейшей работы.
-        $this->config['ext'] = $this->str2array($this->config['ext']);
-        $this->config['skipfile'] = $this->str2array($this->config['skipfile'] . ',' . basename($this->snapFile));
-        $this->config['skipdir'] = $this->str2array($this->config['skipdir']);
+        $this->conf['ext'] = $this->str2array($this->conf['ext']);
+        $this->conf['skipfile'] = $this->str2array($this->conf['skipfile'] . ',' . basename($this->snapFile));
+        $this->conf['skipdir'] = $this->setDirSep($this->str2array($this->conf['skipdir']));
 
-        // Запускаем канирование
-        $scan = $this->doScan($this->config['root_dir'] . $this->config['path']);
+        // Запускаем сканирование
+        $scan = $this->doScan($this->config->root_dir . $this->conf['path']);
         // Пишем в файл
         $makeFile = $this->makeFile($scan);
 
@@ -261,20 +203,18 @@ class AntiShell
         $content = $makeFile['text'] . $this->showStat();
 
         // Суём контент в шаблон для вывода
-        $output = $this->template($this->config['sitename'], str_replace($this->config['root_dir'], '', $content));
+        $output = $this->template($this->conf['sitename'], str_replace($this->config->root_dir, '', $content));
 
         // Отправляем уведомление на почту.
         if ($allowMail){
-            $mailArr = $this->str2array($this->config['email']);
-            $fromMailArr = $this->str2array($this->config['from_email']);
-            foreach ($mailArr as $_mail){
-                $this->mailFromSite($output, $this->config['sitename'], $fromMailArr[0], $_mail, $title);
+            $mailArr = $this->str2array($this->conf['email']);
+            foreach ($mailArr as $mail){
+                $this->mailFromSite($output, $mail, $title);
             }
         }
-
         // Выводим результаты в браузер
-        if ($this->config['showtext']){
-            $this->showOutput($output, $this->config['charset']);
+        if ($this->conf['showtext']){
+            $this->showOutput($output, $this->conf['charset']);
         }
     }
 
@@ -299,10 +239,10 @@ class AntiShell
             $pathName = $obFile->getPathname();
             $fileExtension = $obFile->getExtension();
 
-            if (!empty($this->config['skipdir']) && $this->strposa($pathName, $this->config['skipdir'])){
+            if (!empty($this->conf['skipdir']) && $this->strposa($pathName, $this->conf['skipdir'])){
                 continue;
             }
-            if (!empty($this->config['skipfile']) && (in_array($fileExtension, $this->config['skipfile']) || in_array($fileName, $this->config['skipfile']))){
+            if (!empty($this->conf['skipfile']) && (in_array($fileExtension, $this->conf['skipfile']) || in_array($fileName, $this->conf['skipfile']))){
                 continue;
             }
 
@@ -333,8 +273,6 @@ class AntiShell
         $deletedCount = 0;
         $totalFilesCount = count($arScan);
         $tf_text = $this->declination($totalFilesCount, 'фай|л|ла|лов');
-        
-        file_put_contents($this->snapFile, serialize($arScan), LOCK_EX);
 
         if (file_exists($this->snapFile)){
             $strScanFile = file_get_contents($this->snapFile);
@@ -366,7 +304,6 @@ class AntiShell
                 }
             }
 
-
             unset($diff, $deletedDiff);
             if ($edit){
                 arsort($edit);
@@ -375,10 +312,10 @@ class AntiShell
                 $changeText = $this->declination($changedCount, 'фай|л изменён|ла изменено|лов изменено');
                 $addText = $this->declination($addedCount, 'фай|л добавлен|ла добавлено|лов добавлено');
                 $delText = $this->declination($deletedCount, 'фай|л удалён|ла удалены|лов удалено');
-                $snapInfo = ($this->config['makesnap'] || $this->config['allowsnap']) ? "<p>Снимок создан <b>{$snapDate}</b></p>" : "<p>Дата сканирования: <b>{$snapDate}</b></p>";
+                $snapInfo = ($this->conf['makesnap'] || $this->conf['allowsnap']) ? "<p>Снимок создан <b>{$snapDate}</b></p>" : "<p>Дата сканирования: <b>{$snapDate}</b></p>";
 
                 $makeFileInfo['status'] = '1';
-                $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#2980b9;padding:40px 10px 10px;text-align: center;\">{$this->config['sitename']} - Сканирование завершено</h1>
+                $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#2980b9;padding:40px 10px 10px;text-align: center;\">{$this->conf['sitename']} - Сканирование завершено</h1>
 				<ul style='list-style:none;margin:0 0 15px 0;padding:0;'>
 					{$logs}
 				</ul>
@@ -393,24 +330,21 @@ class AntiShell
 					<p>Запущено с IP: <b>{$_SERVER['REMOTE_ADDR']}</b></p>
 				</div>";
             } else {
+
                 $makeFileInfo['status'] = '2';
                 $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#16a085;padding:40px 10px 10px;text-align: center;\">Файлы не менялись. Всё ок!</h1>";
             }
-            if ($this->config['makesnap'] || $this->config['allowsnap']){
-                @unlink($this->snapFile);
-            }
-
-            $makeFileInfo['status'] = '3';
-            $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#16a085;padding:40px 10px 10px;text-align: center;\">{$this->config['sitename']} - Файл снимка успешно создан " . date("Y-m-d в H:i:s") . "</h1> <p style='color: #34495e; line-height: 22px !important; margin-left: 40px; '>В снимке содержится: <b>{$totalFilesCount}</b> {$tf_text}</p>";
 
         } else {
-            
-                if ($this->config['makesnap'] || $this->config['allowsnap']){
-                    @rename($this->snapFile, $this->snapFile);
-                }
+
+            file_put_contents($this->snapFile, serialize($arScan), LOCK_EX);
+            if (file_exists($this->snapFile)){
+                $makeFileInfo['status'] = '3';
+                $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#16a085;padding:40px 10px 10px;text-align: center;\">{$this->conf['sitename']} - Файл снимка успешно создан " . date("Y-m-d в H:i:s") . "</h1> <p style='color: #34495e; line-height: 22px !important; margin-left: 40px; '>В снимке содержится: <b>{$totalFilesCount}</b> {$tf_text}</p>";
+            } else {
 
                 $makeFileInfo['status'] = '4';
-                $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#c0392b;padding:40px 10px 10px;text-align: center;\">{$this->config['sitename']} - Файл снимка не создан!</h1>
+                $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#c0392b;padding:40px 10px 10px;text-align: center;\">{$this->conf['sitename']} - Файл снимка не создан!</h1>
 					<div style='color: #34495e; line-height: 22px !important; margin-left: 40px;'>
 						Возможные причины:
 						<br />- <b>Не хватает прав.</b> Установите на папку, содержащую снимок права на запись (CHMOD 755 или 777).
@@ -418,15 +352,8 @@ class AntiShell
 						<br />- <b>Особенности хостинга или распределения прав пользователей.</b> Обратитесь за помошью в службу технической поддержки хостинга или на сайт <a href='http://antishell.ru/' target='_blank'>antishell.ru</a> (будьте готовы дать FTP-доступ к папке со скриптом и папке со снимком)
 					</div>";
 
+            }
         }
-
-        if ($this->config['makesnap'] || $this->config['allowsnap']){
-            @rename($this->snapFile, $this->snapFile);
-        }
-        if (!$this->config['makesnap'] && !$this->config['allowsnap']){
-            @unlink($this->snapFile);
-        }
-
         return $makeFileInfo;
     }
 
@@ -440,7 +367,7 @@ class AntiShell
      */
     public function listStyler($class = 'change', $time, $file)
     {
-        $icon_url = $this->config['icon_url'];
+        $icon_url = $this->conf['icon_url'];
         $liInfo = $this->liInfo('#7f8c8d');
 
         switch ($class) {
@@ -468,19 +395,21 @@ class AntiShell
 
     /**
      * @param string $content    - контент сообщения
-     * @param string $subject    - имя отправителя (берётся из имени сайта)
-     * @param string $from_email - email отправителя
      * @param string $email      - email получателя
      * @param string $title      - тема сообщения
      *
      * @return bool
      */
-    public function mailFromSite($content, $subject, $from_email, $email, $title = 'На сайте изменены файлы')
+    public function mailFromSite($content, $email, $title = 'На сайте изменены файлы')
     {
+        // имя отправителя (берётся из имени сайта)
+        $subject = $this->conf['sitename'];
+        // email отправителя
+        $from_email = $this->str2array($this->conf['from_email'])[0];
         $set_mail = (trim($from_email) != '') ? $from_email : $email;
 
         if (trim($subject) != ''){
-            $from = $this->mimeEncode($subject, $this->config['charset']) . ' <' . $set_mail . '>';
+            $from = $this->mimeEncode($subject, $this->conf['charset']) . ' <' . $set_mail . '>';
         } else {
             $from = '<' . $set_mail . '>';
         }
@@ -488,11 +417,11 @@ class AntiShell
         $content = str_replace("\r", "", $content);
         $headers = 'From: ' . $from . "\r\n";
         $headers .= "X-Mailer: ANTI-SHELL\r\n";
-        $headers .= 'Content-Type: text/html; charset=' . $this->config['charset'] . "\r\n";
+        $headers .= 'Content-Type: text/html; charset=' . $this->conf['charset'] . "\r\n";
         $headers .= "Content-Transfer-Encoding: 8bit\r\n";
         $headers .= 'X-Priority: 1 (Highest)';
 
-        $mail_send = mail($email, $this->mimeEncode($title, $this->config['charset']), $content, $headers);
+        $mail_send = mail($email, $this->mimeEncode($title, $this->conf['charset']), $content, $headers);
 
         return $mail_send;
     }
@@ -540,7 +469,7 @@ class AntiShell
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="{$this->config['charset']}" />
+		<meta charset="{$this->conf['charset']}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>{$title}</title>
 	</head>
@@ -632,7 +561,7 @@ HTML;
      */
     public function getConfig()
     {
-        return $this->config;
+        return $this->conf;
     }
 
 
@@ -650,5 +579,7 @@ HTML;
 
 }
 
-$scan = new AntiShell($config);
-$scan->run();
+if (Config::getData('antivirus')['on']){
+    $scan = new AntiShell();
+    $scan->run();
+}

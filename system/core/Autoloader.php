@@ -159,12 +159,12 @@ END;
     }
 
     /**
-     * @param $parh
+     * @param $path
      * @return mixed
      */
-    protected function setDirSep($parh)
+    protected function setDirSep($path)
     {
-        return str_replace(['\\', '/'], DS, $parh);
+        return str_replace(['\\', '/'], DS, $path);
     }
 
     /**
