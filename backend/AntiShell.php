@@ -30,6 +30,7 @@ require_once SYS_DIR . 'core' . DS . 'boot.php';
  * Через wget: /usr/bin/wget -O - -q "http://anti/backend/AntiShell.php"
  * Через php: /usr/bin/php -f O:/domains/Anti/backend/AntiShell.php
  * ручной запуск: /backend/AntiShell.php?snap=y
+ *
  * Путь к php или wget у вас может отличаться! Проверьте корректность пути (можно уточнить в ТП хостинга).
  * Рекомендую ставить в планировщик минимум раз в сутки (лучше раз в час).
  * Если ресурсы хостинга позволяют - раз в час.
@@ -78,7 +79,10 @@ class AntiShell extends Registry
         $this->timeStart = $this->timer();
         $this->memoryStart = $this->getMemory();
         $this->conf = Config::getData('antivirus');
+        // создать в ручную новый снимок
+        // /backend/AntiShell.php?snap=y
         $this->conf['makesnap'] = (isset($_GET['snap']) && trim($_GET['snap']) == 'y');
+        $this->conf['sitename'] .= 'http://' . $_SERVER['HTTP_HOST'];
     }
 
     /**
@@ -312,7 +316,7 @@ class AntiShell extends Registry
 
             foreach ($diff as $hash => $arFile){
                 $fPath = $arFile['path'];
-                $fDate = date("Y-m-d H:i:s", $arFile['date']);
+                $fDate = date('Y-m-d H:i:s', $arFile['date']);
                 if (strpos($strScanFile, $fPath) !== false){
                     $edit[$hash] = $this->listStyler('change', $fDate, $fPath);
                     $changedCount++;
@@ -332,19 +336,26 @@ class AntiShell extends Registry
                     $deletedCount++;
                 }
             }
-
             unset($diff, $deletedDiff);
+
+            if ($this->conf['makesnap'] || $this->conf['allowsnap']){
+                file_put_contents($this->snapFile, serialize($arScan), LOCK_EX);
+                $snapInfo = "<p>Создан новый снимок: ";
+            } else {
+                $snapInfo = "<p>Дата сканирования: ";
+            }
+            $snapDate = date('j.m.Y в H:i:s', filemtime($this->snapFile));
+            $snapInfo .= "<b>{$snapDate}</b></p>";
+
             if ($edit){
                 arsort($edit);
-                $snapDate = date("j.m.Y в H:i:s", filemtime($this->snapFile));
                 $logs = implode("\n\t", $edit);
                 $changeText = $this->declination($changedCount, 'фай|л изменён|ла изменено|лов изменено');
                 $addText = $this->declination($addedCount, 'фай|л добавлен|ла добавлено|лов добавлено');
                 $delText = $this->declination($deletedCount, 'фай|л удалён|ла удалены|лов удалено');
-                $snapInfo = ($this->conf['makesnap'] || $this->conf['allowsnap']) ? "<p>Снимок создан <b>{$snapDate}</b></p>" : "<p>Дата сканирования: <b>{$snapDate}</b></p>";
 
                 $makeFileInfo['status'] = '1';
-                $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#2980b9;padding:40px 10px 10px;text-align: center;\">{$this->conf['sitename']} - Сканирование завершено</h1>
+                $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#2980b9;padding:40px 10px 10px;text-align: center;\">{$this->conf['sitename']}  сканирование завершено\"</h1>
 				<ul style='list-style:none;margin:0 0 15px 0;padding:0;'>
 					{$logs}
 				</ul>
@@ -361,7 +372,11 @@ class AntiShell extends Registry
             } else {
 
                 $makeFileInfo['status'] = '2';
-                $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#16a085;padding:40px 10px 10px;text-align: center;\">Файлы не менялись. Всё ок!</h1>";
+                $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#16a085;padding:40px 10px 10px;text-align: center;\">Файлы не менялись. Всё ок!</h1>
+                 <div style=\"color: #34495e; line-height: 22px !important; margin-left: 40px;\">
+					{$snapInfo}				
+					<p>Запущено с IP: <b>{$_SERVER['REMOTE_ADDR']}</b></p>
+				</div>";
             }
 
         } else {
