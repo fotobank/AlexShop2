@@ -26,7 +26,6 @@ require_once SYS_DIR . 'core' . DS . 'boot.php';
 
 /**
  * Class AntiShell
- * 
  * Команды для выполнения через cron (Скопируйте одну и вставьте в планировщик):
  * Через wget: /usr/bin/wget -O - -q "http://anti/backend/AntiShell.php"
  * Через php: /usr/bin/php -f O:/domains/Anti/backend/AntiShell.php
@@ -71,7 +70,7 @@ class AntiShell extends Registry
 
     /**
      * Конструктор класса
-     *
+
      */
     public function __construct()
     {
@@ -80,6 +79,33 @@ class AntiShell extends Registry
         $this->memoryStart = $this->getMemory();
         $this->conf = Config::getData('antivirus');
         $this->conf['makesnap'] = (isset($_GET['snap']) && trim($_GET['snap']) == 'y');
+    }
+
+    /**
+     * Подсчитываем время выполнения скрипта
+     *
+     * @param bool|string $stop
+     *
+     * @return float|mixed
+     */
+    public function timer($stop = false)
+    {
+        return ($stop) ? (microtime(true) - $stop) : microtime(true);
+    }
+
+    /**
+     * Подсчитываем затраты памяти
+     *
+     * @param bool|string $stop
+     *
+     * @return int|string
+     */
+    public function getMemory($stop = false)
+    {
+        if (function_exists('memory_get_usage')){
+            return ($stop) ? (memory_get_usage() - $stop) : memory_get_usage();
+        }
+        return 0;
     }
 
     /**
@@ -92,66 +118,8 @@ class AntiShell extends Registry
     public function setConfig(array $arConfig = [])
     {
         $this->conf = $arConfig;
+
         return $this;
-    }
-
-    /**
-     * Преобразуем строку в массив
-     * @author Sander http://sandev.pro/
-     *
-     * @param        $array     - входящая строка
-     * @param string $delimiter - разделитель массива
-     *
-     * @return array|bool
-     */
-
-    public function str2array($array, $delimiter = ',')
-    {
-        if (!$array or $array == '*'){
-            return false;
-        }
-        $arOld = explode($delimiter, $array);
-        $arNew = [];
-        foreach ($arOld as $v){
-            $v = trim($v);
-            if ($v){
-                $arNew[] = $v;
-            }
-        }
-        return $arNew;
-    }
-
-    /**
-     * @param $path
-     * @return mixed
-     */
-    protected function setDirSep($path)
-    {
-        return str_replace(['\\', '/'], DS, $path);
-    }
-
-    /**
-     * Метод для реализации strpos с массивом
-     *
-     * @param string $haystack - Где искать
-     * @param array  $needle   - Что искать (массив)
-     * @param int    $offset   - Если этот параметр указан, то поиск будет начат с указанного количества символов с
-     *                         начала строки. {@see strpos()}
-     *
-     * @return bool
-     */
-    public function strposa($haystack, $needle, $offset = 0)
-    {
-        if (!is_array($needle)){
-            $needle = [$needle];
-        }
-        foreach ($needle as $query){
-            if (strpos($haystack, $query, $offset) !== false){
-                return true;
-            } // stop on first true result
-        }
-
-        return false;
     }
 
     /**
@@ -219,6 +187,43 @@ class AntiShell extends Registry
     }
 
     /**
+     * @param $path
+     *
+     * @return mixed
+     */
+    protected function setDirSep($path)
+    {
+        return str_replace(['\\', '/'], DS, $path);
+    }
+
+    /**
+     * Преобразуем строку в массив
+     * @author Sander http://sandev.pro/
+     *
+     * @param        $array     - входящая строка
+     * @param string $delimiter - разделитель массива
+     *
+     * @return array|bool
+     */
+
+    public function str2array($array, $delimiter = ',')
+    {
+        if (!$array or $array == '*'){
+            return false;
+        }
+        $arOld = explode($delimiter, $array);
+        $arNew = [];
+        foreach ($arOld as $v){
+            $v = trim($v);
+            if ($v){
+                $arNew[] = $v;
+            }
+        }
+
+        return $arNew;
+    }
+
+    /**
      * @param string $dir    - Путь к сканируемой папке
      * @param string $subdir - подпапка
      *
@@ -258,6 +263,30 @@ class AntiShell extends Registry
     }
 
     /**
+     * Метод для реализации strpos с массивом
+     *
+     * @param string $haystack - Где искать
+     * @param array  $needle   - Что искать (массив)
+     * @param int    $offset   - Если этот параметр указан, то поиск будет начат с указанного количества символов с
+     *                         начала строки. {@see strpos()}
+     *
+     * @return bool
+     */
+    public function strposa($haystack, $needle, $offset = 0)
+    {
+        if (!is_array($needle)){
+            $needle = [$needle];
+        }
+        foreach ($needle as $query){
+            if (strpos($haystack, $query, $offset) !== false){
+                return true;
+            } // stop on first true result
+        }
+
+        return false;
+    }
+
+    /**
      * Метод, создающий файл снимка
      *
      * @param $arScan - массив с результатами из метода doScan
@@ -274,7 +303,7 @@ class AntiShell extends Registry
         $totalFilesCount = count($arScan);
         $tf_text = $this->declination($totalFilesCount, 'фай|л|ла|лов');
 
-        if (file_exists($this->snapFile)){
+        if (is_readable($this->snapFile)){
             $strScanFile = file_get_contents($this->snapFile);
             $arScanFile = unserialize($strScanFile, ['allowed_classes' => true]);
             $strScan = serialize($arScan);
@@ -354,9 +383,25 @@ class AntiShell extends Registry
 
             }
         }
+
         return $makeFileInfo;
     }
 
+    /**
+     * Функция для установки правильного окончания слов
+     *
+     * @param int    $n     - число, для которого будет расчитано окончание
+     * @param string $words - варианты окончаний для (1 комментарий, 2 комментария, 100 комментариев)
+     *
+     * @return string - слово с правильным окончанием
+     */
+    public function declination($n = 0, $words)
+    {
+        $words = explode('|', $words);
+        $n = (int)$n;
+
+        return $n % 10 == 1 && $n % 100 != 11 ? $words[0] . $words[1] : ($n % 10 >= 2 && $n % 10 <= 4 && ($n % 100 < 10 || $n % 100 >= 20) ? $words[0] . $words[2] : $words[0] . $words[3]);
+    }
 
     /**
      * @param string $class - название CSS-класса
@@ -394,9 +439,72 @@ class AntiShell extends Registry
     }
 
     /**
-     * @param string $content    - контент сообщения
-     * @param string $email      - email получателя
-     * @param string $title      - тема сообщения
+     * @param string $color
+     * @param string $liTooltip
+     * @param string $bgPosition
+     *
+     * @return array
+     */
+    private function liInfo($color = '', $liTooltip = '', $bgPosition = '')
+    {
+        return ['color' => $color, 'liTooltip' => $liTooltip, 'bgPosition' => $bgPosition];
+    }
+
+    /**
+     * Показываем статистику
+     * @return string
+     */
+    public function showStat()
+    {
+        $timerStart = $this->timeStart;
+        $time = round($this->timer($timerStart), 5);
+        $memory = (!function_exists('memory_get_peak_usage')) ? 'неизвестно' : round(memory_get_peak_usage() / 1024 / 1024, 2) . ' Mb';
+        $realMemory = round($this->getMemory($this->memoryStart) / 1024 / 1024, 3) . ' Mb';
+        $showSendStatInfo = '';
+
+        $stat = '<div style="color: #34495e; line-height: 22px !important; margin-left: 40px; margin-top: 10px; border-top: 1px solid #bdc3c7;">
+			<p>Время выполнения: ' . $time . ' Сек.
+			<br />Затраты памяти <small>(максимальное потребление)</small>: ' . $memory . '
+			<br />Затраты памяти <small>(реальное потребление)</small>: ' . $realMemory . '</p>
+			' . $showSendStatInfo . '
+		</div>';
+
+        return $stat;
+    }
+
+    /**
+     * Шаблон для вывода в браузер и отправку уведомления на email
+     *
+     * @param string $title   - заголовок окна браузера
+     * @param string $content - выводимый контент
+     *
+     * @return string
+     */
+    public function template($title = '', $content = '')
+    {
+        $template = <<<HTML
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="{$this->conf['charset']}" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>{$title}</title>
+	</head>
+	<body style="background-color:#ecf0f1; max-width: 800px; margin: 0 auto;padding:0;">
+		<div  style="background-color:#ecf0f1;font:normal 16px 'Trebuchet MS',Arial,sans-serif;color:#7f8c8d;margin:0;padding:5px 5px 35px 5px;">
+			{$content}
+		</div>
+	</body>
+</html>
+HTML;
+
+        return $template;
+    }
+
+    /**
+     * @param string $content - контент сообщения
+     * @param string $email   - email получателя
+     * @param string $title   - тема сообщения
      *
      * @return bool
      */
@@ -440,52 +548,6 @@ class AntiShell extends Registry
     }
 
     /**
-     * Функция для установки правильного окончания слов
-     *
-     * @param int    $n     - число, для которого будет расчитано окончание
-     * @param string $words - варианты окончаний для (1 комментарий, 2 комментария, 100 комментариев)
-     *
-     * @return string - слово с правильным окончанием
-     */
-    public function declination($n = 0, $words)
-    {
-        $words = explode('|', $words);
-        $n = (int)$n;
-
-        return $n % 10 == 1 && $n % 100 != 11 ? $words[0] . $words[1] : ($n % 10 >= 2 && $n % 10 <= 4 && ($n % 100 < 10 || $n % 100 >= 20) ? $words[0] . $words[2] : $words[0] . $words[3]);
-    }
-
-    /**
-     * Шаблон для вывода в браузер и отправку уведомления на email
-     *
-     * @param string $title   - заголовок окна браузера
-     * @param string $content - выводимый контент
-     *
-     * @return string
-     */
-    public function template($title = '', $content = '')
-    {
-        $template = <<<HTML
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="{$this->conf['charset']}" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>{$title}</title>
-	</head>
-	<body style="background-color:#ecf0f1; max-width: 800px; margin: 0 auto;padding:0;">
-		<div  style="background-color:#ecf0f1;font:normal 16px 'Trebuchet MS',Arial,sans-serif;color:#7f8c8d;margin:0;padding:5px 5px 35px 5px;">
-			{$content}
-		</div>
-	</body>
-</html>
-HTML;
-
-        return $template;
-    }
-
-
-    /**
      * @param $output  - что выводим
      * @param $charset - кодировка, отдаваемая браузеру
      */
@@ -504,77 +566,11 @@ HTML;
     }
 
     /**
-     * Подсчитываем время выполнения скрипта
-     *
-     * @param bool|string $stop
-     *
-     * @return float|mixed
-     */
-    public function timer($stop = false)
-    {
-
-        return ($stop) ? (microtime(true) - $stop) : microtime(true);
-    }
-
-    /**
-     * Подсчитываем затраты памяти
-     *
-     * @param bool|string $stop
-     *
-     * @return int|string
-     */
-    public function getMemory($stop = false)
-    {
-        if (function_exists('memory_get_usage')){
-            return ($stop) ? (memory_get_usage() - $stop) : memory_get_usage();
-        }
-
-        return 0;
-    }
-
-    /**
-     * Показываем статистику
-     * @return string
-     */
-    public function showStat()
-    {
-        $timerStart = $this->timeStart;
-        $time = round($this->timer($timerStart), 5);
-        $memory = (!function_exists('memory_get_peak_usage')) ? 'неизвестно' : round(memory_get_peak_usage() / 1024 / 1024, 2) . ' Mb';
-        $realMemory = round($this->getMemory($this->memoryStart) / 1024 / 1024, 3) . ' Mb';
-        $showSendStatInfo = '';
-
-        $stat = '<div style="color: #34495e; line-height: 22px !important; margin-left: 40px; margin-top: 10px; border-top: 1px solid #bdc3c7;">
-			<p>Время выполнения: ' . $time . ' Сек.
-			<br />Затраты памяти <small>(максимальное потребление)</small>: ' . $memory . '
-			<br />Затраты памяти <small>(реальное потребление)</small>: ' . $realMemory . '</p>
-			' . $showSendStatInfo . '
-		</div>';
-
-        return $stat;
-    }
-
-
-
-    /**
      * @return array
      */
     public function getConfig()
     {
         return $this->conf;
-    }
-
-
-    /**
-     * @param string $color
-     * @param string $liTooltip
-     * @param string $bgPosition
-     *
-     * @return array
-     */
-    private function liInfo($color = '', $liTooltip = '', $bgPosition = '')
-    {
-        return ['color' => $color, 'liTooltip' => $liTooltip, 'bgPosition' => $bgPosition];
     }
 
 }
