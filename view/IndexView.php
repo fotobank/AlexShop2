@@ -101,7 +101,7 @@ class IndexView extends View {
         }
 
         if(empty($_SESSION['admin'])) {
-            if ($this->settings->site_work == "off") {
+            if ($this->settings->site_work == 'off') {
                 header('HTTP/1.0 503 Service Temporarily Unavailable');
                 header('Status: 503 Service Temporarily Unavailable');
                 header('Retry-After: 300');//300 seconds

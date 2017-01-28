@@ -1,5 +1,5 @@
 <?php
-     include( '../inc/config.php' ); 
+     include __DIR__ . '/../inc/config.php';
      $connect = @new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
      $sql = "SELECT * FROM locks";
      $rows = $connect->query($sql);

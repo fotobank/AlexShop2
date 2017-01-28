@@ -6,8 +6,8 @@ if (isset($_SESSION['id'])):
     $name = $_SESSION['username'];
     //include database information
     // and pagination
-    include('../inc/config.php');
-    include('inc/pagination.php');
+    include __DIR__ . '/../inc/config.php';
+    include __DIR__ . 'inc/pagination.php';
     $connect = @new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
     $data = $stats = $subs = $sent = '';
     $tp = '';

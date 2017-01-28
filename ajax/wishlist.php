@@ -2,7 +2,7 @@
 
 use api\Registry;
 
-include(__DIR__ . '/../system/configs/define/config.php');
+include __DIR__ . '/../system/configs/define/config.php';
 /** @noinspection PhpIncludeInspection */
 include SYS_DIR . 'core' . DS . 'boot.php';
 

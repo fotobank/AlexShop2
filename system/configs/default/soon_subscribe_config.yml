@@ -1,0 +1,194 @@
+#MySQL database details
+db_table_subscribers: subscribe_mailing #MySQL table to store emails
+db_table_settings: soon_subscribe_settings #MySQL table to store emails
+
+#Logo image
+logo_file: 'images/logo.png'
+logo_width: 200
+logo_height: 150
+logo_alt_text: AlexShop CMS
+
+#Colours
+colour_background: '#FFFFFF'
+colour_font: '#333333'
+colour_main: '#D13A7A'
+colour_block: '#F2F2F2'
+colour_progressbar: '#D13A7A'
+colour_progressbar_background: '#F0F0F0'
+colour_progressbar_font: '#333333'
+
+#Website name
+website_name: 'AlexShop CMS' #Name of the Website as it appear on page and emails
+
+#Countdown
+countdown_activated: TRUE #Show or hide the countdown with TRUE or FALSE
+countdown_day: 0
+countdown_month: 0
+countdown_year: 0
+countdown_hour: 0 #(0-24)
+countdown_min: 0 #(0-60)
+countdown_sec: 0 #(0-60)
+countdown_millisec: 0 #(0-1000)
+countdown_timer: "20:00:00:00" #dd:hh:mm:ss
+
+#Progress bar
+progressbar_activated: TRUE
+progressbar_percent: 20 #Percentage of the progress bar
+
+#Newsletter
+newsletter_activated: TRUE
+newsletter_email: 'newsletter@localhost'
+
+#Social networks
+facebook: 'https://facebook.com' #Remove or leave empty if do not used
+twitter: 'https://twitter.com' #Remove or leave empty if do not used
+googleplus: 'https://plus.google.com' #Remove or leave empty if do not used
+linkedin: 'https://linkedin.com' #Remove or leave empty if do not used
+
+#Google map
+map_activated: TRUE
+map_latitude: 46.475700
+map_longitude: 30.748761
+map_markertitle: AlexGroup
+map_infowindow_title: '<b>AlexGroup</b>' #HTML formated, used in Google Map & Contact
+map_infowindow_address: '<p>Украина, Одесса ул.Троицкая д.3</p>' #HTML formated, used in Google Map & Contact
+
+#Contact
+contact_activated: TRUE #Show or hide the contact form
+phone_fax: '<p>Tel:  094-94-77-070</p>'
+
+
+#Email address used to send emails
+email_address: 'aleksjurii@gmail.com' #Email address sending all the emails messages
+email_from_name: 'AlexShop CMS' #Email from
+
+#About
+about_activated: TRUE #Show or hide the about page with TRUE or FALSE
+
+
+#Google analytics
+google_analytics: '' #enter the Google Analytics identification UA-XXXX-Y, leave it empty or remove this line if you do not want the use it
+
+#Admin access
+admin_username: 'admin' #Administrator username
+admin_password: 'admin' #Administrator password
+admin_cookie: 'Coming Soon Landing Page' #Administrator cookie identification
+
+#Admin pagination
+rows_per_page: '100' #Number of rows per page
+show_page_numbers: TRUE #Hide / show page numbers button
+show_prev_next: TRUE #Hide / show previous and next button
+
+#Language used in this installation
+current_language: 'ru' #Select a language in the /languages/ directory
+#Edit the language file in the /languages/ folder to adjust content to your specific needs
+
+
+#activate the multilingual functionality
+multilingual: FALSE #Use TRUE to activate the multiligual functionality, use FALSE to deactivate
+
+#adress of the pages for all the available languages
+language:
+   en: http://localhost/ #repeat for all the needed languages
+   fr: http://localhost/fr/
+   ru: http://localhost/ru/
+
+
+#2 characters code list of all languages
+lang_code:
+   ab: 'Abkhazian'
+   af: 'Afrikaans'
+   an: 'Aragonese'
+   ar: 'Arabic'
+   as: 'Assamese'
+   az: 'Azerbaijani'
+   be: 'Belarusian'
+   bg: 'Bulgarian'
+   bn: 'Bengali'
+   bo: 'Tibetan'
+   br: 'Breton'
+   bs: 'Bosnian'
+   ca: 'Catalan / Valencian'
+   ce: 'Chechen'
+   co: 'Corsican'
+   cs: 'Czech'
+   cu: 'Church Slavic'
+   cy: 'Welsh'
+   da: 'Danish'
+   de: 'German'
+   el: 'Greek'
+   en: 'English'
+   eo: 'Esperanto'
+   es: 'Spanish / Castilian'
+   et: 'Estonian'
+   eu: 'Basque'
+   fa: 'Persian'
+   fi: 'Finnish'
+   fj: 'Fijian'
+   fo: 'Faroese'
+   fr: 'French'
+   fy: 'Western Frisian'
+   ga: 'Irish'
+   gd: 'Gaelic / Scottish Gaelic'
+   gl: 'Galician'
+   gv: 'Manx'
+   he: 'Hebrew'
+   hi: 'Hindi'
+   hr: 'Croatian'
+   ht: 'Haitian Haitian Creole'
+   hu: 'Hungarian'
+   hy: 'Armenian'
+   id: 'Indonesian'
+   is: 'Icelandic'
+   it: 'Italian'
+   ja: 'Japanese'
+   jv: 'Javanese'
+   ka: 'Georgian'
+   kg: 'Kongo'
+   ko: 'Korean'
+   ku: 'Kurdish'
+   kw: 'Cornish'
+   ky: 'Kirghiz'
+   la: 'Latin'
+   lb: 'Luxembourgish Letzeburgesch'
+   li: 'Limburgan Limburger Limburgish'
+   ln: 'Lingala'
+   lt: 'Lithuanian'
+   lv: 'Latvian'
+   mg: 'Malagasy'
+   mk: 'Macedonian'
+   mn: 'Mongolian'
+   mo: 'Moldavian'
+   ms: 'Malay'
+   mt: 'Maltese'
+   my: 'Burmese'
+   nb: 'Norwegian (Bokmål)'
+   ne: 'Nepali'
+   nl: 'Dutch'
+   nn: 'Norwegian (Nynorsk)'
+   no: 'Norwegian'
+   oc: 'Occitan (post 1500) Provençal'
+   pl: 'Polish'
+   pt: 'Portuguese'
+   rm: 'Raeto-Romance'
+   ro: 'Romanian'
+   ru: 'Russian'
+   sc: 'Sardinian'
+   se: 'Northern Sami'
+   sk: 'Slovak'
+   sl: 'Slovenian'
+   so: 'Somali'
+   sq: 'Albanian'
+   sr: 'Serbian'
+   sv: 'Swedish'
+   sw: 'Swahili'
+   tk: 'Turkmen'
+   tr: 'Turkish'
+   ty: 'Tahitian'
+   uk: 'Ukrainian'
+   ur: 'Urdu'
+   uz: 'Uzbek'
+   vi: 'Vietnamese'
+   vo: 'Volapuk'
+   yi: 'Yiddish'
+   zh: 'Chinese'

@@ -364,7 +364,10 @@ class View extends Registry {
             $smarty->assign($params['var'], $products);
         }
     }
-    
+
+    /**
+     * @param $var
+     */
     public function printa($var) {
         if ($_SESSION['admin']) {
             print_r($var);
@@ -382,7 +385,7 @@ class View extends Registry {
         @$page = $this->design->smarty->getTemplateVars('page');
         
         $show_filter_array = array('products'=>$product->id,'categories'=>$category->id,'brands'=>$brand->id,'pages'=>$page->id);
-        $banner = $this->banners->get_banner(intval($params['group']), true, $show_filter_array);
+        $banner = $this->banners->get_banner((int)$params['group'], true, $show_filter_array);
         if(!empty($banner)) {
             if($items = $this->banners->get_banners_images(array('banner_id'=>$banner->id, 'visible'=>1))) {
                 $banner->items = $items;

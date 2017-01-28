@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Класс предназначен для отправки почты с вложениями
+ * РљР»Р°СЃСЃ РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅ РґР»СЏ РѕС‚РїСЂР°РІРєРё РїРѕС‡С‚С‹ СЃ РІР»РѕР¶РµРЅРёСЏРјРё
  * @created   by PhpStorm
  * @package   SendMail.php
  * @version   1.0
  * @author    Alex Jurii <jurii@mail.ru>
  * @link      http://alex.od.ua
- * @copyright Авторские права (C) 2000-2015, Alex Jurii
+ * @copyright РђРІС‚РѕСЂСЃРєРёРµ РїСЂР°РІР° (C) 2000-2015, Alex Jurii
  * @date      :     14.05.2015
  * @time      :     15:47
  * @license   MIT License: http://opensource.org/licenses/MIT
@@ -31,7 +31,7 @@ class SendMail
 		'email'            => '',
 		'from_name'        => '',
 		'from_email'       => '',
-		'subject'          => 'Без темы',
+		'subject'          => 'Р‘РµР· С‚РµРјС‹',
 		'message'          => '',
 		'notify'           => false,
 		'priority'         => '3 (Normal)',
@@ -60,7 +60,7 @@ class SendMail
 
 
 	/**
-	 * Адрес и имя отправителя.
+	 * РђРґСЂРµСЃ Рё РёРјСЏ РѕС‚РїСЂР°РІРёС‚РµР»СЏ.
 	 *
 	 * @param        $fromEmail
 	 * @param string $fromName
@@ -73,7 +73,7 @@ class SendMail
 
 
 	/**
-	 * Адрес и имя отправителя.
+	 * РђРґСЂРµСЃ Рё РёРјСЏ РѕС‚РїСЂР°РІРёС‚РµР»СЏ.
 	 *
 	 * @param        $email
 	 * @param string $name
@@ -87,7 +87,7 @@ class SendMail
 
 
 	/**
-	 * Адресат (можно массив адресов).
+	 * РђРґСЂРµСЃР°С‚ (РјРѕР¶РЅРѕ РјР°СЃСЃРёРІ Р°РґСЂРµСЃРѕРІ).
 	 *
 	 * @param        $email
 	 * @param string $name
@@ -103,7 +103,7 @@ class SendMail
 
 
 	/**
-	 * Тема сообщения.
+	 * РўРµРјР° СЃРѕРѕР±С‰РµРЅРёСЏ.
 	 */
 	public function subject($subject)
 		{
@@ -114,7 +114,7 @@ class SendMail
 
 
 	/**
-	 * Тело сообщения.
+	 * РўРµР»Рѕ СЃРѕРѕР±С‰РµРЅРёСЏ.
 	 */
 	public function message($message)
 		{
@@ -125,7 +125,7 @@ class SendMail
 
 
 	/**
-	 * Путь до прикрепляемого файла (можно массив).
+	 * РџСѓС‚СЊ РґРѕ РїСЂРёРєСЂРµРїР»СЏРµРјРѕРіРѕ С„Р°Р№Р»Р° (РјРѕР¶РЅРѕ РјР°СЃСЃРёРІ).
 	 *
 	 * @param $files
 	 *
@@ -140,7 +140,7 @@ class SendMail
 
 
 	/**
-	 * Кодировка (по умолчанию utf-8).
+	 * РљРѕРґРёСЂРѕРІРєР° (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ utf-8).
 	 *
 	 * @param string $charset
 	 *
@@ -155,8 +155,8 @@ class SendMail
 
 
 	/**
-	 * Приоритет письма.
-	 * true, если важное. По умолчанию false.
+	 * РџСЂРёРѕСЂРёС‚РµС‚ РїРёСЃСЊРјР°.
+	 * true, РµСЃР»Рё РІР°Р¶РЅРѕРµ. РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ false.
 	 *
 	 * @param bool $important
 	 *
@@ -173,8 +173,8 @@ class SendMail
 
 
 	/**
-	 * Уведомлять о прочтении.
-	 * По умолчанию false.
+	 * РЈРІРµРґРѕРјР»СЏС‚СЊ Рѕ РїСЂРѕС‡С‚РµРЅРёРё.
+	 * РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ false.
 	 *
 	 * @param bool $notify
 	 *
@@ -189,7 +189,7 @@ class SendMail
 
 
 	/**
-	 * Тип сообщения (по умолчанию text/plain).
+	 * РўРёРї СЃРѕРѕР±С‰РµРЅРёСЏ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ text/plain).
 	 *
 	 * @param int $content_type
 	 *
@@ -205,7 +205,7 @@ class SendMail
 
 
 	/**
-	 * Тип конвертации сообщения (по умолчанию 'quoted-printable').
+	 * РўРёРї РєРѕРЅРІРµСЂС‚Р°С†РёРё СЃРѕРѕР±С‰РµРЅРёСЏ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ 'quoted-printable').
 	 *
 	 * @param int $encoding
 	 *
@@ -222,7 +222,7 @@ class SendMail
 
 
 	/**
-	 * set_time_limit (по умолчанию == 30с.).
+	 * set_time_limit (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ == 30СЃ.).
 	 *
 	 * @param int $time_limit
 	 *
@@ -237,7 +237,7 @@ class SendMail
 
 
 	/**
-	 * Отправка почты.
+	 * РћС‚РїСЂР°РІРєР° РїРѕС‡С‚С‹.
 	 */
 	public function send()
 		{
@@ -255,12 +255,12 @@ class SendMail
 		{
 			if (empty($this->_params['email'])) {
 				$this->_error = false;
-				$this->_error_text .= 'Не указан адрес получателя: email()<br>';
+				$this->_error_text .= 'РќРµ СѓРєР°Р·Р°РЅ Р°РґСЂРµСЃ РїРѕР»СѓС‡Р°С‚РµР»СЏ: email()<br>';
 			}
 
 			if (empty($this->_params['from_email'])) {
 				$this->_error = false;
-				$this->_error_text .= 'Не указан адрес отправителя: from($email, [$name])<br>';
+				$this->_error_text .= 'РќРµ СѓРєР°Р·Р°РЅ Р°РґСЂРµСЃ РѕС‚РїСЂР°РІРёС‚РµР»СЏ: from($email, [$name])<br>';
 			}
 
 			$this->_error_text .= '</span>';
@@ -294,9 +294,9 @@ class SendMail
 						"\r\n"."MIME-Version: 1.0\r\n");
 
 
-			// Если есть прикреплённые файлы
+			// Р•СЃР»Рё РµСЃС‚СЊ РїСЂРёРєСЂРµРїР»С‘РЅРЅС‹Рµ С„Р°Р№Р»С‹
 			if (!empty($this->_params['files'])) {
-				$bound = md5(uniqid(time())); // Разделитель
+				$bound = md5(uniqid(time())); // Р Р°Р·РґРµР»РёС‚РµР»СЊ
 
 				$header .= ("Content-Type: multipart/mixed; boundary=\"".$bound."\"\r\n".
 							"This is a multi-part message in MIME format.\r\n");
@@ -314,7 +314,7 @@ class SendMail
 
 				foreach ($this->_params['files'] as $file_name) {
 					if (!file_exists($file_name)) {
-						throw new Exception('Файл <b>'.$file_name.'</b> не найден!');
+						throw new Exception('Р¤Р°Р№Р» <b>'.$file_name.'</b> РЅРµ РЅР°Р№РґРµРЅ!');
 					}
 
 					$mimeType = $finfo ? finfo_file($finfo, $file_name) :
@@ -335,7 +335,7 @@ class SendMail
 				if ($finfo) {
 					finfo_close($finfo);
 				}
-			} else // Если нет файлов
+			} else // Р•СЃР»Рё РЅРµС‚ С„Р°Р№Р»РѕРІ
 			{
 				$header .= ("Content-type: text/".$this->_params['content_type']."; charset=".$this->_params['charset'].
 							"\r\n"."Content-Transfer-Encoding: ".$this->_params['content_encoding']."\r\n");
@@ -346,7 +346,7 @@ class SendMail
 			$this->_params['subject'] = $this->_encodeMimeheader($this->_params['subject']);
 			set_time_limit($this->_params['time_limit']);
 
-			// Отправка сообщения
+			// РћС‚РїСЂР°РІРєР° СЃРѕРѕР±С‰РµРЅРёСЏ
 			foreach ($this->_params['email'] as $email) {
 				if (is_array($email)) {
 					$email = empty($email[1]) ? $email[0] : $this->_encodeMimeheader($email[1]).' <'.$email[0].'>';
@@ -377,9 +377,9 @@ class SendMail
 					return imap_8bit($str);
 				}
 
-				throw new Exception('Для конвертации строки в quoted-printable требуется одна из 2х функций:<br>'.
+				throw new Exception('Р”Р»СЏ РєРѕРЅРІРµСЂС‚Р°С†РёРё СЃС‚СЂРѕРєРё РІ quoted-printable С‚СЂРµР±СѓРµС‚СЃСЏ РѕРґРЅР° РёР· 2С… С„СѓРЅРєС†РёР№:<br>'.
 									'quoted_printable_encode<br>imap_8bit<br><br>'.
-									'В противном случае конвертируйте сообщение в base64.<br>'.'Константа '.__CLASS__.
+									'Р’ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ РєРѕРЅРІРµСЂС‚РёСЂСѓР№С‚Рµ СЃРѕРѕР±С‰РµРЅРёРµ РІ base64.<br>'.'РљРѕРЅСЃС‚Р°РЅС‚Р° '.__CLASS__.
 									'::CONTENT_ENCODING_BASE64');
 			}
 

@@ -7,10 +7,10 @@ include __DIR__ . '/../system/configs/define/config.php';
 /** @noinspection PhpIncludeInspection */
 include SYS_DIR . 'core' . DS . 'boot.php';
 
-header("Content-type: application/json; charset=UTF-8");
-header("Cache-Control: must-revalidate");
+header('Content-type: application/json; charset=UTF-8');
+header('Cache-Control: must-revalidate');
 //header("Pragma: no-cache");
-header("Expires: -1");
+header('Expires: -1');
 
 
 $registry = new Registry();

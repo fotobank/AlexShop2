@@ -24,7 +24,9 @@ class Database extends Registry
      * @var \Mysqli $mysqli
      */
     private $mysqli;
+
     /**
+     * результаты
      * @var \mysqli_result|boolean $res
      */
     private $res;
@@ -35,12 +37,32 @@ class Database extends Registry
     public $listQueries = [];
 
     /**
+     * массив таблиц в базе
+     */
+    public $table_list = [];
+
+    /**
      * В конструкторе подключаем базу
      */
     public function __construct()
     {
         parent::__construct();
+        $this->db_prefix = $this->config->db_prefix;
         $this->connect();
+        $tt = $this->tableExists('subscribe_mailing');
+        $t=0;
+    }
+
+    /**
+     * @return \Mysqli
+     */
+    public function getMysqli(): \Mysqli
+    {
+        if (null === $this->mysqli){
+            return $this->connect();
+        } else {
+            return $this->mysqli;
+        }
     }
 
     /**
@@ -54,6 +76,24 @@ class Database extends Registry
     }
 
     /**
+     * проверка на существование таблиц с кешированием имен таблиц
+     *
+     * @param $table_name - имя искомой таблицы без префикса
+     *
+     * @return bool
+     */
+    public function tableExists($table_name)
+    {
+        if (0 === count($this->table_list)){
+            $res = mysqli_query($this->mysqli, 'SHOW TABLES FROM ' . $this->config->db_name);
+            while ($cRow = mysqli_fetch_array($res)){
+                $this->table_list[] = $cRow[0];
+            }
+        }
+        if (in_array($this->config->db_prefix . $table_name, $this->table_list)) return true; else return false;
+    }
+
+    /**
      * Подключение к базе данных
      */
     public function connect()
@@ -61,7 +101,7 @@ class Database extends Registry
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         // При повторном вызове возвращаем существующий линк
-        if (null !== ($this->mysqli)){
+        if (null !== $this->mysqli){
             return $this->mysqli;
         } // Иначе устанавливаем соединение
         else {
@@ -147,8 +187,12 @@ class Database extends Registry
     }
 
     /**
-     * Плейсхолдер для запросов.
-     * Пример работы: $query = $db->placehold('SELECT name FROM products WHERE id=?', $id);
+     * Плейсхолдер для запросов:
+     * плейсхолдер ?% - именованный массив [key=>data], ?@ - массив параметров [1,2,3], ?# - константа, ? - строка
+     * Пример работы:
+     * $query = $db->placehold('SELECT name FROM products WHERE id=?', $id);
+     * $query = $this->db->placehold('INSERT INTO __lang_'.$this->tables[$object].' SET ?%', $data);
+     * $this->db->query($query);
      *
      * @param array $args
      *
@@ -159,7 +203,7 @@ class Database extends Registry
     {
         $tmpl = array_shift($args);
         // Заменяем все __ на префикс, но только необрамленные кавычками
-        $tmpl = preg_replace('/([^"\'0-9a-z_])__([a-z_]+[^"\'])/i', "\$1" . $this->config->db_prefix . "\$2", $tmpl);
+        $tmpl = preg_replace('/([^"\'0-9a-z_])__([a-z_]+[^"\'])/i', "\$1" . $this->db_prefix . "\$2", $tmpl);
         if (0 !== count($args)){
             // формирование запроса
             $result = $this->sql_placeholder_ex($tmpl, $args, $error);
@@ -179,7 +223,7 @@ class Database extends Registry
 
     /**
      * Возвращает результаты запроса.
-     * Необязательный второй аргумент указывает какую колонку возвращать вместо всего массива колонок
+     * Необязательный аргумент указывает какую колонку возвращать вместо всего массива колонок
      *
      * @param null $field
      *
@@ -214,9 +258,8 @@ class Database extends Registry
      */
     public function result($field = null)
     {
-        $result = [];
         if (!$this->res){
-            $this->error_msg = "Could not execute query to database";
+            $this->error_msg = 'Could not execute query to database';
 
             return 0;
         }
@@ -299,7 +342,7 @@ class Database extends Registry
     /**
      * Выполнение плейсхолдера
      *
-     * @param $tmpl
+     * @param $tmpl / тип плейсхолдера: # - константа, @ - список, % - набор пар ключ=>значение
      * @param $args
      * @param $error_msg
      *
@@ -398,10 +441,10 @@ class Database extends Registry
 
                         if (is_null($v)){
                             $r = '=NULL';
-                        /*} elseif (true === $v) {
-                            $r = '=' . 1;
-                        } elseif (false === $v) {
-                            $r = '=' . 0;*/
+                            /*} elseif (true === $v) {
+                                $r = '=' . 1;
+                            } elseif (false === $v) {
+                                $r = '=' . 0;*/
                         } else {
                             $r = "='" . @addslashes($v) . "'";
                         }

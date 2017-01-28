@@ -30,7 +30,6 @@ require_once SYS_DIR . 'core' . DS . 'boot.php';
  * Через wget: /usr/bin/wget -O - -q "http://anti/backend/AntiShell.php"
  * Через php: /usr/bin/php -f O:/domains/Anti/backend/AntiShell.php
  * ручной запуск: /backend/AntiShell.php?snap=y
- *
  * Путь к php или wget у вас может отличаться! Проверьте корректность пути (можно уточнить в ТП хостинга).
  * Рекомендую ставить в планировщик минимум раз в сутки (лучше раз в час).
  * Если ресурсы хостинга позволяют - раз в час.
@@ -71,7 +70,6 @@ class AntiShell extends Registry
 
     /**
      * Конструктор класса
-
      */
     public function __construct()
     {
@@ -109,6 +107,7 @@ class AntiShell extends Registry
         if (function_exists('memory_get_usage')){
             return ($stop) ? (memory_get_usage() - $stop) : memory_get_usage();
         }
+
         return 0;
     }
 

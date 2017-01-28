@@ -71,7 +71,7 @@ class ProductsView extends View {
                         break;
                     }
                     case 'sort': {
-                        $_GET['sort'] = strval($param_values);
+                        $_GET['sort'] = (string)($param_values);
                         if (!in_array($_GET['sort'], array('position', 'price', 'price_desc', 'name', 'name_desc'))) {
                             $this->is_wrong_params = 1;
                         }
@@ -176,7 +176,7 @@ class ProductsView extends View {
                         break;
                     }
                     case 'sort': {
-                        $result_array['sort'] = strval($param_values);
+                        $result_array['sort'] = (string)($param_values);
                         break;
                     }
                     case 'page': {
@@ -203,7 +203,7 @@ class ProductsView extends View {
                     break;
                 }
                 case 'sort':
-                    $result_array['sort'] = strval($v);
+                    $result_array['sort'] = (string)($v);
                     break;
                 case 'page':
                     $result_array['page'] = $v;

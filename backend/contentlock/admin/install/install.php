@@ -34,8 +34,8 @@
 		font-family: 'Roboto', sans-serif;
 	}
 	body, html{
-		margin: 0px;
-		padding: 0px;
+		margin: 0;
+		padding: 0;
 		height: 100%;
 	}
 	body {

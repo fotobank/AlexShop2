@@ -223,7 +223,12 @@ class Lang extends Registry {
         }
         return $id;
     }
-    
+
+    /**
+     * @param $data
+     *
+     * @return bool|mixed
+     */
     public function add_language($data) {
         $data = (object)$data;
         

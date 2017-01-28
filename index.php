@@ -19,4 +19,10 @@ if(isset($_GET['logout'])) {
 
 $page = $view->request->create($view);
 //print Optimize::html($page);
+
+
+$tt = new ComingSoon();
+$t = $tt->init();
+
+
 print $page;

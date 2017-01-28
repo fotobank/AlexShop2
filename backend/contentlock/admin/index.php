@@ -3,7 +3,7 @@ session_start();
 
 if (isset($_POST['username'])) {
 	
-	include_once("auth.php");
+	include_once __DIR__ . '/auth.php';
 	
 }
 ?>
@@ -35,7 +35,7 @@ if (isset($_POST['username'])) {
     <![endif]-->
 </head>
 
-  <body>
+
 <body>
 <div class="container">
 <?php if( !file_exists('install/install.txt') ) : ?>
