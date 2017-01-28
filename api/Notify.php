@@ -150,7 +150,7 @@ class Notify extends Registry {
     }
     
     public function email_order_admin($order_id) {
-        if(!($order = $this->orders->get_order(intval($order_id)))) {
+        if(!($order = $this->orders->get_order((int)($order_id)))) {
             return false;
         }
         
@@ -194,7 +194,7 @@ class Notify extends Registry {
         $this->design->assign('delivery', $delivery);
         
         // Пользователь
-        $user = $this->users->get_user(intval($order->user_id));
+        $user = $this->users->get_user((int)($order->user_id));
         $this->design->assign('user', $user);
         
         $this->design->assign('order', $order);
@@ -211,15 +211,15 @@ class Notify extends Registry {
     }
     
     public function email_comment_admin($comment_id) {
-        if(!($comment = $this->comments->get_comment(intval($comment_id)))) {
+        if(!($comment = $this->comments->get_comment((int)($comment_id)))) {
             return false;
         }
         
         if($comment->type == 'product') {
-            $comment->product = $this->products->get_product(intval($comment->object_id));
+            $comment->product = $this->products->get_product((int)($comment->object_id));
         }
         if($comment->type == 'blog') {
-            $comment->post = $this->blog->get_post(intval($comment->object_id));
+            $comment->post = $this->blog->get_post((int)($comment->object_id));
         }
         
         $this->design->assign('comment', $comment);
@@ -231,17 +231,17 @@ class Notify extends Registry {
     }
 
     public function email_comment_answer_to_user($comment_id) {
-        if(!($comment = $this->comments->get_comment(intval($comment_id)))
-                || !($parent_comment = $this->comments->get_comment(intval($comment->parent_id)))
+        if(!($comment = $this->comments->get_comment((int)($comment_id)))
+                || !($parent_comment = $this->comments->get_comment((int)$comment->parent_id))
                 || !$parent_comment->email) {
             return false;
         }
 
         if($comment->type == 'product') {
-            $comment->product = $parent_comment->product = $this->products->get_product(intval($comment->object_id));
+            $comment->product = $parent_comment->product = $this->products->get_product((int)$comment->object_id);
         }
         if($comment->type == 'blog') {
-            $comment->post = $parent_comment->post = $this->blog->get_post(intval($comment->object_id));
+            $comment->post = $parent_comment->post = $this->blog->get_post((int)$comment->object_id);
         }
 
         $this->design->assign('comment', $comment);
@@ -255,7 +255,7 @@ class Notify extends Registry {
     }
     
     public function email_password_remind($user_id, $code) {
-        if(!($user = $this->users->get_user(intval($user_id)))) {
+        if(!($user = $this->users->get_user((int)($user_id)))) {
             return false;
         }
         
@@ -273,7 +273,7 @@ class Notify extends Registry {
     }
     
     public function email_feedback_admin($feedback_id) {
-        if(!($feedback = $this->feedbacks->get_feedback(intval($feedback_id)))) {
+        if(!($feedback = $this->feedbacks->get_feedback((int)($feedback_id)))) {
             return false;
         }
         
@@ -286,7 +286,7 @@ class Notify extends Registry {
     }
 
     public function email_feedback_answer_to_user($comment_id,$text) {
-        if(!($feedback = $this->feedbacks->get_feedback(intval($comment_id)))) {
+        if(!($feedback = $this->feedbacks->get_feedback((int)($comment_id)))) {
             return false;
         }
 

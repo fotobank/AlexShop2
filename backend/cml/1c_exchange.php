@@ -56,7 +56,7 @@ if($registry->request->get('type') == 'sale' && $registry->request->get('mode') 
         $order = new \stdClass;
         
         $order->id = $xml_order->Номер;
-        $existed_order = $registry->orders->get_order(intval($order->id));
+        $existed_order = $registry->orders->get_order((int)($order->id));
         
         $order->date = $xml_order->Дата.' '.$xml_order->Время;
         $order->name = $xml_order->Контрагенты->Контрагент->Наименование;
@@ -132,7 +132,7 @@ if($registry->request->get('type') == 'sale' && $registry->request->get('mode') 
             $purchases_ids[] = $purchase_id;
         }
         // Удалим покупки, которых нет в файле
-        foreach($registry->orders->get_purchases(array('order_id'=>intval($order->id))) as $purchase) {
+        foreach($registry->orders->get_purchases(array('order_id'=>(int)($order->id))) as $purchase) {
             if(!in_array($purchase->id, $purchases_ids)) {
                 $registry->orders->delete_purchase($purchase->id);
             }
@@ -142,7 +142,7 @@ if($registry->request->get('type') == 'sale' && $registry->request->get('mode') 
     }
     
     print "success";
-    $registry->settings->last_1c_orders_export_date = date("Y-m-d H:i:s");
+    $registry->settings->last_1c_orders_export_date = date('Y-m-d H:i:s');
 }
 
 if($registry->request->get('type') == 'sale' && $registry->request->get('mode') == 'query') {
@@ -155,25 +155,25 @@ if($registry->request->get('type') == 'sale' && $registry->request->get('mode') 
     foreach($orders as $order) {
         $date = new DateTime($order->date);
 
-        $doc = $xml->addChild ("Документ");
-        $doc->addChild ( "Ид", $order->id);
-        $doc->addChild ( "Номер", $order->id);
-        $doc->addChild ( "Дата", $date->format('Y-m-d'));
-        $doc->addChild ( "ХозОперация", "Заказ товара" );
-        $doc->addChild ( "Роль", "Продавец" );
-        $doc->addChild ( "Валюта", "грн" );//Вводится в зависимости от валюты в 1С
-        $doc->addChild ( "Курс", "1" );
-        $doc->addChild ( "Сумма", $order->total_price);
-        $doc->addChild ( "Время",  $date->format('H:i:s'));
-        $doc->addChild ( "Комментарий", $order->comment. 'Адрес доставки: '.$order->address);
+        $doc = $xml->addChild ('Документ');
+        $doc->addChild ( 'Ид', $order->id);
+        $doc->addChild ( 'Номер', $order->id);
+        $doc->addChild ( 'Дата', $date->format('Y-m-d'));
+        $doc->addChild ( 'ХозОперация', 'Заказ товара');
+        $doc->addChild ( 'Роль', 'Продавец');
+        $doc->addChild ( 'Валюта', 'грн');//Вводится в зависимости от валюты в 1С
+        $doc->addChild ( 'Курс', '1');
+        $doc->addChild ( 'Сумма', $order->total_price);
+        $doc->addChild ( 'Время',  $date->format('H:i:s'));
+        $doc->addChild ( 'Комментарий', $order->comment. 'Адрес доставки: '.$order->address);
 
         // Контрагенты
         $k1 = $doc->addChild ( 'Контрагенты' );
         $k1_1 = $k1->addChild ( 'Контрагент' );
-        $k1_2 = $k1_1->addChild ( "Ид", $order->name);
-        $k1_2 = $k1_1->addChild ( "Наименование", $order->name);
-        $k1_2 = $k1_1->addChild ( "Роль", "Покупатель" );
-        $k1_2 = $k1_1->addChild ( "ПолноеНаименование", $order->name );
+        $k1_2 = $k1_1->addChild ( 'Ид', $order->name);
+        $k1_2 = $k1_1->addChild ( 'Наименование', $order->name);
+        $k1_2 = $k1_1->addChild ( 'Роль', 'Покупатель');
+        $k1_2 = $k1_1->addChild ( 'ПолноеНаименование', $order->name );
 
         //Представители
         $p1_1 = $k1_1->addChild ( 'Представители' );
@@ -475,7 +475,7 @@ function import_categories($xml, $parent_id = 0) {
             if(empty($category_id)) {
                 $category_id = $registry->categories->add_category(array('parent_id'=>$parent_id, 'external_id'=>$xml_group->Ид, 'url'=>translit($xml_group->Наименование), 'name'=>$xml_group->Наименование, 'meta_title'=>$xml_group->Наименование, 'meta_keywords'=>$xml_group->Наименование, 'meta_description'=>$xml_group->Наименование ));
             }
-            $_SESSION['categories_mapping'][strval($xml_group->Ид)] = $category_id;
+            $_SESSION['categories_mapping'][(string)($xml_group->Ид)] = $category_id;
             import_categories($xml_group, $category_id);
         }
 }
@@ -498,19 +498,19 @@ function import_features($xml) {
         // Если свойство содержит производителя товаров
         if($xml_feature->Наименование == $brand_option_name) {
             // Запомним в сессии Ид свойства с производителем
-            $_SESSION['brand_option_id'] = strval($xml_feature->Ид);
+            $_SESSION['brand_option_id'] = (string)($xml_feature->Ид);
         }
         // Иначе обрабатываем как обычной свойство товара
         else {
-            $registry->db->query('SELECT id FROM __features WHERE name=?', strval($xml_feature->Наименование));
+            $registry->db->query('SELECT id FROM __features WHERE name=?', (string)($xml_feature->Наименование));
             $feature_id = $registry->db->result('id');
             if(empty($feature_id)) {
-                $feature_id = $registry->features->add_feature(array('name'=>strval($xml_feature->Наименование)));
+                $feature_id = $registry->features->add_feature(array('name'=>(string)($xml_feature->Наименование)));
             }
-            $_SESSION['features_mapping'][strval($xml_feature->Ид)] = $feature_id;
+            $_SESSION['features_mapping'][(string)($xml_feature->Ид)] = $feature_id;
             if($xml_feature->ТипЗначений == 'Справочник') {
                 foreach($xml_feature->ВариантыЗначений->Справочник as $val) {
-                    $_SESSION['features_values'][strval($val->ИдЗначения)] = strval($val->Значение);
+                    $_SESSION['features_values'][(string)($val->ИдЗначения)] = (string)($val->Значение);
                 }
             }
         }
@@ -533,7 +533,7 @@ function import_product($xml_product) {
 
     // Ид категории
     if(isset($xml_product->Группы->Ид)) {
-        $category_id = $_SESSION['categories_mapping'][strval($xml_product->Группы->Ид)];
+        $category_id = $_SESSION['categories_mapping'][(string)($xml_product->Группы->Ид)];
     }
 
 
@@ -612,7 +612,7 @@ function import_product($xml_product) {
         if($full_update) {
             $p = new \stdClass();
             if(!empty($xml_product->Описание)) {
-                $description = strval($xml_product->Описание);
+                $description = (string)($xml_product->Описание);
                 $p->meta_description = $description;
                 $p->annotation = $description;
                 $p->body = $description;
@@ -638,7 +638,8 @@ function import_product($xml_product) {
             foreach($xml_product->Картинка as $img) {
                 $image = basename($img);
                 if(!empty($image) && is_file($dir.$image) && is_writable($registry->config->original_images_dir)) {
-                    $registry->db->query('SELECT id FROM __images WHERE product_id=? ORDER BY position LIMIT 1', $product_id);
+                    $registry->db->query(
+                        'SELECT id FROM __images WHERE product_id=? ORDER BY position LIMIT 1', $product_id);
                     $img_id = $registry->db->result('id');
                     if(!empty($img_id)) {
                         $registry->products->delete_image($img_id);
@@ -661,16 +662,16 @@ function import_product($xml_product) {
     // Свойства товара
     if(isset($xml_product->ЗначенияСвойств->ЗначенияСвойства)) {
         foreach ($xml_product->ЗначенияСвойств->ЗначенияСвойства as $xml_option) {
-            if(isset($_SESSION['features_mapping'][strval($xml_option->Ид)])) {
-                $feature_id = $_SESSION['features_mapping'][strval($xml_option->Ид)];
+            if(isset($_SESSION['features_mapping'][(string)($xml_option->Ид)])) {
+                $feature_id = $_SESSION['features_mapping'][(string)($xml_option->Ид)];
                 if(isset($category_id) && !empty($feature_id)) {
                     $registry->features->add_feature_category($feature_id, $category_id);
                     $values = array();
                     foreach($xml_option->Значение as $xml_value) {
-                        if(isset($_SESSION['features_values'][strval($xml_value)])) {
-                            $values[] = strval($_SESSION['features_values'][strval($xml_value)]);
+                        if(isset($_SESSION['features_values'][(string)($xml_value)])) {
+                            $values[] = (string)($_SESSION['features_values'][(string)($xml_value)]);
                         } else {
-                            $values[] = strval($xml_value);
+                            $values[] = (string)($xml_value);
                         }
                     }
                     $registry->features->update_option($product_id, $feature_id, implode(' ,', $values));
@@ -678,7 +679,7 @@ function import_product($xml_product) {
             }
             // Если свойство оказалось названием бренда
             elseif(isset($_SESSION['brand_option_id']) && !empty($xml_option->Значение)) {
-                $brand_name = strval($xml_option->Значение);
+                $brand_name = (string)($xml_option->Значение);
                 // Добавим бренд
                 // Найдем его по имени
                 $registry->db->query('SELECT id FROM __brands WHERE name=?', $brand_name);

@@ -49,8 +49,6 @@ class Database extends Registry
         parent::__construct();
         $this->db_prefix = $this->config->db_prefix;
         $this->connect();
-        $tt = $this->tableExists('subscribe_mailing');
-        $t=0;
     }
 
     /**
