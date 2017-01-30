@@ -192,7 +192,7 @@ class Lang extends Registry
 
     public function get_language($id)
     {
-        $query = $this->db->placehold("SELECT * FROM __languages WHERE id=? LIMIT 1", intval($id));
+        $query = $this->db->placehold("SELECT * FROM __languages WHERE id=? LIMIT 1", (int)$id);
         $this->db->query($query);
 
         return $this->db->result();
@@ -413,7 +413,7 @@ class Lang extends Registry
     /* Translation start */
     public function get_translation($id)
     {
-        $query = $this->db->placehold("SELECT * FROM __translations WHERE id=? LIMIT 1", intval($id));
+        $query = $this->db->placehold("SELECT * FROM __translations WHERE id=? LIMIT 1", (int)$id);
         $this->db->query($query);
 
         return $this->db->result();
@@ -485,8 +485,8 @@ class Lang extends Registry
         // THEME JS
         $theme_dir = 'design/' . $this->settings->theme;
         $filejs = $theme_dir . '/lang.js';
-        $filejs = fopen($filejs, 'w');
-        $js .= "var lang = new Array();\n";
+        $filejs = fopen($filejs, 'wb');
+        $js = "var lang = new Array();\n";
 
         $lang_id = $this->lang_id();
         $set_lang = $this->languages(['id' => $lang_id]);
@@ -504,14 +504,14 @@ class Lang extends Registry
     public function delete_translation($id)
     {
         if (!empty($id)){
-            $query = $this->db->placehold("DELETE FROM __translations WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __translations WHERE id=? LIMIT 1", (int)($id));
             $this->db->query($query);
         }
     }
 
     public function set_translation()
     {
-        $this->db->query("TRUNCATE TABLE __translations");
+        $this->db->query('TRUNCATE TABLE __translations');
 
         $theme_dir = 'design/' . $this->settings->theme;
         $filename = $theme_dir . '/translation.sql';
@@ -524,7 +524,7 @@ class Lang extends Registry
     {
         $theme_dir = 'design/' . $this->settings->theme;
         $filename = $theme_dir . '/translation.sql';
-        $filename = fopen($filename, 'w');
+        $filename = fopen($filename, 'wb');
 
         $this->db->dump_table('s_translations', $filename);
         //chmod($filename, 0777);

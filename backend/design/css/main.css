@@ -299,45 +299,129 @@ a.edit {
 }
 #tab_menu li {
     float: left;
+    list-style: none;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-box-shadow: 0 -2px 2px #dadada;
+    -webkit-box-shadow: 0 -2px 2px #dadada;
+    box-shadow: 0 -2px 2px #dadada;
+    margin-bottom: -4px;
+    margin-right: 2px;
+    padding-bottom: 1px;
 }
 #tab_menu li a {
-    background-color: #ebebeb;
 	border-radius: 2px 2px 0 0;
-	border: 1px solid #c1c1c1;
-    border-bottom: 2px solid transparent;
+	border: 1px solid;
+    border-color: white #c1c1c1 #c1c1c1 transparent;
     overflow: hidden;
     padding: 7px 20px;
-    margin-right: 15px;
-    display: block;
-    color: #b5b5b5;
+    margin-right: 0;
+    display: inline-block;
 	font-size: 16px;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
+    color: #aaaaaa;
+    background: -moz-linear-gradient(top, #dedede, white 90%);
+    background: -webkit-gradient(linear, 0 0, 0 90%, from(#dedede), to(white));
+    border-top: 1px solid white;
+}
+#tab_menu .clearfix~li a {
+    font-size: 13px;
+    padding: 4px 14px;
 }
 #tab_menu li a:hover {
-    color: #353b3e;
+    color: #000000;
 }
 #tab_menu li.active a {
-    background-color: #f7f7f7;
-    color: #353b3e;
-	position: relative;
-	z-index: 2;
+    color: #243541;
+    background: #f7f7f7;
+    border-bottom-color: #f7f7f7;
+    border-left: none;
 }
+
 /*Табы разделов END*/
+/*Табы подразделов*/
+#tabs li {
+    float:left;
+    list-style:none;
+    border-top:1px solid #dedede;
+    border-left:1px solid #dedede;
+    border-right:1px solid #dedede;
+    border-top-left-radius:3px;
+    border-top-right-radius:3px;
+    -moz-box-shadow: 0 -2px 2px #dadada;
+    -webkit-box-shadow:  0 -2px 2px #dadada;
+    box-shadow: 0 -2px 2px #dadada;
+    margin-bottom: 15px;
+}
+#tabs li a {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:13px;
+    font-weight:bold;
+    color:#353b3e;
+    padding:7px 3px;
+    border-top-left-radius:3px;
+    border-top-right-radius:3px;
+    text-decoration:none;
+    background: #ffcc00 none repeat scroll 0 0;
+    transition: all 0.3s ease;
+    background: -moz-linear-gradient(top, #ffe759, white 95%);
+    background: -webkit-gradient(linear, 0 0, 0 95%, from(#ffe759), to(white));
+    text-shadow:-1px -1px 0 #fff;
+    outline:none;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-top-color: #dedede;
+}
+
+#tabs li:hover, #tabs li.inactive:hover {
+    border-top: 1px solid #dedede;
+    background: #56b9ff;
+    color: #ffffff;
+}
+#tabs li a.inactive{
+    color: #979797;
+    background: #e9e9e9;
+    background: -moz-linear-gradient(top, #dedede, #f7f7f7 75%);
+    background: -webkit-gradient(linear, 0 0, 0 55%, from(#dedede), to(#f7f7f7));
+    border: 1px solid #ccc;
+    border-top-color: white;
+}
+/*Табы подразделов END*/
+.box10 {
+    width: 100%;
+    clear: both;
+    height: 10px;
+}
+.box20 {
+    width: 100%;
+    clear: both;
+    height: 20px;
+}
+.box25 {
+    width: 100%;
+    clear: both;
+    height: 25px;
+}
+.box30 {
+    width: 100%;
+    clear: both;
+    height: 30px;
+}
 
 /* Центральная часть страницы */
 #middle {
 	position: relative;
-    margin-top: -1px;
-	min-height: 300px;
+    margin-top: 0;
 	padding: 20px 15px;
 	display: block;
 	overflow:hidden;
 	background-color: #f7f7f7;
-	border: 1px solid #fff;
-    box-shadow: 0 0 0 1px #dfdfdf;
 }
 #middle h1 {
 	font-size: 28px;
@@ -352,7 +436,8 @@ a.edit {
 	font-size: 20px;
 	font-weight: normal;
 	font-style: normal;
-	margin-bottom: 10px;
+	margin-right: 10px;
+    float: left;
 }
 /* @group Заголовок правой части */
 #header{
@@ -679,4 +764,7 @@ input[name*="check"]:checked + label{
 }
 #cms_logo {
     margin-top: 12px;
+}
+.clear {
+    clear: both;
 }

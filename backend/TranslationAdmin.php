@@ -48,7 +48,7 @@ class TranslationAdmin extends Registry {
                 
                 // ALL
                 $filephp = $theme_dir.'/translation.php';
-                $filephp = fopen($filephp, 'w');
+                $filephp = fopen($filephp, 'wb');
                 $row = "<?PHP\n\n";
                 foreach($languages as $l) {
                     $row .= "$"."languages[".$l->label."]='".$l->name."';\n";

@@ -525,7 +525,7 @@ class Database extends Registry
     public function restore($filename)
     {
         $temp_line = '';
-        $h = fopen($filename, 'r');
+        $h = fopen($filename, 'rb');
 
         // Loop through each line
         if ($h){

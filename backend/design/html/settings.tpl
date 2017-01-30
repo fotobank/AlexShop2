@@ -33,6 +33,17 @@
         </li>
     {/if}
 {/capture}
+
+{capture name=tabs_setting}
+    <li class="active">
+        <a href="index.php?module=SettingsAdmin">Основные</a>
+    </li>
+    {if in_array('currency', $manager->permissions)}
+        <li>
+            <a href="index.php?module=ComingSoon">Заглушка</a>
+        </li>
+    {/if}
+{/capture}
  
 {$meta_title = "Настройки" scope=parent}
 
@@ -57,9 +68,23 @@
 {/if}
 
 <form method=post id=product enctype="multipart/form-data">
+<div id="wrapper">
     <input type=hidden name="session_id" value="{$smarty.session.id}">
-    <div class="block">
-        <h2>Настройки сайта</h2>
+    <ul id="tabs">
+		<li><a href="#tab1">Основные</a></li>
+		<li><a href="#tab2">Оповещения</a></li>
+		<li><a href="#tab3">Капча</a></li>
+		<li><a href="#tab4">Формат цены</a></li>
+		<li><a href="#tab5">Каталог</a></li>
+		<li><a href="#tab6">1C</a></li>
+		<li><a href="#tab7">Изображения товаров</a></li>
+		<li><a href="#tab8">Экспорта в яндекс</a></li>
+		<li><a href="#tab9">Google аналитика</a></li>
+		<li><a href="#tab10">Яндекс метрика</a></li>
+	</ul>
+    <div class="block layer" id="tab1">
+        <div class="box30"></div>
+        <h2>Основные настройки сайта</h2>
         <ul>
             <li><label class=property>Имя сайта</label><input name="site_name" class="order_inp" type="text" value="{$settings->site_name|escape}" /></li>
             <li><label class=property>Имя компании</label><input name="company_name" class="order_inp" type="text" value="{$settings->company_name|escape}" /></li>
@@ -81,7 +106,8 @@
             </li>
         </ul>
     </div>
-    <div class="block layer">
+    <div class="block layer" id="tab2">
+        <div class="box30"></div>
         <h2>Оповещения</h2>
         <ul>
             <li><label class=property>Оповещение о заказах</label><input name="order_email" class="order_inp" type="text" value="{$settings->order_email|escape}" /></li>
@@ -90,7 +116,8 @@
             <li><label class=property>Имя отправителя письма</label><input name="notify_from_name" class="order_inp" type="text" value="{$settings->notify_from_name|escape}" /></li>
         </ul>
     </div>
-    <div class="block layer">
+     <div class="block layer" id="tab3">
+         <div class="box30"></div>
         <h2>Капча вкл./выкл.</h2>
         <ul>
             <li><label class=property for="captcha_product">В товаре</label><input id="captcha_product" name="captcha_product" class="order_inp" type="checkbox" value="1" {if $settings->captcha_product}checked=""{/if} /></li>
@@ -101,7 +128,8 @@
         </ul>
     </div>
 
-    <div class="block layer">
+     <div class="block layer" id="tab4">
+         <div class="box30"></div>
         <h2>Формат цены</h2>
         <ul>
             <li><label class=property>Разделитель копеек</label>
@@ -120,7 +148,8 @@
         </ul>
     </div>
 
-    <div class="block layer">
+     <div class="block layer" id="tab5">
+         <div class="box30"></div>
         <h2>Настройки каталога</h2>
         <ul>
             <li><label class=property>Товаров на странице сайта</label><input name="products_num" class="order_inp" type="text" value="{$settings->products_num|escape}" /></li>
@@ -131,7 +160,7 @@
             <li>
                 <label class="property">Если нет в наличии
                     <div class="helper_wrap">
-                        <a href="javascript:;" id="show_help_search" class="helper_link"></a>
+                        <a href="javascript:void(0)" id="show_help_search" class="helper_link"></a>
                         <div class="right helper_block">
                         <span>
                             Выберите что происходит с товарами которых нет на складе.
@@ -148,7 +177,8 @@
         </ul>
     </div>
 
-    <div class="block layer">
+     <div class="block layer" id="tab6">
+         <div class="box30"></div>
         <h2>Настройки 1C</h2>
         <ul>
             <li><label class=property>Логин</label><input name="login_1c" class="order_inp" type="text" value="{$login_1c|escape}" /></li>
@@ -156,7 +186,8 @@
         </ul>
     </div>
 
-    <div class="block layer">
+     <div class="block layer" id="tab7">
+         <div class="box30"></div>
         <h2>Изображения товаров</h2>
         <ul>
             <li><label class=property>Водяной знак</label>
@@ -171,16 +202,15 @@
         </ul>
     </div>
 
-    <div class="block layer">
-        <h2>
-            Настройки экспорта в яндекс
-            <div class="helper_wrap" style="margin-left: 5px; margin-top: -8px;">
+     <div class="block layer" id="tab8">
+         <div class="box30"></div>
+        <h2>Настройки экспорта в яндекс</h2>
+            <div class="helper_wrap">
                 <a class="top_help" id="show_help_search" href="https://www.youtube.com/watch?v=9eO8CsSvfqg" target="_blank"></a>
                 <div class="right helper_block topvisor_help">
                     <p>Видеоинструкция по данному функционалу</p>
                 </div>
             </div>
-        </h2>
         <ul class="yandex_list">
             <li>
                 <label class="property" for="yandex_export_not_in_stock">Экспортировать со статусом "под заказ" товары, отсутствующие на складе</label>
@@ -208,7 +238,7 @@
             </li>
                 <label class="property" for="yandex_sales_notes">sales notes
                     <div class="helper_wrap">
-                        <a href="javascript:;" id="show_help_search" class="helper_link"></a>
+                        <a href="javascript:void(0)" id="show_help_search" class="helper_link"></a>
                         <div class="right helper_bottom helper_block" style="width: 446px;">
                             <span>
                                 <b>Используйте элемент sales_notes для указания следующей информации:</b>
@@ -230,10 +260,11 @@
     </div>
 
 
-    <div class="block layer">
-        <h2>Настройка Google аналитики
+     <div class="block layer" id="tab9">
+         <div class="box30"></div>
+        <h2>Настройка Google аналитики</h2>
             <div class="helper_wrap">
-                <a href="javascript:;" id="show_help_search" class="helper_link"></a>
+                <a href="javascript:" id="show_help_search" class="helper_link"></a>
                 <div class="right helper_bottom helper_block" style="width: 446px;">
                     <span>
                         <b>Google Analytics ID</b> - прописывается ID счетчика, в формате (UA-xxxxxxxx-x)
@@ -242,7 +273,6 @@
                     </span>
                 </div>
             </div>
-        </h2>
         <ul>
             <li>
                 <label class="property">Google Analytics ID</label>
@@ -255,10 +285,11 @@
         </ul>
     </div>
 
-    <div class="block layer">
-        <h2>Яндекс метрика
+     <div class="block layer" id="tab10">
+         <div class="box30"></div>
+        <h2>Яндекс метрика</h2>
             <div class="helper_wrap">
-                <a href="javascript:;" id="show_help_search" class="helper_link"></a>
+                <a href="javascript:void(0)" id="show_help_search" class="helper_link"></a>
                 <div class="right helper_bottom helper_block" style="width: 446px;">
                     <span>
                         <b>Yandex метрика</b> - прописывается числовой код метрики (ID)
@@ -268,13 +299,12 @@
                     </span>
                 </div>
             </div>
-            <div class="helper_wrap" style="margin-left: 5px; margin-top: -8px;">
+            <div class="helper_wrap">
                 <a class="top_help" id="show_help_search" href="https://www.youtube.com/watch?v=8IVMhLKSMKA" target="_blank"></a>
                 <div class="right helper_block topvisor_help">
                     <p>Видеоинструкция по данному функционалу</p>
                 </div>
             </div>
-        </h2>
         <ul>
             <li>
                 <label class=property>ID приложения</label>
@@ -350,11 +380,27 @@
             </div>
         </div>
     </div>
-
+</div>
     <input class="button_green button_save" type="submit" name="save" value="Сохранить" />
 </form>
 
 <script>
+    //табы
+    $(document).ready(function () {
+        $('#tabs li a:not(:first)').addClass('inactive');
+        $('.block:not(:first)').hide();
+        $('#tabs li a').click(function () {
+            var t = $(this).attr('href');
+            if ($(this).hasClass('inactive')) { //added to not animate when active
+                $('#tabs li a').addClass('inactive');
+                $(this).removeClass('inactive');
+                $('.block').hide();
+                $(t).fadeIn('slow');
+            }
+            return false;
+        }); //end click
+    });
+
     $(window).on('load',function(){
         $('.fn-helper').on('click',function(){
            $(this).next().slideToggle(500);
