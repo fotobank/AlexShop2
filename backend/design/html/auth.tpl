@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="админ панель">
-    <meta name="author" content="Alex">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1">
+    <meta name = "description" content = "админ панель">
+    <meta name = "author" content = "Alex">
     <meta http-equiv = "Content-Type" content = "text/html; charset=UTF-8"/>
     <meta http-equiv = "Content-Language" content = "ru"/>
     <meta http-equiv = "pragma" content = "no-cache">
@@ -21,8 +21,9 @@
         </div>
         {if !$manager}
             <h1>ВХОД В СИСТЕМУ</h1>
-                {if $error_message}
-                <div class = "message_error">
+
+                                {if $error_message}
+            <div class = "message_error">
                 {if $error_message == 'auth_wrong'}
                     Неверно введены логин или пароль.
                     {if $limit_cnt}<br>Осталось {$limit_cnt} попыт{$limit_cnt|plural:'ка':'ок':'ки'}{/if}
@@ -30,31 +31,10 @@
                     Вы исчерпали количество попыток на сегодня.
                 {/if}
                 </div>
-                {/if}
+        {/if}
 
 
-            {*<form method = "post">*}
-            {*<input type = hidden name = "session_id" value = "{$smarty.session.id}">*}
-            {*<div class = "form_group">*}
-                {*<label for = "autx_login">Логин:&nbsp;&nbsp;</label>*}
-                {*<div class = "inner">*}
-                {*<input id = "autx_login" type = "text" name = "login" value = "{$login}" autofocus = "" tabindex = "1">*}
-                 {*</div>*}
-            {*</div>*}
-            {*<div class = "form_group">*}
-                {*<label for = "autx_password">Пароль:</label>*}
-                {*<div class = "inner">*}
-                {*<input id = "autx_password" type = "password" name = "password" value = "" tabindex = "2">*}
-                {*</div>*}
-            {*</div>*}
-            {*<div>*}
-                {*<a class = "recovery" href = "{$config->root_url}/password.php">Напомнить пароль</a>*}
-                {*<input class = "button" type = "submit" value = "Войти" tabindex = "3">*}
-            {*</div>*}
-        {*</form>*}
-
-
-        <form id = "loginForm" action = "" method = "post">
+            <form id = "loginForm" action = "" method = "post">
         <input type = hidden name = "session_id" value = "{$smarty.session.id}">
     <div class = "field">
         <label for = "autx_login">Имя пользователя:</label>
@@ -74,8 +54,10 @@
     </div>
 </form>
 
-         {else}
-         <a href = "javascript:">Выйти ...</a>
+
+        {else}
+
+            <a href = "javascript:">Выйти ...</a>
         {/if}
 
         <div id = "footer">

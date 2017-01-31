@@ -9,8 +9,11 @@ if (!empty($_SERVER['HTTP_USER_AGENT'])){
 }
 
 $head = '
+<!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1">
     <meta http-equiv = "Content-Type" content = "text/html; charset=UTF-8"/>
     <meta http-equiv = "Content-Language" content = "ru"/>
     <meta http-equiv = "pragma" content = "no-cache">
@@ -32,17 +35,17 @@ $registry = new Registry();
 
 // Если пришли по ссылке из письма
 $c = $registry->request->get('code');
-if (!$c){
+if ($c){
     // Код не совпадает - прекращяем работу
     if (empty($_SESSION['admin_password_recovery_code']) || empty($c) || $_SESSION['admin_password_recovery_code'] !== $c){
-//        header('Location:admin');
-//        exit();
+        header('Location:admin');
+        exit();
     }
 
     // IP не совпадает - прекращяем работу
     if (empty($_SESSION['admin_password_recovery_ip']) || empty($_SERVER['REMOTE_ADDR']) || $_SESSION['admin_password_recovery_ip'] !== $_SERVER['REMOTE_ADDR']){
-//        header('Location:admin');
-//        exit();
+        header('Location:admin');
+        exit();
     }
 
     // Если запостили логин и пароль
