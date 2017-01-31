@@ -299,129 +299,47 @@ a.edit {
 }
 #tab_menu li {
     float: left;
-    list-style: none;
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    -moz-box-shadow: 0 -2px 2px #dadada;
-    -webkit-box-shadow: 0 -2px 2px #dadada;
-    box-shadow: 0 -2px 2px #dadada;
-    margin-bottom: -4px;
-    margin-right: 2px;
-    padding-bottom: 1px;
 }
 #tab_menu li a {
+    background-color: #ebebeb;
 	border-radius: 2px 2px 0 0;
-	border: 1px solid;
-    border-color: white #c1c1c1 #c1c1c1 transparent;
+	border: 1px solid #c1c1c1;
+    border-bottom: 2px solid transparent;
     overflow: hidden;
     padding: 7px 20px;
-    margin-right: 0;
-    display: inline-block;
+    margin-right: 15px;
+    display: block;
+    color: #b5b5b5;
 	font-size: 16px;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    color: #aaaaaa;
-    background: -moz-linear-gradient(top, #dedede, white 90%);
-    background: -webkit-gradient(linear, 0 0, 0 90%, from(#dedede), to(white));
-    border-top: 1px solid white;
-}
-#tab_menu .clearfix~li a {
-    font-size: 13px;
-    padding: 4px 14px;
 }
 #tab_menu li a:hover {
-    color: #000000;
+    color: #353b3e;
 }
 #tab_menu li.active a {
-    color: #243541;
-    background: #f7f7f7;
-    border-bottom-color: #f7f7f7;
-    border-left: none;
+    background-color: #f7f7f7;
+    color: #353b3e;
+	position: relative;
+	z-index: 2;
+    margin-left: 1px;
 }
-
 /*Табы разделов END*/
-/*Табы подразделов*/
-#tabs li {
-    float:left;
-    list-style:none;
-    border-top:1px solid #dedede;
-    border-left:1px solid #dedede;
-    border-right:1px solid #dedede;
-    border-top-left-radius:3px;
-    border-top-right-radius:3px;
-    -moz-box-shadow: 0 -2px 2px #dadada;
-    -webkit-box-shadow:  0 -2px 2px #dadada;
-    box-shadow: 0 -2px 2px #dadada;
-    margin-bottom: 15px;
-}
-#tabs li a {
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:13px;
-    font-weight:bold;
-    color:#353b3e;
-    padding:7px 3px;
-    border-top-left-radius:3px;
-    border-top-right-radius:3px;
-    text-decoration:none;
-    background: #ffcc00 none repeat scroll 0 0;
-    transition: all 0.3s ease;
-    background: -moz-linear-gradient(top, #ffe759, white 95%);
-    background: -webkit-gradient(linear, 0 0, 0 95%, from(#ffe759), to(white));
-    text-shadow:-1px -1px 0 #fff;
-    outline:none;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    border-top-color: #dedede;
-}
-
-#tabs li:hover, #tabs li.inactive:hover {
-    border-top: 1px solid #dedede;
-    background: #56b9ff;
-    color: #ffffff;
-}
-#tabs li a.inactive{
-    color: #979797;
-    background: #e9e9e9;
-    background: -moz-linear-gradient(top, #dedede, #f7f7f7 75%);
-    background: -webkit-gradient(linear, 0 0, 0 55%, from(#dedede), to(#f7f7f7));
-    border: 1px solid #ccc;
-    border-top-color: white;
-}
-/*Табы подразделов END*/
-.box10 {
-    width: 100%;
-    clear: both;
-    height: 10px;
-}
-.box20 {
-    width: 100%;
-    clear: both;
-    height: 20px;
-}
-.box25 {
-    width: 100%;
-    clear: both;
-    height: 25px;
-}
-.box30 {
-    width: 100%;
-    clear: both;
-    height: 30px;
-}
 
 /* Центральная часть страницы */
 #middle {
 	position: relative;
-    margin-top: 0;
+    margin-top: -1px;
+	min-height: 300px;
 	padding: 20px 15px;
-	display: block;
-	overflow:hidden;
+	display: inline-block;
+	/*overflow:hidden;*/
 	background-color: #f7f7f7;
+	border: 1px solid #c1c1c1;
+    box-shadow: 0 0 0 1px #dfdfdf;
+    width: 945px;
 }
 #middle h1 {
 	font-size: 28px;
@@ -436,8 +354,7 @@ a.edit {
 	font-size: 20px;
 	font-weight: normal;
 	font-style: normal;
-	margin-right: 10px;
-    float: left;
+	margin-bottom: 10px;
 }
 /* @group Заголовок правой части */
 #header{
@@ -693,7 +610,7 @@ input[name*="check"]:checked + label{
 }
 /*стилизация всех чекбоксов в админке*/
 .yandex_list label {
-    width: 300px !important;
+    /*width: 300px !important;*/
 }
 .add_attachment{
     display: block;
@@ -765,6 +682,171 @@ input[name*="check"]:checked + label{
 #cms_logo {
     margin-top: 12px;
 }
-.clear {
+/*вертикальные табы в setting*/
+.tabs-section {
+    background: #EFEFEF;
+    margin: 0 0 20px;
+}
+.tabs-section.tabs-vertical {
+    min-height: 350px;
+    border-left: 180px solid #f7f7f7;
+}
+.tabs-caption {
+    height: 28px;
+    line-height: 25px;
+    list-style: none;
+    background: #FFF;
+}
+.tabs-caption li {
+    float: left;
+    display: inline;
+    margin: 0 1px -1px 0;
+    padding: 0 13px 1px;
+    color: #777;
+    cursor: pointer;
+    background: #F9F9F9;
+    border: 1px solid #E4E4E4;
+    border-bottom: 1px solid #F9F9F9;
+    position: relative;
+}
+.tabs-caption li:hover,
+.tabs-vertical .tabs-caption li:hover {
+    color: #243541;
+    padding: 4px 13px;
+    background: #ffcc00;
+    border: 1px solid #D4D4D4;
+    border-right: none;
+    border-right: 1px solid #EFEFEF;
+}
+.tabs-caption .active {
+    color: #444;
+    background: #EFEFEF;
+    padding: 0 13px 2px;
+    border: 1px solid #D4D4D4;
+    border-bottom: 1px solid #EFEFEF;
+}
+.tabs-content {
+    width: auto;
+    display: none;
+    border: 1px solid #D4D4D4;
+    border-top-width: 0;
+    background: #EFEFEF;
+    padding: 15px 20px;
+    min-height: 100%;
+}
+.tabs-content.active {
+    display: block;
+    min-height: 350px;
+}
+.tabs-vertical .tabs-caption {
+    width: 180px;
+    float: left;
+    display: inline-block;
+    margin: 0 0 0 -180px;
+    background: #f7f7f7;
+}
+.tabs-vertical .tabs-caption .active {
+    color: #444;
+    background: #EFEFEF;
+    border: 1px solid #D4D4D4;
+    border-right: 1px solid #EFEFEF;
+    margin-right: -1px;
+    width: 154px;
+}
+.tabs-vertical .tabs-caption li {
+    padding: 4px 13px;
+    border: 1px solid #D4D4D4;
+    border-right: 1px solid #F9F9F9;
+    width: 153px;
+    height: 25px;
+}
+.tabs-vertical .tabs-content {
+    border-width: 1px;
+    margin-left: 1px;
+}
+#product .tabs-content li {
+    display: block;
+    margin-bottom: 10px;
+    /*overflow: hidden;*/
+}
+#product label.property {
+    display: block;
+    float: left;
+    width: 200px;
+    clear: left;
+    padding-right: 5px;
+    font-size: 14px;
+    text-align: left;
+}
+#product .tabs-content select {width: 362px; font-size: 14px;}
+#product .tabs-content input[type=text]  { width: 350px;}
+
+#product .tabs-content textarea {
+    width: 350px;
+    height: 68px;
+    padding: 5px;
+}
+.tabs-section.tabs-vertical ul {
     clear: both;
+}
+.tabs-section.tabs-vertical img {
+    max-width: 720px;
+}
+/*вертикальные табы в setting END*/
+
+/*выравнивание полей input*/
+#middle .align-field {display: inline-block;}
+#middle .align-field li {clear:both; text-align:right; line-height:25px;}
+#middle .helper_wrap li {text-align:left; line-height:14px;}
+#middle .align-field li input[type=text], #middle .align-field li input[type=checkbox],
+#middle .align-field li select {clear:both; line-height:25px;}
+#middle .align-field li label  {float:left; padding-right:20px; width: inherit;}
+/*выравнивание полей input END*/
+
+#middle .set-field-watermark li input[type=text] {width: 40px; text-align:right;}
+#middle .width-mini-field li input[type=text], #middle .width-mini-field li select {width: 40px;}
+#middle .width-middle-field li input[type=text] {width: 150px;}
+#middle .width-middle-field li select {width: 162px;}
+#middle .width-max-field li input[type=text], #middle .width-max-field li select {width: 270px;}
+
+#middle .center-h1 {
+    display: block;
+    margin: 0 auto;
+    line-height: 40px;
+}
+#middle .center-h1 h1 {
+    margin-bottom: 30px;
+}
+#middle .center-h1 .helper_wrap {
+    vertical-align: middle;
+    line-height: 16px;
+    text-align: left;
+}
+#middle .center-h1 .top_help {
+    margin-top: 0;
+}
+.box0 {
+    width: 100%;
+    clear: both;
+    height: 0;
+}
+.box10 {
+    width: 100%;
+    clear: both;
+    height: 10px;
+}
+.box20 {
+    width: 100%;
+    clear: both;
+    height: 20px;
+}
+.box25 {
+    width: 100%;
+    clear: both;
+    height: 25px;
+}
+.box30 {
+    width: 100%;
+    clear: both;
+    height: 30px;
 }
