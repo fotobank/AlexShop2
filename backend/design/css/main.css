@@ -825,28 +825,30 @@ input[name*="check"]:checked + label{
 #middle .center-h1 .top_help {
     margin-top: 0;
 }
-.box0 {
+/* разделители блоков */
+.separator0 {
     width: 100%;
     clear: both;
     height: 0;
 }
-.box10 {
+.separator10 {
     width: 100%;
     clear: both;
     height: 10px;
 }
-.box20 {
+.separator20 {
     width: 100%;
     clear: both;
     height: 20px;
 }
-.box25 {
+.separator25 {
     width: 100%;
     clear: both;
     height: 25px;
 }
-.box30 {
+.separator30 {
     width: 100%;
     clear: both;
     height: 30px;
 }
+/* разделители блоков END */

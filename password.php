@@ -32,17 +32,17 @@ $registry = new Registry();
 
 // Если пришли по ссылке из письма
 $c = $registry->request->get('code');
-if ($c){
+if (!$c){
     // Код не совпадает - прекращяем работу
     if (empty($_SESSION['admin_password_recovery_code']) || empty($c) || $_SESSION['admin_password_recovery_code'] !== $c){
-        header('Location:admin');
-        exit();
+//        header('Location:admin');
+//        exit();
     }
 
     // IP не совпадает - прекращяем работу
     if (empty($_SESSION['admin_password_recovery_ip']) || empty($_SERVER['REMOTE_ADDR']) || $_SESSION['admin_password_recovery_ip'] !== $_SERVER['REMOTE_ADDR']){
-        header('Location:admin');
-        exit();
+//        header('Location:admin');
+//        exit();
     }
 
     // Если запостили логин и пароль
@@ -69,21 +69,19 @@ if ($c){
         echo $head,
         '
             <h1>Восстановление пароля администратора</h1>
-            <form method="post">
-            <div class="form_group">
-                <label>Новый логин:&nbsp;&nbsp;</label>
-                 <div class="inner">
-            	<input type="text" name="new_login">
-            	</div> 
+             <form id="loginForm" method="post" action="' . $registry->config->root_url . '/password.php" >
+            <div class = "field">
+                <label for = "autx_login">Новый логин:&nbsp;&nbsp;</label>
+            	<div class = "input"><input id = "autx_login" type="text" name="new_login"></div>
              </div> 
-             <div class="form_group">
-                <label>Новый пароль:</label>
-                 <div class="inner">
-            	<input type="password" name="new_password">
-            	</div> 
+            <div class = "field">
+                <label for = "autx_password">Новый пароль:</label>
+            	<div class = "input"><input id = "autx_password" type="password" name="new_password"></div>
              </div> 
-             <a class="recovery" href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
+              <div class="submit">
+             <a id = "return" class="recovery" href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
             	<input class="button" type="submit" value="Сохранить"> 
+            	</div>
             </form>
         ';
     }
@@ -93,16 +91,16 @@ if ($c){
     '
         <h1>Восстановление пароля администратора</h1>
         <p>
-            <form method="post" action="' . $registry->config->root_url . '/password.php" >
-            <div class="form_group">Введите email администратора:</div>
-            <div class="form_group">
-                <label>Email:</label>
-                <div class="inner">
-            	  <input type="text" name="email">
-            	</div>
+            <form id="loginForm" method="post" action="' . $registry->config->root_url . '/password.php" >
+            <div class="field">Введите email администратора:</div>
+           <div class = "field">
+                <label for = "autx_email">Email:</label>       
+            	 <div class = "input"> <input id = "autx_email" type="text" name="email"></div> 	
              </div> 
-             <a class="recovery" href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
+             <div class="submit">
+             <a id = "return" class="recovery" href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
                 <input class="button" type="submit" value="Восстановить">
+                </div>
             </form>
         </p>
     ';

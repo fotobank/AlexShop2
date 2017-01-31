@@ -747,7 +747,7 @@ div#sort_links a
 #list .variants ul .compare_price {
     color: #dd0063;
 }
-#list .variants ul .stock {
+#list .variants ul stock {
     width: 40px;
     text-align: right;
     margin-right: 3px;

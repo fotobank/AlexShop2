@@ -86,7 +86,7 @@
          <div class = "center-h1">
         <h1>Основные настройки сайта</h1>
          </div>
-        <div class = "box0"></div>
+        <div class = "separator0"></div>
         <ul class = "align-field">
             <li><label for = "site_name" class = property>Имя сайта</label>
                 <input id = "site_name" name = "site_name" class = "order_inp" type = "text"
@@ -127,7 +127,7 @@
          <div class = "center-h1">
         <h1>Оповещения</h1>
          </div>
-        <div class = "box0"></div>
+        <div class = "separator0"></div>
         <ul class = "align-field width-max-field">
             <li><label for = "order_email" class = property>Оповещение о заказах</label>
                 <input id = "order_email" name = "order_email" class = "order_inp" type = "text"
@@ -147,27 +147,32 @@
           <div class = "center-h1">
         <h1>Капча вкл./выкл.</h1>
           </div>
-         <div class = "box0"></div>
+         <div class = "separator0"></div>
         <ul>
-            <li><label class = property for = "captcha_product">В товаре</label><input id = "captcha_product"
-                                                                                       name = "captcha_product"
-                                                                                       class = "order_inp"
-                                                                                       type = "checkbox" value = "1"
-                                                                                       {if $settings->captcha_product}checked = ""{/if} /></li>
-            <li><label class = property for = "captcha_post">В статье блога</label><input id = "captcha_post"
-                                                                                          name = "captcha_post"
-                                                                                          class = "order_inp"
-                                                                                          type = "checkbox" value = "1"
-                                                                                          {if $settings->captcha_post}checked = ""{/if} /></li>
-            <li><label class = property for = "captcha_cart">В корзине</label><input id = "captcha_cart"
-                                                                                     name = "captcha_cart"
-                                                                                     class = "order_inp"
-                                                                                     type = "checkbox" value = "1"
-                                                                                     {if $settings->captcha_cart}checked = ""{/if} /></li>
-            <li><label class = property for = "captcha_register">В форме регистрации</label><input
+            <li><label class = property for = "captcha_product">В товаре</label>
+                <input id = "captcha_product"
+                       name = "captcha_product"
+                       class = "order_inp"
+                       type = "checkbox" value = "1"
+                       {if $settings->captcha_product}checked = ""{/if} /></li>
+            <li><label class = property for = "captcha_post">В статье блога</label>
+                <input id = "captcha_post"
+                       name = "captcha_post"
+                       class = "order_inp"
+                       type = "checkbox" value = "1"
+                       {if $settings->captcha_post}checked = ""{/if} /></li>
+            <li><label class = property for = "captcha_cart">В корзине</label>
+                <input id = "captcha_cart"
+                       name = "captcha_cart"
+                       class = "order_inp"
+                       type = "checkbox" value = "1"
+                       {if $settings->captcha_cart}checked = ""{/if} /></li>
+            <li><label class = property for = "captcha_register">В форме регистрации</label>
+                <input
                         id = "captcha_register" name = "captcha_register" class = "order_inp" type = "checkbox"
                         value = "1" {if $settings->captcha_register}checked = ""{/if} /></li>
-            <li><label class = property for = "captcha_feedback">В форме обратной связи</label><input
+            <li><label class = property for = "captcha_feedback">В форме обратной связи</label>
+                <input
                         id = "captcha_feedback" name = "captcha_feedback" class = "order_inp" type = "checkbox"
                         value = "1" {if $settings->captcha_feedback}checked = ""{/if} /></li>
         </ul>
@@ -177,7 +182,7 @@
           <div class = "center-h1">
         <h1>Формат цены</h1>
           </div>
-          <div class = "box0"></div>
+          <div class = "separator0"></div>
         <ul class = "align-field width-max-field">
             <li><label for = "decimals_point" class = property>Разделитель копеек</label>
                 <select id = "decimals_point" name = "decimals_point" class = "order_inp">
@@ -243,7 +248,7 @@
          <div class = "center-h1">
             <h1>Настройки 1C</h1>
          </div>
-         <div class = "box0"></div>
+         <div class = "separator0"></div>
         <ul class = "align-field width-middle-field">
             <li><label for = "login_1c" class = property>Логин</label>
                 <input id = "login_1c" name = "login_1c" class = "order_inp" type = "text"
@@ -325,10 +330,10 @@
                        type = "checkbox" {if $settings->yandex_has_seller_warranty}checked = ""{/if} />
             </li>
             <li>
-                <label class = "property" for = "yandex_sales_notes">sales notes
+                <label class = "property" for = "yandex_sales_notes">sales_notes
                     <div class = "helper_wrap">
                         <a href = "javascript:void(0)" id = "show_help_search" class = "helper_link"></a>
-                        <div class = "right helper_bottom helper_block" style = "width: 446px;">
+                        <div class = "right helper_bottom helper_block" style = "width: 546px;">
                                 <b>Используйте элемент sales_notes для указания следующей информации:</b>
                                     <ol style = "list-style-type: decimal">
                                         <li>минимальная сумма заказа (указание элемента обязательно);</li>
