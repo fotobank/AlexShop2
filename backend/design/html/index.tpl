@@ -12,6 +12,16 @@
     <script src = "design/js/jquery/jquery.form.js"></script>
     <script src = "design/js/jquery/jquery-ui.min.js"></script>
     <meta name = "viewport" content = "width=1024">
+    <script>
+    if (typeof jQuery == 'undefined') {
+        console.log('jQuery hasn\'t loaded');
+    } else {
+        console.log('jQuery has loaded');
+    }
+    $('img').on('load', function () {
+        console.log('image load successful');
+    });
+</script>
 
 </head>
 <body>
@@ -66,8 +76,8 @@
     });
 </script>
 {/if}
-<a href = '{$config->root_url}/{$lang_link}' class = 'admin_bookmark'></a>
 
+<a href = '{$config->root_url}/{$lang_link}' class = 'admin_bookmark'></a>
 <div class = "container">
 
     <div class = "left">

@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic);
-
+@import url("http://fonts.googleapis.com/css?family=Open+Sans");
 body, html{
 	width: 100%;
 	height: 100%;
@@ -72,7 +72,32 @@ textarea{
     font-size: 14px;
     margin-left: 10px;
     vertical-align: middle;
+    margin-top: -2px;
 }
+#main_menu .icon_log_out{
+    background-position: -32px -450px;
+}
+#main_menu li:hover .icon_log_out,
+#main_menu li.active .icon_log_out {
+    background-position: -65px -450px;
+}
+#main_menu .icon_first_settings {
+    background-position: -32px -602px;
+}
+#main_menu ul[class*="dropdown-"] li:hover .icon_first_settings,
+#main_menu ul[class*="dropdown-"] li.active .icon_first_settings
+{
+    background-position: -65px -602px;
+}
+#main_menu .icon_second_settings {
+    background-position: -32px -808px;
+}
+#main_menu ul[class*="dropdown-"] li:hover .icon_second_settings,
+#main_menu ul[class*="dropdown-"] li.active .icon_second_settings
+{
+    background-position: -65px -808px;
+}
+
 #main_menu .icon_catalog{
     background-position: 0 -160px;
 }
@@ -106,7 +131,10 @@ textarea{
 #main_menu .icon_topvisor {
 	background-position: 1px -407px;
 }
-#main_menu li:hover, #main_menu li:hover i, #main_menu li.active, #main_menu li.active i {
+#main_menu li:hover,
+#main_menu li:hover > i,
+#main_menu li.active,
+#main_menu li.active > i {
     background-color: #384956;
 }
 #main_menu li:hover .icon_catalog, 
@@ -166,12 +194,12 @@ textarea{
 	-moz-transition: all 0.3s ease;
 	transition: all 0.3s ease;
 }
-#main_menu a:hover, #main_menu li.active a {
+#main_menu a:hover, #main_menu li.active > a {
     color: #ffffff;
 }
-#main_menu div.counter {
-    margin-left: 70px;
-    margin-top:-75px;
+#main_menu ul[class*="dropdown-"] a:hover,
+#main_menu ul[class*="dropdown-"] li.active a {
+    color: #ffffff;
 }
 #main_menu div.counter span{
     color:white;
@@ -201,6 +229,72 @@ textarea{
     display: table-cell;
     border-radius:10px;
     -moz-border-radius:10px;
+}
+#main_menu ul li.dropdown:before {
+    position: absolute;
+    margin: 20px 0 0 0;
+    left: 85%;
+    color: #aaa;
+}
+/*подчеркивающая линия*/
+div.left ul li:hover:after {
+    width: 230px;
+    height: 2px;
+}
+div.left ul li:after {
+    content: " ";
+    position: absolute;
+    z-index: 1;
+    width: 0;
+    height: 2px;
+    margin-top: -2px;
+    background: #126CA1;
+    -webkit-transition: 200ms ease all;
+    -moz-transition: 200ms ease all;
+    -ms-transition: 200ms ease all;
+    -o-transition: 200ms ease all;
+    transition: 200ms ease all;
+}
+
+div.left ul li a, div.left ul ul li a {
+    display: block;
+    padding: 0 15px;
+    text-decoration: none;
+    color: #aaa;
+    -webkit-transition: 200ms ease all;
+    -moz-transition: 200ms ease all;
+    -ms-transition: 200ms ease all;
+    -o-transition: 200ms ease all;
+    transition: 200ms ease all;
+    height: 40px;
+}
+div.left ul li a i,
+div.left ul li a span {
+    display: inline-block;
+}
+div.left ul li a i {
+    font-size: 1.3em;
+}
+div.left ul li a span {
+    margin: 0 0 0 35px;
+    font-size: 0.85em;
+}
+div.left ul li ul[class*="dropdown-"] {
+    position: absolute;
+    display: none;
+    margin: -44px 0 0 230px;
+    z-index: 2;
+}
+div.left ul[class*="dropdown-"] li
+{
+    width: 230px;
+    background: #243541;
+}
+div.left ul[class*="dropdown-"] li a:hover
+{
+    width: 220px;
+    background: #384956;
+    height: 40px;
 }
 /*Левый блок с меню END*/
 /*Иконнки каталога*/
@@ -402,7 +496,7 @@ a.edit {
     border: none;
     outline: none;
     float: right;
-    margin: 7px;
+    margin: 5px 7px 7px 7px;
 	color: #243541;
 }
 .comments_num {
@@ -733,6 +827,7 @@ input[name*="check"]:checked + label{
     background: #EFEFEF;
     padding: 15px 20px;
     min-height: 100%;
+    margin-bottom: 15px;
 }
 .tabs-content.active {
     display: block;
@@ -765,7 +860,6 @@ input[name*="check"]:checked + label{
     margin-left: 1px;
 }
 #product .tabs-content li {
-    display: block;
     margin-bottom: 10px;
     /*overflow: hidden;*/
 }
@@ -797,7 +891,12 @@ input[name*="check"]:checked + label{
 /*выравнивание полей input*/
 #middle .align-field {display: inline-block;}
 #middle .align-field li {clear:both; text-align:right; line-height:25px;}
+
+#middle .helper_block ol { margin-left: 25px;}
+#middle .helper_block span { margin-left: 10px;}
 #middle .helper_wrap li {text-align:left; line-height:14px;}
+#middle .helper_wrap {text-align:left; vertical-align: middle;line-height: 20px;}
+
 #middle .align-field li input[type=text], #middle .align-field li input[type=checkbox],
 #middle .align-field li select {clear:both; line-height:25px;}
 #middle .align-field li label  {float:left; padding-right:20px; width: inherit;}
@@ -817,36 +916,31 @@ input[name*="check"]:checked + label{
 #middle .center-h1 h1 {
     margin-bottom: 30px;
 }
-#middle .center-h1 .helper_wrap {
-    vertical-align: middle;
-    line-height: 16px;
-    text-align: left;
-}
 #middle .center-h1 .top_help {
     margin-top: 0;
 }
 /* разделители блоков */
-.separator0 {
+.split-0 {
     width: 100%;
     clear: both;
     height: 0;
 }
-.separator10 {
+.split-10 {
     width: 100%;
     clear: both;
     height: 10px;
 }
-.separator20 {
+.split-20 {
     width: 100%;
     clear: both;
     height: 20px;
 }
-.separator25 {
+.split-25 {
     width: 100%;
     clear: both;
     height: 25px;
 }
-.separator30 {
+.split-30 {
     width: 100%;
     clear: both;
     height: 30px;

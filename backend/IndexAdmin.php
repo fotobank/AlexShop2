@@ -81,6 +81,10 @@ class IndexAdmin extends Registry {
         'LanguagesAdmin'      => 'settings',
         'TranslationAdmin'    => 'settings',
         'TranslationsAdmin'   => 'settings',
+
+        'SettingsAdmin2'      => 'settings2',
+        'ComingSoon'          => 'settings2',
+
         'LicenseAdmin'        => 'license'
         
     );

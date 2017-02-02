@@ -34,17 +34,6 @@
     {/if}
 {/capture}
 
-{capture name=tabs_setting}
-    <li class = "active">
-        <a href = "index.php?module=SettingsAdmin">Основные</a>
-    </li>
-    {if in_array('currency', $manager->permissions)}
-        <li>
-            <a href = "index.php?module=ComingSoon">Заглушка</a>
-        </li>
-    {/if}
-{/capture}
-
 {$meta_title = "Настройки" scope=parent}
 
 {if $message_success}
@@ -86,38 +75,38 @@
          <div class = "center-h1">
         <h1>Основные настройки сайта</h1>
          </div>
-        <div class = "separator0"></div>
+        <div class = "split-0"></div>
         <ul class = "align-field">
-            <li><label for = "site_name" class = property>Имя сайта</label>
+            <li><label for = "site_name" class = "property">Имя сайта</label>
                 <input id = "site_name" name = "site_name" class = "order_inp" type = "text"
                        value = "{$settings->site_name|escape}"/></li>
-            <li><label for = "company_name" class = property>Имя компании</label>
+            <li><label for = "company_name" class = "property">Имя компании</label>
                 <input id = "company_name" name = "company_name" class = "order_inp" type = "text"
                        value = "{$settings->company_name|escape}"/></li>
-            <li><label for = "phone1" class = property>телефон 1</label>
+            <li><label for = "phone1" class = "property">телефон 1</label>
                 <input id = "phone1" name = "phone1" class = "order_inp" type = "text"
                        value = "{$settings->phone1}"/></li>
-            <li><label for = "phone2" class = property>телефон 2</label>
+            <li><label for = "phone2" class = "property">телефон 2</label>
                 <input id = "phone2" name = "phone2" class = "order_inp" type = "text"
                        value = "{$settings->phone2}"/></li>
-            <li><label for = "phone3" class = property>телефон 3</label>
+            <li><label for = "phone3" class = "property">телефон 3</label>
                 <input id = "phone3" name = "phone3" class = "order_inp" type = "text"
                        value = "{$settings->phone3}"/></li>
-            <li><label for = "date_format" class = property>Формат даты</label>
+            <li><label for = "date_format" class = "property">Формат даты</label>
                 <input id = "date_format" name = "date_format" class = "order_inp" type = "text"
                        value = "{$settings->date_format|escape}"/></li>
-            <li><label for = "admin_email" class = property>Email для восстановления пароля</label>
+            <li><label for = "admin_email" class = "property">Email для восстановления пароля</label>
                 <input id = "admin_email" name = "admin_email" class = "order_inp" type = "text"
                        value = "{$settings->admin_email|escape}"/></li>
             <li>
-                <label for = "site_work" class = property>Выключение сайта</label>
+                <label for = "site_work" class = "property">Выключение сайта</label>
                 <select id = "site_work" name = "site_work">
                     <option value = "on" {if $settings->site_work == "on"}selected{/if}>Включен</option>
                     <option value = "off" {if $settings->site_work == "off"}selected{/if}>Выключен</option>
                 </select>
             </li>
             <li>
-                <label for = "site_annotation" class = property>Техническое сообщение</label>
+                <label for = "site_annotation" class = "property">Техническое сообщение</label>
                 <textarea id = "site_annotation" name = "site_annotation"
                           class = "order_inp">{$settings->site_annotation|escape}</textarea>
             </li>
@@ -127,18 +116,18 @@
          <div class = "center-h1">
         <h1>Оповещения</h1>
          </div>
-        <div class = "separator0"></div>
+        <div class = "split-0"></div>
         <ul class = "align-field width-max-field">
-            <li><label for = "order_email" class = property>Оповещение о заказах</label>
+            <li><label for = "order_email" class = "property">Оповещение о заказах</label>
                 <input id = "order_email" name = "order_email" class = "order_inp" type = "text"
                        value = "{$settings->order_email|escape}"/></li>
-            <li><label for = "comment_email" class = property>Оповещение о комментариях</label>
+            <li><label for = "comment_email" class = "property">Оповещение о комментариях</label>
                 <input id = "comment_email" name = "comment_email" class = "order_inp" type = "text"
                        value = "{$settings->comment_email|escape}"/></li>
-            <li><label for = "notify_from_email" class = property>Обратный адрес оповещений</label>
+            <li><label for = "notify_from_email" class = "property">Обратный адрес оповещений</label>
                 <input id = "notify_from_email" name = "notify_from_email" class = "order_inp" type = "text"
                        value = "{$settings->notify_from_email|escape}"/></li>
-            <li><label for = "notify_from_name" class = property>Имя отправителя письма</label>
+            <li><label for = "notify_from_name" class = "property">Имя отправителя письма</label>
                 <input id = "notify_from_name" name = "notify_from_name" class = "order_inp" type = "text"
                        value = "{$settings->notify_from_name|escape}"/></li>
         </ul>
@@ -147,31 +136,32 @@
           <div class = "center-h1">
         <h1>Капча вкл./выкл.</h1>
           </div>
-         <div class = "separator0"></div>
+         <div class = "split-0"></div>
         <ul>
-            <li><label class = property for = "captcha_product">В товаре</label>
+            <li><label class = "property" for = "captcha_product">В товаре</label>
                 <input id = "captcha_product"
                        name = "captcha_product"
                        class = "order_inp"
                        type = "checkbox" value = "1"
-                       {if $settings->captcha_product}checked = ""{/if} /></li>
-            <li><label class = property for = "captcha_post">В статье блога</label>
+                       {if $settings->captcha_product}checked = ""{/if} />
+            </li>
+            <li><label class = "property" for = "captcha_post">В статье блога</label>
                 <input id = "captcha_post"
                        name = "captcha_post"
                        class = "order_inp"
                        type = "checkbox" value = "1"
                        {if $settings->captcha_post}checked = ""{/if} /></li>
-            <li><label class = property for = "captcha_cart">В корзине</label>
+            <li><label class = "property" for = "captcha_cart">В корзине</label>
                 <input id = "captcha_cart"
                        name = "captcha_cart"
                        class = "order_inp"
                        type = "checkbox" value = "1"
                        {if $settings->captcha_cart}checked = ""{/if} /></li>
-            <li><label class = property for = "captcha_register">В форме регистрации</label>
+            <li><label class = "property" for = "captcha_register">В форме регистрации</label>
                 <input
                         id = "captcha_register" name = "captcha_register" class = "order_inp" type = "checkbox"
                         value = "1" {if $settings->captcha_register}checked = ""{/if} /></li>
-            <li><label class = property for = "captcha_feedback">В форме обратной связи</label>
+            <li><label class = "property" for = "captcha_feedback">В форме обратной связи</label>
                 <input
                         id = "captcha_feedback" name = "captcha_feedback" class = "order_inp" type = "checkbox"
                         value = "1" {if $settings->captcha_feedback}checked = ""{/if} /></li>
@@ -182,9 +172,9 @@
           <div class = "center-h1">
         <h1>Формат цены</h1>
           </div>
-          <div class = "separator0"></div>
+          <div class = "split-0"></div>
         <ul class = "align-field width-max-field">
-            <li><label for = "decimals_point" class = property>Разделитель копеек</label>
+            <li><label for = "decimals_point" class = "property">Разделитель копеек</label>
                 <select id = "decimals_point" name = "decimals_point" class = "order_inp">
                     <option value = '.'
                             {if $settings->decimals_point == '.'}selected{/if}>точка: 12.45 {$currency->sign|escape}</option>
@@ -192,7 +182,7 @@
                             {if $settings->decimals_point == ','}selected{/if}>запятая: 12,45 {$currency->sign|escape}</option>
                 </select>
             </li>
-            <li><label for = "thousands_separator" class = property>Разделитель тысяч</label>
+            <li><label for = "thousands_separator" class = "property">Разделитель тысяч</label>
                 <select id = "thousands_separator" name = "thousands_separator" class = "order_inp">
                     <option value = ''
                             {if $settings->thousands_separator == ''}selected{/if}>без разделителя: 1245678 {$currency->sign|escape}</option>
@@ -209,13 +199,13 @@
             <h1>Настройки каталога</h1>
          </div>
          <ul class = "align-field width-middle-field">
-            <li><label for = "products_num" class = property>Товаров на странице сайта</label>
+            <li><label for = "products_num" class = "property">Товаров на странице сайта</label>
                 <input id = "products_num" name = "products_num" class = "order_inp" type = "text"
                        value = "{$settings->products_num|escape}"/></li>
-            <li><label for = "max_order_amount" class = property>Максимум товаров в заказе</label>
+            <li><label for = "max_order_amount" class = "property">Максимум товаров в заказе</label>
                 <input id = "max_order_amount" name = "max_order_amount" class = "order_inp" type = "text"
                        value = "{$settings->max_order_amount|escape}"/></li>
-            <li><label for = "units" class = property>Единицы измерения товаров</label>
+            <li><label for = "units" class = "property">Единицы измерения товаров</label>
                 <input id = "units" name = "units" class = "order_inp" type = "text"
                        value = "{$settings->units|escape}"/></li>
             <li><label for = "comparison_count"
@@ -248,12 +238,12 @@
          <div class = "center-h1">
             <h1>Настройки 1C</h1>
          </div>
-         <div class = "separator0"></div>
+         <div class = "split-0"></div>
         <ul class = "align-field width-middle-field">
-            <li><label for = "login_1c" class = property>Логин</label>
+            <li><label for = "login_1c" class = "property">Логин</label>
                 <input id = "login_1c" name = "login_1c" class = "order_inp" type = "text"
                        value = "{$login_1c|escape}"/></li>
-            <li><label for = "pass_1c" class = property>Пароль</label>
+            <li><label for = "pass_1c" class = "property">Пароль</label>
                 <input id = "pass_1c" name = "pass_1c" class = "order_inp" type = "text" value = ""/></li>
         </ul>
     </div>
@@ -262,20 +252,20 @@
         <h1>Изображения товаров</h1>
          </div>
         <ul class = "align-field set-field-watermark">
-            <li><label for = "watermark_offset_x" class = property>Горизонтальное положение водяного знака</label>
+            <li><label for = "watermark_offset_x" class = "property">Горизонтальное положение водяного знака</label>
                 <input id = "watermark_offset_x" name = "watermark_offset_x" class = "order_inp" type = "text"
                        value = "{$settings->watermark_offset_x|escape}"/> %</li>
-            <li><label for = "watermark_offset_y" class = property>Вертикальное положение водяного знака</label>
+            <li><label for = "watermark_offset_y" class = "property">Вертикальное положение водяного знака</label>
                 <input id = "watermark_offset_y" name = "watermark_offset_y" class = "order_inp" type = "text"
                        value = "{$settings->watermark_offset_y|escape}"/> %</li>
-            <li><label for = "watermark_transparency" class = property>Прозрачность знака (больше &mdash;
+            <li><label for = "watermark_transparency" class = "property">Прозрачность знака (больше &mdash;
                                                                        прозрачней)</label>
                 <input id = "watermark_transparency" name = "watermark_transparency" class = "order_inp" type = "text"
                        value = "{$settings->watermark_transparency|escape}"/> %</li>
-            <li><label for = "images_sharpen" class = property>Резкость изображений (рекомендуется 20%)</label>
+            <li><label for = "images_sharpen" class = "property">Резкость изображений (рекомендуется 20%)</label>
                 <input id = "images_sharpen" name = "images_sharpen" class = "order_inp" type = "text"
                        value = "{$settings->images_sharpen|escape}"/> %</li>
-            <li><label class = property>Водяной знак</label>
+            <li><label class = "property">Водяной знак</label>
             <input name = "watermark_file" class = "order_inp" type = "file"/>
             </li>
         </ul>
@@ -402,17 +392,17 @@
      </div>
         <ul>
             <li>
-                <label for = "yandex_metrika_app_id" class = property>ID приложения</label>
+                <label for = "yandex_metrika_app_id" class = "property">ID приложения</label>
                 <input id = "yandex_metrika_app_id" name = "yandex_metrika_app_id" class = "order_inp" type = "text"
                        value = "{$settings->yandex_metrika_app_id|escape}"/>
             </li>
             <li>
-                <label for = "yandex_metrika_token" class = property>Токен</label>
+                <label for = "yandex_metrika_token" class = "property">Токен</label>
                 <input id = "yandex_metrika_token" name = "yandex_metrika_token" class = "order_inp" type = "text"
                        value = "{$settings->yandex_metrika_token|escape}"/>
             </li>
             <li>
-                <label for = "yandex_metrika_counter_id" class = property>ID счётчика</label>
+                <label for = "yandex_metrika_counter_id" class = "property">ID счётчика</label>
                 <input id = "yandex_metrika_counter_id" name = "yandex_metrika_counter_id" class = "order_inp"
                        type = "text" value = "{$settings->yandex_metrika_counter_id|escape}"/>
             </li>
