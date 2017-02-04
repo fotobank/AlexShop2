@@ -74,6 +74,15 @@ class Database extends Registry
     }
 
     /**
+     * @param $table
+     *
+     * @return string - имя таблицы с префиксом
+     */
+    public function prefixTable($table) {
+        return $this->config->db_prefix . $table;
+    }
+
+    /**
      * проверка на существование таблиц с кешированием имен таблиц
      *
      * @param $table_name - имя искомой таблицы без префикса

@@ -11,10 +11,11 @@
 namespace api;
 
 class Managers extends Registry {
-    
+
+    // все существующие разрешения
     public $permissions_list = array('products','comment', 'comment_edit', 'categories', 'brands', 'features',
         'orders', 'labels', 'users', 'groups', 'coupons', 'pages', 'blog', 'comments', 'feedbacks', 'import',
-        'export', 'stats', 'design', 'settings', 'currency', 'delivery', 'payment', 'managers', 'license',
+        'export', 'stats', 'design', 'settings', 'settings2', 'currency', 'delivery', 'payment', 'managers', 'license',
         'languages', 'banners', 'special', 'callbacks', 'topvisor', 'yametrika', 'robots'
         
     );

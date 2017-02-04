@@ -128,7 +128,7 @@ input .user-phone::-webkit-input-placeholder {
 #subscribe-container {
     width: 300px;
     font: normal normal normal normal 14px / 20px HelveticaNeue-Light, "Helvetica Neue Light","Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin: 15px 0 0;
+    margin: 15px 0 0 -80px;
 }
 .subscription-tape {
     height: 14px;

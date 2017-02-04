@@ -9,7 +9,7 @@ class TranslationAdmin extends Registry {
         
         $translation = new \stdClass();
         if($this->request->method('post')) {
-            $translation->id    = $this->request->post('id', 'intgeger');
+            $translation->id    = $this->request->post('id', 'integer');
             
             $translation->label = trim($this->request->post('label'));
             $translation->label = str_replace(" ", '_', $translation->label);
@@ -51,14 +51,14 @@ class TranslationAdmin extends Registry {
                 $filephp = fopen($filephp, 'wb');
                 $row = "<?PHP\n\n";
                 foreach($languages as $l) {
-                    $row .= "$"."languages[".$l->label."]='".$l->name."';\n";
+                    $row .= "$"."languages['".$l->label."']='".$l->name."';\n";
                 }
                 foreach($languages as $l) {
                     $row .= "\n//".$l->name."\n\n";
                     
                     foreach($translations as $t) {
                         $lang = 'lang_'.$l->label;
-                        $row .= "$"."lang[".$l->label."][".$t->label."] = '".$this->db->escape($t->$lang)."';\n";
+                        $row .= "$"."lang['".$l->label."']['".$t->label."'] = '".$this->db->escape($t->$lang)."';\n";
                     }
                 }
                 fwrite($filephp, $row);

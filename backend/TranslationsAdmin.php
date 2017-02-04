@@ -20,9 +20,8 @@ class TranslationsAdmin extends Registry {
                 }
             }
         }
-
         $filter = array();
-        $filter['lang'] = $this->design->get_var('lang_label');
+        $filter['langs'] = $this->design->get_var('langs_label');
         $filter['sort'] = $this->request->get('sort', 'string');
         $this->design->assign('sort', $filter['sort']);
 

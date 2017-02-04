@@ -1,5 +1,6 @@
 <?php
 
+use api\ComingSoon\ComingSoon;
 use lib\Security\Security;
 
 

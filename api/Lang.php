@@ -171,6 +171,13 @@ class Lang extends Registry
                 }
             }
         }
+        if (!empty($filter['labels'])){
+            $langs = [];
+            foreach ($this->languages as $lang){
+                $langs[$lang->id] = $lang->label;
+            }
+            return $langs;
+        }
 
         return $this->languages;
     }
@@ -403,7 +410,6 @@ class Lang extends Registry
                 $description->lang_id = $lang->id;
                 $this->action_data($object_id, $description, $object);
             }
-
             return;
         } else {
             return;
@@ -425,6 +431,11 @@ class Lang extends Registry
         $lang = '*';
         if (!empty($filter['lang'])){
             $lang = 'id, label, lang_' . $filter['lang'] . ' as value';
+        } elseif (is_array($filter['langs']) && 0 !==count($filter['langs'])){
+            $lang = 'id, label';
+            foreach ($filter['langs'] as $name_lang) {
+                $lang .= ', lang_' . $name_lang . ' ';
+            }
         }
 
         if (!empty($filter['sort'])){
@@ -451,7 +462,7 @@ class Lang extends Registry
             }
         }
 
-        $query = "SELECT " . $lang . " FROM __translations WHERE 1 $order";
+        $query = 'SELECT ' . $lang . " FROM __translations WHERE 1 $order";
         if ($this->db->query($query)){
             return $this->db->results();
         }

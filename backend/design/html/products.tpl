@@ -36,7 +36,7 @@
 <form method="get">
     <div id="search">
         <input type="hidden" name="module" value="ProductsAdmin">
-        <input class="search" type="text" name="keyword" value="{$keyword|escape}" />
+        <input class="search" type="text" name="keyword" value="{$keyword|escape}" placeholder="Search..."/>
         <input class="search_button" type="submit" value=""/>
     </div>
 </form>

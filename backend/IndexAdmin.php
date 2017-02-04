@@ -82,8 +82,7 @@ class IndexAdmin extends Registry {
         'TranslationAdmin'    => 'settings',
         'TranslationsAdmin'   => 'settings',
 
-        'SettingsAdmin2'      => 'settings2',
-        'ComingSoon'          => 'settings2',
+        'SecondarySettingsAdmin' => 'settings2',
 
         'LicenseAdmin'        => 'license'
         
@@ -127,7 +126,7 @@ class IndexAdmin extends Registry {
         'ImagesAdmin'         => 'design',
         'ScriptsAdmin'        => 'design',
         'SettingsAdmin'       => 'settings',
-        'ComingSoon'          => 'settings',
+        'SecondarySettingsAdmin' => 'settings2',
         'CurrencyAdmin'       => 'currency',
         'DeliveriesAdmin'     => 'delivery',
         'DeliveryAdmin'       => 'delivery',
@@ -264,6 +263,10 @@ class IndexAdmin extends Registry {
             if($first_lang->id != $lang_id) {
                 $lang_link = $lang_label.'/';
             }
+        }
+        if($languages) {
+            $lang_labels = $this->languages->languages(['labels' => 'all']);
+            $this->design->assign('langs_label', $lang_labels);
         }
         $this->design->assign('lang_label', $lang_label);
         $this->design->assign('lang_link', $lang_link);

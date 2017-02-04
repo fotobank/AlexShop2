@@ -42,8 +42,16 @@
 	<h1>Переводы</h1>
 	<a class="add" href="{url module=TranslationAdmin}">Добавить перевод</a>
 </div>
-
-<div id="main_list">
+<div id="main_table">
+    <div class="clearfix">
+    <h2 class="streamlined">переменные используемые в шаблонах</h2>
+<form id="form-search" method="get">
+    <div id="search">
+        <input id="input-filter" class="search" type="text" value="" placeholder="Search...">
+        <input class="search_button" type="text" value="">
+    </div>
+</form>
+    </div>
     <div>Сортировка переводов:</div>
     <ul class="sort_translation">
         <li>
@@ -59,27 +67,43 @@
 	<form id="list_form" method="post">
         <input type="hidden" name="session_id" value="{$smarty.session.id}">
 
-        <div id="list">
-
+        <table id="list">
+             <thead>
+            <tr>
+                <th>#</th>
+                <th>название переменной</th>
+                {foreach $langs_label as $lang}
+                    <th>{$lang}</th>
+                {/foreach}
+                <th>#</th>
+            </tr>
+        </thead>
+           <tbody>
             {foreach $translations as $translation}
-                <div class="{if !$translation->enabled}invisible{/if} row">
-                    <div class="checkbox cell">
+                <tr class="{if !$translation->enabled}invisible{/if} row">
+                    <td class="checkbox cell">
                         <input type="checkbox" id="{$translation->id}" name="check[]" value="{$translation->id}" />
                         <label for="{$translation->id}"></label>
-                    </div>
-                    <div class="name cell">
-                        <span style='width:350px;display:inline-block;overflow:hidden'>
-                            <a href="{url module=TranslationAdmin id=$translation->id return=$smarty.server.REQUEST_URI}">{$translation->value|escape}</a>
-                        </span>
+                    </td>
+                     <td class="name">
+                        <span>
                          <a href="{url module=TranslationAdmin id=$translation->id return=$smarty.server.REQUEST_URI}">{$translation->label|escape}</a>
-                    </div>
-                    <div class="icons cell">
+                         </span>
+                    </td>
+                    {foreach $langs_label as $lang}
+                        <td class="name">
+                        <span>
+                            <a href="{url module=TranslationAdmin id=$translation->id return=$smarty.server.REQUEST_URI}">{$translation->lang_{$lang}|escape}</a>
+                        </span>
+                    </td>
+                    {/foreach}
+                    <td class="icons">
                         <a class="delete" title="Удалить" href="#"></a>
-                    </div>
-                    <div class="clear"></div>
-                </div>
+                    </td>
+                </tr>
             {/foreach}
-        </div>
+            </tbody>
+        </table>
 
         <div id="action">
         <label id="check_all" class='dash_link'>Выбрать все</label>
@@ -91,11 +115,61 @@
         <input id="apply_action" class="button_green" type="submit" value="Применить">
         </div>
 	</form>
-
 </div>
 
+<div id="jsGrid"></div>
+
+
+    <link type="text/css" rel="stylesheet" href="design/js/jsgrid/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="design/js/jsgrid/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="design/js/jsgrid/jsgrid.min.js"></script>
+
+    <script>
+        var clients = [
+                {foreach $translations as $translation}
+                   {ldelim}"label": "{$translation->label|escape}"{rdelim},
+                        {foreach $langs_label as $lang}
+                            {ldelim}"{$lang}": "{$translation->lang_{$lang}|escape:'html'}"{rdelim},
+                        {/foreach}
+                  {/foreach}
+            ];
+
+        $("#jsGrid").jsGrid({ldelim}
+            width: "100%",
+            height: "400px",
+
+            inserting: true,
+            editing: true,
+            sorting: true,
+            paging: true,
+
+            data: clients,
+
+            fields: [
+                {ldelim} name: "check[]", type: "checkbox", width: 20, title: "#", sorting: false {rdelim},
+                {ldelim} name: "label", type: "text", width: 150, validate: "required" {rdelim},
+            {foreach $langs_label as $lang}
+                {ldelim} name: "lang_{$lang}", type: "text", width: 150, validate: "required" {rdelim},
+            {/foreach}
+                {ldelim} type: "control" {rdelim}
+            ]
+        });
+    </script>
+
 {literal}
+
+<script src="design/js/jquery.filtertable/jquery.filtertable.min.js"></script>
 <script>
+//     $(document).ready(function() {
+//         $('table').filterTable({
+//             filterExpression: 'filterTableFindAll',
+//            inputSelector: '#input-filter'
+//         });
+//     });
+</script>
+
+<script>
+
 $(function() {
 
 	// Раскраска строк
@@ -120,7 +194,7 @@ $(function() {
 		$(this).closest("form").submit();
 	});
 	
-	$("form").submit(function() {
+	$("#list_form").submit(function() {
 		if($('select[name="action"]').val()=='delete' && !confirm('Подтвердите удаление'))
 			return false;	
 	});

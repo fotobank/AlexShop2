@@ -1,6 +1,11 @@
 <div id = "cms_logo">
      <a href = 'index.php?module=LicenseAdmin'><img src = "design/images/logo.png" alt = "AlexShop CMS"/></a>
 </div>
+<div id = "manager_login">
+     <span>{$manager->login}</span>
+    <p>текущий менеджер</p>
+</div>
+<div class="split-0"></div>
 
 <ul id = "main_menu">
 
@@ -209,17 +214,19 @@
     {/if}
 
     {if in_array('settings', $manager->permissions)}
-        <li class = "dropdown {if $menu_selected == ('settings' || 'settings2')}active{/if}" rel="1">
+        <li class = "dropdown {if $menu_selected == ('settings')}active
+                              {elseif $menu_selected == ('settings2')}active{/if}" rel="1">
 			<a href = "index.php?module=SettingsAdmin">
 				<i class = "icon_settings"></i>
-				<span>Настройки</span>
+				<span class="i-menu-max">Настройки</span>
+                <i class = "icon_more"></i>
             </a>
                  <ul class="dropdown-1">
                    <li class = "dropdown {if $menu_selected == ('settings')}active{/if}" rel="11">
                        <a href = "index.php?module=SettingsAdmin">
                            <i class="icon_first_settings"></i><span>Основные</span></a></li>
                    <li class = "dropdown {if $menu_selected == ('settings2')}active{/if}" rel="12">
-                       <a href = "index.php?module=ComingSoon">
+                       <a href = "index.php?module=SecondarySettingsAdmin">
                            <i class="icon_second_settings"></i><span>Дополнительные</span></a></li>
                  </ul>
 
@@ -294,7 +301,7 @@
     {/if}
 {/if}
 </div>
-
+{*основное меню*}
 <script>
     jQuery(document).ready(function($) {
         $("li.dropdown").hover(function() {

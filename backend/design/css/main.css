@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic);
-@import url("http://fonts.googleapis.com/css?family=Open+Sans");
+
 body, html{
 	width: 100%;
 	height: 100%;
@@ -51,15 +51,33 @@ textarea{
     padding-left: 23px;
     margin-top: 14px;
 }
+
 /*Левый блок с меню*/
-.left{
+.left {
     float: left;
     width: 230px;
 }
-#main_menu {
+#main_menu, #manager_login {
 	background-color: #243541;
 }
- 
+#manager_login {
+    color: #aaa;
+    text-align: center;
+    background-color: #002a48;
+}
+#manager_login p {
+    color: #aaa;
+    font-size: 10px;
+    padding-bottom: 3px;
+}
+#manager_login span {
+    font-size: 28px;
+    color: #00a4db;
+    display: block;
+    padding-top: 5px;
+    border-bottom: 1px solid #49a446;
+    line-height: 28px;
+}
 #main_menu i {
     background: url(../images/sprite_admin2.png) 0 0 no-repeat;
     display: inline-block;
@@ -73,6 +91,9 @@ textarea{
     margin-left: 10px;
     vertical-align: middle;
     margin-top: -2px;
+}
+#main_menu span.i-menu-max {
+    margin-right: 45px;
 }
 #main_menu .icon_log_out{
     background-position: -32px -450px;
@@ -122,7 +143,7 @@ textarea{
 #main_menu .icon_design{
     background-position: 0 -200px;
 }
-#main_menu i.icon_settings{
+#main_menu i.icon_settings {
      background-position: 0 -80px;
 }
 #main_menu .icon_banner{
@@ -137,6 +158,16 @@ textarea{
 #main_menu li.active > i {
     background-color: #384956;
 }
+
+#main_menu .icon_more {
+    background-position: -26px -555px;
+}
+
+#main_menu li:hover .icon_more,
+#main_menu li.active .icon_more {
+    background-position: -57px -555px;
+}
+
 #main_menu li:hover .icon_catalog, 
 #main_menu li.active .icon_catalog {
     background-position: -40px -160px;
@@ -230,18 +261,13 @@ textarea{
     border-radius:10px;
     -moz-border-radius:10px;
 }
-#main_menu ul li.dropdown:before {
-    position: absolute;
-    margin: 20px 0 0 0;
-    left: 85%;
-    color: #aaa;
-}
+
 /*подчеркивающая линия*/
-div.left ul li:hover:after {
+#main_menu li:hover:after {
     width: 230px;
     height: 2px;
 }
-div.left ul li:after {
+#main_menu li:after {
     content: " ";
     position: absolute;
     z-index: 1;
@@ -255,7 +281,6 @@ div.left ul li:after {
     -o-transition: 200ms ease all;
     transition: 200ms ease all;
 }
-
 div.left ul li a, div.left ul ul li a {
     display: block;
     padding: 0 15px;
@@ -450,6 +475,20 @@ a.edit {
 	font-style: normal;
 	margin-bottom: 10px;
 }
+#middle h2.streamlined {
+    float: left;
+}
+#form-search {
+    /*margin-right: 50px;*/
+}
+#main_table {
+    width: 100%;
+}
+table { border-collapse: collapse; width: 100%; }
+/*thead tr {line-height: 30px;}*/
+th, td { padding: 5px; }
+th { line-height: 25px; border-bottom: 2px solid #999; background-color: #ddd; vertical-align: bottom; text-align: left; }
+td { border-bottom: 1px solid #ccc; }
 /* @group Заголовок правой части */
 #header{
 	margin-bottom: 15px;
@@ -579,14 +618,15 @@ a:hover {
 	color: #fff;
 }
 #footer {
+    text-align: center;
 	height: 40px;
 	margin-top: 30px;
 	cursor: pointer;
 }
+
 #footer a{
     margin: 0 5px;
 }
-
 
 a.admin_bookmark {
     background-image: url('../images/admin_enter.png');
@@ -819,7 +859,7 @@ input[name*="check"]:checked + label{
     border: 1px solid #D4D4D4;
     border-bottom: 1px solid #EFEFEF;
 }
-.tabs-content {
+.tabs-content, .content {
     width: auto;
     display: none;
     border: 1px solid #D4D4D4;
@@ -829,7 +869,7 @@ input[name*="check"]:checked + label{
     min-height: 100%;
     margin-bottom: 15px;
 }
-.tabs-content.active {
+.tabs-content.active, .content {
     display: block;
     min-height: 350px;
 }
@@ -859,7 +899,7 @@ input[name*="check"]:checked + label{
     border-width: 1px;
     margin-left: 1px;
 }
-#product .tabs-content li {
+#product .tabs-content li, .content li {
     margin-bottom: 10px;
     /*overflow: hidden;*/
 }
@@ -904,9 +944,13 @@ input[name*="check"]:checked + label{
 
 #middle .set-field-watermark li input[type=text] {width: 40px; text-align:right;}
 #middle .width-mini-field li input[type=text], #middle .width-mini-field li select {width: 40px;}
+
 #middle .width-middle-field li input[type=text] {width: 150px;}
 #middle .width-middle-field li select {width: 162px;}
-#middle .width-max-field li input[type=text], #middle .width-max-field li select {width: 270px;}
+
+#middle .width-max-field li input[type=text] {width: 270px;}
+#middle .width-max-field li select {width: 282px;}
+#middle .width-max-field li textarea {width: 276px; height: 80px;}
 
 #middle .center-h1 {
     display: block;
@@ -946,3 +990,6 @@ input[name*="check"]:checked + label{
     height: 30px;
 }
 /* разделители блоков END */
+
+/* filter table specific styling */
+td.alt { background-color: #ffc; background-color: rgba(255, 255, 0, 0.2); }
