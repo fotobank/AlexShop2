@@ -148,9 +148,9 @@
             fields: [
                 {ldelim} name: "check[]", type: "checkbox", width: 20, title: "#", sorting: false {rdelim},
                 {ldelim} name: "label", type: "text", width: 150, validate: "required" {rdelim},
-            {foreach $langs_label as $lang}
-                {ldelim} name: "lang_{$lang}", type: "text", width: 150, validate: "required" {rdelim},
-            {/foreach}
+                  {foreach $langs_label as $lang}
+                    {ldelim} name: "lang_{$lang}", type: "text", width: 150, validate: "required" {rdelim},
+                  {/foreach}
                 {ldelim} type: "control" {rdelim}
             ]
         });
