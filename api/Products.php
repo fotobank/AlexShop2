@@ -508,7 +508,7 @@ class Products extends Registry {
             }
             
             // Удаляем товар из связанных с другими
-            $query = $this->db->placehold("DELETE FROM __related_products WHERE related_id=?", intval($id));
+            $query = $this->db->placehold("DELETE FROM __related_products WHERE related_id=?", (int)$id);
             $this->db->query($query);
             
             // Удаляем отзывы
@@ -518,21 +518,21 @@ class Products extends Registry {
             }
             
             // Удаляем из покупок
-            $this->db->query('UPDATE __purchases SET product_id=NULL WHERE product_id=?', intval($id));
+            $this->db->query('UPDATE __purchases SET product_id=NULL WHERE product_id=?', (int)$id);
             
             //lastModify
-            $this->db->query('select brand_id from __products where id=?', intval($id));
+            $this->db->query('select brand_id from __products where id=?', (int)$id);
             $bid = (int)$this->db->result('brand_id');
             if ($bid) {
                 $this->db->query('update __brands set last_modify=now() where id=?', $bid);
             }
             
             // Удаляем языки
-            $query = $this->db->placehold("DELETE FROM __lang_products WHERE product_id=?", intval($id));
+            $query = $this->db->placehold("DELETE FROM __lang_products WHERE product_id=?", (int)$id);
             $this->db->query($query);
             
             // Удаляем товар
-            $query = $this->db->placehold("DELETE FROM __products WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __products WHERE id=? LIMIT 1", (int)$id);
             if($this->db->query($query)) {
                 return true;
             }

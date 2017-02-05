@@ -23,10 +23,10 @@ class SpecialAdmin extends Registry {
                 switch($this->request->post('action')) {
                     case 'delete': {
                         foreach($ids as $id) {
-                            $this->db->query("SELECT filename FROM __spec_img WHERE id=?", intval($id));
+                            $this->db->query("SELECT filename FROM __spec_img WHERE id=?", (int)$id);
                             $filename = $this->db->result('filename');
                             @unlink($this->config->root_dir.$this->config->special_images_dir.$filename);
-                            $this->db->query("DELETE FROM __spec_img WHERE id=? LIMIT 1", intval($id));
+                            $this->db->query("DELETE FROM __spec_img WHERE id=? LIMIT 1", (int)$id);
                             
                             $this->db->query("UPDATE __products set special=null where special=?", $filename);
                             $this->db->query("UPDATE __lang_products set special=null where special=?", $filename);

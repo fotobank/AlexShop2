@@ -17,10 +17,10 @@ class Subscribes extends Registry {
         $page = 1;
         $keyword_filter = '';
         if(isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
         if(isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         $sql_limit = $this->db->placehold(' LIMIT ?, ? ', ($page-1)*$limit, $limit);
         if (isset($filter['keyword'])) {
@@ -77,7 +77,7 @@ class Subscribes extends Registry {
     }
     
     public function update_subscribe($id, $subscribe) {
-        $query = $this->db->placehold("UPDATE __subscribe_mailing SET ?% WHERE id=? LIMIT 1", $subscribe, intval($id));
+        $query = $this->db->placehold("UPDATE __subscribe_mailing SET ?% WHERE id=? LIMIT 1", $subscribe, (int)$id);
         $this->db->query($query);
         return $id;
     }

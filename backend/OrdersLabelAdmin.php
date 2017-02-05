@@ -27,7 +27,7 @@ class OrdersLabelAdmin extends Registry {
         } else {
             $id = $this->request->get('id', 'integer');
             if(!empty($id)) {
-                $label = $this->orders->get_label(intval($id));
+                $label = $this->orders->get_label((int)$id);
             }
         }
         

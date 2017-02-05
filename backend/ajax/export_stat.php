@@ -100,8 +100,8 @@ class ExportAjax extends Registry {
                 $path[] = str_replace($this->subcategory_delimiter, '\\'.$this->subcategory_delimiter, $p->name);
             }
             if (isset($purchases[$v->id])) {
-                $price = floatval($purchases[$v->id]->price);
-                $amount = intval($purchases[$v->id]->amount);
+                $price = (float)$purchases[$v->id]->price;
+                $amount = (int)$purchases[$v->id]->amount;
             } else {
                 $price = 0;
                 $amount = 0;

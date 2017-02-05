@@ -51,7 +51,7 @@ class BannersImageAdmin extends Registry {
                 move_uploaded_file($image['tmp_name'], $this->root_dir.$this->config->banners_images_dir.$image['name']);
                 $this->banners->update_banners_image($banners_image->id, array('image'=>$image['name']));
             }
-            $banners_image = $this->banners->get_banners_image(intval($banners_image->id));
+            $banners_image = $this->banners->get_banners_image((int)$banners_image->id);
         } else {
             $banners_image->id = $this->request->get('id', 'integer');
             $banners_image = $this->banners->get_banners_image($banners_image->id);

@@ -252,7 +252,7 @@ class GdImage {
         if(!$img) return false;
 
 		// Rotate the image. We take roation away from 360 as image rotate rotates Counter Clockwise
-		$img = imagerotate($img, (360 - intval($rotateBy)), 0);
+		$img = imagerotate($img, (360 - (int)$rotateBy), 0);
 
 		if($this->saveFile){
             //delete if exist

@@ -44,7 +44,7 @@ class Delivery extends Registry {
         $enabled_filter = '';
         
         if(!empty($filter['enabled'])) {
-            $enabled_filter = $this->db->placehold('AND enabled=?', intval($filter['enabled']));
+            $enabled_filter = $this->db->placehold('AND enabled=?', (int)$filter['enabled']);
         }
         
         $lang_sql = $this->languages->get_query(array('object'=>'delivery'));

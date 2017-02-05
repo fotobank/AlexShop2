@@ -177,11 +177,11 @@ class ImportAjax extends Registry
         }
 
         if (isset($item['visible'])){
-            $product['visible'] = intval($item['visible']);
+            $product['visible'] = (int)$item['visible'];
         }
 
         if (isset($item['featured'])){
-            $product['featured'] = intval($item['featured']);
+            $product['featured'] = (int)$item['featured'];
         }
 
         if (!empty($item['url'])){
@@ -243,7 +243,7 @@ class ImportAjax extends Registry
         }
 
         if (isset($item['currency'])){
-            $variant['currency_id'] = intval($item['currency']);
+            $variant['currency_id'] = (int)$item['currency'];
         }
 
         // Если задан артикул варианта, найдем этот вариант и соответствующий товар
@@ -305,8 +305,8 @@ class ImportAjax extends Registry
 
         if (!empty($variant_id) && !empty($product_id)){
             // Нужно вернуть обновленный товар
-            $imported_item->variant = $this->variants->get_variant(intval($variant_id));
-            $imported_item->product = $this->products->get_product(intval($product_id));
+            $imported_item->variant = $this->variants->get_variant((int)$variant_id);
+            $imported_item->product = $this->products->get_product((int)$product_id);
 
             // Добавляем категории к товару
             if (!empty($categories_ids)){

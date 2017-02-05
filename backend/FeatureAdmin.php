@@ -9,8 +9,8 @@ class FeatureAdmin extends Registry {
         if($this->request->method('post')) {
             $feature->id = $this->request->post('id', 'integer');
             $feature->name = $this->request->post('name');
-            $feature->in_filter = intval($this->request->post('in_filter'));
-            $feature->yandex = intval($this->request->post('yandex'));
+            $feature->in_filter = (int)$this->request->post('in_filter');
+            $feature->yandex = (int)$this->request->post('yandex');
             $feature_categories = $this->request->post('feature_categories');
             $feature->auto_name_id = $this->request->post('auto_name_id');
             $feature->auto_value_id = $this->request->post('auto_value_id');

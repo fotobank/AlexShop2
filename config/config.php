@@ -46,7 +46,7 @@ logfile = admin/log/log.txt;
 smarty_compile_check = true;
 smarty_caching = false;
 smarty_cache_lifetime = 0;
-smarty_debugging = false;
+smarty_debugging = true;
 smarty_html_minify = false;
  
 [images]

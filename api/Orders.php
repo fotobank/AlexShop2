@@ -77,17 +77,17 @@ class Orders extends Registry {
         $date_filter = '';
         
         if(isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
         
         if(isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         
         $sql_limit = $this->db->placehold(' LIMIT ?, ? ', ($page-1)*$limit, $limit);
         
         if(isset($filter['status'])) {
-            $status_filter = $this->db->placehold('AND o.status = ?', intval($filter['status']));
+            $status_filter = $this->db->placehold('AND o.status = ?', (int)$filter['status']);
         }
         
         if(isset($filter['id'])) {
@@ -95,7 +95,7 @@ class Orders extends Registry {
         }
         
         if(isset($filter['user_id'])) {
-            $user_filter = $this->db->placehold('AND o.user_id = ?', intval($filter['user_id']));
+            $user_filter = $this->db->placehold('AND o.user_id = ?', (int)$filter['user_id']);
         }
         
         if(isset($filter['modified_since'])) {
@@ -190,11 +190,11 @@ class Orders extends Registry {
         $date_filter = '';
         
         if(isset($filter['status'])) {
-            $status_filter = $this->db->placehold('AND o.status = ?', intval($filter['status']));
+            $status_filter = $this->db->placehold('AND o.status = ?', (int)$filter['status']);
         }
         
         if(isset($filter['user_id'])) {
-            $user_filter = $this->db->placehold('AND o.user_id = ?', intval($filter['user_id']));
+            $user_filter = $this->db->placehold('AND o.user_id = ?', (int)$filter['user_id']);
         }
         
         if(isset($filter['label'])) {
@@ -246,9 +246,9 @@ class Orders extends Registry {
     }
     
     public function update_order($id, $order) {
-        $query = $this->db->placehold("UPDATE __orders SET ?%, modified=now() WHERE id=? LIMIT 1", $order, intval($id));
+        $query = $this->db->placehold("UPDATE __orders SET ?%, modified=now() WHERE id=? LIMIT 1", $order, (int)$id);
         $this->db->query($query);
-        $this->update_total_price(intval($id));
+        $this->update_total_price((int)$id);
         return $id;
     }
     
@@ -279,7 +279,7 @@ class Orders extends Registry {
     }
     
     public function get_label($id) {
-        $query = $this->db->placehold("SELECT * FROM __labels WHERE id=? LIMIT 1", intval($id));
+        $query = $this->db->placehold("SELECT * FROM __labels WHERE id=? LIMIT 1", (int)$id);
         $this->db->query($query);
         return $this->db->result();
     }
@@ -309,9 +309,9 @@ class Orders extends Registry {
     
     public function delete_label($id) {
         if(!empty($id)) {
-            $query = $this->db->placehold("DELETE FROM __orders_labels WHERE label_id=?", intval($id));
+            $query = $this->db->placehold("DELETE FROM __orders_labels WHERE label_id=?", (int)$id);
             if($this->db->query($query)) {
-                $query = $this->db->placehold("DELETE FROM __labels WHERE id=? LIMIT 1", intval($id));
+                $query = $this->db->placehold("DELETE FROM __labels WHERE id=? LIMIT 1", (int)$id);
                 return $this->db->query($query);
             } else {
                 return false;
@@ -346,7 +346,7 @@ class Orders extends Registry {
     
     public function update_order_labels($id, $labels_ids) {
         $labels_ids = (array)$labels_ids;
-        $query = $this->db->placehold("DELETE FROM __orders_labels WHERE order_id=?", intval($id));
+        $query = $this->db->placehold("DELETE FROM __orders_labels WHERE order_id=?", (int)$id);
         $this->db->query($query);
         if(is_array($labels_ids)) {
             foreach($labels_ids as $l_id) {
@@ -373,7 +373,7 @@ class Orders extends Registry {
     }
     
     public function get_purchase($id) {
-        $query = $this->db->placehold("SELECT * FROM __purchases WHERE id=? LIMIT 1", intval($id));
+        $query = $this->db->placehold("SELECT * FROM __purchases WHERE id=? LIMIT 1", (int)$id);
         $this->db->query($query);
         return $this->db->result();
     }
@@ -396,7 +396,7 @@ class Orders extends Registry {
             return false;
         }
         
-        $order = $this->get_order(intval($old_purchase->order_id));
+        $order = $this->get_order((int)$old_purchase->order_id);
         if(!$order) {
             return false;
         }
@@ -424,7 +424,7 @@ class Orders extends Registry {
             }
         }
         
-        $query = $this->db->placehold("UPDATE __purchases SET ?% WHERE id=? LIMIT 1", $purchase, intval($id));
+        $query = $this->db->placehold("UPDATE __purchases SET ?% WHERE id=? LIMIT 1", $purchase, (int)$id);
         $this->db->query($query);
         $this->update_total_price($order->id);
         return $id;
@@ -437,13 +437,13 @@ class Orders extends Registry {
             if(empty($variant)) {
                 return false;
             }
-            $product = $this->products->get_product(intval($variant->product_id));
+            $product = $this->products->get_product((int)$variant->product_id);
             if(empty($product)) {
                 return false;
             }
         }
         
-        $order = $this->get_order(intval($purchase->order_id));
+        $order = $this->get_order((int)$purchase->order_id);
         if(empty($order)) {
             return false;
         }
@@ -498,7 +498,7 @@ class Orders extends Registry {
             return false;
         }
         
-        $order = $this->get_order(intval($purchase->order_id));
+        $order = $this->get_order((int)$purchase->order_id);
         if(!$order) {
             return false;
         }
@@ -510,14 +510,14 @@ class Orders extends Registry {
             $this->db->query($query);
         }
         
-        $query = $this->db->placehold("DELETE FROM __purchases WHERE id=? LIMIT 1", intval($id));
+        $query = $this->db->placehold("DELETE FROM __purchases WHERE id=? LIMIT 1", (int)$id);
         $this->db->query($query);
         $this->update_total_price($order->id);
         return true;
     }
     
     public function close($order_id) {
-        $order = $this->get_order(intval($order_id));
+        $order = $this->get_order((int)$order_id);
         if(empty($order)) {
             return false;
         }
@@ -553,7 +553,7 @@ class Orders extends Registry {
     }
     
     public function open($order_id) {
-        $order = $this->get_order(intval($order_id));
+        $order = $this->get_order((int)$order_id);
         if(empty($order)) {
             return false;
         }
@@ -574,7 +574,7 @@ class Orders extends Registry {
     }
     
     private function update_total_price($order_id) {
-        $order = $this->get_order(intval($order_id));
+        $order = $this->get_order((int)$order_id);
         if(empty($order)) {
             return false;
         }
@@ -592,7 +592,7 @@ class Orders extends Registry {
         $this->db->query("SELECT MIN(id) as id FROM __orders WHERE id>? $f LIMIT 1", $id);
         $next_id = $this->db->result('id');
         if($next_id) {
-            return $this->get_order(intval($next_id));
+            return $this->get_order((int)$next_id);
         } else {
             return false;
         }
@@ -606,7 +606,7 @@ class Orders extends Registry {
         $this->db->query("SELECT MAX(id) as id FROM __orders WHERE id<? $f LIMIT 1", $id);
         $prev_id = $this->db->result('id');
         if($prev_id) {
-            return $this->get_order(intval($prev_id));
+            return $this->get_order((int)$prev_id);
         } else {
             return false;
         }

@@ -54,7 +54,7 @@ class CategoryAdmin extends Registry {
                     $this->image->delete_image($category->id, 'image', 'categories', $this->config->original_categories_dir, $this->config->resized_categories_dir);
                     $this->categories->update_category($category->id, array('image'=>$filename));
                 }
-                $category = $this->categories->get_category(intval($category->id));
+                $category = $this->categories->get_category((int)$category->id);
             }
         } else {
             $category->id = $this->request->get('id', 'integer');

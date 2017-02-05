@@ -173,7 +173,7 @@ class ReportStat extends Registry {
         }
         
         if (!empty($filter['brand_id'])) {
-            $brand_filter = $this->db->placehold(" AND p.brand_id=? ",intval($filter['brand_id']));
+            $brand_filter = $this->db->placehold(" AND p.brand_id=? ",(int)$filter['brand_id']);
         }
         
         if (isset($filter['date_from']) && !isset($filter['date_to'])) {

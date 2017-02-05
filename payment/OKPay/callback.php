@@ -46,27 +46,27 @@ if($_POST['ok_txn_kind'] !== 'payment_link')
 if($_POST['ok_txn_status'] !== 'completed')
 	my_exit('Invalid ok_txn_status');
 
-if(intval($_POST['ok_ipn_test']) !== 0)
+if((int)$_POST['ok_ipn_test'] !== 0)
 	my_exit('Test ipn');
 
-$order_id = intval($_POST['ok_invoice']);
+$order_id = (int)$_POST['ok_invoice'];
 
 ////////////////////////////////////////////////
 // Выберем заказ из базы
 ////////////////////////////////////////////////
-$order = $registry->orders->get_order(intval($order_id));
+$order = $registry->orders->get_order((int)$order_id);
 if(empty($order))
 	my_exit('Оплачиваемый заказ не найден');
  
 ////////////////////////////////////////////////
 // Выбираем из базы соответствующий метод оплаты
 ////////////////////////////////////////////////
-$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
+$method = $registry->payment->get_payment_method((int)$order->payment_method_id);
 if(empty($method))
 	my_exit("Неизвестный метод оплаты");
 	
 $settings = unserialize($method->settings);
-$payment_currency = $registry->money->get_currency(intval($method->currency_id));
+$payment_currency = $registry->money->get_currency((int)$method->currency_id);
 
 // Проверяем получателя платежа
 if($_POST['ok_reciever'] != $settings['okpay_receiver'])
@@ -85,14 +85,14 @@ if($_POST['ok_item_1_price'] != round($registry->money->convert($order->total_pr
 	
 	       
 // Установим статус оплачен
-$registry->orders->update_order(intval($order->id), array('paid'=>1));
+$registry->orders->update_order((int)$order->id, array('paid'=>1));
 
 // Отправим уведомление на email
-$registry->notify->email_order_user(intval($order->id));
-$registry->notify->email_order_admin(intval($order->id));
+$registry->notify->email_order_user((int)$order->id);
+$registry->notify->email_order_admin((int)$order->id);
 
 // Спишем товары  
-$registry->orders->close(intval($order->id));
+$registry->orders->close((int)$order->id);
 
 // Перенаправим пользователя на страницу заказа
 header('Location: '.$registry->config->root_url.'/order/'.$order->url);

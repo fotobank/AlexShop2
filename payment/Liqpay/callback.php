@@ -29,19 +29,19 @@ if($type !== 'buy')
 ////////////////////////////////////////////////
 // Выберем заказ из базы
 ////////////////////////////////////////////////
-$order = $registry->orders->get_order(intval($order_id));
+$order = $registry->orders->get_order((int)$order_id);
 if(empty($order))
 	die('Оплачиваемый заказ не найден');
  
 ////////////////////////////////////////////////
 // Выбираем из базы соответствующий метод оплаты
 ////////////////////////////////////////////////
-$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
+$method = $registry->payment->get_payment_method((int)$order->payment_method_id);
 if(empty($method))
 	die("Неизвестный метод оплаты");
 	
 $settings = unserialize($method->settings);
-$payment_currency = $registry->money->get_currency(intval($method->currency_id));
+$payment_currency = $registry->money->get_currency((int)$method->currency_id);
 
 // Валюта должна совпадать
 if($currency !== $payment_currency->code)
@@ -60,14 +60,14 @@ if($amount != round($registry->money->convert($order->total_price, $method->curr
 	die("incorrect price");
 	       
 // Установим статус оплачен
-$registry->orders->update_order(intval($order->id), array('paid'=>1));
+$registry->orders->update_order((int)$order->id, array('paid'=>1));
 
 // Отправим уведомление на email
-$registry->notify->email_order_user(intval($order->id));
-$registry->notify->email_order_admin(intval($order->id));
+$registry->notify->email_order_user((int)$order->id);
+$registry->notify->email_order_admin((int)$order->id);
 
 // Спишем товары  
-$registry->orders->close(intval($order->id));
+$registry->orders->close((int)$order->id);
 
 // Перенаправим пользователя на страницу заказа
 // header('Location: '.$registry->config->root_url.'/order/'.$order->url);

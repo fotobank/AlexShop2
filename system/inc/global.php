@@ -771,8 +771,8 @@ function draw_rating($id, $module, $score, $votes, $blocked = null)
         $button_plus = defined('AJAX') ? '' : '<img src="usr/tpl/' . Core::tpl()->tplDir . '/assest/images/engine/up.gif" border="0" alt="' . _PLUS_CARMA . '" title="' . _PLUS_CARMA . '" align="middle" class="_pointer" onclick="do_carma(' . $id . ', 1)" />';
         $button_minus = defined('AJAX') ? '' : '<img src="usr/tpl/' . Core::tpl()->tplDir . '/assest/images/engine/down.gif" border="0" alt="' . _MINUS_CARMA . '" title="' . _MINUS_CARMA . '" align="middle" class="_pointer" onclick="do_carma(' . $id . ', 2)" />';
         $summ = $news_conf['carma_summ'] ? (((int)$score - $votes) > 0 ? '<span class="rating_plus">+' . ((int)$score - $votes) . '</span>' :
-            (((int)$score - $votes) == 0 ? '<span class="rating_zero">0</span>' : '<span class="rating_minus">' . ((int)($score) - $votes) . '</span>')) : (($score + $votes) > 0 ? '<span class="rating_plus">' . ($score > 0 ? '+' . (int)($score) :
-                (int)($score)) . '</span> <span class="rating_minus">' . ($votes > 0 ? '-' . $votes : $votes) . '</span>' : '<span class="rating_zero">0</span>');
+            (((int)$score - $votes) == 0 ? '<span class="rating_zero">0</span>' : '<span class="rating_minus">' . ((int)$score - $votes) . '</span>')) : (($score + $votes) > 0 ? '<span class="rating_plus">' . ($score > 0 ? '+' . (int)$score :
+                (int)$score) . '</span> <span class="rating_minus">' . ($votes > 0 ? '-' . $votes : $votes) . '</span>' : '<span class="rating_zero">0</span>');
 
         $rating = '<div id="rating' . $id . '" class="rating_layer">' . $button_plus . $summ . $button_minus . '</div>';
         return $rating;
@@ -1616,7 +1616,7 @@ function addnewsShow($is, $content)
 function fullnewsShow($is, $content)
 {
     $url = Core::getUrl();
-    $is = (int)($is);
+    $is = (int)$is;
 
     if ($is > 0) {
         if (eregStrt('.html', $url[1]) || eregStrt('.html', $url[2])) {
@@ -1648,7 +1648,7 @@ function buildCustom($category = '', $template = '', $aviable = '', $limit = '',
     $category = filter($category, 'a');
     $template = filter($template, 'a');
     $aviable = filter($aviable, 'a');
-    $limit = (int)($limit);
+    $limit = (int)$limit;
     $module = filter($module, 'module');
 
     if (!empty($category) && !empty($template) && !empty($aviable) && ($limit > 0) && !empty($module) && file_exists(ROOT . 'usr/modules/' . $module . '/custom.php')) {

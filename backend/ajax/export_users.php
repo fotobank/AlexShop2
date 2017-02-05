@@ -7,7 +7,7 @@ class ExportAjax extends Registry {
     private $columns_names = array(
         'name'=>             'Имя',
         'email'=>            'Email',
-        'group_name'=>            'Группа',
+        'group_name'=>       'Группа',
         'discount'=>         'Скидка',
         'enabled'=>          'Активен',
         'created'=>          'Дата',
@@ -41,7 +41,7 @@ class ExportAjax extends Registry {
         
         // Открываем файл экспорта на добавление
         $f = fopen($this->export_files_dir.$this->filename, 'ab');
-        
+
         // Если начали сначала - добавим в первую строку названия колонок
         if($page == 1) {
             fputcsv($f, $this->columns_names, $this->column_delimiter);
@@ -51,7 +51,7 @@ class ExportAjax extends Registry {
         $filter['page'] = $page;
         $filter['limit'] = $this->users_count;
         if($this->request->get('group_id')) {
-            $filter['group_id'] = intval($this->request->get('group_id'));
+            $filter['group_id'] = (int)$this->request->get('group_id');
         }
         $filter['sort'] = $this->request->get('sort');
         $filter['keyword'] = $this->request->get('keyword');
@@ -73,7 +73,7 @@ class ExportAjax extends Registry {
         } else {
             return array('end'=>true, 'page'=>$page, 'totalpages'=>$total_users/$this->users_count);
         }
-        
+
         fclose($f);
     }
     

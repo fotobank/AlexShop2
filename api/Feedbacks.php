@@ -16,7 +16,7 @@ class Feedbacks extends Registry {
         if (empty($id)) {
             return false;
         }
-        $feedback_id_filter = $this->db->placehold('AND f.id=?', intval($id));
+        $feedback_id_filter = $this->db->placehold('AND f.id=?', (int)$id);
         $query = $this->db->placehold("SELECT 
                 f.id, 
                 f.name, 
@@ -45,7 +45,7 @@ class Feedbacks extends Registry {
         $keyword_filter = '';
         $processed = '';
         if(isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
 
         if(isset($filter['processed'])) {
@@ -53,7 +53,7 @@ class Feedbacks extends Registry {
         }
 
         if(isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         $sql_limit = $this->db->placehold(' LIMIT ?, ? ', ($page-1)*$limit, $limit);
         
@@ -141,7 +141,7 @@ class Feedbacks extends Registry {
     
     public function delete_feedback($id) {
         if(!empty($id)) {
-            $query = $this->db->placehold("DELETE FROM __feedbacks WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __feedbacks WHERE id=? LIMIT 1", (int)$id);
             $this->db->query($query);
         }
     }

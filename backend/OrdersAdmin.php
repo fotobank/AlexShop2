@@ -33,7 +33,7 @@ class OrdersAdmin extends Registry {
                 switch($this->request->post('action')) {
                     case 'delete': {
                         foreach($ids as $id) {
-                            $o = $this->orders->get_order(intval($id));
+                            $o = $this->orders->get_order((int)$id);
                             if($o->status<3) {
                                 $this->orders->update_order($id, array('status'=>3));
                                 $this->orders->open($id);
@@ -45,7 +45,7 @@ class OrdersAdmin extends Registry {
                     }
                     case 'set_status_0': {
                         foreach($ids as $id) {
-                            if($this->orders->open(intval($id))) {
+                            if($this->orders->open((int)$id)) {
                                 $this->orders->update_order($id, array('status'=>0));
                             }
                         }
@@ -53,7 +53,7 @@ class OrdersAdmin extends Registry {
                     }
                     case 'set_status_1': {
                         foreach($ids as $id) {
-                            if(!$this->orders->close(intval($id))) {
+                            if(!$this->orders->close((int)$id)) {
                                 $this->design->assign('message_error', 'error_closing');
                             } else {
                                 $this->orders->update_order($id, array('status'=>1));
@@ -63,7 +63,7 @@ class OrdersAdmin extends Registry {
                     }
                     case 'set_status_2': {
                         foreach($ids as $id) {
-                            if(!$this->orders->close(intval($id))) {
+                            if(!$this->orders->close((int)$id)) {
                                 $this->design->assign('message_error', 'error_closing');
                             } else {
                                 $this->orders->update_order($id, array('status'=>2));
@@ -72,7 +72,7 @@ class OrdersAdmin extends Registry {
                         break;
                     }
                     case(preg_match('/^set_label_([0-9]+)/', $this->request->post('action'), $a) ? true : false): {
-                        $l_id = intval($a[1]);
+                        $l_id = (int)$a[1];
                         if($l_id>0) {
                             foreach($ids as $id) {
                                 $this->orders->add_order_labels($id, $l_id);
@@ -81,7 +81,7 @@ class OrdersAdmin extends Registry {
                         break;
                     }
                     case(preg_match('/^unset_label_([0-9]+)/', $this->request->post('action'), $a) ? true : false): {
-                        $l_id = intval($a[1]);
+                        $l_id = (int)$a[1];
                         if($l_id>0) {
                             foreach($ids as $id) {
                                 $this->orders->delete_order_labels($id, $l_id);

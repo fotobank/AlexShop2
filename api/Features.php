@@ -20,7 +20,7 @@ class Features extends Registry {
         
         $in_filter_filter = '';
         if(isset($filter['in_filter'])) {
-            $in_filter_filter = $this->db->placehold('AND f.in_filter=?', intval($filter['in_filter']));
+            $in_filter_filter = $this->db->placehold('AND f.in_filter=?', (int)$filter['in_filter']);
         }
         
         $id_filter = '';
@@ -57,7 +57,7 @@ class Features extends Registry {
             return false;
         }
         if (is_int($id)) {
-            $feature_id_filter = $this->db->placehold('AND f.id=?', intval($id));
+            $feature_id_filter = $this->db->placehold('AND f.id=?', (int)$id);
         } else {
             $feature_id_filter = $this->db->placehold('AND f.url=?', $id);
         }
@@ -129,7 +129,7 @@ class Features extends Registry {
         if (isset($feature['name']) && !empty($feature['name']) && !is_array($id)) {
             $old_feature = $this->get_feature($id);
             if ($old_feature->name != $feature['name']) {
-                $this->db->query('select product_id from __options where feature_id=?', intval($id));
+                $this->db->query('select product_id from __options where feature_id=?', (int)$id);
                 $p_ids = $this->db->results('product_id');
                 if (!empty($p_ids)) {
                     $this->db->query('update __products set last_modify=now() where id in(?@)', $p_ids);
@@ -154,19 +154,19 @@ class Features extends Registry {
     public function delete_feature($id = array()) {
         if(!empty($id)) {
             //lastModify
-            $this->db->query('select product_id from __options where feature_id=?', intval($id));
+            $this->db->query('select product_id from __options where feature_id=?', (int)$id);
             $p_ids = $this->db->results('product_id');
             if (!empty($p_ids)) {
                 $this->db->query('update __products set last_modify=now() where id in(?@)', $p_ids);
             }
             
-            $query = $this->db->placehold("DELETE FROM __features WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __features WHERE id=? LIMIT 1", (int)$id);
             $this->db->query($query);
-            $query = $this->db->placehold("DELETE FROM __options WHERE feature_id=?", intval($id));
+            $query = $this->db->placehold("DELETE FROM __options WHERE feature_id=?", (int)$id);
             $this->db->query($query);
-            $query = $this->db->placehold("DELETE FROM __categories_features WHERE feature_id=?", intval($id));
+            $query = $this->db->placehold("DELETE FROM __categories_features WHERE feature_id=?", (int)$id);
             $this->db->query($query);
-            $this->db->query("DELETE FROM __lang_features WHERE feature_id=?", intval($id));
+            $this->db->query("DELETE FROM __lang_features WHERE feature_id=?", (int)$id);
         }
     }
     
@@ -177,7 +177,7 @@ class Features extends Registry {
             $lang_id_filter = $this->db->placehold("AND lang_id=?", $lang_id);
         }
         
-        $query = $this->db->placehold("DELETE FROM __options WHERE product_id=? AND feature_id=? $lang_id_filter LIMIT 1", intval($product_id), intval($feature_id));
+        $query = $this->db->placehold("DELETE FROM __options WHERE product_id=? AND feature_id=? $lang_id_filter LIMIT 1", (int)$product_id, (int)$feature_id);
         $this->db->query($query);
     }
     
@@ -192,10 +192,10 @@ class Features extends Registry {
         $translit = $this->db->placehold("translit=?, ", ($translit != '' ? $translit : $this->translit_alpha($value)));
         
         if($value != '') {
-            $query = $this->db->placehold("REPLACE INTO __options SET $into_lang $translit value=?, product_id=?, feature_id=?", $value, intval($product_id), intval($feature_id));
+            $query = $this->db->placehold("REPLACE INTO __options SET $into_lang $translit value=?, product_id=?, feature_id=?", $value, (int)$product_id, (int)$feature_id);
             $this->db->query($query);
         } else {
-            $query = $this->db->placehold("DELETE FROM __options WHERE feature_id=? AND product_id=? $lang_id_filter", intval($feature_id), intval($product_id));
+            $query = $this->db->placehold("DELETE FROM __options WHERE feature_id=? AND product_id=? $lang_id_filter", (int)$feature_id, (int)$product_id);
             $this->db->query($query);
         }
         return true;
@@ -216,28 +216,28 @@ class Features extends Registry {
                 $this->db->query('select o.product_id 
                     from __options o
                     inner join s_products_categories pc on(pc.product_id=o.product_id)
-                    where o.feature_id=? and pc.category_id in(?@) group by o.product_id', intval($id), $diff);
+                    where o.feature_id=? and pc.category_id in(?@) group by o.product_id', (int)$id, $diff);
                 $p_ids = $this->db->results('product_id');
                 if (!empty($p_ids)) {
                     $this->db->query('update __products set last_modify=now() where id in(?@)', $p_ids);
                 }
             }
         } else {
-            $this->db->query('select product_id from __options where feature_id=?', intval($id));
+            $this->db->query('select product_id from __options where feature_id=?', (int)$id);
             $p_ids = $this->db->results('product_id');
             if (!empty($p_ids)) {
                 $this->db->query('update __products set last_modify=now() where id in(?@)', $p_ids);
             }
         }
         
-        $id = intval($id);
+        $id = (int)$id;
         $query = $this->db->placehold("DELETE FROM __categories_features WHERE feature_id=?", $id);
         $this->db->query($query);
         
         if(is_array($categories)) {
             $values = array();
             foreach($categories as $category) {
-                $values[] = "($id , ".intval($category).")";
+                $values[] = "($id , ".(int)$category.")";
             }
             
             $query = $this->db->placehold("INSERT INTO __categories_features (feature_id, category_id) VALUES ".implode(', ', $values));
@@ -288,7 +288,7 @@ class Features extends Registry {
         }
         
         if(isset($filter['visible'])) {
-            $visible_filter = $this->db->placehold('INNER JOIN __products p ON p.id=po.product_id AND visible=?', intval($filter['visible']));
+            $visible_filter = $this->db->placehold('INNER JOIN __products p ON p.id=po.product_id AND visible=?', (int)$filter['visible']);
         }
         
         if(isset($filter['brand_id'])) {
@@ -338,7 +338,7 @@ class Features extends Registry {
         }
         $yandex_filter = '';
         if (isset($filter['yandex'])) {
-            $yandex_filter = $this->db->placehold("AND f.yandex=?", intval($filter['yandex']));
+            $yandex_filter = $this->db->placehold("AND f.yandex=?", (int)$filter['yandex']);
         }
         
         $lang_id  = $this->languages->lang_id();

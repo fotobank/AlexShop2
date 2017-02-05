@@ -124,9 +124,9 @@ class Money extends Registry {
     
     public function delete_currency($id) {
         if(!empty($id)) {
-            $query = $this->db->placehold("DELETE FROM __currencies WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __currencies WHERE id=? LIMIT 1", (int)$id);
             $this->db->query($query);
-            $this->db->query("DELETE FROM __lang_currencies WHERE currency_id=? LIMIT 1", intval($id));
+            $this->db->query("DELETE FROM __lang_currencies WHERE currency_id=? LIMIT 1", (int)$id);
         }
         $this->init_currencies();
     }

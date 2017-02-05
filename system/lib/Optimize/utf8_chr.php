@@ -13,7 +13,7 @@
 function utf8_chr($cp) # = utf8_from_unicode() or unicode_to_utf8()
 {
     static $cache = array();
-    $cp = intval($cp);
+    $cp = (int)$cp;
     if (array_key_exists($cp, $cache)) return $cache[$cp]; #speed improve
 
     if ($cp <= 0x7f)     return $cache[$cp] = chr($cp);

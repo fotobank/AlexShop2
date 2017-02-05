@@ -14,14 +14,14 @@ $invoice_id = $registry->request->post('invoiceId', 'string');
 ////////////////////////////////////////////////
 // Выберем заказ из базы
 ////////////////////////////////////////////////
-$order = $registry->orders->get_order(intval($order_id));
+$order = $registry->orders->get_order((int)$order_id);
 if(empty($order))
 	print_error('Оплачиваемый заказ не найден');
  
 ////////////////////////////////////////////////
 // Выбираем из базы соответствующий метод оплаты
 ////////////////////////////////////////////////
-$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
+$method = $registry->payment->get_payment_method((int)$order->payment_method_id);
 if(empty($method))
 	print_error("Неизвестный метод оплаты");
  
@@ -58,10 +58,10 @@ if(floatval($order_amount) !== floatval($_POST['orderSumAmount']))
 ////////////////////////////////////
 // Проверка наличия товара
 ////////////////////////////////////
-$purchases = $registry->orders->get_purchases(array('order_id'=>intval($order->id)));
+$purchases = $registry->orders->get_purchases(array('order_id'=>(int)$order->id));
 foreach($purchases as $purchase)
 {
-	$variant = $registry->variants->get_variant(intval($purchase->variant_id));
+	$variant = $registry->variants->get_variant((int)$purchase->variant_id);
 	if(empty($variant) || (!$variant->infinity && $variant->stock < $purchase->amount))
 	{
 		print_error("Нехватка товара $purchase->product_name $purchase->variant_name");
@@ -72,12 +72,12 @@ foreach($purchases as $purchase)
 if($_POST['action'] == 'paymentAviso')
 {
 	// Установим статус оплачен
-	$registry->orders->update_order(intval($order->id), array('paid'=>1));
+	$registry->orders->update_order((int)$order->id, array('paid'=>1));
 
 	// Спишем товары  
-	$registry->orders->close(intval($order->id));
-	$registry->notify->email_order_user(intval($order->id));
-	$registry->notify->email_order_admin(intval($order->id));
+	$registry->orders->close((int)$order->id);
+	$registry->notify->email_order_user((int)$order->id);
+	$registry->notify->email_order_admin((int)$order->id);
 	
 	$datetime = new DateTime();
 	$performedDatetime = $datetime->format('c');
@@ -101,8 +101,8 @@ function print_error($text)
 {
 	$datetime = new DateTime();
 	$performedDatetime = $datetime->format('c');
-	$shop_id = intval($_POST['shopId']);
-	$invoice_id = intval($_POST['invoiceId']);
+	$shop_id = (int)$_POST['shopId'];
+	$invoice_id = (int)$_POST['invoiceId'];
 	
 	$responce = '';
 	$action = $_POST['action'];

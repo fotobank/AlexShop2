@@ -54,11 +54,11 @@ class Coupons extends Registry {
         $keyword_filter = '';
         
         if(isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
         
         if(isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         
         if(!empty($filter['id'])) {
@@ -171,7 +171,7 @@ class Coupons extends Registry {
     
     public function delete_coupon($id) {
         if(!empty($id)) {
-            $query = $this->db->placehold("DELETE FROM __coupons WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __coupons WHERE id=? LIMIT 1", (int)$id);
             return $this->db->query($query);
         }
     }

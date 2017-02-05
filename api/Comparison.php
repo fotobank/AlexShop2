@@ -24,7 +24,7 @@ class Comparison extends Registry {
             $session_items = $_SESSION['comparison'];
             $products = array();
             foreach($session_items as $v) {
-                $products[intval($v)]=$this->products->get_product(intval($v));
+                $products[(int)$v]=$this->products->get_product((int)$v);
             }
             if(!empty($products)) {
                 $products_ids = array_keys($products);

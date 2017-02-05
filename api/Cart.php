@@ -60,7 +60,7 @@ class Cart extends Registry {
                 
                 // Пользовательская скидка
                 $cart->discount = 0;
-                if(isset($_SESSION['user_id']) && $user = $this->users->get_user(intval($_SESSION['user_id']))) {
+                if(isset($_SESSION['user_id']) && $user = $this->users->get_user((int)$_SESSION['user_id'])) {
                     $cart->discount = $user->discount;
                 }
                 
@@ -98,7 +98,7 @@ class Cart extends Registry {
             }
             // Не дадим больше чем на складе
             $amount = min($amount, ($variant->stock ? $variant->stock : min($this->settings->max_order_amount, $amount)));
-            $_SESSION['shopping_cart'][$variant_id] = intval($amount);
+            $_SESSION['shopping_cart'][$variant_id] = (int)$amount;
         }
     }
     
@@ -110,7 +110,7 @@ class Cart extends Registry {
             $amount = max(1, $amount);
             // Не дадим больше чем на складе
             $amount = min($amount, ($variant->stock ? $variant->stock : min($this->settings->max_order_amount, $amount)));
-            $_SESSION['shopping_cart'][$variant_id] = intval($amount);
+            $_SESSION['shopping_cart'][$variant_id] = (int)$amount;
         }
     }
     

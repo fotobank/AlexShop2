@@ -36,7 +36,7 @@ class BannerAdmin extends Registry {
         } else {
             $id = $this->request->get('id', 'integer');
             if(!empty($id)) {
-                $banner = $this->banners->get_banner(intval($id));
+                $banner = $this->banners->get_banner((int)$id);
                 $banner->category_selected = explode(",",$banner->categories);//Создаем массив категорий
                 $banner->brand_selected = explode(",",$banner->brands);//Создаем массив брендов
                 $banner->page_selected = explode(",",$banner->pages);//Создаем массив страниц

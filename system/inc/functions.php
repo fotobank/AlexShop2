@@ -1722,7 +1722,7 @@ function translate($_str)
  */
 function is_ajax()
 {
-    return !empty($_SERVER['HTTP_X_REQUESTED_WITH'])
+    return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH'])
     && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 }
 
@@ -1809,7 +1809,7 @@ function image64($url, $alt = '')
  */
 function endofstr($s, $k)
 {
-    $v   = (int)($s);
+    $v   = (int)$s;
     $len = strlen($v);
     $arr = [
         'sec'  => ['секунд', 'секунда', 'секунды'],
@@ -1821,9 +1821,9 @@ function endofstr($s, $k)
         'ammo' => ['патронов', 'патрон', 'патрона'],
         'card' => ['карт', 'карта', 'карты'],
     ];
-    $s   = $len <= 2 ? (int)($s) : substr($s, ($len - ($len - 2)));
-    $s   = ($s > 14) ? substr($s, -1) : intval($s);
-    $s   = ($s > 0 && $s < 3) ? (int)($s) : ($s > 2 && $s < 5 ? 2 : 0);
+    $s   = $len <= 2 ? (int)$s : substr($s, ($len - ($len - 2)));
+    $s   = ($s > 14) ? substr($s, -1) : (int)$s;
+    $s   = ($s > 0 && $s < 3) ? (int)$s : ($s > 2 && $s < 5 ? 2 : 0);
 
     return $v . ' ' . $arr[$k][$s] . ' ';
 }

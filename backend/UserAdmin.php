@@ -25,7 +25,7 @@ class UserAdmin extends Registry {
             } else {
                 $user->id = $this->users->update_user($user->id, $user);
                 $this->design->assign('message_success', 'updated');
-                $user = $this->users->get_user(intval($user->id));
+                $user = $this->users->get_user((int)$user->id);
             }
         } elseif($this->request->post('check')) {
             // Действия с выбранными
@@ -34,7 +34,7 @@ class UserAdmin extends Registry {
                 switch($this->request->post('action')) {
                     case 'delete': {
                         foreach($ids as $id) {
-                            $o = $this->orders->get_order(intval($id));
+                            $o = $this->orders->get_order((int)$id);
                             if($o->status<3) {
                                 $this->orders->update_order($id, array('status'=>3, 'user_id'=>null));
                                 $this->orders->open($id);
@@ -50,7 +50,7 @@ class UserAdmin extends Registry {
         
         $id = $this->request->get('id', 'integer');
         if(!empty($id)) {
-            $user = $this->users->get_user(intval($id));
+            $user = $this->users->get_user((int)$id);
         }
         
         if(!empty($user)) {

@@ -112,7 +112,7 @@ class Banners extends Registry {
         }
         
         if(isset($filter['visible'])) {
-            $visible_filter = $this->db->placehold('AND bi.visible=?', (int)($filter['visible']));
+            $visible_filter = $this->db->placehold('AND bi.visible=?', (int)$filter['visible']);
         }
         
         $query = "SELECT count(distinct bi.id) as count 
@@ -133,7 +133,7 @@ class Banners extends Registry {
         if(!is_int($id)) {
            return false;
         }
-        $banner_id_filter = $this->db->placehold("AND bi.id=?", (int)($id));
+        $banner_id_filter = $this->db->placehold("AND bi.id=?", (int)$id);
         
         $lang_sql = $this->languages->get_query(array('object'=>'banner_image', 'px'=>'bi'));
         $query = $this->db->placehold("SELECT 
@@ -227,7 +227,7 @@ class Banners extends Registry {
         $banners = array();
         
         if(isset($filter['visible'])) {
-            $visible_filter = $this->db->placehold('AND visible = ?', (int)($filter['visible']));
+            $visible_filter = $this->db->placehold('AND visible = ?', (int)$filter['visible']);
         }
         
         $query = "SELECT * FROM __banners WHERE 1 $visible_filter ORDER BY position";

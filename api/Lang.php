@@ -515,7 +515,7 @@ class Lang extends Registry
     public function delete_translation($id)
     {
         if (!empty($id)){
-            $query = $this->db->placehold("DELETE FROM __translations WHERE id=? LIMIT 1", (int)($id));
+            $query = $this->db->placehold("DELETE FROM __translations WHERE id=? LIMIT 1", (int)$id);
             $this->db->query($query);
         }
     }
@@ -539,6 +539,7 @@ class Lang extends Registry
 
         $this->db->dump_table('s_translations', $filename);
         //chmod($filename, 0777);
+        fclose($filename);
     }
     /* Translation end */
 

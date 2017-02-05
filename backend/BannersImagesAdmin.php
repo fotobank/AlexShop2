@@ -74,7 +74,7 @@ class BannersImagesAdmin extends Registry {
                     }
                     /*case 'duplicate': {
                         foreach($ids as $id) {
-                            $this->banners->duplicate_banners_image(intval($id));
+                            $this->banners->duplicate_banners_image((int)$id);
                         }
                         break;
                     }*/

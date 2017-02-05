@@ -14,14 +14,14 @@ $registry = new Registry();
 
 
 // Get the order
-$order = $registry->orders->get_order(intval($registry->request->post('invoice')));
+$order = $registry->orders->get_order((int)$registry->request->post('invoice'));
 if(empty($order))
 	die('Order not found');
  
 // Get payment method from this order
-$method = $registry->payment->get_payment_method(intval($order->payment_method_id));
+$method = $registry->payment->get_payment_method((int)$order->payment_method_id);
 if(empty($method))
-	die("Unknown payment method");
+	die('Unknown payment method');
 
 // Payment method settings
 $settings = unserialize($method->settings);
@@ -68,7 +68,7 @@ if($order->paid)
 $total_price = 0;
 
 // Get order purchases
-$purchases = $registry->orders->get_purchases(array('order_id'=>intval($order->id)));
+$purchases = $registry->orders->get_purchases(array('order_id'=>(int)$order->id));
 foreach($purchases as $purchase)
 {			
 	$price = $registry->money->convert($purchase->price, $method->currency_id, false);
@@ -92,12 +92,12 @@ if($total_price != $registry->request->post('mc_gross'))
 	die("Incorrect total price (".$total_price."!=".$registry->request->post('mc_gross').")");
        
 // Set order status paid
-$registry->orders->update_order(intval($order->id), array('paid'=>1));
+$registry->orders->update_order((int)$order->id, array('paid'=>1));
 
 // Write off products
-$registry->orders->close(intval($order->id));
-$registry->notify->email_order_user(intval($order->id));
-$registry->notify->email_order_admin(intval($order->id));
+$registry->orders->close((int)$order->id);
+$registry->notify->email_order_user((int)$order->id);
+$registry->notify->email_order_admin((int)$order->id);
 
 
 function logg($str)

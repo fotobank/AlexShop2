@@ -40,8 +40,8 @@ class Categories extends Registry {
         }
         
         $parent = null;
-        if (!empty($filter['parent_id']) && isset($this->all_categories[intval($filter['parent_id'])])) {
-            $parent = $this->all_categories[intval($filter['parent_id'])];
+        if (!empty($filter['parent_id']) && isset($this->all_categories[(int)$filter['parent_id']])) {
+            $parent = $this->all_categories[(int)$filter['parent_id']];
         }
         
         if (!empty($filter['level_depth'])) {
@@ -54,7 +54,7 @@ class Categories extends Registry {
                 from __categories c 
                 where c.level_depth=? 
                 $parent_filter 
-                order by c.name", intval($filter['level_depth']));
+                order by c.name", (int)$filter['level_depth']);
             $result = array();
             foreach ($this->db->results('id') as $cid) {
                 if (isset($this->all_categories[$cid])) {
@@ -92,8 +92,8 @@ class Categories extends Registry {
         if(!isset($this->all_categories)) {
             $this->init_categories();
         }
-        if(is_int($id) && array_key_exists(intval($id), $this->all_categories)) {
-            return $category = $this->all_categories[intval($id)];
+        if(is_int($id) && array_key_exists((int)$id, $this->all_categories)) {
+            return $category = $this->all_categories[(int)$id];
         } elseif(is_string($id)) {
             foreach ($this->all_categories as $category) {
                 if ($category->url == $id) {
@@ -148,7 +148,7 @@ class Categories extends Registry {
     private function update_level_depth($id, $prev_level = 1) {
         if ($this->all_categories[$id]->subcategories) {
             foreach ($this->all_categories[$id]->subcategories as $sub_cat) {
-                $this->db->query("UPDATE __categories SET level_depth=? WHERE id=? LIMIT 1", $prev_level+1, intval($sub_cat->id));
+                $this->db->query("UPDATE __categories SET level_depth=? WHERE id=? LIMIT 1", $prev_level+1, (int)$sub_cat->id);
                 $this->update_level_depth($sub_cat->id, $prev_level+1);
             }
         }
@@ -170,7 +170,7 @@ class Categories extends Registry {
         $result = $this->languages->get_description($category, 'category');
         
         $category->last_modify = date("Y-m-d H:i:s");
-        $query = $this->db->placehold("UPDATE __categories SET ?% WHERE id=? LIMIT 1", $category, intval($id));
+        $query = $this->db->placehold("UPDATE __categories SET ?% WHERE id=? LIMIT 1", $category, (int)$id);
         $this->db->query($query);
         
         if(!empty($result->description)) {
@@ -204,13 +204,13 @@ class Categories extends Registry {
     }
     
     public function add_product_category($product_id, $category_id, $position=0) {
-        $this->db->query('update __categories set last_modify=now() where id=?', intval($category_id));
+        $this->db->query('update __categories set last_modify=now() where id=?', (int)$category_id);
         $query = $this->db->placehold('INSERT IGNORE INTO __products_categories SET product_id=?, category_id=?, position=?', $product_id, $category_id, $position);
         $this->db->query($query);
     }
     
     public function delete_product_category($product_id, $category_id) {
-        $this->db->query('update __categories set last_modify=now() where id=?', intval($category_id));
+        $this->db->query('update __categories set last_modify=now() where id=?', (int)$category_id);
         $query = $this->db->placehold('DELETE FROM __products_categories WHERE product_id=? AND category_id=? LIMIT 1', (int)$product_id, (int)$category_id);
         $this->db->query($query);
     }

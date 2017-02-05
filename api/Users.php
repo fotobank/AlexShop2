@@ -22,11 +22,11 @@ class Users extends Registry {
         $keyword_filter = '';
         
         if(isset($filter['limit'])) {
-            $limit = max(1, intval($filter['limit']));
+            $limit = max(1, (int)$filter['limit']);
         }
         
         if(isset($filter['page'])) {
-            $page = max(1, intval($filter['page']));
+            $page = max(1, (int)$filter['page']);
         }
         
         if(isset($filter['group_id'])) {
@@ -122,7 +122,7 @@ class Users extends Registry {
         if(gettype($id) == 'string') {
             $where = $this->db->placehold('AND u.email=? ', $id);
         } else {
-            $where = $this->db->placehold('AND u.id=? ', intval($id));
+            $where = $this->db->placehold('AND u.id=? ', (int)$id);
         }
         
         // Выбираем пользователя
@@ -178,17 +178,17 @@ class Users extends Registry {
         if(isset($user['password'])) {
             $user['password'] = md5($this->salt.$user['password'].md5($user['password']));
         }
-        $query = $this->db->placehold("UPDATE __users SET ?% WHERE id=? LIMIT 1", $user, intval($id));
+        $query = $this->db->placehold("UPDATE __users SET ?% WHERE id=? LIMIT 1", $user, (int)$id);
         $this->db->query($query);
         return $id;
     }
     
     public function delete_user($id) {
         if(!empty($id)) {
-            $query = $this->db->placehold("UPDATE __orders SET user_id=0 WHERE user_id=?", intval($id));
+            $query = $this->db->placehold("UPDATE __orders SET user_id=0 WHERE user_id=?", (int)$id);
             $this->db->query($query);
             
-            $query = $this->db->placehold("DELETE FROM __users WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __users WHERE id=? LIMIT 1", (int)$id);
             if($this->db->query($query)) {
                 return true;
             }
@@ -219,17 +219,17 @@ class Users extends Registry {
     }
     
     public function update_group($id, $group) {
-        $query = $this->db->placehold("UPDATE __groups SET ?% WHERE id=? LIMIT 1", $group, intval($id));
+        $query = $this->db->placehold("UPDATE __groups SET ?% WHERE id=? LIMIT 1", $group, (int)$id);
         $this->db->query($query);
         return $id;
     }
     
     public function delete_group($id) {
         if(!empty($id)) {
-            $query = $this->db->placehold("UPDATE __users SET group_id=NULL WHERE group_id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("UPDATE __users SET group_id=NULL WHERE group_id=? LIMIT 1", (int)$id);
             $this->db->query($query);
             
-            $query = $this->db->placehold("DELETE FROM __groups WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __groups WHERE id=? LIMIT 1", (int)$id);
             if($this->db->query($query)) {
                 return true;
             }

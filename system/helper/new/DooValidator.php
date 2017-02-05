@@ -852,7 +852,7 @@ class DooValidator {
      * @return string
      */
     public function testInteger($value, $msg=null){
-        if(intval($value)!=$value || strlen(intval($value))!=strlen($value)){
+        if((int)$value!=$value || strlen((int)$value)!=strlen($value)){
             if($msg!==null) return $msg;
             return 'Input is not an integer.';
         }

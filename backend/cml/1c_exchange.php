@@ -56,7 +56,7 @@ if($registry->request->get('type') == 'sale' && $registry->request->get('mode') 
         $order = new \stdClass;
         
         $order->id = $xml_order->Номер;
-        $existed_order = $registry->orders->get_order((int)($order->id));
+        $existed_order = $registry->orders->get_order((int)$order->id);
         
         $order->date = $xml_order->Дата.' '.$xml_order->Время;
         $order->name = $xml_order->Контрагенты->Контрагент->Наименование;
@@ -132,7 +132,7 @@ if($registry->request->get('type') == 'sale' && $registry->request->get('mode') 
             $purchases_ids[] = $purchase_id;
         }
         // Удалим покупки, которых нет в файле
-        foreach($registry->orders->get_purchases(array('order_id'=>(int)($order->id))) as $purchase) {
+        foreach($registry->orders->get_purchases(array('order_id'=>(int)$order->id)) as $purchase) {
             if(!in_array($purchase->id, $purchases_ids)) {
                 $registry->orders->delete_purchase($purchase->id);
             }

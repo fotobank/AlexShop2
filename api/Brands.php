@@ -58,7 +58,7 @@ class Brands extends Registry {
             return false;
         }
         if(is_int($id)) {
-            $filter = $this->db->placehold('AND b.id = ?', intval($id));
+            $filter = $this->db->placehold('AND b.id = ?', (int)$id);
         } else {
             $filter = $this->db->placehold('AND b.url = ?', $id);
         }

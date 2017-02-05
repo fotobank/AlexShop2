@@ -73,7 +73,7 @@ class PostAdmin extends Registry {
             }
         } else {
             $post->id = $this->request->get('id', 'integer');
-            $post = $this->blog->get_post(intval($post->id));
+            $post = $this->blog->get_post((int)$post->id);
             // Связанные товары
             if($post->id) {
                 $related_products = $this->blog->get_related_products(array('post_id' => $post->id));

@@ -155,10 +155,10 @@ class Variants extends Registry {
     public function delete_variant($id) {
         if(!empty($id)) {
             $this->delete_attachment($id);
-            $query = $this->db->placehold("DELETE FROM __variants WHERE id = ? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __variants WHERE id = ? LIMIT 1", (int)$id);
             $this->db->query($query);
-            $this->db->query('UPDATE __purchases SET variant_id=NULL WHERE variant_id=?', intval($id));
-            $this->db->query("DELETE FROM __lang_variants WHERE variant_id = ?", intval($id));
+            $this->db->query('UPDATE __purchases SET variant_id=NULL WHERE variant_id=?', (int)$id);
+            $this->db->query("DELETE FROM __lang_variants WHERE variant_id = ?", (int)$id);
         }
     }
     

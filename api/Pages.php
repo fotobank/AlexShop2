@@ -16,7 +16,7 @@ class Pages extends Registry {
         if(gettype($id) == 'string') {
             $where = $this->db->placehold('AND p.url=? ', $id);
         } else {
-            $where = $this->db->placehold('AND p.id=? ', intval($id));
+            $where = $this->db->placehold('AND p.id=? ', (int)$id);
         }
         
         $lang_sql = $this->languages->get_query(array('object'=>'page'));
@@ -51,7 +51,7 @@ class Pages extends Registry {
         }
         
         if(isset($filter['visible'])) {
-            $visible_filter = $this->db->placehold('AND p.visible = ?', intval($filter['visible']));
+            $visible_filter = $this->db->placehold('AND p.visible = ?', (int)$filter['visible']);
         }
         
         $lang_sql = $this->languages->get_query(array('object'=>'page'));
@@ -121,9 +121,9 @@ class Pages extends Registry {
     
     public function delete_page($id) {
         if(!empty($id)) {
-            $query = $this->db->placehold("DELETE FROM __pages WHERE id=? LIMIT 1", intval($id));
+            $query = $this->db->placehold("DELETE FROM __pages WHERE id=? LIMIT 1", (int)$id);
             if($this->db->query($query)) {
-                $this->db->query("DELETE FROM __lang_pages WHERE page_id=?", intval($id));
+                $this->db->query("DELETE FROM __lang_pages WHERE page_id=?", (int)$id);
                 return true;
             }
         }
@@ -141,7 +141,7 @@ class Pages extends Registry {
     }
     
     public function get_menu($menu_id) {
-        $query = $this->db->placehold("SELECT * FROM __menu WHERE id=? LIMIT 1", intval($menu_id));
+        $query = $this->db->placehold("SELECT * FROM __menu WHERE id=? LIMIT 1", (int)$menu_id);
         $this->db->query($query);
         return $this->db->result();
     }

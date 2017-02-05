@@ -375,8 +375,8 @@ class RestClient {
         $this->result = curl_exec($ch);
         $this->header_code_received = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $this->content_type_received = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        $this->header_size_received = intval(curl_getinfo($ch, CURLINFO_HEADER_SIZE));
-        $this->content_size_received = intval(curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD));
+        $this->header_size_received = (int)(curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+        $this->content_size_received = (int)(curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD));
 
         curl_close($ch);
         return $this;
@@ -407,8 +407,8 @@ class RestClient {
         $this->result = curl_exec($ch);
         $this->header_code_received = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $this->content_type_received = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        $this->header_size_received = intval(curl_getinfo($ch, CURLINFO_HEADER_SIZE));
-        $this->content_size_received = intval(curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD));
+        $this->header_size_received = (int)(curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+        $this->content_size_received = (int)(curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD));
 
         curl_close($ch);
         return $this;
@@ -439,8 +439,8 @@ class RestClient {
         $this->result = curl_exec($ch);
         $this->header_code_received = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $this->content_type_received = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        $this->header_size_received = intval(curl_getinfo($ch, CURLINFO_HEADER_SIZE));
-        $this->content_size_received = intval(curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD));
+        $this->header_size_received = (int)(curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+        $this->content_size_received = (int)(curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD));
 
         curl_close($ch);
         return $this;
@@ -470,8 +470,8 @@ class RestClient {
         $this->result = curl_exec($ch);
         $this->header_code_received = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $this->content_type_received = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        $this->header_size_received = intval(curl_getinfo($ch, CURLINFO_HEADER_SIZE));
-        $this->content_size_received = intval(curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD));
+        $this->header_size_received = (int)(curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+        $this->content_size_received = (int)(curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD));
 
         curl_close($ch);
         return $this;
