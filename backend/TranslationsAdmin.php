@@ -7,6 +7,9 @@ class TranslationsAdmin extends Registry
 
     public function fetch()
     {
+        $filter = [];
+        $filter['langs'] = $this->design->get_var('langs_label');
+
         // Обработка действий
         if ($this->request->method('post')){
             // Действия с выбранными
@@ -21,32 +24,83 @@ class TranslationsAdmin extends Registry
                     }
                 }
             }
+            if (is_ajax()){
+
+                // ajax вывод заголовка jqGrid таблицы
+                if (!empty($this->request->post('jqgrid_heading', 'integer'))){
+                    $this->put_ajax_head($filter['langs']);
+                }
+                // ajax вывод jqGrid таблицы
+                if (!empty($this->request->post('jqgrid_body', 'integer'))){
+                    $this->put_ajax_body($filter);
+                }
+                exit();
+            }
         }
-        $filter = [];
-        $filter['langs'] = $this->design->get_var('langs_label');
+
         $filter['sort'] = $this->request->get('sort', 'string');
         $this->design->assign('sort', $filter['sort']);
-
-        if (is_ajax()){
-
-            $head = $this->getHeadTable($filter['langs']);
-            $translations = $this->languages->get_translations($filter);
-            $body = $this->getBodyTable($filter['langs'], $translations);
-            $table = ['head' => $head, 'body' => $body];
-
-            header("Content-type: application/json; charset=UTF-8");
-            header("Cache-Control: must-revalidate");
-            header("Pragma: no-cache");
-            header("Expires: -1");
-            $json = json_encode($table);
-            print $json;
-            exit();
-        }
 
         $translations = $this->languages->get_translations($filter);
         $this->design->assign('translations', $translations);
 
         return $this->design->fetch('translations.tpl');
+    }
+
+    /**
+     * @param $filter
+     */
+    protected function put_ajax_body($filter)
+    {
+        // Получаем номер страницы. Сначала jqGrid ставит его в 1.
+        $filter['page'] = $this->request->post('page', 'integer');
+
+        // сколько строк мы хотим иметь в таблице - rowNum параметр
+        $filter['limit'] = $this->request->post('rows', 'integer');
+
+        // Колонка для сортировки. Сначала sortname параметр
+        // затем index из colModel
+        $filter['sidx'] = $this->request->post('sidx', 'string');
+
+        // Порядок сортировки.
+        $filter['sord'] = $this->request->post('sord', 'string');
+        $filter['sort'] = $this->request->post('sort', 'string');
+
+        // Если колонка сортировки не указана, то будем
+        // сортировать по первой колонке.
+        if (!$filter['sidx']) $filter['sidx'] = 1;
+
+        // Вычисляем количество строк для навигации..
+        $count = $this->languages->get_count();
+
+        // Вычисляем общее количество страниц.
+        if ($count > 0 && $filter['limit'] > 0){
+            $total_pages = ceil($count / $filter['limit']);
+        } else {
+            $total_pages = 0;
+        }
+        // Если запрашиваемый номер страницы больше общего количества страниц,
+        // то устанавливаем номер страницы в максимальный.
+        if ($filter['page'] > $total_pages) $filter['page'] = $total_pages;
+
+        // Вычисляем начальное смещение строк.
+        $filter['start'] = $filter['limit'] * $filter['page'] - $filter['limit'];
+
+        // Если начальное смещение отрицательно,
+        // то устанавливаем его в 0.
+        // Например, когда пользователь
+        // выбрал 0 в качестве запрашиваемой страницы.
+        if ($filter['start'] < 0) $filter['start'] = 0;
+
+        $body = $this->languages->get_translations($filter);
+
+        header("Content-type: application/json; charset=UTF-8");
+        header("Cache-Control: must-revalidate");
+        header("Pragma: no-cache");
+        header("Expires: -1");
+        $json = json_encode($body);
+        print $json;
+        exit();
     }
 
     /**
@@ -56,35 +110,38 @@ class TranslationsAdmin extends Registry
      *
      * @return array
      */
-    private function getHeadTable($langs_label)
+    private function get_grid_model($langs_label)
     {
-        $head[] = ['name' => "id", 'sorter' => "number", 'autosearch' => false, 'readOnly' => true, 'width' => 35];
-        $head[] = ['name' => "название переменной", 'type' => "textarea", 'autosearch' => true, 'validate' => "required"];
+        $head[] = [
+            'name' => 'id', 'index' => 'id', 'readOnly' => true, 'width' => 15, 'editable' => false, 'search' => false
+        ];
+        $head[] = ['name' => 'label', 'index' => 'label', 'editable' => true, 'edittype' => 'textarea', 'width' => 80];
         foreach ($langs_label as $lang){
-            $head[] = ['name' => "$lang", 'type' => 'textarea', 'autosearch' => true];
+            $head[] = ['name' => "lang_$lang", 'index' => "lang_$lang", 'editable' => true, 'edittype' => 'textarea', 'width' => 80];
         };
-        $head[] = ['type' => 'control'];
 
         return $head;
     }
 
     /**
-     * @param array $langs_label
-     * @param array $translations
-     *
-     * @return array
+     * @param $langs
      */
-    private function getBodyTable($langs_label, $translations)
+    protected function put_ajax_head($langs)
     {
-        $body = [];
-        foreach ($translations as $key => $trans){
-            $body[$key] = ['id' => $trans->id, 'название переменной' => "$trans->label"];
-            foreach ($langs_label as $type){
-                $body[$key] += ["$type" => $trans->{'lang_'.$type}];
-            }
+        $lang_list = $this->languages->lang_list();
+        $head = ['id', 'переменная в шаблоне'];
+        foreach ($langs as $short_lang){
+            $head[] = mb_strtolower($lang_list["$short_lang"]->name);
         }
+        $model = $this->get_grid_model($langs);
 
-        return $body;
+        header("Content-type: application/json; charset=UTF-8");
+        header("Cache-Control: must-revalidate");
+        header("Pragma: no-cache");
+        header("Expires: -1");
+        $json = json_encode(['head' => $head, 'model' => $model]);
+        print $json;
+        exit();
     }
 
 }

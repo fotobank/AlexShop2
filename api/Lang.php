@@ -176,6 +176,7 @@ class Lang extends Registry
             foreach ($this->languages as $lang){
                 $langs[$lang->id] = $lang->label;
             }
+
             return $langs;
         }
 
@@ -410,10 +411,21 @@ class Lang extends Registry
                 $description->lang_id = $lang->id;
                 $this->action_data($object_id, $description, $object);
             }
+
             return;
         } else {
             return;
         }
+    }
+
+    /**
+     * количество строк в таблице
+     * @return int
+     */
+    public function get_count() {
+        $query = $this->db->placehold("SELECT COUNT(*) AS count FROM __translations");
+        $this->db->query($query);
+        return (int)$this->db->result()->count;
     }
 
     /* Translation start */
@@ -431,9 +443,9 @@ class Lang extends Registry
         $lang = '*';
         if (!empty($filter['lang'])){
             $lang = 'id, label, lang_' . $filter['lang'] . ' as value';
-        } elseif (is_array($filter['langs']) && 0 !==count($filter['langs'])){
+        } elseif (is_array($filter['langs']) && 0 !== count($filter['langs'])) {
             $lang = 'id, label';
-            foreach ($filter['langs'] as $name_lang) {
+            foreach ($filter['langs'] as $name_lang){
                 $lang .= ', lang_' . $name_lang . ' ';
             }
         }
@@ -459,6 +471,22 @@ class Lang extends Registry
                         $order = 'ORDER BY value DESC';
                     }
                     break;
+            }
+        }
+        if (!empty($filter['sidx']) && !empty($filter['sord'])){
+            $order = 'ORDER BY ' . $filter['sidx'] . ' ' . $filter['sord'];
+        }
+        if (!empty($filter['limit'])){
+
+            if (!empty($filter['start'])){
+                $limit = 'LIMIT ' . $filter['start'] . ', ' . $filter['limit'];
+            } else {
+                $limit = 'LIMIT ' . $filter['limit'];
+            }
+
+            $query = "SELECT $lang FROM __translations $order $limit";
+            if ($this->db->query($query)){
+                return $this->db->results();
             }
         }
 

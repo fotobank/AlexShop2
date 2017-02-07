@@ -484,11 +484,7 @@ a.edit {
 #main_table {
     width: 100%;
 }
-table { border-collapse: collapse; width: 100%; }
-/*thead tr {line-height: 30px;}*/
-th, td { padding: 5px; }
-th { line-height: 25px; border-bottom: 2px solid #999; background-color: #ddd; vertical-align: bottom; text-align: left; }
-td { border-bottom: 1px solid #ccc; }
+
 /* @group Заголовок правой части */
 #header{
 	margin-bottom: 15px;

@@ -9,8 +9,10 @@
     <link href = "design/css/style.css" rel = "stylesheet" type = "text/css"/>
     <link rel = "stylesheet" type = "text/css" href = "design/js/jquery/jquery-ui.css" media = "screen"/>
     <script src = "design/js/jquery/jquery-1.9.1.min.js"></script>
+    <script src = "design/js/jquery.cookie.js"></script>
     <script src = "design/js/jquery/jquery.form.js"></script>
     <script src = "design/js/jquery/jquery-ui.min.js"></script>
+
     <meta name = "viewport" content = "width=1024">
     <script>
     if (typeof jQuery == 'undefined') {
