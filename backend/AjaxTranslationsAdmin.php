@@ -23,7 +23,6 @@ class AjaxTranslationsAdmin extends Registry
                 if (!empty($this->request->post('jqgrid_body', 'integer'))){
                     $this->put_ajax_body($filter);
                 }
-
             }
         }
         exit();
@@ -68,10 +67,8 @@ class AjaxTranslationsAdmin extends Registry
         // Вычисляем начальное смещение строк.
         $filter['start'] = $filter['limit'] * $filter['page'] - $filter['limit'];
 
-        // Если начальное смещение отрицательно,
-        // то устанавливаем его в 0.
-        // Например, когда пользователь
-        // выбрал 0 в качестве запрашиваемой страницы.
+        // Если начальное смещение отрицательно, то устанавливаем его в 0.
+        // Например, когда пользователь выбрал 0 в качестве запрашиваемой страницы.
         if ($filter['start'] < 0) $filter['start'] = 0;
 
         $body = $this->languages->get_translations($filter);
