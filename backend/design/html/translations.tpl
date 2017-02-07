@@ -153,47 +153,12 @@
 
 
 
-    <table id = "jqGrid"></table>
-    <div id = "jqGridPager"></div>
+    <table id = "grid-translations-table"></table>
+    <div id = "grid-translations-pager"></div>
 
     <script type = "text/javascript">
 
         $(document).ready(function () {
-
-
-            var _cn = 'cookie_name';
-
-            function delete_cookie(cookie) {
-                $.cookie(cookie, null);
-            }
-
-            function getArrayCookie(cookie) {
-                var cookie_str = $.cookie(cookie);
-                var kv = [];
-                var arr_c = { };
-                if (cookie_str != null) {
-                    var arr = cookie_str.split(';');
-                    for (var i = 0; i < arr.length - 1; i++) {
-                        kv = arr[i].split('=');
-                        arr_c[kv[0]] = kv[1];
-                    }
-                }
-                return arr_c;
-            }
-            function getParam(cookie, name) {
-                var arr_c = getArrayCookie(cookie);
-                return (arr_c[name] == null ) ? 0 : arr_c[name];
-            }
-            function setParam(cookie, name, value) {
-                var arr_c = getArrayCookie(cookie);
-                arr_c[name] = value;
-                var cookie_str ='';
-                for (var key in arr_c) {
-                    cookie_str += key + '=' + arr_c[ key ] + ';';
-                }
-                $.cookie(cookie, cookie_str);
-            }
-
 
                     jQuery(function ($) {
 
@@ -215,20 +180,23 @@
                                         ColM = data.model; // its column model
                                         $.cookie("ColN", JSON.stringify(ColN), { expires: 1 });
                                         $.cookie("ColM", JSON.stringify(ColM), { expires: 1 });
+
                                     }
                                 },
                                 error: function () {
                                     alert("Error with AJAX callback");
                                 }
                             });
+                        } else {
+                            ColN = JSON.parse(ColN);
+                            ColM = JSON.parse(ColM);
                         }
-                            createGrid();
-
+                        createGrid();
+                        
                         function createGrid2() {
-                            $("#jqGrid").jqGrid({
-                                autowidth: true,
+                            $("#grid-translations-table").jqGrid({
                                 url: sPage + '?module=TranslationsAdmin',
-                                editurl: sPage + '?module=TranslationsAdmin',
+                                editurl: sPage + '?module=AjaxTranslationsAdmin',
                                 mtype: "POST",
                                 ajaxGridOptions: {
                                     contentType: 'application/json; charset=utf-8',
@@ -242,12 +210,12 @@
                                 viewrecords: true,
                                 colNames: ColN,
                                 colModel: ColM,
-                                width: 945,
+                                autowidth: true,
                                 height: "100%",
                                 rowNum: 20,
                                 loadonce: true, // загрузка только один раз
                                 rowList: [10, 20, 30, 40, 50, 100],
-                                pager: "#jqGridPager",
+                                pager: "#grid-translations-pager",
 //                    sortname: 'id', // сортировка по умолчанию по столбцу Id
 //                    sortorder: "asc", // порядок сортировки
                                 caption: "Переводы переменных в шаблонах",
@@ -257,7 +225,7 @@
 //                    jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" }
                             });
                         }
-
+                        
                         /**
                          * функция для построения select"a
                          * @param response ответ ajax"a
@@ -297,7 +265,7 @@
                         }
 
                         function createGrid() {
-                            $("#jqGrid").jqGrid({
+                            $("#grid-translations-table").jqGrid({
                                 autowidth: true,
                                 height: "100%",
                                 colNames: ColN,
@@ -305,14 +273,14 @@
                                 sortname: 'id',
                                 sortorder: "asc",
                                 caption: "Переводы переменных в шаблонах",
-                                pager: "#jqGridPager",
+                                pager: "#grid-translations-pager",
                                 datatype: "json",
                                 viewrecords: true,
-                                url: sPage + '?module=TranslationsAdmin',
-                                editurl: sPage + '?module=TranslationsAdmin',
+                                url: sPage + '?module=AjaxTranslationsAdmin',
+                                editurl: sPage + '?module=AjaxTranslationsAdmin',
                                 mtype: "POST",
                                 rowNum: 20,
-                                //    loadonce: true, // загрузка только один раз
+                           loadonce: true, // загрузка только один раз
                                 ajaxGridOptions: {
                                     cache: false,
                                     data: {
@@ -335,11 +303,11 @@
                                         this.p.page = lastPage;
                                     }
                                 }
-                            }).jqGrid("navGrid", "#jqGridPager",
-                                {}, // показать/скрыть кнопки добавить/редактировать/удалить/поиск/обновить
+                            }).jqGrid("navGrid", "#grid-translations-pager",
+                                { }, // показать/скрыть кнопки добавить/редактировать/удалить/поиск/обновить
                                 {  // опции для редактирования
                                     modal: false, // диалог модальный
-                                    url: sPage + '?module=TranslationsAdmin', // бэкэнд
+                                    url: sPage + '?module=AjaxTranslationsAdmin', // бэкэнд
                                     closeAfterEdit: true, // закрыть диплог после редактирования
                                     reloadAfterSubmit: false, // перезагрузить таблицу после добавления
                                     mtype: "POST", // тип запроса, перекрывает все предыдущие настройки
@@ -359,7 +327,7 @@
                                 },
                                 {  // опции для добавления, все так же как и прошлый раз
                                     modal: true,
-                                    url: sPage + '?module=TranslationsAdmin',
+                                    url: sPage + '?module=AjaxTranslationsAdmin',
                                     closeAfterAdd: true, // закрыть диплог после добавления
                                     reloadAfterSubmit: false,
                                     mtype: "POST",
@@ -378,7 +346,7 @@
                                 },
                                 { // опции для удаления
                                     modal: true,
-                                    url: sPage + '?module=TranslationsAdmin',
+                                    url: sPage + '?module=AjaxTranslationsAdmin',
                                     reloadAfterSubmit: false,
                                     mtype: "POST",
                                     afterSubmit: function (response) {
@@ -427,14 +395,14 @@
        /*loadData: function(filter) {
         return $.ajax({
         type: "GET",
-        url: "index.php?module=TranslationsAdmin&get",
+        url: "index.php?module=AjaxTranslationsAdmin&get",
         data: filter
         });
         },*/
        /*insertItem: function(item) {
         return $.ajax({
         type: "POST",
-        url: "index.php?module=TranslationsAdmin&post",
+        url: "index.php?module=AjaxTranslationsAdmin&post",
         data: item
         });
         },
@@ -442,7 +410,7 @@
         updateItem: function(item) {
         return $.ajax({
         type: "PUT",
-        url: "index.php?module=TranslationsAdmin&put",
+        url: "index.php?module=AjaxTranslationsAdmin&put",
         data: item
         });
         },
@@ -450,7 +418,7 @@
         deleteItem: function(item) {
         return $.ajax({
         type: "DELETE",
-        url: "index.php?module=TranslationsAdmin&delete",
+        url: "index.php?module=AjaxTranslationsAdmin&delete",
         data: item
         });
         },*/
