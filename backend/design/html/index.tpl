@@ -12,6 +12,8 @@
     <script src = "design/js/jquery.cookie.js"></script>
     <script src = "design/js/jquery/jquery.form.js"></script>
     <script src = "design/js/jquery/jquery-ui.min.js"></script>
+    <script src = "design/js/jquery.store/jquery.store.js"></script>
+    <script src = "design/js/combined.js"></script>
 
     <meta name = "viewport" content = "width=1024">
     <script>
