@@ -203,6 +203,7 @@ $lang['ru']['wishlist_empty'] = 'В избранном пусто';
 $lang['ru']['wishlist_header'] = 'Избранное';
 $lang['ru']['wishlist_info_wishlist'] = 'Избранное';
 $lang['ru']['wishlist_title'] = 'Избранные товары';
+$lang['ru']['ww'] = 'ww';
 $lang['ru']['yandex_map_lang'] = 'ru_RU';
 
 //Английский
@@ -404,6 +405,7 @@ $lang['en']['wishlist_empty'] = 'Favoured empty';
 $lang['en']['wishlist_header'] = 'Favorites';
 $lang['en']['wishlist_info_wishlist'] = 'Wishlist';
 $lang['en']['wishlist_title'] = 'Favorites';
+$lang['en']['ww'] = 'ww';
 $lang['en']['yandex_map_lang'] = 'en_US';
 
 //Украинский
@@ -605,4 +607,5 @@ $lang['uk']['wishlist_empty'] = 'В обраному покіщо нічого �
 $lang['uk']['wishlist_header'] = 'Вибране';
 $lang['uk']['wishlist_info_wishlist'] = 'Вибране';
 $lang['uk']['wishlist_title'] = 'Вибрані товари';
+$lang['uk']['ww'] = 'ww';
 $lang['uk']['yandex_map_lang'] = 'uk_UA';

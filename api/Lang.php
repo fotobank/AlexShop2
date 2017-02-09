@@ -450,7 +450,7 @@ class Lang extends Registry
      * @param $filter
      *
      * @return array
-     * @throws \AjaxTranslationsAdminException
+     * @throws \Exception
      */
     public function get_search($filter): array
     {
@@ -465,7 +465,7 @@ class Lang extends Registry
                     $qWhere .= ' ' . $filter['searchData']->groupOp . ' ';
                 } else {
                     //если получили не существующее условие - возвращаем описание ошибки
-                    throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
+                    throw new \Exception('Cool hacker is here!!! :)');
                 }
             } else {
                 $firstElem = false;
@@ -486,11 +486,11 @@ class Lang extends Registry
                         $qWhere .= $rule->field . " LIKE '" . $this->db->escape('%' . $rule->data . '%') . "'";
                         break;
                     default:
-                        throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
+                        throw new \Exception('Cool hacker is here!!! :)');
                 }
             } else {
                 //если получили не существующее условие - возвращаем описание ошибки
-                throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
+                throw new \Exception('Cool hacker is here!!! :)');
             }
         }
 

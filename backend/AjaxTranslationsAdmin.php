@@ -15,6 +15,11 @@ class AjaxTranslationsAdmin extends Registry
 
     public function fetch()
     {
+        //читаем параметры
+        $filter['curPage'] = $this->request->post('page', 'integer');
+        $filter['rowsPerPage'] = $this->request->post('rows', 'integer');
+        $filter['sortingField'] = $this->request->post('sidx', 'string');
+        $filter['sortingOrder'] = $this->request->post('sord', 'string');
         $filter['langs'] = $this->design->get_var('langs_label');
 
         // Обработка действий
@@ -36,7 +41,7 @@ class AjaxTranslationsAdmin extends Registry
                 // редактирование или добавление записей
                 $mode = $this->request->post('oper', 'string');
                 if ($mode == 'edit' || $mode == 'add'){
-                    $this->edit();
+                    $this->add_edit();
                 }
                 // удаление
                 if (!empty($this->request->post('oper', 'string') == 'del')){
@@ -61,7 +66,7 @@ class AjaxTranslationsAdmin extends Registry
         $model = $this->model_table($langs);
 
         $json = json_encode(['head' => $head, 'model' => $model]);
-        $this->response($json);
+        $this->send($json);
     }
 
     /**
@@ -89,7 +94,7 @@ class AjaxTranslationsAdmin extends Registry
      *
      * @param $json
      */
-    protected function response($json)
+    protected function send($json)
     {
         header('Content-type: application/json; charset=UTF-8');
         header('Cache-Control: must-revalidate');
@@ -141,8 +146,8 @@ class AjaxTranslationsAdmin extends Registry
         // Например, когда пользователь выбрал 0 в качестве запрашиваемой страницы.
         if ($filter['start'] < 0) $filter['start'] = 0;
 
-        $json = json_encode($this->languages->get_translations($filter));
-        $this->response($json);
+        $translations = $this->languages->get_translations($filter);
+        $this->prepare($filter, $translations);
     }
 
     /**
@@ -151,12 +156,6 @@ class AjaxTranslationsAdmin extends Registry
     protected function search($filter)
     {
         try {
-            //читаем параметры
-            $filter['curPage'] = $this->request->post('page', 'integer');
-            $filter['rowsPerPage'] = $this->request->post('rows', 'integer');
-            $filter['sortingField'] = $this->request->post('sidx', 'string');
-            $filter['sortingOrder'] = $this->request->post('sord', 'string');
-
             // допустимые колонки таблицы
             $filter['allowedFields'] = ['id', 'label'];
             foreach ($filter['langs'] as $short_lang){
@@ -174,38 +173,21 @@ class AjaxTranslationsAdmin extends Registry
             }
 
             $translations = $this->languages->get_search($filter);
-            //определяем количество записей в таблице
-            $totalRows = count($translations);
 
-            //сохраняем номер текущей страницы, общее количество страниц и общее количество записей
-            $response = new stdClass();
-            $response->page = $filter['curPage'];
-            $response->total = ceil($totalRows / $filter['rowsPerPage']);
-            $response->records = $totalRows;
+            $this->prepare($filter, $translations);
 
-            $rows = [];
-            foreach ($translations as $key => $row){
-                $rows[$key]['id'] = $row->id;
-                $rows[$key]['cell'] = [$row->id, $row->label];
-                foreach ($filter['langs'] as $short_lang){
-                    $rows[$key]['cell'][] = $row->{'lang_' . $short_lang};
-                }
-            }
-            $response->rows = $rows;
-            $response = json_encode($response);
-            $this->response($response);
 
         } catch (AjaxTranslationsAdminException $e) {
 
             $json = json_encode(['errMess' => 'Error: ' . $e->getMessage()]);
-            $this->response($json);
+            $this->send($json);
         }
     }
 
     /**
-     *
+     * редактирование или добавление записей
      */
-    protected function edit()
+    protected function add_edit()
     {
         $translation = new stdClass();
         $languages = $this->languages->get_languages();
@@ -229,13 +211,13 @@ class AjaxTranslationsAdmin extends Registry
         if (!$translation->label){
             $error .= ' присутствуют путые поля';
         } elseif ($exist_label && $exist_label->id != $translation->id) {
-            $error .= ' запись "'.$translation->id.'" уже существует';
+            $error .= ' запись "'.$translation->label.'" уже существует';
         } elseif (!empty($registry_object)) {
             $error .= ' переменная является классом';
         } else {
             if ($translation->id == '_empty'){
                 $translation->id = $this->languages->add_translation($translation);
-                $success = 'перевод добавлен';
+                $success = 'запись добавлена';
             } else {
                 $this->languages->update_translation($translation->id, $translation);
                 $success = 'запись обновлена';
@@ -247,7 +229,7 @@ class AjaxTranslationsAdmin extends Registry
         $json = ($error != '') ? ['message' => 'Error: ' . $error] : ['message' => 'Success: ' . $success];
 
         $json = json_encode($json);
-        $this->response($json);
+        $this->send($json);
     }
 
     /**
@@ -262,7 +244,37 @@ class AjaxTranslationsAdmin extends Registry
         $json = ($error != '') ? ['message' => 'Error: ' . $error] : ['message' => 'Success: запись удалена'];
 
         $json = json_encode($json);
-        $this->response($json);
+        $this->send($json);
     }
+
+    /**
+     * @param $filter
+     * @param $translations
+     *
+     * @return string
+     */
+    protected function prepare($filter, $translations)
+    {
+        //определяем количество записей в таблице
+        $totalRows = $this->languages->get_count();
+
+        //сохраняем номер текущей страницы, общее количество страниц и общее количество записей
+        $response = new stdClass();
+        $response->page = $filter['curPage'];
+        $response->total = ceil($totalRows / $filter['rowsPerPage']);
+        $response->records = $totalRows;
+
+        $rows = [];
+        foreach ($translations as $key => $row){
+            $rows[$key]['id'] = $row->id;
+            $rows[$key]['cell'] = [$row->id, $row->label];
+            foreach ($filter['langs'] as $short_lang){
+                $rows[$key]['cell'][] = $row->{'lang_' . $short_lang};
+            }
+        }
+        $response->rows = $rows;
+        $json = json_encode($response);
+        $this->send($json);
+}
 
 }
