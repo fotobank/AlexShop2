@@ -202,7 +202,13 @@ class Lang extends Registry
     {
         $query = $this->db->placehold("SELECT * FROM __languages WHERE id=? LIMIT 1", (int)$id);
         $this->db->query($query);
+        return $this->db->result();
+    }
 
+    public function get_language_where_label($label)
+    {
+        $query = $this->db->placehold("SELECT * FROM __translations WHERE label=? LIMIT 1", (string)$label);
+        $this->db->query($query);
         return $this->db->result();
     }
 

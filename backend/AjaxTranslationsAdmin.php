@@ -220,8 +220,7 @@ class AjaxTranslationsAdmin extends Registry
         $translation->id = $this->request->post('id', 'integer');
         $translation->label = trim($this->request->post('label', 'string'));
 
-        $this->db->query("SELECT * FROM __translations WHERE label=? LIMIT 1", $translation->label);
-        $exist_label = $this->db->result();
+        $exist_label = $this->languages->get_language_where_label($translation->label);
 
         $error = $this->db->getMysqli()->error;
 
@@ -230,7 +229,7 @@ class AjaxTranslationsAdmin extends Registry
         if (!$translation->label){
             $error .= ' присутствуют путые поля';
         } elseif ($exist_label && $exist_label->id != $translation->id) {
-            $error .= ' запись уже существует';
+            $error .= ' запись "'.$translation->id.'" уже существует';
         } elseif (!empty($registry_object)) {
             $error .= ' переменная является классом';
         } else {
