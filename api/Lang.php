@@ -440,6 +440,71 @@ class Lang extends Registry
         return $this->db->result();
     }
 
+    /**
+     * @param $filter
+     *
+     * @return array
+     * @throws \AjaxTranslationsAdminException
+     */
+    public function get_search($filter): array
+    {
+        $qWhere = ' WHERE ';
+        $firstElem = true;
+        //объединяем все полученные условия
+        foreach ($filter['searchData']->rules as $rule){
+
+            if (!$firstElem){
+                //объединяем условия (с помощью AND или OR)
+                if (in_array($filter['searchData']->groupOp, $filter['allowedOperations'])){
+                    $qWhere .= ' ' . $filter['searchData']->groupOp . ' ';
+                } else {
+                    //если получили не существующее условие - возвращаем описание ошибки
+                    throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
+                }
+            } else {
+                $firstElem = false;
+            }
+            //вставляем условия
+            if (in_array($rule->field, $filter['allowedFields'])){
+                switch ($rule->op) {
+                    case 'eq': // равно
+                        $qWhere .= $rule->field . " = '" . $this->db->escape($rule->data) . "'";
+                        break;
+                    case 'ne': // не равно
+                        $qWhere .= $rule->field . " <> '" . $this->db->escape($rule->data) . "'";
+                        break;
+                    case 'bw': // начинаетя с
+                        $qWhere .= $rule->field . " LIKE '" . $this->db->escape($rule->data . '%') . "'";
+                        break;
+                    case 'cn': // содержит
+                        $qWhere .= $rule->field . " LIKE '" . $this->db->escape('%' . $rule->data . '%') . "'";
+                        break;
+                    default:
+                        throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
+                }
+            } else {
+                //если получили не существующее условие - возвращаем описание ошибки
+                throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
+            }
+        }
+
+        $firstRowIndex = $filter['curPage'] * $filter['rowsPerPage'] - $filter['rowsPerPage'];
+
+        //получаем массив искомых переводов
+        $this->db->query('
+                 SELECT * FROM __translations ' . $qWhere . ' 
+                 ORDER BY ' . $filter['sortingField'] . ' ' . $filter['sortingOrder'] . '
+                 LIMIT ' . $firstRowIndex . ', ' . $filter['rowsPerPage']
+        );
+
+        return $this->db->results();
+    }
+
+    /**
+     * @param array $filter
+     *
+     * @return array
+     */
     public function get_translations($filter = [])
     {
         $order = 'ORDER BY label';

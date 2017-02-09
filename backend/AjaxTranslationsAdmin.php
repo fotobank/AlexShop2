@@ -7,7 +7,6 @@ class AjaxTranslationsAdminException extends CommonException
 {
 }
 
-
 /**
  * Class AjaxTranslationsAdmin
  */
@@ -153,83 +152,35 @@ class AjaxTranslationsAdmin extends Registry
     {
         try {
             //читаем параметры
-            $curPage = $this->request->post('page', 'integer');
-            $rowsPerPage = $this->request->post('rows', 'integer');
-            $sortingField = $this->request->post('sidx', 'string');
-            $sortingOrder = $this->request->post('sord', 'string');
+            $filter['curPage'] = $this->request->post('page', 'integer');
+            $filter['rowsPerPage'] = $this->request->post('rows', 'integer');
+            $filter['sortingField'] = $this->request->post('sidx', 'string');
+            $filter['sortingOrder'] = $this->request->post('sord', 'string');
 
-
-            $allowedFields = ['id', 'label'];
+            // допустимые колонки таблицы
+            $filter['allowedFields'] = ['id', 'label'];
             foreach ($filter['langs'] as $short_lang){
-                $allowedFields[] = 'lang_' . $short_lang;
+                $filter['allowedFields'][] = 'lang_' . $short_lang;
             }
 
-            $allowedOperations = ['AND', 'OR'];
+            // допустимый маркер
+            $filter['allowedOperations'] = ['AND', 'OR'];
 
-            $searchData = json_decode($_POST['filters']);
+            $filter['searchData'] = json_decode($_POST['filters']);
 
             //ограничение на количество условий
-            if (count($searchData->rules) > 10){
+            if (count($filter['searchData']->rules) > 10){
                 throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
             }
 
-            $qWhere = ' WHERE ';
-            $firstElem = true;
-            //объединяем все полученные условия
-            foreach ($searchData->rules as $rule){
-
-                if (!$firstElem){
-                    //объединяем условия (с помощью AND или OR)
-                    if (in_array($searchData->groupOp, $allowedOperations)){
-                        $qWhere .= ' ' . $searchData->groupOp . ' ';
-                    } else {
-                        //если получили не существующее условие - возвращаем описание ошибки
-                        throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
-                    }
-                } else {
-                    $firstElem = false;
-                }
-                //вставляем условия
-                if (in_array($rule->field, $allowedFields)){
-                    switch ($rule->op) {
-                        case 'eq': // равно
-                            $qWhere .= $rule->field . " = '" . $this->db->escape($rule->data) . "'";
-                            break;
-                        case 'ne': // не равно
-                            $qWhere .= $rule->field . " <> '" . $this->db->escape($rule->data) . "'";
-                            break;
-                        case 'bw': // начинаетя с
-                            $qWhere .= $rule->field . " LIKE '" . $this->db->escape($rule->data . '%') . "'";
-                            break;
-                        case 'cn': // содержит
-                            $qWhere .= $rule->field . " LIKE '" . $this->db->escape('%' . $rule->data . '%') . "'";
-                            break;
-                        default:
-                            throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
-                    }
-                } else {
-                    //если получили не существующее условие - возвращаем описание ошибки
-                    throw new AjaxTranslationsAdminException('Cool hacker is here!!! :)');
-                }
-            }
-
-            $firstRowIndex = $curPage * $rowsPerPage - $rowsPerPage;
-
-            //получаем массив искомых переводов
-            $this->db->query('
-                 SELECT * FROM __translations ' . $qWhere . ' 
-                 ORDER BY ' . $sortingField . ' ' . $sortingOrder . '
-                 LIMIT ' . $firstRowIndex . ', ' . $rowsPerPage
-            );
-            $translations = $this->db->results();
-
+            $translations = $this->languages->get_search($filter);
             //определяем количество записей в таблице
-            $totalRows = $this->languages->get_count($qWhere);
+            $totalRows = count($translations);
 
             //сохраняем номер текущей страницы, общее количество страниц и общее количество записей
             $response = new stdClass();
-            $response->page = $curPage;
-            $response->total = ceil($totalRows / $rowsPerPage);
+            $response->page = $filter['curPage'];
+            $response->total = ceil($totalRows / $filter['rowsPerPage']);
             $response->records = $totalRows;
 
             $rows = [];
