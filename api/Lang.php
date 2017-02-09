@@ -420,10 +420,13 @@ class Lang extends Registry
 
     /**
      * количество строк в таблице
+     *
+     * @param null|string $qWhere
+     *
      * @return int
      */
-    public function get_count() {
-        $query = $this->db->placehold("SELECT COUNT(*) AS count FROM __translations");
+    public function get_count($qWhere = null) {
+        $query = $this->db->placehold("SELECT COUNT(id) AS count FROM __translations " . $qWhere);
         $this->db->query($query);
         return (int)$this->db->result()->count;
     }
@@ -443,7 +446,7 @@ class Lang extends Registry
         $lang = '*';
         if (!empty($filter['lang'])){
             $lang = 'id, label, lang_' . $filter['lang'] . ' as value';
-        } elseif (is_array($filter['langs']) && 0 !== count($filter['langs'])) {
+        } elseif (isset($filter['langs']) && is_array($filter['langs']) && 0 !== count($filter['langs'])) {
             $lang = 'id, label';
             foreach ($filter['langs'] as $name_lang){
                 $lang .= ', lang_' . $name_lang . ' ';
@@ -516,6 +519,29 @@ class Lang extends Registry
 
         return $last_id;
     }
+    public function update_translation_file() {
+        $translations = $this->get_translations();
+        $languages = $this->get_languages();
+        $theme_dir = 'design/'.$this->settings->theme;
+
+        // ALL
+        $filephp = $theme_dir.'/translation.php';
+        $filephp = fopen($filephp, 'wb');
+        $row = "<?PHP\n\n";
+        foreach($languages as $l) {
+            $row .= "$"."languages['".$l->label."']='".$l->name."';\n";
+        }
+        foreach($languages as $l) {
+            $row .= "\n//".$l->name."\n\n";
+
+            foreach($translations as $t) {
+                $lang = 'lang_'.$l->label;
+                $row .= "$"."lang['".$l->label."']['".$t->label."'] = '".$this->db->escape($t->$lang)."';\n";
+            }
+        }
+        fwrite($filephp, $row);
+        fclose($filephp);
+    }
 
     public function update_translation_config_js()
     {
@@ -533,7 +559,7 @@ class Lang extends Registry
         foreach ($translations as $t){
             if ($t->in_config){
                 $lang = 'lang_' . $set_lang->label;
-                $js .= "\nlang['" . $t->label . "'] = '" . mysql_escape_string($t->$lang) . "';";
+                $js .= "\nlang['" . $t->label . "'] = '" . mysqli_escape_string($this->db->getMysqli(), $t->$lang) . "';";
             }
         }
         fwrite($filejs, $js);

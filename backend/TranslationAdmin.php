@@ -29,7 +29,7 @@ class TranslationAdmin extends Registry {
             $registry_object = $this->{$translation->label};
             if(!$translation->label) {
                 $this->design->assign('message_error', 'label_empty');
-            } elseif($exist_label && $exist_label->id!=$translation->id) {
+            } elseif($exist_label && $exist_label->id != $translation->id) {
                 $this->design->assign('message_error', 'label_exists');
             } elseif(!empty($registry_object)) {
                 $this->design->assign('message_error', 'label_is_class');

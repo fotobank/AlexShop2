@@ -12,20 +12,10 @@
     <script src = "design/js/jquery.cookie.js"></script>
     <script src = "design/js/jquery/jquery.form.js"></script>
     <script src = "design/js/jquery/jquery-ui.min.js"></script>
-    <script src = "design/js/jquery.store/jquery.store.js"></script>
+    <script src = "design/js/store.js/store.min.js"></script>
     <script src = "design/js/combined.js"></script>
 
     <meta name = "viewport" content = "width=1024">
-    <script>
-    if (typeof jQuery == 'undefined') {
-        console.log('jQuery hasn\'t loaded');
-    } else {
-        console.log('jQuery has loaded');
-    }
-    $('img').on('load', function () {
-        console.log('image load successful');
-    });
-</script>
 
 </head>
 <body>
@@ -116,5 +106,12 @@
 <div class = "fast_save">
     <input class = "button_green button_save" type = "submit" name = "" value = "Сохранить"/>
 </div>
+<script>
+    if (typeof jQuery == 'undefined') {
+        console.error('jQuery не загружен');
+    } else {
+        console.log('jQuery загружен');
+    }
+</script>
 </body>
 </html>

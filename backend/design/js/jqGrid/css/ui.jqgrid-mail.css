@@ -1,0 +1,51 @@
+.ui-jqgrid .ui-jqgrid-view {
+    font-size: 14px;
+}
+.ui-jqgrid tr.jqgrow td {
+   padding: 4px 8px;
+}
+.ui-jqgrid .ui-jqgrid-titlebar {
+    height: 22px;
+    padding: .6em .2em .2em .3em;
+    font-size: 14px;
+}
+.ui-jqgrid .ui-jqgrid-htable .ui-th-div {
+     margin-top: 0;
+}
+.ui-jqgrid .ui-jqgrid-htable .ui-th-div {
+    margin-top: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: transparent;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: #efefef none;
+    font-weight: bold;
+    color: #1c94c4;
+}
+.EditTable td textarea {
+    min-width: 270px;
+    font-size: 16px;
+}
+.ui-jqdialog {
+    font-size: 16px !important;
+}
+.ui-jqdialog-content .CaptionTD {
+    white-space: pre;
+    width: 200px;
+}
+.ui-jqdialog .ui-jqdialog-title {
+     margin: 0 .2em;
+}
+.fm-button {
+    padding: .5em .5em .5em .5em;
+}
+.fm-button-icon-left {
+    padding-left: 1.9em;
+}
+.fm-button-icon-right {
+    padding-right: 1.9em;
+}
+.ui-jqdialog {
+    width: auto;
+}

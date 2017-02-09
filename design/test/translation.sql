@@ -1,7 +1,7 @@
 /* Data for table s_translations */
 TRUNCATE TABLE `s_translations`;
 INSERT INTO `s_translations` (`id`, `template`, `in_config`, `label`, `lang_ru`, `lang_en`, `lang_uk`, `lang_ch`, `lang_by`) VALUES
-('133','','0','breadcrumb_brands','Бренды','Brands','Бренди','',''),
+('133','','0','breadcrumb_brands','Бренды\r\n ','Brands','Бренди','',''),
 ('132','','0','breadcrumb_cart','Корзина','Cart','Кошик','',''),
 ('246','','0','breadcrumb_comparison','Сравнение','Comparison','Порівняння','',''),
 ('252','','0','breadcrumb_home','Главная','Home','Головна','',''),
@@ -81,7 +81,7 @@ INSERT INTO `s_translations` (`id`, `template`, `in_config`, `label`, `lang_ru`,
 ('251','','0','index_catalog','Каталог','Catalog','Каталог','',''),
 ('254','','0','index_comparison','Сравнение','Comparison','Порівняння','',''),
 ('62','','0','index_contacts','Контакты','Contacts','Контакти','',''),
-('57','','0','index_contacts_body','Пн–Сб 09:00–20:00,<br/>\r\nВс 09:00–17:00<br/>\r\ninfo@alex-cms.com<br/>\r\nAlexShop CMS<br/>\r\nул. Троицкая 3 ','Mon-Sat 9:00-20:00, <br/>\r\nSun 9:00-17:00 <br/>\r\ninfo@alex-cms.com <br/>\r\nAlexShop CMS <br/>\r\nstr. Trinity 3','Пн–Сб 09:00–20:00,<br/>\r\nВс 09:00–17:00<br/>\r\ninfo@alex-cms.com<br/>\r\nAlexShop CMS<br/>\r\nул. Троицкая 3 ','',''),
+('57','','0','index_contacts_body','Пн–Сб 09:00–20:00,<br/> Вс 09:00–17:00<br/> info@alex-cms.com<br/> AlexShop CMS<br/>ул. Троицкая 3','Mon-Sat 9:00-20:00, <br/>Sun 9:00-17:00 <br/>info@alex-cms.com <br/>AlexShop CMS <br/>str. Trinity 3','Пн–Сб 09:00–20:00,<br/>Вс 09:00–17:00<br/>info@alex-cms.com<br/>AlexShop CMS<br/>ул. Троицкая 3 ','',''),
 ('245','','0','index_copyright','Интернет-магазин на AlexShop CMS','Online Store with AlexShop CMS','Інтернет-магазин на AlexShop CMS','',''),
 ('244','','0','index_empty_cart','Корзина пуста','Cart is empty','Кошик порожній','',''),
 ('241','','0','index_favorites','Избранное','Favorites','Вибране','',''),
@@ -150,7 +150,7 @@ INSERT INTO `s_translations` (`id`, `template`, `in_config`, `label`, `lang_ru`,
 ('144','','0','product_payment','Способы оплаты','Payment methods','Способи оплати','',''),
 ('178','','0','product_payment_1','Наличными при получении','Cash on delivery','Готівкою при отриманні','',''),
 ('179','','0','product_payment_2','Безналичный перевод','Cashless','Безготівковий перевод коштів','',''),
-('146','','0','product_payment_3','Приват 24\r\n','Privat 24','Пріват 24\r\n','',''),
+('146','','0','product_payment_3','Приват 24','Privat 24','Пріват 24','',''),
 ('190','','0','product_payment_4','WebMoney','WebMoney','WebMoney','',''),
 ('191','','0','product_pre_order','Предзаказ','Pre-order','Передзамовлення','',''),
 ('192','','0','product_rating','Рейтинг','Rating','Рейтинг','',''),
@@ -197,5 +197,8 @@ INSERT INTO `s_translations` (`id`, `template`, `in_config`, `label`, `lang_ru`,
 ('273','','0','yandex_map_lang','ru_RU','en_US','uk_UA','',''),
 ('274','','0','product_related_post','Рекомендуемые статьи','Related articles','Рекомендовані статті','',''),
 ('276','','0','form_enter_surname','Введите фамилию','Enter surname','Введіть прізвище','',''),
-('277','','0','form_surname','Фамилия','Surname','Прізвище','','');
+('277','','0','form_surname','Фамилия','Surname','Прізвище','',''),
+('289','','0','qqqq','qqq','qqq','qqq','',''),
+('290','','0','qqqqq','qqqq','qqq','qqq','',''),
+('288','','0','qqq','qqq','qqq','qqq','','');
 

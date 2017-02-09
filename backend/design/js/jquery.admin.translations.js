@@ -10,9 +10,8 @@ $(document).ready(function () {
         var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
 
         var colN = null, colM = null;
-
-        colN = $.storage.get( 'names_translations' );
-        colM = $.storage.get( 'models_translations' );
+        colN = store.get( 'names_translations' );
+        colM = store.get( 'models_translations' );
 
         if (colN == null || colM == null || colN.length != colM.length) {
 
@@ -25,8 +24,8 @@ $(document).ready(function () {
                     if (st == "success") {
                         colN = data.head;//jqgrid heading data
                         colM = data.model; // its column model
-                        $.storage.set( "names_translations", colN );
-                        $.storage.set( "models_translations", colM );
+                        store.set( "names_translations", colN );
+                        store.set( "models_translations", colM );
                         // работаем в асинхронном режиме
                         createGrid();
                     }
@@ -70,7 +69,7 @@ $(document).ready(function () {
 
         function createGrid() {
             if (colN.length != colM.length) {
-                console.error("(colN = " + colN.length + " ; colM = " + colM.length + ")Количество заголовков не равно количеству столбцов");
+                console.error("(colN = " + colN.length + " ; colM = " + colM.length + ")" + $.jgrid.regional["ru"].errors.model);
                 return void(0);
             }
             $("#grid-translations-table").jqGrid({
@@ -85,18 +84,18 @@ $(document).ready(function () {
                 datatype: "json",
                 viewrecords: true,
                 url: sPage + '?module=AjaxTranslationsAdmin',
-                editurl: sPage + '?module=AjaxTranslationsAdmin',
                 mtype: "POST",
-                rowList: [10, 20, 30, 40, 50, 100],
-                rowNum: 20,
-                loadonce: true, // загрузка только один раз
-                ajaxGridOptions: {
+               rowList: [10, 20, 30, 40, 50, 100],
+               rowNum: 20,
+ //               rowTotal: 200,
+                loadonce: false, // загрузка только один раз
+                /*ajaxGridOptions: {
                     cache: false,
                     data: {
                         jqgrid_body: "1",
                         sort: 'date' // соортировка по столбцу id
                     }
-                },
+                },*/
                 /**
                  * Если пользователь запросил страницу номер которой больше чем максимальное
                  * количество страниц, или меньше чем 1, эта функция вернет его обратно
@@ -113,7 +112,7 @@ $(document).ready(function () {
                     }
                 }
             }).jqGrid("navGrid", "#grid-translations-pager",
-                {}, // показать/скрыть кнопки добавить/редактировать/удалить/поиск/обновить
+                {view:true, del:true, add:true, edit:true}, // показать/скрыть кнопки добавить/редактировать/удалить/поиск/обновить
                 {  // опции для редактирования
                     modal: false, // диалог модальный
                     url: sPage + '?module=AjaxTranslationsAdmin', // бэкэнд
@@ -128,7 +127,10 @@ $(document).ready(function () {
                      * @param response
                      */
                     afterSubmit: function (response) {
-                        var json = eval("(" + response.responseText + ")");
+                        // var retMess = JSON.parse(response.responseText);
+                        // console.log(retMess.message);
+
+                        var json = eval("(" + response.responseText + ");");
                         return [!json.message, json.message];
                     },
 
@@ -138,10 +140,9 @@ $(document).ready(function () {
                     modal: true,
                     url: sPage + '?module=AjaxTranslationsAdmin',
                     closeAfterAdd: true, // закрыть диплог после добавления
-                    reloadAfterSubmit: false,
                     mtype: "POST",
                     afterSubmit: function (response) {
-                        var json = eval("(" + response.responseText + ")");
+                        var json = eval("(" + response.responseText + ");");
                         return [!json.message, json.message, json.id];
                     },
                     /**
@@ -154,18 +155,20 @@ $(document).ready(function () {
                     serializeEditData: serialize
                 },
                 { // опции для удаления
-                    modal: true,
+                    modal: false,
                     url: sPage + '?module=AjaxTranslationsAdmin',
-                    reloadAfterSubmit: false,
                     mtype: "POST",
                     afterSubmit: function (response) {
-                        var json = eval("(" + response.responseText + ")");
+                        var json = eval("(" + response.responseText + ");");
                         return [!json.message, json.message];
                     },
                     serializeDelData: serialize
                 },
                 { // опции поиска
-                    sopt: ["eq", "ne", "in", "cn"], // ограничиваю критерии
+                    searchOnEnter: true,
+                    showQuery: false,
+                    width: 540,
+                    sopt: ["cn", "eq", "ne", "bw"], // ограничиваю критерии
                     multipleSearch: true, // можно искать по нескольким полям
                     closeAfterSearch: true, // закрыть после поиска
                     closeOnEscape: true // окно поиска закроется при нажатии на клавишу «Esc»;
@@ -173,4 +176,9 @@ $(document).ready(function () {
             );
         }
     });
+    var options = {
+        gridModel: true,
+        autosearch: true
+    };
+    // jQuery("#input-filter").jqGrid('filterGrid','#grid-translations-table',options);
 });
