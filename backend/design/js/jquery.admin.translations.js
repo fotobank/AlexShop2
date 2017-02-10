@@ -66,6 +66,8 @@ $(document).ready(function () {
             return str.join("&");
         }
 
+        var lastSel;
+
         function createGrid() {
             if (colN.length != colM.length) {
                 console.error("(colN = " + colN.length + " ; colM = " + colM.length + ")" + $.jgrid.regional["ru"].errors.model);
@@ -73,23 +75,43 @@ $(document).ready(function () {
             }
 
             $("#grid-translations-table").jqGrid({
-                autowidth: true,
-                height: "100%",
-                colNames: colN,
-                colModel: colM,
-                sortname: 'id',
-                sortorder: "asc",
-                caption: "Переводы переменных в шаблонах",
-                pager: "#grid-translations-pager",
-                datatype: "json",
-                viewrecords: true,
                 url: sPage + '?module=AjaxTranslationsAdmin',
                 mtype: "POST",
+                datatype: "json",
+                colNames: colN,
+                colModel: colM,
+                autowidth: true,
+                height: "100%",
+                regional : 'ru',
+                sortname: 'id',
+                sortorder: "desc",
+                caption: "Переводы переменных в шаблонах",
+                pager: "#grid-translations-pager",
+                viewrecords: true,
                 rowList: [10, 20, 30, 50, 100],
                 rowNum: 20,
                 sortable:true,
-                loadonce: false, // загрузка только один раз
-                excelexport: true,
+                /** загрузка только один раз */
+                loadonce: false,
+                /** редактирование двойным кликом */
+                ondblClickRow: function(id){
+                if(id && id!==lastSel){
+                    jQuery(this).restoreRow(lastSel);
+                    jQuery(this).editRow(id, false);
+                    lastSel=id;
+                }
+                jQuery(this).editRow(id, true);
+                },
+                onSelectRow: function(id){
+                    if(id && id!==lastSel){
+                         jQuery(this).restoreRow(lastSel);
+                    }
+                },
+                /** редактирование по одной ячейке */
+                /*cellEdit: true,
+                cellsubmit: 'remote',
+                cellurl: sPage + '?module=AjaxTranslationsAdmin',*/
+
                 /**
                  * Если пользователь запросил страницу номер которой больше чем максимальное
                  * количество страниц, или меньше чем 1, эта функция вернет его обратно
@@ -105,6 +127,7 @@ $(document).ready(function () {
                         this.p.page = lastPage;
                     }
                 }
+
             }).jqGrid("navGrid", "#grid-translations-pager",
                 {view:true, del:true, add:true, edit:true}, // показать/скрыть кнопки добавить/редактировать/удалить/поиск/обновить
                 {  // опции для редактирования
@@ -121,9 +144,6 @@ $(document).ready(function () {
                      * @param response
                      */
                     afterSubmit: function (response) {
-                        // var retMess = JSON.parse(response.responseText);
-                        // console.log(retMess.message);
-
                         var json = eval("(" + response.responseText + ");");
                         return [!json.message, json.message];
                     },
@@ -169,6 +189,7 @@ $(document).ready(function () {
                 }
             );
         }
+
     });
 
 });

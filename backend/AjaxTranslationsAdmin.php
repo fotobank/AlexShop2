@@ -82,7 +82,7 @@ class AjaxTranslationsAdmin extends Registry
         $model[] = [
             'name' => 'id', 'index' => 'id', 'readOnly' => true, 'width' => 15, 'editable' => false, 'search' => false
         ];
-        $model[] = ['name' => 'label', 'index' => 'label', 'searchrules' => ['required' => true], 'editable' => true, 'edittype' => 'text', 'width' => 80];
+        $model[] = ['name' => 'label', 'index' => 'label', 'searchrules' => ['required' => true], 'editable' => true, 'width' => 80];
         foreach ($langs_label as $lang){
             $model[] = ['name' => "lang_$lang", 'index' => "lang_$lang", 'searchrules' => ['required' => true], 'editable' => true, 'edittype' => 'textarea', 'width' => 80];
         };

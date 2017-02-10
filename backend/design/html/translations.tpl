@@ -147,7 +147,7 @@
 
     <table id = "grid-translations-table"></table>
     <div id = "grid-translations-pager"></div>
-<div id="mysearch"></div>
+
 
     <script src = "/backend/design/js/jqGrid/js/i18n/grid.locale-ru.js"></script>
     <script src = "/backend/design/js/jqGrid/js/jquery.jqGrid.min.js"></script>
