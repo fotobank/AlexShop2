@@ -147,14 +147,14 @@
 
     <table id = "grid-translations-table"></table>
     <div id = "grid-translations-pager"></div>
+<div id="mysearch"></div>
 
-    <script src = "design/js/jqGrid/js/i18n/grid.locale-ru.js"></script>
-    <script src = "design/js/jqGrid/js/jquery.jqGrid.min.js"></script>
-    {*<script src = "design/js/jqGrid/src/jquery.jqGrid.js"></script>*}
-    <script src = "design/js/jquery.admin.translations.js"></script>
+    <script src = "/backend/design/js/jqGrid/js/i18n/grid.locale-ru.js"></script>
+    <script src = "/backend/design/js/jqGrid/js/jquery.jqGrid.min.js"></script>
+    <script src = "/backend/design/js/jquery.admin.translations.js"></script>
 
-    <link rel = "stylesheet" type = "text/css" media = "screen" href = "design/js/jqGrid/css/ui.jqgrid.css"/>
-    <link rel = "stylesheet" type = "text/css" media = "screen" href = "design/js/jqGrid/css/ui.jqgrid-mail.css"/>
+    <link rel = "stylesheet" type = "text/css" media = "screen" href = "/backend/design/js/jqGrid/css/ui.jqgrid.css"/>
+    <link rel = "stylesheet" type = "text/css" media = "screen" href = "/backend/design/js/jqGrid/css/ui.jqgrid-mail.css"/>
 
 
 

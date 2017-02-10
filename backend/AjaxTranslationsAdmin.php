@@ -54,6 +54,7 @@ class AjaxTranslationsAdmin extends Registry
 
     /**
      * названия колонок в таблице
+     *
      * @param $langs
      */
     protected function head_table($langs)
@@ -81,7 +82,7 @@ class AjaxTranslationsAdmin extends Registry
         $model[] = [
             'name' => 'id', 'index' => 'id', 'readOnly' => true, 'width' => 15, 'editable' => false, 'search' => false
         ];
-        $model[] = ['name' => 'label', 'index' => 'label', 'searchrules' => ['required' => true], 'editable' => true, 'edittype' => 'textarea', 'width' => 80];
+        $model[] = ['name' => 'label', 'index' => 'label', 'searchrules' => ['required' => true], 'editable' => true, 'edittype' => 'text', 'width' => 80];
         foreach ($langs_label as $lang){
             $model[] = ['name' => "lang_$lang", 'index' => "lang_$lang", 'searchrules' => ['required' => true], 'editable' => true, 'edittype' => 'textarea', 'width' => 80];
         };
@@ -211,7 +212,7 @@ class AjaxTranslationsAdmin extends Registry
         if (!$translation->label){
             $error .= ' присутствуют путые поля';
         } elseif ($exist_label && $exist_label->id != $translation->id) {
-            $error .= ' запись "'.$translation->label.'" уже существует';
+            $error .= ' запись "' . $translation->label . '" уже существует';
         } elseif (!empty($registry_object)) {
             $error .= ' переменная является классом';
         } else {
@@ -251,7 +252,6 @@ class AjaxTranslationsAdmin extends Registry
      * @param $filter
      * @param $translations
      *
-     * @return string
      */
     protected function prepare($filter, $translations)
     {
@@ -275,6 +275,6 @@ class AjaxTranslationsAdmin extends Registry
         $response->rows = $rows;
         $json = json_encode($response);
         $this->send($json);
-}
+    }
 
 }

@@ -14,7 +14,7 @@ $(document).ready(function () {
         colM = store.get( 'models_translations' );
 
         if (colN == null || colM == null || colN.length != colM.length) {
-
+            // получаем шапку таблицы
             $.ajax({
                 url: sPage + '?module=AjaxTranslationsAdmin',
                 type: "POST",
@@ -38,7 +38,6 @@ $(document).ready(function () {
         } else {
             createGrid();
         }
-
 
         /**
          * Эта функция формирует пост запрос
@@ -72,6 +71,7 @@ $(document).ready(function () {
                 console.error("(colN = " + colN.length + " ; colM = " + colM.length + ")" + $.jgrid.regional["ru"].errors.model);
                 return void(0);
             }
+
             $("#grid-translations-table").jqGrid({
                 autowidth: true,
                 height: "100%",
@@ -85,17 +85,11 @@ $(document).ready(function () {
                 viewrecords: true,
                 url: sPage + '?module=AjaxTranslationsAdmin',
                 mtype: "POST",
-               rowList: [10, 20, 30, 40, 50, 100],
-               rowNum: 20,
- //               rowTotal: 200,
+                rowList: [10, 20, 30, 50, 100],
+                rowNum: 20,
+                sortable:true,
                 loadonce: false, // загрузка только один раз
-                /*ajaxGridOptions: {
-                    cache: false,
-                    data: {
-                        jqgrid_body: "1",
-                        sort: 'date' // соортировка по столбцу id
-                    }
-                },*/
+                excelexport: true,
                 /**
                  * Если пользователь запросил страницу номер которой больше чем максимальное
                  * количество страниц, или меньше чем 1, эта функция вернет его обратно
@@ -176,9 +170,5 @@ $(document).ready(function () {
             );
         }
     });
-    var options = {
-        gridModel: true,
-        autosearch: true
-    };
-    // jQuery("#input-filter").jqGrid('filterGrid','#grid-translations-table',options);
+
 });
