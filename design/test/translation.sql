@@ -198,5 +198,7 @@ INSERT INTO `s_translations` (`id`, `template`, `in_config`, `label`, `lang_ru`,
 ('274','','0','product_related_post','Рекомендуемые статьи','Related articles','Рекомендовані статті','',''),
 ('276','','0','form_enter_surname','Введите фамилию','Enter surname','Введіть прізвище','',''),
 ('277','','0','form_surname','Фамилия','Surname','Прізвище','',''),
-('293','','0','qq','','','','','');
+('303','','0','sdfg2','1','g','12','',''),
+('294','','0','sdfg','rt1','rf','rt','',''),
+('302','','0','sdfg1','sk','s','sd','','');
 

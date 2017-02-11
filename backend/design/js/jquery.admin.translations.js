@@ -16,7 +16,7 @@ $(document).ready(function () {
         if (colN == null || colM == null || colN.length != colM.length) {
             // получаем шапку таблицы
             $.ajax({
-                url: sPage + '?module=AjaxTranslationsAdmin',
+                url: sPage + '?module=JqGridAjaxTranslations',
                 type: "POST",
                 data: "jqgrid_heading=1",
                 dataType: "json",
@@ -70,12 +70,12 @@ $(document).ready(function () {
 
         function createGrid() {
             if (colN.length != colM.length) {
-                console.error("(colN = " + colN.length + " ; colM = " + colM.length + ")" + $.jgrid.regional["ru"].errors.model);
+                console.error("(colN = " + colN.length + " ; colM = " + colM.length + ") " + $.jgrid.regional[currentlang].errors.model);
                 return void(0);
             }
 
-            $("#grid-translations-table").jqGrid({
-                url: sPage + '?module=AjaxTranslationsAdmin',
+            $("#list").jqGrid({
+                url: sPage + '?module=JqGridAjaxTranslations',
                 mtype: "POST",
                 datatype: "json",
                 colNames: colN,
@@ -86,15 +86,16 @@ $(document).ready(function () {
                 sortname: 'id',
                 sortorder: "desc",
                 caption: "Переводы переменных в шаблонах",
-                pager: "#grid-translations-pager",
+                pager: "#grid-pager",
                 viewrecords: true,
                 rowList: [10, 20, 30, 50, 100],
                 rowNum: 20,
                 sortable:true,
                 /** загрузка только один раз */
                 loadonce: false,
+                editurl: sPage + '?module=JqGridAjaxTranslations',
                 /** редактирование двойным кликом */
-                ondblClickRow: function(id){
+                /*ondblClickRow: function(id){
                 if(id && id!==lastSel){
                     jQuery(this).restoreRow(lastSel);
                     jQuery(this).editRow(id, false);
@@ -106,11 +107,16 @@ $(document).ready(function () {
                     if(id && id!==lastSel){
                          jQuery(this).restoreRow(lastSel);
                     }
-                },
+                },*/
                 /** редактирование по одной ячейке */
-                /*cellEdit: true,
+                cellEdit: true,
                 cellsubmit: 'remote',
-                cellurl: sPage + '?module=AjaxTranslationsAdmin',*/
+                cellurl: sPage + '?module=JqGridAjaxTranslations',
+                afterSaveCell: function () {
+                    $("span#message").hide('slow').remove();
+                    $(".ui-jqgrid-title").after("<el></el><span id='message'>успешно сохранено</span></el>").show('slow');
+                    setTimeout(function() { $("span#message").hide('slow').remove(); }, 3000);
+                },
 
                 /**
                  * Если пользователь запросил страницу номер которой больше чем максимальное
@@ -128,11 +134,11 @@ $(document).ready(function () {
                     }
                 }
 
-            }).jqGrid("navGrid", "#grid-translations-pager",
+            }).jqGrid("navGrid", "#grid-pager",
                 {view:true, del:true, add:true, edit:true}, // показать/скрыть кнопки добавить/редактировать/удалить/поиск/обновить
                 {  // опции для редактирования
-                    modal: false, // диалог модальный
-                    url: sPage + '?module=AjaxTranslationsAdmin', // бэкэнд
+                    modal: true, // диалог модальный
+                    url: sPage + '?module=JqGridAjaxTranslations', // бэкэнд
                     closeAfterEdit: true, // закрыть диплог после редактирования
                     reloadAfterSubmit: false, // перезагрузить таблицу после добавления
                     mtype: "POST", // тип запроса, перекрывает все предыдущие настройки
@@ -152,7 +158,7 @@ $(document).ready(function () {
                 },
                 {  // опции для добавления, все так же как и прошлый раз
                     modal: true,
-                    url: sPage + '?module=AjaxTranslationsAdmin',
+                    url: sPage + '?module=JqGridAjaxTranslations',
                     closeAfterAdd: true, // закрыть диплог после добавления
                     mtype: "POST",
                     afterSubmit: function (response) {
@@ -169,9 +175,10 @@ $(document).ready(function () {
                     serializeEditData: serialize
                 },
                 { // опции для удаления
-                    modal: false,
-                    url: sPage + '?module=AjaxTranslationsAdmin',
+                    modal: true,
+                    url: sPage + '?module=JqGridAjaxTranslations',
                     mtype: "POST",
+                    closeAfterDelete: true,
                     afterSubmit: function (response) {
                         var json = eval("(" + response.responseText + ");");
                         return [!json.message, json.message];

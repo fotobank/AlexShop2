@@ -70,7 +70,10 @@
     });
 </script>
 {/if}
-
+{*определяем текущий язык*}
+<script>
+var currentlang = "{$lang_label}";
+</script>
 <a href = '{$config->root_url}/{$lang_link}' class = 'admin_bookmark'></a>
 <div class = "container">
 

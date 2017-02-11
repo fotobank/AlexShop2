@@ -60,7 +60,8 @@
 <form method = post id = product enctype = "multipart/form-data">
     <input type = hidden name = "session_id" value = "{$smarty.session.id}">
     <ul class = "tabs-caption">
-		<li class = "active">Основные</li>
+		<li class = "active">Сайт</li>
+		<li>Админка</li>
 		<li>Оповещения</li>
 		<li>Капча</li>
 		<li>Формат цены</li>
@@ -109,6 +110,33 @@
                 <label for = "site_annotation" class = "property">Техническое сообщение</label>
                 <textarea id = "site_annotation" name = "site_annotation"
                           class = "order_inp">{$settings->site_annotation|escape}</textarea>
+            </li>
+        </ul>
+    </div>
+    <div class = "tabs-content active">
+         <div class = "center-h1">
+        <h1>Настройки админки</h1>
+         </div>
+        <div class = "split-0"></div>
+        <ul class = "align-field">
+            <li>
+                <label for = "admin_table" class = "property">Метод отображения таблиц
+                    <div class="helper_wrap">
+                        <a href="javascript:void(0)" id="show_help_search" class="helper_link"></a>
+                        <div class="right helper_block">
+                        <span>
+                            Выбор шаблона для работы с таблицами.
+                            Не все таблицы поддерживают ajax, поэтому они будут работать
+                            в основном шаблоне не зависимо от выбора.
+                        </span>
+                        </div>
+                    </div>
+                  </label>
+                <select id = "admin_table" name = "admin_table">
+                    <option value = "old_table" {if $settings->admin_table == "old_table"}selected{/if}>основной</option>
+                    <option value = "jq_grig" {if $settings->admin_table == "jq_grig"}selected{/if}>ajax-jQGrid</option>
+                    <option value = "js_grig" {if $settings->admin_table == "js_grig"}selected{/if}>ajax-jSGrid</option>
+                </select>
             </li>
         </ul>
     </div>

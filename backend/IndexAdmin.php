@@ -81,7 +81,7 @@ class IndexAdmin extends Registry {
         'LanguagesAdmin'      => 'settings',
         'TranslationAdmin'    => 'settings',
         'TranslationsAdmin'   => 'settings',
-        'AjaxTranslationsAdmin'   => 'settings',
+        'JqGridAjaxTranslations'   => 'settings',
 
         'SecondarySettingsAdmin' => 'settings2',
 
@@ -152,7 +152,7 @@ class IndexAdmin extends Registry {
         'LanguagesAdmin'      => 'languages',
         'TranslationAdmin'    => 'languages',
         'TranslationsAdmin'   => 'languages',
-        'AjaxTranslationsAdmin'   => 'languages',
+        'JqGridAjaxTranslations'   => 'languages',
         /* Мультиязычность end */
         /*statistic*/
         'ReportStatsAdmin'    => 'stats',

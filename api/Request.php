@@ -14,6 +14,7 @@ class Request extends Registry {
     
     public function __construct() {
         parent::__construct();
+
         $_POST = $this->stripslashes_recursive($_POST);
         $_GET = $this->stripslashes_recursive($_GET);
     }
@@ -85,17 +86,19 @@ class Request extends Registry {
         } elseif(empty($name)) {
             $val = file_get_contents('php://input');
         }
-        if($type === 'string') {
-            return (string)preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/iu', '', $val);
-        }
-        if($type === 'integer') {
-            return (int)$val;
-        }
-        if($type === 'float') {
-            return (float)$val;
-        }
-        if($type === 'boolean') {
-            return !empty($val);
+        if($val){
+            if ($type === 'string'){
+                return (string)preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/iu', '', $val);
+            }
+            if ($type === 'integer'){
+                return (int)$val;
+            }
+            if ($type === 'float'){
+                return (float)$val;
+            }
+            if ($type === 'boolean'){
+                return !empty($val);
+            }
         }
         return $val;
     }

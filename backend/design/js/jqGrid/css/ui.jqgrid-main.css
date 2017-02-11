@@ -49,3 +49,21 @@
 .ui-jqdialog {
     width: auto;
 }
+
+table {
+    border-spacing: 0; /* Расстояние между ячейками */
+}
+tr:nth-child(2n) {
+    background: #f0f0f0; /* Цвет фона */
+}
+#message {
+    margin-left: 50px;
+    padding: 0 4px 2px;
+    font-size: 11px;
+    background-color: #468847;
+    border: solid #777 1px;
+    border-radius: 5px;
+}
+.ui-jqgrid .ui-jqgrid-view input, .ui-jqgrid .ui-jqgrid-view select, .ui-jqgrid .ui-jqgrid-view textarea, .ui-jqgrid .ui-jqgrid-view button {
+    font-size: 14px;
+}
