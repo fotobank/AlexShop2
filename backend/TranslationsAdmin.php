@@ -1,4 +1,26 @@
 <?php
+/*******************************************************************
+ *
+ * ******** --- AlexShop CMS  Created by Jury V. Alex --- **********
+ * **    Система Управления Контентом Сайта интернет магазина    ***
+ * *****************************************************************
+ * 1. Данный скрипт защищен правом интеллектуальной собственности.
+ * 2. Скрипт распространяется бесплатно по лицензии MIT независимо
+ *     от способа его приобретения.
+ * 3. Независимым разработикам разрешено вносить изменения,
+ *     улучшающие работу данного скрипта, с уведомлением автора.
+ * 4. При заказе разработки сайта, с использованием данного
+ *     скрипта, цену выставляет исполнитель.
+ * 5. За содержание и работу сайта ответственность несет владелец
+ *     веб-ресурса.
+ * -----------------------------------------------------------------
+ *                  ---  Техническая поддержка ---
+ *  E-Mail: alexjurii@gmail.com
+ *  Skype: jurii.od.ua
+ *  Mobile: +80-94-94-77-0-70
+ *  Copyright (c) 2013 - 2017
+ *
+ *******************************************************************/
 
 use api\Registry;
 
@@ -8,9 +30,12 @@ class TranslationsAdmin extends Registry
     public function fetch()
     {
 
-        if ($this->settings->admin_table == 'old_table'){
+        if ($this->settings->table_translation == 'jq_grid') {
+            return $this->design->fetch('jq_grid_translations.tpl');
+        } elseif ($this->settings->table_translation == 'js_grid') {
+            return $this->design->fetch('js_grid_translations.tpl');
+        }
 
-            // Обработка действий
             if ($this->request->method('post')){
                 // Действия с выбранными
                 $ids = $this->request->post('check');
@@ -35,12 +60,6 @@ class TranslationsAdmin extends Registry
             $this->design->assign('translations', $translations);
 
             return $this->design->fetch('translations.tpl');
-
-        } elseif ($this->settings->admin_table == 'jq_grig') {
-            return $this->design->fetch('jq_grid_translations.tpl');
-        } elseif ($this->settings->admin_table == 'js_grig') {
-            return $this->design->fetch('js_grid_translations.tpl');
-        }
 
     }
 

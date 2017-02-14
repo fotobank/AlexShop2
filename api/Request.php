@@ -102,6 +102,50 @@ class Request extends Registry {
         }
         return $val;
     }
+
+    /**
+     * очистка переменных
+     * @param      $string
+     * @param null $type
+     *
+     * @return mixed|string
+     */
+    public function filter($string, $type = null) {
+
+        if ($type === 'js'){
+            $string = preg_replace("/\r*\n/", "\\n", $string);
+            $string = preg_replace("/\//", "\\\/", $string);
+            $string = preg_replace("/\"/", "\\\"", $string);
+            return preg_replace("/'/", " ", $string);
+        }
+        if ($type === 'sql_valid'){
+            return str_replace(["\\", "'", '"', "\x00", "\x1a", "\r", "\n"],
+                ["\\\\", "\'", '\"', "\\x00", "\\x1a", "\\r", "\\n"], $string);
+        }
+        if ($type === 'sql'){
+            $string = htmlentities($string, ENT_QUOTES);
+            if(get_magic_quotes_gpc())
+            {
+                $string = stripslashes($string);
+            }
+            $string = mysqli_real_escape_string($this->db->getMysqli(), $string);
+            $string = strip_tags($string);
+            $string = str_replace('  ', "\n", $string);
+
+            return $string;
+        }
+        if ($type === 'clean'){
+            $search = [
+                '@<script[^>]*?>.*?</script>@si', // javascript
+                '@<[\/\!]*?[^<>]*?>@si', // HTML теги
+                '@<style[^>]*?>.*?</style>@siU', // теги style
+                '@<![\s\S]*?--[ \t\n\r]*>@' // многоуровневые комментарии
+            ];
+
+            return preg_replace($search, '', $string);
+        }
+        return $string;
+    }
     
     /**
     * Возвращает переменную _FILES
@@ -136,7 +180,7 @@ class Request extends Registry {
         // Если переменная - число, то экранировать её не нужно
         // если нет - то окружем её кавычками, и экранируем
         if (!is_numeric($value)) {
-            $value = $this->mysqli->real_escape_string($value);
+            $value = $this->db->getMysqli()->real_escape_string($value);
         }
         return $value;
     }

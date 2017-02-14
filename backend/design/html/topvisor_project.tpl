@@ -497,7 +497,7 @@ $(function() {
 	});
 
     //Рисовалка графиков
-    $(".graph_create").live('click',function(){
+    $(".dyn_row").on('click', '.graph_create', function(){
         var from = $('.frequency_date_from').val();
         var to = $('.frequency_date_to').val();
         var date =[];

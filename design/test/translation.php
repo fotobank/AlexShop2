@@ -179,8 +179,8 @@ $lang['ru']['register_header'] = 'Регистрация';
 $lang['ru']['register_title'] = 'Регистрация';
 $lang['ru']['register_user_registered'] = 'Пользователь с таким email уже зарегистрирован';
 $lang['ru']['sdfg'] = 'rt1';
-$lang['ru']['sdfg1'] = 'sk';
-$lang['ru']['sdfg2'] = '1';
+$lang['ru']['sdfg1'] = 's';
+$lang['ru']['sdfg2'] = 'kjk';
 $lang['ru']['status_accepted'] = 'принят';
 $lang['ru']['status_made'] = 'выполнен';
 $lang['ru']['status_paid'] = 'оплачен';
@@ -206,6 +206,7 @@ $lang['ru']['wishlist_header'] = 'Избранное';
 $lang['ru']['wishlist_info_wishlist'] = 'Избранное';
 $lang['ru']['wishlist_title'] = 'Избранные товары';
 $lang['ru']['yandex_map_lang'] = 'ru_RU';
+$lang['ru']['уке'] = 'у';
 
 //Английский
 
@@ -383,7 +384,7 @@ $lang['en']['register_title'] = 'Registration';
 $lang['en']['register_user_registered'] = 'User with this email already registered';
 $lang['en']['sdfg'] = 'rf';
 $lang['en']['sdfg1'] = 's';
-$lang['en']['sdfg2'] = 'g';
+$lang['en']['sdfg2'] = 'jk';
 $lang['en']['status_accepted'] = 'accepted';
 $lang['en']['status_made'] = 'made';
 $lang['en']['status_paid'] = 'paid';
@@ -409,6 +410,7 @@ $lang['en']['wishlist_header'] = 'Favorites';
 $lang['en']['wishlist_info_wishlist'] = 'Wishlist';
 $lang['en']['wishlist_title'] = 'Favorites';
 $lang['en']['yandex_map_lang'] = 'en_US';
+$lang['en']['уке'] = 'уkl';
 
 //Украинский
 
@@ -586,7 +588,7 @@ $lang['uk']['register_title'] = 'Реєстрація';
 $lang['uk']['register_user_registered'] = 'Користувач з такою поштою вже зареєстрован';
 $lang['uk']['sdfg'] = 'rt';
 $lang['uk']['sdfg1'] = 'sd';
-$lang['uk']['sdfg2'] = '12';
+$lang['uk']['sdfg2'] = '12jkl';
 $lang['uk']['status_accepted'] = 'прийнятий';
 $lang['uk']['status_made'] = 'виконаний';
 $lang['uk']['status_paid'] = 'оплачений';
@@ -612,3 +614,4 @@ $lang['uk']['wishlist_header'] = 'Вибране';
 $lang['uk']['wishlist_info_wishlist'] = 'Вибране';
 $lang['uk']['wishlist_title'] = 'Вибрані товари';
 $lang['uk']['yandex_map_lang'] = 'uk_UA';
+$lang['uk']['уке'] = 'укеi';

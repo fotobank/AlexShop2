@@ -1767,12 +1767,12 @@ ul.seo_notice li {
 .date_filter_title {
     position: relative;
 }
-#show_help_search:hover + div{
+#show_help_search:hover + div, #show_help_search:hover + span{
     display: block;
     transition: 0.8s;
     z-index: 10;
 }
-#show_help_filter:hover + div{
+#show_help_filter:hover + div, #show_help_filter:hover + span{
     display: block;
 }
 .helper_block::after {

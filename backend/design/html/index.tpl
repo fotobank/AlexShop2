@@ -5,15 +5,17 @@
     <META HTTP-EQUIV = "Pragma" CONTENT = "no-cache">
     <META HTTP-EQUIV = "Expires" CONTENT = "-1">
     <title>{$meta_title}</title>
-    <link rel = "icon" href = "design/images/favicon.png" type = "image/x-icon">
-    <link rel = "stylesheet" type = "text/css" href = "design/css/style.css"/>
-    <link rel = "stylesheet" type = "text/css" href = "design/js/jquery/jquery-ui.css" media = "screen"/>
-    <script src = "design/js/jquery/jquery-1.12.4.js"></script>
-    <script src = "design/js/jquery/jquery-ui.min.js"></script>
-    <script src = "design/js/jquery/jquery.form.js"></script>
-    <script src = "design/js/jquery.cookie.js"></script>
-    <script src = "design/js/store.js/store.min.js"></script>
-    <script src = "design/js/combined.js"></script>
+    <link rel = "icon" href = "/backend/design/images/favicon.png" type = "image/x-icon">
+    <link rel = "stylesheet" type = "text/css" href = "/backend/design/css/style.css"/>
+    <link rel = "stylesheet" type = "text/css" href = "/backend/design/js/jquery/jquery-ui.css" media = "screen"/>
+    <link rel = "stylesheet" type = "text/css" href = "/backend/design/js/autocomplete/styles.css" media = "screen"/>
+    <script src = "/backend/design/js/jquery/jquery-1.12.4.js"></script>
+    <script src = "/backend/design/js/jquery/jquery-ui.min.js"></script>
+    <script src = "/backend/design/js/jquery/jquery.form.js"></script>
+    <script src = "/backend/design/js/autocomplete/jquery.autocomplete.js"></script>
+    <script src = "/backend/design/js/jquery.cookie.js"></script>
+    <script src = "/backend/design/js/store.js/store.min.js"></script>
+    <script src = "/backend/design/js/combined.js"></script>
 
     <meta name = "viewport" content = "width=1024">
 

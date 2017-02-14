@@ -50,7 +50,7 @@
     <div class = "submit">
         {*<button type = "submit">Войти</button>*}
         <input class = "button" type = "submit" value = "Войти">
-        <label id = "remember"><input name = "remember" type = "checkbox" value = ""/> Запомнить меня</label>
+        <label id = "remember" for="check-remember"><input id = "check-remember" name = "remember" type = "checkbox" value = "ok"/> Запомнить меня</label>
     </div>
 </form>
 

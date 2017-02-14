@@ -120,23 +120,39 @@
         <div class = "split-0"></div>
         <ul class = "align-field">
             <li>
-                <label for = "admin_table" class = "property">Метод отображения таблиц
-                    <div class="helper_wrap">
+                <label for = "table_translation" class = "property">Метод отображения таблиц
+                    <span class="helper_wrap">
                         <a href="javascript:void(0)" id="show_help_search" class="helper_link"></a>
-                        <div class="right helper_block">
+                        <span class="right helper_block">
                         <span>
                             Выбор шаблона для работы с таблицами.
                             Не все таблицы поддерживают ajax, поэтому они будут работать
-                            в основном шаблоне не зависимо от выбора.
+                            в основном шаблоне не зависимо от данного выбора.
                         </span>
-                        </div>
-                    </div>
+                        </span>
+                    </span>
                   </label>
-                <select id = "admin_table" name = "admin_table">
-                    <option value = "old_table" {if $settings->admin_table == "old_table"}selected{/if}>основной</option>
-                    <option value = "jq_grig" {if $settings->admin_table == "jq_grig"}selected{/if}>ajax-jQGrid</option>
-                    <option value = "js_grig" {if $settings->admin_table == "js_grig"}selected{/if}>ajax-jSGrid</option>
+                <select id = "table_translation" name = "table_translation">
+                    <option value = "old_table" {if $settings->table_translation == "old_table"}selected{/if}>основной</option>
+                    <option value = "jq_grid" {if $settings->table_translation == "jq_grid"}selected{/if}>ajax-jQGrid</option>
+                    <option value = "js_grid" {if $settings->table_translation == "js_grid"}selected{/if}>ajax-jSGrid</option>
                 </select>
+            </li>
+            <li>
+                <label for = "admin_cookie" class = "property">Время жизни cookies
+                    <span class="helper_wrap">
+                        <a href="javascript:void(0)" id="show_help_search" class="helper_link"></a>
+                        <span class="right helper_block">
+                        <span>
+                            Время жизни cookies текущего менеджера.
+                            Задавать вместе с названием величины времени.
+                            Например: 5 HOUR или 60 MINUTE или 1 DAY
+                        </span>
+                        </span>
+                    </span>
+                  </label>
+                  <input id = "admin_cookie" name = "admin_cookie" class = "order_inp" type = "text"
+                   value = "{$settings->admin_cookie}"/>
             </li>
         </ul>
     </div>

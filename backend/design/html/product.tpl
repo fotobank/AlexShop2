@@ -84,7 +84,7 @@
 	});
 
 	// Удаление категории
-	$("#product_categories .delete").live('click', function() {
+	$("#product_categories").on('click','.delete' , function() {
 		$(this).closest("li").fadeOut(200, function() { $(this).remove(); });
 		return false;
 	});
@@ -109,7 +109,7 @@
 	$(".images ul").sortable({ tolerance: 'pointer'});
 
 	// Удаление изображений
-	$(".images a.delete").live('click', function() {
+	$(".images").on('click', 'a.delete', function() {
 		 $(this).closest("li").fadeOut(200, function() { $(this).remove(); });
 		 return false;
 	});
@@ -160,7 +160,7 @@
 		      reader.readAsDataURL(f);
 		    }
 		}
-		$('.dropInput').live("change", handleFileSelect);
+		$('#dropZone').on("change", ".dropInput", handleFileSelect);
 	};
 
 	// Удаление варианта
@@ -276,7 +276,7 @@
 
 	
 	// Удаление связанного товара
-	$(".related_products a.delete").live('click', function() {
+	$(".related_products").on('click', 'a.delete', function() {
 		 $(this).closest("div.row").fadeOut(200, function() { $(this).remove(); });
 		 return false;
 	});
@@ -427,7 +427,7 @@ function translit_option($elem)
 	return url;
 }
 $(function(){
-    $('.option_value').live('keyup click change',function(){
+    $('ul.prop_ul').on('keyup click change', '.option_value', function(){
         $(this).next().val(translit_option($(this)));
     });
 });

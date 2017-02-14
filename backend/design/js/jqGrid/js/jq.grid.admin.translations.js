@@ -66,6 +66,7 @@ $(document).ready(function () {
             return str.join("&");
         }
 
+        // для строчного редактирования
         var lastSel;
 
         function createGrid() {
@@ -113,9 +114,14 @@ $(document).ready(function () {
                 cellsubmit: 'remote',
                 cellurl: sPage + '?module=JqGridAjaxTranslations',
                 afterSaveCell: function () {
-                    $("span#message").hide('slow').remove();
-                    $(".ui-jqgrid-title").after("<el></el><span id='message'>успешно сохранено</span></el>").show('slow');
-                    setTimeout(function() { $("span#message").hide('slow').remove(); }, 3000);
+                    $(".label-message").remove();
+                    $(".ui-jqgrid-title").after("<span class='label-message'><span id='success-message'>успешно сохранено</span></span>").show('slow');
+                    setTimeout(function() { $("#success-message").hide('slow').remove(); }, 3000);
+                },
+                errorCell: function () {
+                    $(".label-message").remove();
+                    $(".ui-jqgrid-title").after("<span class='label-message'><span id='error-message'>ошибка сервера "+status+" при сохранении</span></span>").show('slow');
+                    setTimeout(function() { $("#error-message").hide('slow').remove(); }, 3000);
                 },
 
                 /**
@@ -194,9 +200,49 @@ $(document).ready(function () {
                     closeAfterSearch: true, // закрыть после поиска
                     closeOnEscape: true // окно поиска закроется при нажатии на клавишу «Esc»;
                 }
-            );
+            ).jqGrid('navButtonAdd',"#grid-pager",{
+                caption: "",
+                buttonicon: "ui-icon-closethick",
+                onClickButton: function () {
+                    store.remove( "names_translations" );
+                    store.remove( "models_translations" );
+                    $("#success-message-ok").remove();
+                    $(".navtable .ui-icon-closethick").after("<span id='success-message-ok'>выполнено</span>").show('slow');
+                    setTimeout(function() { $("#success-message-ok").hide('slow').remove(); }, 1000);
+                },
+                position: "last",
+                title: "Очистить кеш названий столбцов"
+            });
+        }
+        //эта функция добавляет GET параметр в запрос на получение
+        //данных для таблицы и обновляет её
+        function updateTable(value) {
+            console.log('value = ' + value);
+            /*jQuery("#list")
+                .setGridParam({url: sPage + "?module=JqGridAjaxTranslations&sel_city=" + value, page: 1})
+                .trigger("reloadGrid");*/
         }
 
+        //настройка плагина Autocomplete
+        //при возникновении события onSelect вызываем функцию updateTable
+        $('#city_field').autocomplete({
+            serviceUrl: sPage + '?module=JqGridAjaxTranslations',
+            type: "POST",
+            params: { 'search': 'autocomplete'},
+            maxHeight:150,
+        //    minChars: 2, //миниальное число символов
+        //    deferRequestBy: 100, // отложить запрос на миллисекунд
+            onSelect: function(value) {
+                updateTable(value);
+            }
+        });
+
+        //этот обработчик используется если посетитель ввел данные и нажал Enter
+        $('#autocomplete_form').submit(function() {
+        //    console.log('updateTable');
+            updateTable($('#city_field').val());
+            return false;
+        });
     });
 
 });

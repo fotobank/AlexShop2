@@ -62,7 +62,8 @@ class SettingsAdmin extends Registry {
             $this->settings->yandex_metrika_token = $this->request->post('yandex_metrika_token');
             $this->settings->yandex_metrika_counter_id = $this->request->post('yandex_metrika_counter_id');
             // настройки админки
-            $this->settings->admin_table = $this->request->post('admin_table');
+            $this->settings->table_translation = $this->request->post('table_translation', 'string');
+            $this->settings->admin_cookie = $this->request->post('admin_cookie', 'string');
 
             // Водяной знак
             $clear_image_cache = false;

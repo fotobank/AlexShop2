@@ -48,6 +48,13 @@ class Managers extends Registry {
         }
         return $this->all_managers;
     }
+
+    public function get_remember(){
+        $this->db->query("
+                  SELECT `login`, TIMESTAMPDIFF(MINUTE, current_timestamp, `valid_period`) AS `diff`
+                  FROM __managers WHERE `cookie` = ?", $this->request->filter($_COOKIE['_remember'], 'sql'));
+        return $this->db->result();
+    }
     
     public function count_managers($filter = array()) {
         return count($this->all_managers);
@@ -107,7 +114,7 @@ class Managers extends Registry {
             // захешировать пароль
             $manager->password = $this->crypt_apr1_md5($manager->password);
         }
-
+         // права
         if(isset($manager->permissions) && is_array($manager->permissions)) {
             if(count(array_diff($this->permissions_list, $manager->permissions))>0) {
                 $manager->permissions = implode(",", array_intersect($this->permissions_list, $manager->permissions));
@@ -117,7 +124,19 @@ class Managers extends Registry {
             }
         }
 
-        $this->db->query('UPDATE __managers SET ?% WHERE id=?', $manager, (int)$id);
+        if(isset($manager->valid_period)) {
+            $valid_period = $manager->valid_period;
+            unset($manager->valid_period);
+            $this->db->query('
+               UPDATE __managers 
+               SET ?%, `valid_period`= DATE_ADD(current_timestamp, INTERVAL ?) 
+               WHERE id=?', $manager, $valid_period, (int)$id);
+
+        } else {
+
+            $this->db->query('UPDATE __managers SET ?% WHERE id=?', $manager, (int)$id);
+        }
+
         $this->init_managers();
         return $id;
     }
@@ -130,7 +149,11 @@ class Managers extends Registry {
         }
         return false;
     }
-    
+
+    public function hash_cookie($manager) {
+        return $this->crypt_apr1_md5($manager);
+    }
+
     private function crypt_apr1_md5($plainpasswd, $salt = '') {
         if (empty($salt)) {
             $salt = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789"), 0, 8);

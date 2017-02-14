@@ -6,8 +6,6 @@ class TranslationAdmin extends Registry {
     
     public function fetch() {
 
-        if($this->settings->admin_table == 'old_table'){
-
             $languages = $this->languages->get_languages();
             $translation = new \stdClass();
             if ($this->request->method('post')){
@@ -80,11 +78,6 @@ class TranslationAdmin extends Registry {
         $this->design->assign('translation', $translation);
         return $this->design->fetch('translation.tpl');
 
-        } elseif($this->settings->admin_table == 'jq_grig') {
-            return $this->design->fetch('jq_grid_translations.tpl');
-        } elseif($this->settings->admin_table == 'js_grig') {
-            return $this->design->fetch('js_grid_translations.tpl');
-        }
     }
 
 }

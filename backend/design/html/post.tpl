@@ -43,7 +43,7 @@
     });
 
     // Удаление связанного товара
-    $(".related_products a.delete").live('click', function() {
+    $(".related_products").on('click', 'a.delete', function() {
         $(this).closest("div.row").fadeOut(200, function() { $(this).remove(); });
         return false;
     });

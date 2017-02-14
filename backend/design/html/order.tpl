@@ -427,7 +427,7 @@ $(function() {
 	colorize();
 	
 	// Удаление товара
-	$(".purchases a.delete").live('click', function() {
+	$(".purchases").on('click', 'a.delete', function() {
 		 $(this).closest(".row").fadeOut(200, function() { $(this).remove(); });
 		 return false;
 	});

@@ -151,7 +151,7 @@
 
     <script src = "/backend/design/js/jqGrid/js/i18n/grid.locale-ru.js"></script>
     <script src = "/backend/design/js/jqGrid/js/jquery.jqGrid.min.js"></script>
-    <script src = "/backend/design/js/jquery.admin.translations.js"></script>
+    <script src = "/backend/design/js/jqGrid/js/jq.grid.admin.translations.js"></script>
 
     <link rel = "stylesheet" type = "text/css" media = "screen" href = "/backend/design/js/jqGrid/css/ui.jqgrid.css"/>
     <link rel = "stylesheet" type = "text/css" media = "screen" href = "/backend/design/js/jqGrid/css/ui.jqgrid-main.css"/>

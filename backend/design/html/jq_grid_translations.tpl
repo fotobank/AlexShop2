@@ -39,7 +39,7 @@
 
     <script src = "/backend/design/js/jqGrid/js/i18n/grid.locale-ru.js"></script>
     <script src = "/backend/design/js/jqGrid/js/jquery.jqGrid.min.js"></script>
-    <script src = "/backend/design/js/jquery.admin.translations.js"></script>
+    <script src = "/backend/design/js/jqGrid/js/jq.grid.admin.translations.js"></script>
     <script src = "/backend/design/js/jquery.filtertable/jquery.filtertable.min.js"></script>
 
     <link rel = "stylesheet" type = "text/css" media = "screen" href = "/backend/design/js/jqGrid/css/ui.jqgrid.css"/>
@@ -55,10 +55,14 @@
     <div class = "clearfix">
     <h2 class = "streamlined">переменные используемые в шаблонах</h2>
     </div>
+
+    <form action="#" method="post" id="autocomplete_form">
+    <p>
+    <label for="city_field">Название города</label>
+    <input type="text" id="city_field" name="city_field" size="20" />
+    </p>
+  </form>
+
      <table id = "list"></table>
      <div id = "grid-pager"></div>
-</div>
-
-<div>
-<span class="label label-success">успешно сохранено</span>
 </div>

@@ -12,7 +12,6 @@ if (!function_exists('cutString')){
      */
     function cutString($string, $minlength, $maxlen)
     {
-
         $len = (mb_strlen($string) > $maxlen) ? mb_strripos(mb_substr($string, $minlength, $maxlen), ' ') : $maxlen;
         $cutStr = mb_substr($string, $minlength, $len);
         $cutStr_last = mb_substr($string, $len, mb_strlen($string));

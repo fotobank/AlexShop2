@@ -137,6 +137,9 @@ class Comments extends Registry {
     private function buildTree(array &$elements, $parentId = 0) {
         $comments_tree = array();
         foreach ($elements as $element) {
+            /**
+             * TODO: $element->parent не существует??? => $element->parent_id
+             */
             if ($element->parent == $parentId) {
                 $children = $this->buildTree($elements, $element->id);
                 if ($children) {

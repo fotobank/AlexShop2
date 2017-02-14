@@ -56,13 +56,25 @@ table {
 tr:nth-child(2n) {
     background: #f0f0f0; /* Цвет фона */
 }
-#message {
-    margin-left: 50px;
+#success-message {
+    color: #f0f0f0;
+
     padding: 0 4px 2px;
     font-size: 11px;
     background-color: #468847;
     border: solid #777 1px;
     border-radius: 5px;
+}
+#error-message {
+    color: #f0f0f0;
+    padding: 0 4px 2px;
+    font-size: 11px;
+    background-color: #9d454f;
+    border: solid #777 1px;
+    border-radius: 5px;
+}
+.label-message{
+    margin-left: 50px;
 }
 .ui-jqgrid .ui-jqgrid-view input, .ui-jqgrid .ui-jqgrid-view select, .ui-jqgrid .ui-jqgrid-view textarea, .ui-jqgrid .ui-jqgrid-view button {
     font-size: 14px;
