@@ -570,6 +570,79 @@ class Lang extends Registry
         }
     }
 
+    /**
+     * функция поиска с автодополнением
+     * для использования WHERE MATCH(`label`, `lang_ru`, `lang_en`, `lang_uk`)
+     * в базе надо задать индекс таблицы с типом FULLTEXT, объединяющий в себе перечень полей для поиска
+     *
+     * @param $filter
+     *
+     * @return array
+     * @internal param $query
+     */
+    public function get_autocomplete($filter) {
+
+        $order = 'ORDER BY label';
+        $lang = '*';
+        if (!empty($filter['lang'])){
+            $lang = 'id, label, lang_' . $filter['lang'] . ' as value';
+        } elseif (isset($filter['langs']) && is_array($filter['langs']) && 0 !== count($filter['langs'])) {
+            $lang = 'id, label';
+            foreach ($filter['langs'] as $name_lang){
+                $lang .= ', lang_' . $name_lang . ' ';
+            }
+        }
+        if (!empty($filter['sort'])){
+            switch ($filter['sort']) {
+                case 'label_desc':
+                    $order = 'ORDER BY label DESC';
+                    break;
+                case 'date':
+                    $order = 'ORDER BY id';
+                    break;
+                case 'date_desc':
+                    $order = 'ORDER BY id DESC';
+                    break;
+                case 'translation':
+                    if (!empty($filter['lang'])){
+                        $order = 'ORDER BY value';
+                    }
+                    break;
+                case 'translation_desc':
+                    if (!empty($filter['lang'])){
+                        $order = 'ORDER BY value DESC';
+                    }
+                    break;
+            }
+        }
+        if (!empty($filter['sidx']) && !empty($filter['sord'])){
+            $order = 'ORDER BY ' . $filter['sidx'] . ' ' . $filter['sord'];
+        }
+        if (!empty($filter['limit'])){
+
+            if (!empty($filter['start'])){
+                $limit = 'LIMIT ' . $filter['start'] . ', ' . $filter['limit'];
+            } else {
+                $limit = 'LIMIT ' . $filter['limit'];
+            }
+
+            $query = $this->db->placehold("SELECT `id`, `label`, `lang_ru`, `lang_en`, `lang_uk`
+                    FROM __translations
+                    WHERE MATCH(`label`, `lang_ru`, `lang_en`, `lang_uk`) 
+                    AGAINST(? IN BOOLEAN MODE) $order $limit", '*' . $filter['query'] . '*');
+            if ($this->db->query($query)){
+                return $this->db->results();
+            }
+        }
+        $query = $this->db->placehold("SELECT `id`, `label`, `lang_ru`, `lang_en`, `lang_uk`
+                    FROM __translations
+                    WHERE MATCH(`label`, `lang_ru`, `lang_en`, `lang_uk`) 
+                    AGAINST(? IN BOOLEAN MODE) $order", '*' . $filter['query'] . '*');
+        if ($this->db->query($query)){
+            return $this->db->results();
+        }
+    }
+
     public function update_translation($id, $data)
     {
         $query = $this->db->placehold("UPDATE __translations SET ?% WHERE id IN(?@)", $data, (array)$id);

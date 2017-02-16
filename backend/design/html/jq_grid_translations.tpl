@@ -57,7 +57,7 @@
         <form action = "#" id = "form-search-autocomplete" method = "post">
             <div id = "search">
                 <input id = "input-filter" class = "search" type = "text" value = "" placeholder = "Search...">
-                <input class = "search_button" type = "text" value = "">
+                <button class = "search_button"></button>
             </div>
         </form>
     </div>

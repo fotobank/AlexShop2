@@ -30,84 +30,90 @@ class JqGridAjaxTranslations extends Registry
                 if (!empty($this->request->post('jqgrid_heading', 'integer'))){
                     $this->head_table($filter['langs']);
                 }
-                // ajax вывод jqGrid таблицы
-                if ($this->request->post('_search', 'string') == 'false'){
-                    $this->body_table($filter);
-                    // поиск
-                } elseif ($this->request->post('_search', 'string') == 'true') {
-                    $this->search($filter);
+
+                $search = $this->request->post('_search', 'string');
+                if (!empty($search)){
+                    switch ($search) {
+                        case 'autocomplete': // поиск с автодополнением - вывод результата в строке поиска
+                            $filter['query'] = trim($this->request->post('query', 'string'));
+                            $this->autocomplete($filter);
+                            break;
+                        case 'false':
+                            $filter['query'] = trim($this->request->post('query', 'string'));
+                            if(!empty($filter['query'])){
+                                // выводим результата поиска с автодополнением
+                                $this->get_search($filter);
+                            } else {
+                                // или всю таблицу
+                                $this->body_table($filter);
+                            }
+                            break;
+                        case 'true':
+                            // внутренний поиск jqGrid
+                            $this->search($filter);
+                            break;
+                    }
                 }
-                // редактирование или добавление записей
+
                 $mode = $this->request->post('oper', 'string');
-                if ($mode == 'edit' || $mode == 'add'){
-                    $this->add_edit();
-                }
-                // удаление
-                if (!empty($this->request->post('oper', 'string') == 'del')){
-                    $this->delete();
-                }
-                if (!empty($this->request->post('search', 'string') == 'autocomplete')){
-                    $s_query = trim($this->request->post('query', 'string'));
-                    $this->autocomplete($filter, $s_query);
+                if (!empty($mode)){
+                    switch ($mode) {
+                        case 'edit': // редактирование или добавление записей
+                        case 'add':
+                            $this->add_edit();
+                            break;
+                        case 'del': // удаление
+                            $this->delete();
+                            break;
+                    }
                 }
             }
-        } elseif ($this->request->method('get')) {
-
         }
         exit();
     }
 
     /**
+     * запрос для выводя результатов автопоиска
+     * @param $filter
+     */
+    public function get_search($filter) {
+
+        $translations = $this->languages->get_autocomplete($filter);
+        $filter['totalRows'] = count($translations);
+        $this->prepare($filter, $translations);
+    }
+
+    /**
      * поиск в autocomplete для грид
      *
-     * @param $s_query
+     * @param $filter
      *
      * @return bool
+     * @throws \exception\DbException
+     * @throws \JqGridAjaxTranslationsException
      */
-    protected function autocomplete($filter, $s_query)
+    protected function autocomplete($filter)
     {
         try {
 
-            // для использования WHERE MATCH(`label`, `lang_ru`, `lang_en`, `lang_uk`)
-            // в базе надо задать индекс таблицы с типом FULLTEXT, объединяющий в себе перечень полей для поиска
-            $query = $this->db->placehold("SELECT `label`, `lang_ru`, `lang_en`, `lang_uk`
-                    FROM __translations
-                    WHERE MATCH(`label`, `lang_ru`, `lang_en`, `lang_uk`) 
-                    AGAINST(? IN BOOLEAN MODE)", '*' . $s_query . '*');
-            $this->db->query($query);
-            $translations = $this->db->results();
-
-
-            /*$result = array();
-            array_walk($translations, function($value) use (&$result, $s_query){
-                $arr = (array)$value;
-                $i = 0;
-                array_walk($arr, function($value) use (&$result, $s_query, &$i){
-                    if(strpos($value, $s_query) !== false ){
-                        $result[] = $value;
-                    }
-                    if($i>12) return;
-                    ++$i;
-                });
-            });*/
+            $translations = $this->languages->get_autocomplete($filter);
 
             $result = [];
             foreach ($translations as $std){
                 $arr = $std;
                 foreach ($arr as $value){
-                    if (strpos($value, $s_query) !== false){
+                    if (strpos($value, $filter['query']) !== false){
                         $result[] = $value;
                     }
                 }
             }
 
-            $result = ['query'=> $s_query, 'suggestions' => $result];
+            $result = ['query'=> $filter['query'], 'suggestions' => $result];
                 $json = json_encode($result);
                 $this->send($json);
 
         } catch (JqGridAjaxTranslationsException $e) {
-            $json = json_encode('Database error: ' . $e->getMessage());
-            $this->send($json);
+            throw $e;
         }
     }
 
@@ -317,7 +323,7 @@ class JqGridAjaxTranslations extends Registry
     protected function prepare($filter, $translations)
     {
         //определяем количество записей в таблице
-        $totalRows = $this->languages->get_count();
+        $totalRows = $filter['totalRows'] ?? $this->languages->get_count();
 
         //сохраняем номер текущей страницы, общее количество страниц и общее количество записей
         $response = new stdClass();

@@ -83,7 +83,7 @@ $(document).ready(function () {
                 colModel: colM,
                 autowidth: true,
                 height: "100%",
-                regional : 'ru',
+                regional : currentlang,
                 sortname: 'id',
                 sortorder: "desc",
                 caption: "Переводы переменных в шаблонах",
@@ -214,11 +214,15 @@ $(document).ready(function () {
                 title: "Очистить кеш названий столбцов"
             });
         }
-        //эта функция добавляет GET параметр в запрос на получение
-        //данных для таблицы и обновляет её
+        //эта функция добавляет POST параметр в запрос на получение данных для таблицы и обновляет её
         function updateTable(value) {
             jQuery("#list")
-                .setGridParam({url: sPage + "?module=JqGridAjaxTranslations&sel_city=" + value, page: 1})
+                .setGridParam({
+                    url: sPage + "?module=JqGridAjaxTranslations",
+                    page: 1,
+                    mtype: "POST",
+                    postData: { query: value }
+                })
                 .trigger("reloadGrid");
         }
 
@@ -227,12 +231,12 @@ $(document).ready(function () {
         $('#input-filter').autocomplete({
             serviceUrl: sPage + '?module=JqGridAjaxTranslations',
             type: "POST",
-            params: { 'search': 'autocomplete' },
+            params: { '_search': 'autocomplete' },
             maxHeight:150,
             // minChars: 2, //миниальное число символов
             // deferRequestBy: 100, // отложить запрос на миллисекунд
             onSelect: function(suggestion) {
-                console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+            //    console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 updateTable(suggestion.value);
             }
         });
