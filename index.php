@@ -13,6 +13,9 @@ $view = new IndexView();
 
 
 if(isset($_GET['logout'])) {
+    $out_manager = $view->request->filter($_SESSION['admin'], 'sql');
+    $view->managers->delete_cookie($out_manager);
+    setcookie('_remember', '', 1, '/');
     unset($_SESSION['admin']);
     header('location: ' . $view->config->root_url . '/admin');
     exit();
@@ -20,10 +23,6 @@ if(isset($_GET['logout'])) {
 
 $page = $view->request->create($view);
 //print Optimize::html($page);
-
-
-$tt = new ComingSoon();
-$t = $tt->init();
 
 
 print $page;

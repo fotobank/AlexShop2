@@ -49,14 +49,21 @@ class Managers extends Registry {
         return $this->all_managers;
     }
 
-    public function get_remember(){
+    public function get_cookie($cookie_remember){
         $this->db->query("
-                  SELECT `login`, TIMESTAMPDIFF(MINUTE, current_timestamp, `valid_period`) AS `diff`
-                  FROM __managers WHERE `cookie` = ?", $this->request->filter($_COOKIE['_remember'], 'sql'));
+                  SELECT  `id`, `login`, TIMESTAMPDIFF(MINUTE, current_timestamp, `valid_period`) AS `diff`
+                  FROM __managers WHERE `cookie` = ?", $cookie_remember);
         return $this->db->result();
     }
+    public function delete_cookie($manager) {
+        $this->db->query("
+               UPDATE __managers 
+               SET `cookie` = SUBSTRING(MD5(RAND()) FROM 1 FOR 24),
+                `valid_period`= DATE_ADD(current_timestamp, INTERVAL 1 SECOND) 
+               WHERE `login` = ?", (string)$manager);
+    }
     
-    public function count_managers($filter = array()) {
+    public function count_managers() {
         return count($this->all_managers);
     }
     
@@ -127,10 +134,10 @@ class Managers extends Registry {
         if(isset($manager->valid_period)) {
             $valid_period = $manager->valid_period;
             unset($manager->valid_period);
-            $this->db->query('
+            $this->db->query("
                UPDATE __managers 
-               SET ?%, `valid_period`= DATE_ADD(current_timestamp, INTERVAL ?) 
-               WHERE id=?', $manager, $valid_period, (int)$id);
+               SET ?%, `valid_period`= DATE_ADD(current_timestamp, INTERVAL $valid_period) 
+               WHERE id=?", $manager, (int)$id);
 
         } else {
 
@@ -151,7 +158,9 @@ class Managers extends Registry {
     }
 
     public function hash_cookie($manager) {
-        return $this->crypt_apr1_md5($manager);
+
+        $salt =  bin2hex(random_bytes(11));
+        return hash('sha512', $salt . $manager);
     }
 
     private function crypt_apr1_md5($plainpasswd, $salt = '') {

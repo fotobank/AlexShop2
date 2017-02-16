@@ -22,17 +22,21 @@ class AuthAdmin extends Registry
                 } else {
                     $manager->cnt_try++;
                 }
+
                 if (isset($_COOKIE['_remember'])){
 
-                    $manager_remember =$this->managers->get_remember();
+                    $cookie_remember = $this->request->filter($_COOKIE['_remember'], 'sql');
+                    $manager_cookie = $this->managers->get_cookie($cookie_remember);
 
-                    if (null != $manager_remember && $manager_remember['diff'] > 0){
-                        $_SESSION['admin'] = $manager_remember['login'];
+                    if (null != $manager_cookie && $manager_cookie->diff > 0 &&
+                        $manager_cookie->login === $manager->login){
+                        $_SESSION['admin'] = $manager->login;
                         header('location: ' . $this->config->root_url . '/backend/index.php');
                         exit();
                     }
+                }
 
-                } elseif ($manager->cnt_try > $limit) {
+                if ($manager->cnt_try > $limit){
                     $this->design->assign('error_message', 'limit_try');
 
                 } elseif ($this->managers->check_password($pass, $manager->password)) {
@@ -43,15 +47,17 @@ class AuthAdmin extends Registry
 
                     if ($this->request->post('remember', 'string') == 'ok'){
                         $cookie = $this->managers->hash_cookie($manager->login);
-                        $admin_cookie = $this->settings->admin_cookie;
+                        $admin_cookie = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
                         setcookie('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
 
                         $arr_value['cookie'] = $cookie;
-                        $arr_value['valid_period'] = $this->settings->admin_cookie;
+                        $arr_value['valid_period'] = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
 
-                    } else {
-                        $this->managers->update_manager((int)$manager->id, $arr_value);
+                    } elseif(isset($_COOKIE['_remember'])) {
+                        setcookie('_remember', '', 1, '/');
                     }
+
+                    $this->managers->update_manager((int)$manager->id, $arr_value);
                     header('location: ' . $this->config->root_url . '/backend/index.php');
                     exit();
 

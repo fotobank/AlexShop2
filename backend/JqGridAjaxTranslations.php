@@ -92,30 +92,20 @@ class JqGridAjaxTranslations extends Registry
             });*/
 
             $result = [];
-            $i = 0;
             foreach ($translations as $std){
                 $arr = $std;
                 foreach ($arr as $value){
                     if (strpos($value, $s_query) !== false){
                         $result[] = $value;
-                        ++$i;
                     }
                 }
-                if ($i > 11) break;
             }
 
-            if (count($result) > 0){
-                $result = array_unique($result);
-                $response = [];
-                $response['query'] = $s_query;
-                $response['suggestions'] = $result;
-
-                $json = json_encode($response);
+            $result = ['query'=> $s_query, 'suggestions' => $result];
+                $json = json_encode($result);
                 $this->send($json);
-            } else {
-                return false;
-            }
-        } catch (PDOException $e) {
+
+        } catch (JqGridAjaxTranslationsException $e) {
             $json = json_encode('Database error: ' . $e->getMessage());
             $this->send($json);
         }

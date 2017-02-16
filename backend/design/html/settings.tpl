@@ -139,20 +139,29 @@
                 </select>
             </li>
             <li>
-                <label for = "admin_cookie" class = "property">Время жизни cookies
+                <label for = "admin_cookie_number" class = "property">Время жизни cookies
                     <span class="helper_wrap">
                         <a href="javascript:void(0)" id="show_help_search" class="helper_link"></a>
                         <span class="right helper_block">
                         <span>
-                            Время жизни cookies текущего менеджера.
-                            Задавать вместе с названием величины времени.
-                            Например: 5 HOUR или 60 MINUTE или 1 DAY
+                            Время жизни "cookies" текущего менеджера не зависящий от механизма сессий.
+                            Для использования отметить галочку "запомнить меня" при входе.
                         </span>
                         </span>
                     </span>
                   </label>
-                  <input id = "admin_cookie" name = "admin_cookie" class = "order_inp" type = "text"
-                   value = "{$settings->admin_cookie}"/>
+                <div class="input-group-middle">
+                  <input id = "admin_cookie_number" name = "admin_cookie_number" class = "order_inp" type = "text"
+                   value = "{$settings->admin_cookie_number}"/>
+                <select id = "admin_cookie_unit" name = "admin_cookie_unit">
+                    <option value = "MINUTE" {if $settings->admin_cookie_unit == "MINUTE"}
+                    selected{/if}>{$settings->admin_cookie_number|plural:'минута':'минут':'минуты'}</option>
+                    <option value = "HOUR" {if $settings->admin_cookie_unit == "HOUR"}
+                    selected{/if}>{$settings->admin_cookie_number|plural:'час':'часов':'часа'}</option>
+                    <option value = "DAY" {if $settings->admin_cookie_unit == "DAY"}
+                    selected{/if}>{$settings->admin_cookie_number|plural:'день':'дней':'дня'}</option>
+                </select>
+                </div>
             </li>
         </ul>
     </div>

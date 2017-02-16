@@ -104,6 +104,7 @@ class Request extends Registry {
     }
 
     /**
+     * доделать
      * очистка переменных
      * @param      $string
      * @param null $type

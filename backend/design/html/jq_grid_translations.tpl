@@ -37,7 +37,7 @@
 {* Title *}
 {$meta_title='Переводы' scope=parent}
 
-    <script src = "/backend/design/js/jqGrid/js/i18n/grid.locale-ru.js"></script>
+<script src = "/backend/design/js/jqGrid/js/i18n/grid.locale-ru.js"></script>
     <script src = "/backend/design/js/jqGrid/js/jquery.jqGrid.min.js"></script>
     <script src = "/backend/design/js/jqGrid/js/jq.grid.admin.translations.js"></script>
     <script src = "/backend/design/js/jquery.filtertable/jquery.filtertable.min.js"></script>
@@ -54,15 +54,13 @@
 <div id = "main_table">
     <div class = "clearfix">
     <h2 class = "streamlined">переменные используемые в шаблонах</h2>
+        <form action = "#" id = "form-search-autocomplete" method = "post">
+            <div id = "search">
+                <input id = "input-filter" class = "search" type = "text" value = "" placeholder = "Search...">
+                <input class = "search_button" type = "text" value = "">
+            </div>
+        </form>
     </div>
-
-    <form action="#" method="post" id="autocomplete_form">
-    <p>
-    <label for="city_field">Название города</label>
-    <input type="text" id="city_field" name="city_field" size="20" />
-    </p>
-  </form>
-
      <table id = "list"></table>
      <div id = "grid-pager"></div>
 </div>

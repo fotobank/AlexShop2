@@ -308,7 +308,7 @@ div.left ul li ul[class*="dropdown-"] {
     position: absolute;
     display: none;
     margin: -44px 0 0 230px;
-    z-index: 2;
+    z-index: 999;
 }
 div.left ul[class*="dropdown-"] li
 {
@@ -922,6 +922,13 @@ input[name*="check"]:checked + label{
 .tabs-section.tabs-vertical img {
     max-width: 720px;
 }
+#product #admin_cookie_unit {
+    width: 196px;
+}
+#product #admin_cookie_number {
+    width: 150px;
+}
+
 /*вертикальные табы в setting END*/
 
 /*выравнивание полей input*/
@@ -989,3 +996,12 @@ input[name*="check"]:checked + label{
 
 /* filter table specific styling */
 td.alt { background-color: #ffc; background-color: rgba(255, 255, 0, 0.2); }
+
+/*Обрезка текста с многоточием css*/
+.wsoto {
+    white-space: nowrap; /* Запрещаем перенос строк */
+    overflow: hidden; /* Обрезаем все, что не помещается в область */
+    text-overflow: ellipsis; /* Добавляем многоточие */
+    /* Не обязательно, но может понадобиться. Например, для ссылок */
+    display: block;
+}

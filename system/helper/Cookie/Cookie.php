@@ -59,7 +59,7 @@ class Cookie extends ArrayHelper
      *
      * @return $this|void
      */
-    public function set($name, $value, $expire  = 0, $path  = '', $domain  = '', $secure  = 0)
+    public function set($name, $value, $expire  = 0, $path  = '/', $domain  = '', $secure  = 0)
     {
         setcookie ($name, $value, $expire, $path, $domain, $secure);
     }
@@ -74,6 +74,6 @@ class Cookie extends ArrayHelper
      */
     public function del($name)
     {
-        setcookie ($name, $value = '');
+        setcookie ($name, $value = '', 1);
     }
 }

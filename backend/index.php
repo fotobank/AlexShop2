@@ -1,6 +1,7 @@
 <?php
 
 // Засекаем время
+use proxy\Cookie;
 use proxy\Session;
 use Tracy\Debugger;
 
@@ -17,6 +18,15 @@ header('Cache-Control: no-cache, must-revalidate');
 header('Expires: -1');
 header('Pragma: no-cache');
 
+// запоминаем для debug в Phpstorm
+if(DEBUG_MODE && Cookie::has('XDEBUG_SESSION')) {
+    Session::set('XDEBUG_SESSION', Cookie::get('XDEBUG_SESSION'));
+    $_GET['XDEBUG_SESSION'] = Session::get('XDEBUG_SESSION');
+} else {
+    Cookie::set('XDEBUG_SESSION', Session::get('XDEBUG_SESSION'));
+    $_GET['XDEBUG_SESSION'] = Session::get('XDEBUG_SESSION');
+}
+
 $backend = new IndexAdmin();
 
 
@@ -26,7 +36,6 @@ if(!Session::check_session()) {
         $_SERVER['SERVER_NAME'] . ' пользователь пришел из: ' . Session::get('origURL') .
         ' Ip адрес пользователя: ' . $_SERVER['REMOTE_ADDR']), Debugger::ERROR);
 }
-
 
 print $backend->fetch();
 

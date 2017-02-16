@@ -217,30 +217,29 @@ $(document).ready(function () {
         //эта функция добавляет GET параметр в запрос на получение
         //данных для таблицы и обновляет её
         function updateTable(value) {
-            console.log('value = ' + value);
-            /*jQuery("#list")
+            jQuery("#list")
                 .setGridParam({url: sPage + "?module=JqGridAjaxTranslations&sel_city=" + value, page: 1})
-                .trigger("reloadGrid");*/
+                .trigger("reloadGrid");
         }
 
         //настройка плагина Autocomplete
         //при возникновении события onSelect вызываем функцию updateTable
-        $('#city_field').autocomplete({
+        $('#input-filter').autocomplete({
             serviceUrl: sPage + '?module=JqGridAjaxTranslations',
             type: "POST",
-            params: { 'search': 'autocomplete'},
+            params: { 'search': 'autocomplete' },
             maxHeight:150,
-        //    minChars: 2, //миниальное число символов
-        //    deferRequestBy: 100, // отложить запрос на миллисекунд
-            onSelect: function(value) {
-                updateTable(value);
+            // minChars: 2, //миниальное число символов
+            // deferRequestBy: 100, // отложить запрос на миллисекунд
+            onSelect: function(suggestion) {
+                console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                updateTable(suggestion.value);
             }
         });
 
         //этот обработчик используется если посетитель ввел данные и нажал Enter
-        $('#autocomplete_form').submit(function() {
-        //    console.log('updateTable');
-            updateTable($('#city_field').val());
+        $('#form-search-autocomplete').submit(function() {
+            updateTable($('#input-filter').val());
             return false;
         });
     });

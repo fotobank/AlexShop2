@@ -200,7 +200,7 @@ class Lang extends Registry
 
     public function get_language($id)
     {
-        $query = $this->db->placehold("SELECT * FROM __languages WHERE id=? LIMIT 1", (int)$id);
+        $query = $this->db->placehold('SELECT * FROM __languages WHERE id=? LIMIT 1', (int)$id);
         $this->db->query($query);
         return $this->db->result();
     }

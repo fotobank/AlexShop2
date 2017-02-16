@@ -79,3 +79,9 @@ tr:nth-child(2n) {
 .ui-jqgrid .ui-jqgrid-view input, .ui-jqgrid .ui-jqgrid-view select, .ui-jqgrid .ui-jqgrid-view textarea, .ui-jqgrid .ui-jqgrid-view button {
     font-size: 14px;
 }
+#form-search-autocomplete #search {
+    width: 243px;
+}
+#form-search-autocomplete #search .search {
+    width: 200px;
+}
