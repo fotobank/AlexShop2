@@ -18,7 +18,7 @@ class Settings extends Registry {
     
     private $vars = array();
     
-    function __construct() {
+    public function __construct() {
         parent::__construct();
         
         // Выбираем из базы настройки

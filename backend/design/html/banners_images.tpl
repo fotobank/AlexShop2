@@ -185,7 +185,7 @@ $(function() {
 		},
 		update:function(event, ui)
 		{
-			$("#list_form input[name*='check']").attr('checked', false);
+			$("#list_form input[name*='check']").prop('checked', false);
 			$("#list_form").ajaxSubmit(function() {
 				colorize();
 			});
@@ -225,20 +225,20 @@ $(function() {
 
 	// Выделить все
 	$("#check_all").click(function() {
-		$('#list input[type="checkbox"][name*="check"]').attr('checked', $('#list input[type="checkbox"][name*="check"]:not(:checked)').length>0);
+		$('#list input[type="checkbox"][name*="check"]').prop('checked', $('#list input[type="checkbox"][name*="check"]:not(:checked)').length>0);
 	});	
 
 	// Удалить товар
 	$("a.delete").click(function() {
-		$('#list input[type="checkbox"][name*="check"]').attr('checked', false);
+		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
 		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
-		$(this).closest("form").find('select[name="action"] option[value=delete]').attr('selected', true);
+		$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
 		$(this).closest("form").submit();
 	});
 	
 	// Дублировать товар
 	$("a.duplicate").click(function() {
-		$('#list input[type="checkbox"][name*="check"]').attr('checked', false);
+		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
 		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
 		$(this).closest("form").find('select[name="action"] option[value=duplicate]').attr('selected', true);
 		$(this).closest("form").submit();

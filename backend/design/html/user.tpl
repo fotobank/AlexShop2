@@ -161,12 +161,12 @@ $(function() {
 
 	// Выделить все
 	$("#check_all").click(function() {
-		$('#list input[type="checkbox"][name*="check"]').attr('checked', $('#list input[type="checkbox"][name*="check"]:not(:checked)').length>0);
+		$('#list input[type="checkbox"][name*="check"]').prop('checked', $('#list input[type="checkbox"][name*="check"]:not(:checked)').length>0);
 	});	
 
 	// Удалить 
 	$("a.delete").click(function() {
-		$('#list input[type="checkbox"][name*="check"]').attr('checked', false);
+		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
 		$(this).closest(".row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
 		$(this).closest("form#list").find('select[name="action"] option[value=delete]').attr('selected', true);
 		$(this).closest("form#list").submit();

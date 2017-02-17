@@ -148,7 +148,6 @@
     <table id = "grid-translations-table"></table>
     <div id = "grid-translations-pager"></div>
 
-
     <script src = "/backend/design/js/jqGrid/js/i18n/grid.locale-ru.js"></script>
     <script src = "/backend/design/js/jqGrid/js/jquery.jqGrid.min.js"></script>
     <script src = "/backend/design/js/jqGrid/js/jq.grid.admin.translations.js"></script>
@@ -255,9 +254,9 @@ $(function () {
     });
     // Удалить
     $("a.delete").click(function () {
-        $('#list input[type="checkbox"][name*="check"]').attr('checked', false);
+        $('#list input[type="checkbox"][name*="check"]').prop('checked', false);
         $(this).closest(".row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
-        $(this).closest("form").find('select[name="action"] option[value=delete]').attr('selected', true);
+        $(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
         $(this).closest("form").submit();
     });
     $("#list_form").submit(function () {

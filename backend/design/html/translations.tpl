@@ -109,24 +109,34 @@ $(function() {
 
 	// Выделить все
 	$("#check_all").click(function() {
-		$('#list input[type="checkbox"][name*="check"]').attr('checked', $('#list input[type="checkbox"][name*="check"]:not(:checked)').length>0);
-	});	
+		$('#list input[type="checkbox"][name*="check"]').prop('checked', $('#list input[type="checkbox"][name*="check"]:not(:checked)').length>0);
+	});
 
-	// Удалить 
+	// Удалить
 	$("a.delete").click(function() {
-		$('#list input[type="checkbox"][name*="check"]').attr('checked', false);
-		$(this).closest(".row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
-		$(this).closest("form").find('select[name="action"] option[value=delete]').attr('selected', true);
+		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
+		$(this).closest(".row").find('input[type="checkbox"][name*="check"]').prop('checked', true);
+		$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
 		$(this).closest("form").submit();
 	});
-	
-	$("form").submit(function() {
-		if($('select[name="action"]').val()=='delete' && !confirm('Подтвердите удаление'))
-			return false;	
-	});
 
+    $.extend($.expr[':'], {
+        checkboxOn: function(e) {
+            return $(e).find('input[type="checkbox"][name*="check"]').prop('checked', true);
+        }
+    });
+
+
+    /*$("form").on("click", "a.delete", function() {
+        $("#list:checkboxOn");
+    });*/
+    
+
+	/*$("form").submit(function() {
+		if($('select[name="action"]').val()=='delete' && !confirm('Подтвердите удаление'))
+			return false;
+	});*/
 
 });
-
 </script>
 {/literal}

@@ -145,7 +145,7 @@
                     }
                 },
                 update: function (event, ui) {
-                    $("#list_form input[name*='check']").attr('checked', false);
+                    $("#list_form input[name*='check']").prop('checked', false);
                     $("#list_form").ajaxSubmit(function () {
                         colorize();
                     });
@@ -168,9 +168,9 @@
 
             // Удалить
             $("a.delete").click(function () {
-                $('#list input[type="checkbox"][name*="check"]').attr('checked', false);
+                $('#list input[type="checkbox"][name*="check"]').prop('checked', false);
                 $(this).closest(".row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
-                $(this).closest("form").find('select[name="action"] option[value=delete]').attr('selected', true);
+                $(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
                 $(this).closest("form").submit();
             });
 

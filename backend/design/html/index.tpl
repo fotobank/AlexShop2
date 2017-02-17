@@ -10,6 +10,7 @@
     <link rel = "stylesheet" type = "text/css" href = "/backend/design/js/jquery/jquery-ui.css" media = "screen"/>
     <link rel = "stylesheet" type = "text/css" href = "/backend/design/js/autocomplete/styles.css" media = "screen"/>
     <script src = "/backend/design/js/jquery/jquery-1.12.4.js"></script>
+    {*<script src = "/backend/design/js/jquery/jquery-1.7.1.min.js"></script>*}
     <script src = "/backend/design/js/jquery/jquery-ui.min.js"></script>
     <script src = "/backend/design/js/jquery/jquery.form.js"></script>
     <script src = "/backend/design/js/autocomplete/jquery.autocomplete.js"></script>
@@ -72,9 +73,10 @@
     });
 </script>
 {/if}
-{*определяем текущий язык*}
+{*определяем текущий язык и id сессии*}
 <script>
-var currentlang = "{$lang_label}";
+var current_lang = "{$lang_label}";
+var session_id = "{$smarty.session.id}";
 </script>
 <a href = '{$config->root_url}/{$lang_link}' class = 'admin_bookmark'></a>
 <div class = "container">

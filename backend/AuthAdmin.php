@@ -1,6 +1,8 @@
 <?php
 
 use api\Registry;
+use proxy\Cookie;
+use proxy\Session;
 
 class AuthAdmin extends Registry
 {
@@ -23,38 +25,38 @@ class AuthAdmin extends Registry
                     $manager->cnt_try++;
                 }
 
-                if (isset($_COOKIE['_remember'])){
+                if (Cookie::has('_remember')){
 
-                    $cookie_remember = $this->request->filter($_COOKIE['_remember'], 'sql');
-                    $manager_cookie = $this->managers->get_cookie($cookie_remember);
+                    $cookie_remember = $this->request->filter(Cookie::get('_remember'), 'sql');
+                    $manager_cookie = $this->managers->manager_cookie($cookie_remember);
 
                     if (null != $manager_cookie && $manager_cookie->diff > 0 &&
                         $manager_cookie->login === $manager->login){
-                        $_SESSION['admin'] = $manager->login;
+                        Session::set('admin', $manager->login);
                         header('location: ' . $this->config->root_url . '/backend/index.php');
                         exit();
                     }
                 }
-
                 if ($manager->cnt_try > $limit){
                     $this->design->assign('error_message', 'limit_try');
 
                 } elseif ($this->managers->check_password($pass, $manager->password)) {
 
                     // Установим переменную сессии, чтоб сервер знал что админ авторизован.
-                    $_SESSION['admin'] = $manager->login;
+                    Session::set('admin', $manager->login);
                     $arr_value = ['cnt_try' => 0, 'last_try' => null];
 
                     if ($this->request->post('remember', 'string') == 'ok'){
                         $cookie = $this->managers->hash_cookie($manager->login);
                         $admin_cookie = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
-                        setcookie('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
+                        Cookie::set('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
 
                         $arr_value['cookie'] = $cookie;
-                        $arr_value['valid_period'] = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
+                        $arr_value['valid_period'] = $this->settings->admin_cookie_number . ' ' .
+                                                      $this->settings->admin_cookie_unit;
 
-                    } elseif(isset($_COOKIE['_remember'])) {
-                        setcookie('_remember', '', 1, '/');
+                    } else {
+                        Cookie::del('_remember');
                     }
 
                     $this->managers->update_manager((int)$manager->id, $arr_value);

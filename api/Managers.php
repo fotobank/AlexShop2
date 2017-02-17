@@ -49,7 +49,7 @@ class Managers extends Registry {
         return $this->all_managers;
     }
 
-    public function get_cookie($cookie_remember){
+    public function manager_cookie($cookie_remember){
         $this->db->query("
                   SELECT  `id`, `login`, TIMESTAMPDIFF(MINUTE, current_timestamp, `valid_period`) AS `diff`
                   FROM __managers WHERE `cookie` = ?", $cookie_remember);

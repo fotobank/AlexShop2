@@ -494,13 +494,13 @@ class Lang extends Registry
             }
         }
 
-        $firstRowIndex = $filter['curPage'] * $filter['rowsPerPage'] - $filter['rowsPerPage'];
+        $firstRowIndex = $filter['page'] * $filter['limit'] - $filter['limit'];
 
         //получаем массив искомых переводов
         $this->db->query('
                  SELECT * FROM __translations ' . $qWhere . ' 
                  ORDER BY ' . $filter['sortingField'] . ' ' . $filter['sortingOrder'] . '
-                 LIMIT ' . $firstRowIndex . ', ' . $filter['rowsPerPage']
+                 LIMIT ' . $firstRowIndex . ', ' . $filter['limit']
         );
 
         return $this->db->results();
@@ -547,8 +547,8 @@ class Lang extends Registry
                     break;
             }
         }
-        if (!empty($filter['sidx']) && !empty($filter['sord'])){
-            $order = 'ORDER BY ' . $filter['sidx'] . ' ' . $filter['sord'];
+        if (!empty($filter['sortingField']) && !empty($filter['sortingOrder'])){
+            $order = 'ORDER BY ' . $filter['sortingField'] . ' ' . $filter['sortingOrder'];
         }
         if (!empty($filter['limit'])){
 

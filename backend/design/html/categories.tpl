@@ -157,14 +157,14 @@ $(function() {
 		axis: "y",
 		update:function()
 		{
-			$("#list_form input[name*='check']").attr('checked', false);
+			$("#list_form input[name*='check']").prop('checked', false);
 			$("#list_form").ajaxSubmit();
 		}
 	});
  
 	// Выделить все
 	$("#check_all").click(function() {
-		$('#list input[type="checkbox"][name*="check"]:not(:disabled)').attr('checked', $('#list input[type="checkbox"][name*="check"]:not(:disabled):not(:checked)').length>0);
+		$('#list input[type="checkbox"][name*="check"]:not(:disabled)').prop('checked', $('#list input[type="checkbox"][name*="check"]:not(:disabled):not(:checked)').length>0);
 	});	
 
 	// Показать категорию
@@ -192,9 +192,9 @@ $(function() {
 
 	// Удалить 
 	$("a.delete").click(function() {
-		$('#list input[type="checkbox"][name*="check"]').attr('checked', false);
-		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]:first').attr('checked', true);
-		$(this).closest("form").find('select[name="action"] option[value=delete]').attr('selected', true);
+		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
+		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]:first').prop('checked', true);
+		$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
 		$(this).closest("form").submit();
 	});
 

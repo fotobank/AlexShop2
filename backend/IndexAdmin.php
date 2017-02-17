@@ -3,6 +3,8 @@
 
 use api\Registry;
 use core\Alex;
+use proxy\Cookie;
+use proxy\Session;
 
 /**
  * Этот класс выбирает модуль в зависимости от параметра Section и выводит его на экран
@@ -179,25 +181,23 @@ class IndexAdmin extends Registry
         $module = preg_replace('/[^A-Za-z0-9]+/', '', $module);
 
 
-        if (isset($_COOKIE['_remember'])){
+        if (Cookie::has('_remember')){
             // проверяем время доступности и вылидность cookie
-            $cookie_remember = $this->request->filter($_COOKIE['_remember'], 'sql');
-            $manager_cookie = $this->managers->get_cookie($cookie_remember);
+            $cookie_remember = $this->request->filter(Cookie::get('_remember'), 'sql');
+            $manager_cookie = $this->managers->manager_cookie($cookie_remember);
             if (null != $manager_cookie && $manager_cookie->diff > 0){
                 // при каждоб посещении страницы обновляем cookie и записываем их в базу
                 $cookie = $this->managers->hash_cookie($manager_cookie->login);
                 $admin_cookie = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
-                setcookie('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
+                Cookie::set('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
                 $arr_value['cookie'] = $cookie;
                 $arr_value['valid_period'] = $admin_cookie;
                 $this->managers->update_manager((int)$manager_cookie->id, $arr_value);
-                $_SESSION['admin'] = $manager_cookie->login;
+                Session::set('admin', $manager_cookie->login);
                 // если время вышло или менеджер в базе не найден удаляем фиктивную cookie и выходим
             } else {
-                if(isset($_SESSION['admin'])) {
-                    unset($_SESSION['admin']);
-                }
-                setcookie('_remember', '', 1, '/'); // если доступное время для менеджера вышло - удаляем cookie
+                Session::del('admin');
+                Cookie::del('_remember'); // если доступное время для менеджера вышло - удаляем cookie
                 $arr_value['cookie'] = random_bytes(10);
                 $arr_value['valid_period'] = '1 SECOND';
                 $this->managers->update_manager((int)$manager_cookie->id, $arr_value);

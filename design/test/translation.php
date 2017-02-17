@@ -6,6 +6,7 @@ $languages['uk']='Украинский';
 
 //Русский
 
+$lang['ru']['11111ролролр'] = '11гш';
 $lang['ru']['breadcrumbs_blog'] = 'Блог';
 $lang['ru']['breadcrumbs_enter'] = 'Вход';
 $lang['ru']['breadcrumbs_password_remind'] = 'Восстановление пароля';
@@ -94,6 +95,8 @@ $lang['ru']['index_empty_cart'] = 'Корзина пуста';
 $lang['ru']['index_favorites'] = 'Избранное';
 $lang['ru']['index_in_networks'] = 'Мы в соцсетях';
 $lang['ru']['index_login'] = 'Вход';
+$lang['ru']['index_phone_1'] = '0 894 777-66-33';
+$lang['ru']['index_phone_2'] = '0 894 777-66-33';
 $lang['ru']['index_search'] = 'Поиск товаров';
 $lang['ru']['index_subscribe'] = 'Вы можете подписаться на рассылку и получать сообщения об акциях и скидках.';
 $lang['ru']['index_subscribe_already'] = 'Вы уже подписаны';
@@ -178,9 +181,6 @@ $lang['ru']['register_create_account'] = 'Зарегистрироваться';
 $lang['ru']['register_header'] = 'Регистрация';
 $lang['ru']['register_title'] = 'Регистрация';
 $lang['ru']['register_user_registered'] = 'Пользователь с таким email уже зарегистрирован';
-$lang['ru']['sdf'] = 'rt1';
-$lang['ru']['sdfg1'] = 'sl';
-$lang['ru']['sdfg2'] = 'kj';
 $lang['ru']['status_accepted'] = 'принят';
 $lang['ru']['status_made'] = 'выполнен';
 $lang['ru']['status_paid'] = 'оплачен';
@@ -206,10 +206,11 @@ $lang['ru']['wishlist_header'] = 'Избранное';
 $lang['ru']['wishlist_info_wishlist'] = 'Избранное';
 $lang['ru']['wishlist_title'] = 'Избранные товары';
 $lang['ru']['yandex_map_lang'] = 'ru_RU';
-$lang['ru']['ук'] = 'уj';
+$lang['ru']['екн'] = 'po';
 
 //Английский
 
+$lang['en']['11111ролролр'] = '11';
 $lang['en']['breadcrumbs_blog'] = 'Blog';
 $lang['en']['breadcrumbs_enter'] = 'Enter';
 $lang['en']['breadcrumbs_password_remind'] = 'Password reset';
@@ -298,6 +299,8 @@ $lang['en']['index_empty_cart'] = 'Cart is empty';
 $lang['en']['index_favorites'] = 'Favorites';
 $lang['en']['index_in_networks'] = 'We are in social networks';
 $lang['en']['index_login'] = 'Sign in';
+$lang['en']['index_phone_1'] = '0 894 777-66-33';
+$lang['en']['index_phone_2'] = '0 894 777-66-33';
 $lang['en']['index_search'] = 'Search products';
 $lang['en']['index_subscribe'] = 'You can subscribe to and receive messages about promotions and discounts.';
 $lang['en']['index_subscribe_already'] = 'You are already subscribed';
@@ -382,9 +385,6 @@ $lang['en']['register_create_account'] = 'Create Account';
 $lang['en']['register_header'] = 'Registration';
 $lang['en']['register_title'] = 'Registration';
 $lang['en']['register_user_registered'] = 'User with this email already registered';
-$lang['en']['sdf'] = 'rf';
-$lang['en']['sdfg1'] = 's';
-$lang['en']['sdfg2'] = 'jk';
 $lang['en']['status_accepted'] = 'accepted';
 $lang['en']['status_made'] = 'made';
 $lang['en']['status_paid'] = 'paid';
@@ -410,10 +410,11 @@ $lang['en']['wishlist_header'] = 'Favorites';
 $lang['en']['wishlist_info_wishlist'] = 'Wishlist';
 $lang['en']['wishlist_title'] = 'Favorites';
 $lang['en']['yandex_map_lang'] = 'en_US';
-$lang['en']['ук'] = 'уk';
+$lang['en']['екн'] = 'ро';
 
 //Украинский
 
+$lang['uk']['11111ролролр'] = '11';
 $lang['uk']['breadcrumbs_blog'] = 'Блог';
 $lang['uk']['breadcrumbs_enter'] = 'Вхід';
 $lang['uk']['breadcrumbs_password_remind'] = 'Відновлення паролю';
@@ -502,6 +503,8 @@ $lang['uk']['index_empty_cart'] = 'Кошик порожній';
 $lang['uk']['index_favorites'] = 'Вибране';
 $lang['uk']['index_in_networks'] = 'Ми в соцмережах';
 $lang['uk']['index_login'] = 'Вхiд';
+$lang['uk']['index_phone_1'] = '0 894 777-66-33';
+$lang['uk']['index_phone_2'] = '0 894 777-66-33';
 $lang['uk']['index_search'] = 'Пошук товарів';
 $lang['uk']['index_subscribe'] = 'Ви можете підписатися і отримувати повідомлення про акції та знижки.';
 $lang['uk']['index_subscribe_already'] = 'Ви вже підписані';
@@ -586,9 +589,6 @@ $lang['uk']['register_create_account'] = 'Зареєструватися';
 $lang['uk']['register_header'] = 'Реєстрація';
 $lang['uk']['register_title'] = 'Реєстрація';
 $lang['uk']['register_user_registered'] = 'Користувач з такою поштою вже зареєстрован';
-$lang['uk']['sdf'] = 'rt';
-$lang['uk']['sdfg1'] = 'sd';
-$lang['uk']['sdfg2'] = '12jkl';
 $lang['uk']['status_accepted'] = 'прийнятий';
 $lang['uk']['status_made'] = 'виконаний';
 $lang['uk']['status_paid'] = 'оплачений';
@@ -614,4 +614,4 @@ $lang['uk']['wishlist_header'] = 'Вибране';
 $lang['uk']['wishlist_info_wishlist'] = 'Вибране';
 $lang['uk']['wishlist_title'] = 'Вибрані товари';
 $lang['uk']['yandex_map_lang'] = 'uk_UA';
-$lang['uk']['ук'] = 'укеi';
+$lang['uk']['екн'] = 'пр';

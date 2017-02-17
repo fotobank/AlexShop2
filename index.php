@@ -2,6 +2,7 @@
 
 use api\ComingSoon\ComingSoon;
 use lib\Security\Security;
+use proxy\Cookie;
 
 
 include(__DIR__ . '/system/configs/define/config.php');
@@ -15,7 +16,7 @@ $view = new IndexView();
 if(isset($_GET['logout'])) {
     $out_manager = $view->request->filter($_SESSION['admin'], 'sql');
     $view->managers->delete_cookie($out_manager);
-    setcookie('_remember', '', 1, '/');
+    Cookie::del('_remember');
     unset($_SESSION['admin']);
     header('location: ' . $view->config->root_url . '/admin');
     exit();

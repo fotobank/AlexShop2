@@ -18,7 +18,7 @@ $(document).ready(function () {
             $.ajax({
                 url: sPage + '?module=JqGridAjaxTranslations',
                 type: "POST",
-                data: "jqgrid_heading=1",
+                data: { "jqgrid_heading": 1, 'session_id': session_id },
                 dataType: "json",
                 success: function (data, st) {
                     if (st == "success") {
@@ -71,7 +71,7 @@ $(document).ready(function () {
 
         function createGrid() {
             if (colN.length != colM.length) {
-                console.error("(colN = " + colN.length + " ; colM = " + colM.length + ") " + $.jgrid.regional[currentlang].errors.model);
+                console.error("(colN = " + colN.length + " ; colM = " + colM.length + ") " + $.jgrid.regional[current_lang].errors.model);
                 return void(0);
             }
 
@@ -79,11 +79,12 @@ $(document).ready(function () {
                 url: sPage + '?module=JqGridAjaxTranslations',
                 mtype: "POST",
                 datatype: "json",
+                postData: { 'session_id': session_id },
                 colNames: colN,
                 colModel: colM,
                 autowidth: true,
                 height: "100%",
-                regional : currentlang,
+                regional : current_lang,
                 sortname: 'id',
                 sortorder: "desc",
                 caption: "Переводы переменных в шаблонах",
@@ -113,6 +114,10 @@ $(document).ready(function () {
                 cellEdit: true,
                 cellsubmit: 'remote',
                 cellurl: sPage + '?module=JqGridAjaxTranslations',
+                // добавляем к запросу id сессии
+                beforeSubmitCell : function() {
+                 return  {"session_id": session_id };
+                },
                 afterSaveCell: function () {
                     $(".label-message").remove();
                     $(".ui-jqgrid-title").after("<span class='label-message'><span id='success-message'>успешно сохранено</span></span>").show('slow');
@@ -145,6 +150,7 @@ $(document).ready(function () {
                 {  // опции для редактирования
                     modal: true, // диалог модальный
                     url: sPage + '?module=JqGridAjaxTranslations', // бэкэнд
+                    editData: { 'session_id': session_id },
                     closeAfterEdit: true, // закрыть диплог после редактирования
                     reloadAfterSubmit: false, // перезагрузить таблицу после добавления
                     mtype: "POST", // тип запроса, перекрывает все предыдущие настройки
@@ -165,6 +171,7 @@ $(document).ready(function () {
                 {  // опции для добавления, все так же как и прошлый раз
                     modal: true,
                     url: sPage + '?module=JqGridAjaxTranslations',
+                    editData: { 'session_id': session_id },
                     closeAfterAdd: true, // закрыть диплог после добавления
                     mtype: "POST",
                     afterSubmit: function (response) {
@@ -184,6 +191,7 @@ $(document).ready(function () {
                     modal: true,
                     url: sPage + '?module=JqGridAjaxTranslations',
                     mtype: "POST",
+                    delData: { 'session_id': session_id },
                     closeAfterDelete: true,
                     afterSubmit: function (response) {
                         var json = eval("(" + response.responseText + ");");
@@ -221,7 +229,7 @@ $(document).ready(function () {
                     url: sPage + "?module=JqGridAjaxTranslations",
                     page: 1,
                     mtype: "POST",
-                    postData: { query: value }
+                    postData: { query: value, 'session_id': session_id }
                 })
                 .trigger("reloadGrid");
         }
@@ -231,7 +239,7 @@ $(document).ready(function () {
         $('#input-filter').autocomplete({
             serviceUrl: sPage + '?module=JqGridAjaxTranslations',
             type: "POST",
-            params: { '_search': 'autocomplete' },
+            params: { '_search': 'autocomplete', 'session_id': session_id },
             maxHeight:150,
             // minChars: 2, //миниальное число символов
             // deferRequestBy: 100, // отложить запрос на миллисекунд

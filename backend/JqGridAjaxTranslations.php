@@ -2,6 +2,8 @@
 
 use api\Registry;
 use exception\CommonException;
+use proxy\Post;
+use proxy\Session;
 
 class JqGridAjaxTranslationsException extends CommonException
 {
@@ -15,14 +17,19 @@ class JqGridAjaxTranslations extends Registry
 
     public function fetch()
     {
-        $filter['langs'] = $this->design->get_var('langs_label');
-
-        if ($this->request->method('post')){
+        if ($this->request->method('post') && Session::get('id') === Post::get('session_id')){
+            $filter['langs'] = $this->design->get_var('langs_label');
             //читаем параметры
-            $filter['curPage'] = $this->request->post('page', 'integer');
-            $filter['rowsPerPage'] = $this->request->post('rows', 'integer');
+            $filter['page'] = $this->request->post('page', 'integer');
+            // сколько строк мы хотим иметь в таблице - rowNum параметр
+            $filter['limit'] = $this->request->post('rows', 'integer');
+            // Колонка для сортировки.
             $filter['sortingField'] = $this->request->post('sidx', 'string');
+            // Порядок сортировки.
             $filter['sortingOrder'] = $this->request->post('sord', 'string');
+            // Если колонка сортировки не указана, то будем
+            // сортировать по id.
+            if (!$filter['sortingField']) $filter['sortingField'] = 'id';
 
             if (is_ajax()){
 
@@ -69,6 +76,7 @@ class JqGridAjaxTranslations extends Registry
                 }
             }
         }
+        echo json_encode(['message' => 'Error: ошибка запроса данных']);
         exit();
     }
 
@@ -181,23 +189,6 @@ class JqGridAjaxTranslations extends Registry
      */
     protected function body_table($filter)
     {
-        // Получаем номер страницы. Сначала jqGrid ставит его в 1.
-        $filter['page'] = $this->request->post('page', 'integer');
-
-        // сколько строк мы хотим иметь в таблице - rowNum параметр
-        $filter['limit'] = $this->request->post('rows', 'integer');
-
-        // Колонка для сортировки. Сначала sortname параметр
-        // затем index из colModel
-        $filter['sidx'] = $this->request->post('sidx', 'string');
-
-        // Порядок сортировки.
-        $filter['sord'] = $this->request->post('sord', 'string');
-
-        // Если колонка сортировки не указана, то будем
-        // сортировать по первой колонке.
-        if (!$filter['sidx']) $filter['sidx'] = 1;
-
         // Вычисляем количество строк для навигации..
         $count = $this->languages->get_count();
 
@@ -327,8 +318,8 @@ class JqGridAjaxTranslations extends Registry
 
         //сохраняем номер текущей страницы, общее количество страниц и общее количество записей
         $response = new stdClass();
-        $response->page = $filter['curPage'];
-        $response->total = ceil($totalRows / $filter['rowsPerPage']);
+        $response->page = $filter['page'];
+        $response->total = ceil($totalRows / $filter['limit']);
         $response->records = $totalRows;
 
         $rows = [];
