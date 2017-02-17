@@ -6,7 +6,7 @@ $languages['uk']='Украинский';
 
 //Русский
 
-$lang['ru']['11111ролролр'] = '11гш';
+$lang['ru']['11111ролролр'] = '11г';
 $lang['ru']['breadcrumbs_blog'] = 'Блог';
 $lang['ru']['breadcrumbs_enter'] = 'Вход';
 $lang['ru']['breadcrumbs_password_remind'] = 'Восстановление пароля';
@@ -206,11 +206,10 @@ $lang['ru']['wishlist_header'] = 'Избранное';
 $lang['ru']['wishlist_info_wishlist'] = 'Избранное';
 $lang['ru']['wishlist_title'] = 'Избранные товары';
 $lang['ru']['yandex_map_lang'] = 'ru_RU';
-$lang['ru']['екн'] = 'po';
 
 //Английский
 
-$lang['en']['11111ролролр'] = '11';
+$lang['en']['11111ролролр'] = '1';
 $lang['en']['breadcrumbs_blog'] = 'Blog';
 $lang['en']['breadcrumbs_enter'] = 'Enter';
 $lang['en']['breadcrumbs_password_remind'] = 'Password reset';
@@ -410,7 +409,6 @@ $lang['en']['wishlist_header'] = 'Favorites';
 $lang['en']['wishlist_info_wishlist'] = 'Wishlist';
 $lang['en']['wishlist_title'] = 'Favorites';
 $lang['en']['yandex_map_lang'] = 'en_US';
-$lang['en']['екн'] = 'ро';
 
 //Украинский
 
@@ -614,4 +612,3 @@ $lang['uk']['wishlist_header'] = 'Вибране';
 $lang['uk']['wishlist_info_wishlist'] = 'Вибране';
 $lang['uk']['wishlist_title'] = 'Вибрані товари';
 $lang['uk']['yandex_map_lang'] = 'uk_UA';
-$lang['uk']['екн'] = 'пр';

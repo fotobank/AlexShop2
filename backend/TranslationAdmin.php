@@ -12,7 +12,7 @@ class TranslationAdmin extends Registry {
                 $translation->id = $this->request->post('id', 'integer');
 
                 $translation->label = trim($this->request->post('label'));
-                $translation->label = str_replace(" ", '_', $translation->label);
+                $translation->label = str_replace(' ', '_', $translation->label);
 
                 //$translation->in_config = $this->request->post('in_config', 'boolean');
 
@@ -23,7 +23,7 @@ class TranslationAdmin extends Registry {
                     }
                 }
 
-                $this->db->query("SELECT * FROM __translations WHERE label=? LIMIT 1", $translation->label);
+                $this->db->query('SELECT * FROM __translations WHERE label=? LIMIT 1', $translation->label);
                 $exist_label = $this->db->result();
 
                 $registry_object = $this->{$translation->label};
@@ -58,7 +58,7 @@ class TranslationAdmin extends Registry {
 
                         foreach ($translations as $t){
                             $lang = 'lang_' . $l->label;
-                            $row .= "$" . "lang['" . $l->label . "']['" . $t->label . "'] = '" . $this->db->escape($t->$lang) . "';\n";
+                            $row .= '$' . "lang['" . $l->label . "']['" . $t->label . "'] = '" . $this->db->escape($t->$lang) . "';\n";
                         }
                     }
                     fwrite($filephp, $row);

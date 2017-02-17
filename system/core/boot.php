@@ -27,6 +27,7 @@
  * SOFTWARE.
  */
 
+use api\Registry;
 use core\Autoloader;
 use proxy\Config;
 use proxy\Session;
@@ -124,3 +125,7 @@ ini_set('assert.exception', DEBUG_MODE);
 parse_req($_REQUEST);
 $_SERVER['REQUEST_URI'] = filter($_SERVER['REQUEST_URI'], 'reqUri');
 $_SERVER['REMOTE_ADDR'] = filter($_SERVER['REMOTE_ADDR'], 'ip');
+
+function api() {
+    return Registry::getInstance();
+};

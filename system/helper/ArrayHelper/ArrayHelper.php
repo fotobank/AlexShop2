@@ -130,7 +130,7 @@ class ArrayHelper
      *  возвращает значение по пути
      *
      * @param $path
-     * @return bool|array
+     * @return bool|array|string
      */
     public function get($path)
     {

@@ -10,6 +10,7 @@
 
 namespace api;
 
+use proxy\AbstractProxy;
 
 
 /**
@@ -48,7 +49,7 @@ namespace api;
  * @property \api\ReportStat() reportstat
  * @property \api\Topvisor() topvisor
  */
-class Registry {
+class Registry extends AbstractProxy {
 
     /**
      * алиасы API
@@ -63,7 +64,7 @@ class Registry {
      * Созданные объекты
      * @var array
      */
-	private static $objects = array();
+//	private static $objects = array();
 
 
     /**
@@ -72,6 +73,16 @@ class Registry {
     public function __construct() {
        //  $this->config = Config::getData('config');
 	}
+
+    /**
+     * Init instance
+     * @throws \exception\ComponentException
+     */
+    protected static function initInstance()
+    {
+        return new Registry();
+    }
+
 
     /**
      * Магический метод, создает нужный объект API
@@ -90,22 +101,22 @@ class Registry {
             $class = self::$alias[$name];
         }
         // Если такой объект уже существует, возвращаем его
-        if (isset(self::$objects[$class])){
-            return self::$objects[$class];
+        if (isset(self::$instances[$class])){
+            return self::$instances[$class];
         }
 
         $file_class = __DIR__ . '/' . $class . '.php';
         if(is_readable($file_class)){
             $name = "api\\$class";
         //    require_once $file_class;
-            self::$objects[$class] = new $name();
+            self::$instances[$class] = new $name();
 
         } else {
             return null;
         }
 
         // Возвращаем созданный объект
-        return self::$objects[$class];
+        return self::$instances[$class];
 	}
     
     public function translit($text) {

@@ -1,6 +1,7 @@
 <?php
 
 use api\ComingSoon\ComingSoon;
+use api\Registry;
 use lib\Security\Security;
 use proxy\Cookie;
 
@@ -22,8 +23,8 @@ if(isset($_GET['logout'])) {
     exit();
 }
 
+
 $page = $view->request->create($view);
 //print Optimize::html($page);
-
 
 print $page;

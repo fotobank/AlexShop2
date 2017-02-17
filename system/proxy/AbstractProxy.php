@@ -75,7 +75,6 @@ abstract class AbstractProxy
     public static function getInstance()
     {
         $class = static::class;
-        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (!isset(static::$instances[$class]))
         {
             static::$instances[$class] = static::initInstance();

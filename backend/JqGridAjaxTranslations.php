@@ -17,7 +17,8 @@ class JqGridAjaxTranslations extends Registry
 
     public function fetch()
     {
-        if ($this->request->method('post') && Session::get('id') === Post::get('session_id')){
+
+        if ($this->request->method('post') && Session::get('id') === Post::filter('session_id', 'string')){
             $filter['langs'] = $this->design->get_var('langs_label');
             //читаем параметры
             $filter['page'] = $this->request->post('page', 'integer');
@@ -96,7 +97,6 @@ class JqGridAjaxTranslations extends Registry
      *
      * @param $filter
      *
-     * @return bool
      * @throws \exception\DbException
      * @throws \JqGridAjaxTranslationsException
      */
@@ -215,6 +215,8 @@ class JqGridAjaxTranslations extends Registry
 
     /**
      * @param $filter
+     *
+     * @throws \Exception
      */
     protected function search($filter)
     {

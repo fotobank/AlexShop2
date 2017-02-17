@@ -48,4 +48,38 @@ class Post extends ArrayHelper
         }
 
     }
+
+    /**
+     * @param                              $post_key
+     * @param boolean|float|integer|string $type
+     *
+     * @return array|bool|float|boolean
+     * @internal param $post_data
+     * @internal param $path
+     */
+    public function filter($post_key = null, $type = null)
+    {
+        $val = null;
+        if(!empty($post_key) && $this->has($post_key)) {
+            $val = parent::get($post_key);
+        } elseif(empty($post_key)) {
+            $val = file_get_contents('php://input');
+        }
+        if($val){
+            if ($type === 'string'){
+                return (string)preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/iu', '', $val);
+            }
+            if ($type === 'integer'){
+                return (int)$val;
+            }
+            if ($type === 'float'){
+                return (float)$val;
+            }
+            if ($type === 'boolean'){
+                return !empty($val);
+            }
+        }
+        return $val;
+
+    }
 }

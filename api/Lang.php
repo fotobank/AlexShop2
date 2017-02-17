@@ -73,7 +73,13 @@ class Lang extends Registry
         }
     }
 
-    public function get_query($params = [])
+    /**
+     * @param array $params
+     *
+     * @return \stdClass
+     * @throws \exception\DbException
+     */
+    public function get_query(array $params = [])
     {
         $lang = (isset($params['lang']) && $params['lang'] ? $params['lang'] : $this->lang_id());
         $object = $params['object'];
@@ -87,7 +93,7 @@ class Lang extends Registry
         $this->db->query("SHOW TABLES LIKE '%__languages%'");
         $exist = $this->db->result();
 
-        if (isset($lang) && $exist && !empty($this->languages)){
+        if (isset($lang) && $exist && null !== $this->languages){
             /*$f = 'l';
             $lang_join = 'LEFT JOIN __lang_'.$this->tables[$object].' l ON l.'.$object.'_id='.$px.'.id AND l.lang_id = '.(int)$lang;*/
             $f = (isset($params['px_lang']) && $params['px_lang'] ? $params['px_lang'] : 'l');
@@ -105,9 +111,12 @@ class Lang extends Registry
         return $result;
     }
 
+    /**
+     * @return array|bool|float|int|mixed|null
+     */
     public function lang_id()
     {
-        if (empty($this->languages)){
+        if (null === $this->languages){
             return false;
         }
 
@@ -156,7 +165,7 @@ class Lang extends Registry
 
     public function languages($filter = [])
     {
-        if (empty($this->languages)){
+        if (null === $this->languages){
             $this->init_languages();
         }
 
@@ -185,7 +194,7 @@ class Lang extends Registry
 
     public function init_languages()
     {
-        if (!empty($this->languages)){
+        if (null !== $this->languages){
             return $this->languages;
         }
 
@@ -247,7 +256,7 @@ class Lang extends Registry
 
         if (isset($data->label) && !empty($language) && $language->label !== $data->label){
             foreach ($this->tables as $table){
-                $this->db->query("UPDATE __lang_" . $table . " SET lang_label=? WHERE lang_id=?", $data->label, $id);
+                $this->db->query('UPDATE __lang_' . $table . ' SET lang_label=? WHERE lang_id=?', $data->label, $id);
             }
         }
 
@@ -258,10 +267,12 @@ class Lang extends Registry
      * @param $data
      *
      * @return bool|mixed
+     * @throws \exception\DbException
      */
     public function add_language($data)
     {
         $data = (object)$data;
+        $languag = null;
 
         $languages = $this->get_languages();
         $data->position = 1;
@@ -402,7 +413,7 @@ class Lang extends Registry
         }
 
         $languages = $this->languages();
-        if (empty($languages)){
+        if (null === $this->languages){
             return;
         }
 
@@ -524,6 +535,7 @@ class Lang extends Registry
             }
         }
 
+        // сортировка для старого варианта таблицы
         if (!empty($filter['sort'])){
             switch ($filter['sort']) {
                 case 'label_desc':
