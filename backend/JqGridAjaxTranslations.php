@@ -133,7 +133,7 @@ class JqGridAjaxTranslations extends Registry
     protected function head_table($langs)
     {
         $lang_list = $this->languages->lang_list();
-        $head = ['v', 'id', 'переменная в шаблоне'];
+        $head = ['id', 'переменная в шаблоне'];
         foreach ($langs as $short_lang){
             $head[] = mb_strtolower($lang_list["$short_lang"]->name);
         }
@@ -152,12 +152,15 @@ class JqGridAjaxTranslations extends Registry
      */
     private function model_table($langs_label)
     {
+        /*$model[] = [
+        'name' => 'checkbox', 'width' => 15, 'align' => 'center',
+            'formatter' => 'checkbox', 'formatoptions' => ['disabled' => false],
+            'edittype' => 'checkbox', 'editoptions' => ['value' => 'Yes:No', 'defaultValue' => 'Yes'],
+            'stype' => 'select', 'searchoptions' => ['value' => ':Any;true:Yes;false:No'], 'sortable' => false
+         ];*/
         $model[] = [
-            'name' => 'checkbox', 'index' => 'checkbox', 'edittype' => 'checkbox', 'editable' => true,
-            'editoptions' => ['value' => 'Yes:No'], 'width' => 15
-        ];
-        $model[] = [
-            'name' => 'id', 'index' => 'id', 'readOnly' => true, 'width' => 15, 'editable' => false, 'search' => false
+            'name' => 'id', 'index' => 'id', 'readOnly' => true, 'width' => 18, 'align' => 'center',
+            'editable' => false, 'search' => false
         ];
         $model[] = ['name' => 'label', 'index' => 'label',
             'searchrules' => ['required' => true], 'editable' => true, 'width' => 80];
@@ -230,17 +233,33 @@ class JqGridAjaxTranslations extends Registry
             // допустимый маркер
             $filter['allowedOperations'] = ['AND', 'OR'];
 
-            $filter['searchData'] = json_decode($_POST['filters']);
+            if(Post::has('filters')){
+                $filter['searchData'] = json_decode($_POST['filters']);
+            } else {
+                // поиск по отдельным колонкам
+                $filter['searchData'] = new stdClass();
+                $rules = new stdClass();
+                $filter['searchData']->rules = new stdClass();
 
+                $flipped = array_flip($filter['allowedFields']);
+                $keys = array_intersect_key($_POST, $flipped);
+
+                foreach ($keys as $key => $value) {
+                    $rules->field = $key;
+                    $rules->data = $value;
+                    $rules->op = 'cn';
+                }
+                $filter['searchData']->rules = [];
+                $filter['searchData']->rules[] = $rules;
+            }
             //ограничение на количество условий
             if (count($filter['searchData']->rules) > 10){
                 throw new JqGridAjaxTranslationsException('Cool hacker is here!!! :)');
             }
-
-            $translations = $this->languages->get_search($filter);
-
-            $this->prepare($filter, $translations);
-
+            if(isset($filter['searchData'])){
+                $translations = $this->languages->get_search($filter);
+                $this->prepare($filter, $translations);
+            }
 
         } catch (JqGridAjaxTranslationsException $e) {
 
@@ -300,8 +319,8 @@ class JqGridAjaxTranslations extends Registry
      */
     protected function delete()
     {
-        $id = $this->request->post('id', 'integer');
-        $this->languages->delete_translation($id);
+        $ids = explode(',', $this->request->post('id'));
+        $this->languages->delete_translations($ids);
 
         $error = $this->db->getMysqli()->error;
         $json = ($error != '') ? json_encode(['message' => 'Error: ' . $error]) : true;
@@ -327,7 +346,7 @@ class JqGridAjaxTranslations extends Registry
         $rows = [];
         foreach ($translations as $key => $row){
             $rows[$key]['id'] = $row->id;
-            $rows[$key]['cell'] = ['No', $row->id, $row->label];
+            $rows[$key]['cell'] = [$row->id, $row->label];
             foreach ($filter['langs'] as $short_lang){
                 $rows[$key]['cell'][] = $row->{'lang_' . $short_lang};
             }

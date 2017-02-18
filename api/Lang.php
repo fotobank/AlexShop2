@@ -686,11 +686,28 @@ class Lang extends Registry
         fclose($filejs);
     }
 
+    /**
+     * удаление одной строки
+     * @param $id
+     */
     public function delete_translation($id)
     {
         if (!empty($id)){
             $query = $this->db->placehold("DELETE FROM __translations WHERE id=? LIMIT 1", (int)$id);
             $this->db->query($query);
+        }
+    }
+
+    /**
+     * удаление множества строк
+     *
+     * @param array $ids
+     *
+     * @throws \exception\DbException
+     */
+    public function delete_translations($ids) {
+        if(!empty($ids)) {
+            $this->db->query('delete from __translations where id in(?@)', $ids);
         }
     }
 

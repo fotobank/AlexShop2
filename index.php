@@ -1,7 +1,7 @@
 <?php
 
 use api\ComingSoon\ComingSoon;
-use api\Registry;
+
 use lib\Security\Security;
 use proxy\Cookie;
 
@@ -16,13 +16,12 @@ $view = new IndexView();
 
 if(isset($_GET['logout'])) {
     $out_manager = $view->request->filter($_SESSION['admin'], 'sql');
-    $view->managers->delete_cookie($out_manager);
+    $view->managers->delete_cookie($out_manager, 'login');
     Cookie::del('_remember');
     unset($_SESSION['admin']);
     header('location: ' . $view->config->root_url . '/admin');
     exit();
 }
-
 
 $page = $view->request->create($view);
 //print Optimize::html($page);

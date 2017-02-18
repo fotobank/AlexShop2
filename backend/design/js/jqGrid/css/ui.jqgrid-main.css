@@ -85,3 +85,9 @@ tr:nth-child(2n) {
 #form-search-autocomplete #search .search {
     width: 200px;
 }
+
+td.ui-search-input input, td.ui-search-input select, td.ui-search-input textarea {
+    margin: 4px;
+    height: 14px;
+    font-size: 13px;
+}

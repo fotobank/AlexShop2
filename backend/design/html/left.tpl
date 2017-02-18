@@ -212,6 +212,14 @@
 			</a>
 		</li>
     {/if}
+	{if in_array('service', $manager->permissions)}
+        <li class = "{if $menu_selected == 'service'}active{/if}">
+			<a href = "index.php?module=ServiceAdmin">
+				<i class = "icon_banner"></i>
+				<span>Обслуживание</span>
+			</a>
+		</li>
+    {/if}
 
     {if in_array('settings', $manager->permissions)}
         <li class = "dropdown {if $menu_selected == ('settings')}active

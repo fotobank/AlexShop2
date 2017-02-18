@@ -6,7 +6,8 @@ $languages['uk']='Украинский';
 
 //Русский
 
-$lang['ru']['11111ролролр'] = '11г';
+$lang['ru']['1'] = '';
+$lang['ru']['11'] = '';
 $lang['ru']['breadcrumbs_blog'] = 'Блог';
 $lang['ru']['breadcrumbs_enter'] = 'Вход';
 $lang['ru']['breadcrumbs_password_remind'] = 'Восстановление пароля';
@@ -209,7 +210,8 @@ $lang['ru']['yandex_map_lang'] = 'ru_RU';
 
 //Английский
 
-$lang['en']['11111ролролр'] = '1';
+$lang['en']['1'] = '';
+$lang['en']['11'] = '';
 $lang['en']['breadcrumbs_blog'] = 'Blog';
 $lang['en']['breadcrumbs_enter'] = 'Enter';
 $lang['en']['breadcrumbs_password_remind'] = 'Password reset';
@@ -412,7 +414,8 @@ $lang['en']['yandex_map_lang'] = 'en_US';
 
 //Украинский
 
-$lang['uk']['11111ролролр'] = '11';
+$lang['uk']['1'] = '';
+$lang['uk']['11'] = '';
 $lang['uk']['breadcrumbs_blog'] = 'Блог';
 $lang['uk']['breadcrumbs_enter'] = 'Вхід';
 $lang['uk']['breadcrumbs_password_remind'] = 'Відновлення паролю';

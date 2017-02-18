@@ -1,5 +1,5 @@
 {capture name=tabs_setting}
-    {if in_array('currency', $manager->permissions)}
+    {if in_array('settings2', $manager->permissions)}
         <li class="active">
             <a href="index.php?module=SecondarySettingsAdmin">Заглушка</a>
         </li>

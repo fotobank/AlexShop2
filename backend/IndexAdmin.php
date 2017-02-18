@@ -196,11 +196,10 @@ class IndexAdmin extends Registry
                 Session::set('admin', $manager_cookie->login);
                 // если время вышло или менеджер в базе не найден удаляем фиктивную cookie и выходим
             } else {
+                $this->managers->delete_cookie($cookie_remember, 'cookie');
+                $this->managers->delete_cookie(Session::get('admin'), 'login');
                 Session::del('admin');
                 Cookie::del('_remember'); // если доступное время для менеджера вышло - удаляем cookie
-                $arr_value['cookie'] = random_bytes(10);
-                $arr_value['valid_period'] = '1 SECOND';
-                $this->managers->update_manager((int)$manager_cookie->id, $arr_value);
                 header('location: ' . $this->config->root_url . '/admin');
                 exit();
             }

@@ -16,7 +16,7 @@ class Managers extends Registry {
     public $permissions_list = array('products','comment', 'comment_edit', 'categories', 'brands', 'features',
         'orders', 'labels', 'users', 'groups', 'coupons', 'pages', 'blog', 'comments', 'feedbacks', 'import',
         'export', 'stats', 'design', 'settings', 'settings2', 'currency', 'delivery', 'payment', 'managers', 'license',
-        'languages', 'banners', 'special', 'callbacks', 'topvisor', 'yametrika', 'robots'
+        'languages', 'banners', 'special', 'callbacks', 'topvisor', 'yametrika', 'robots', 'service'
         
     );
 
@@ -55,12 +55,12 @@ class Managers extends Registry {
                   FROM __managers WHERE `cookie` = ?", $cookie_remember);
         return $this->db->result();
     }
-    public function delete_cookie($manager) {
+    public function delete_cookie($manager, $type) {
         $this->db->query("
                UPDATE __managers 
                SET `cookie` = SUBSTRING(MD5(RAND()) FROM 1 FOR 24),
                 `valid_period`= DATE_ADD(current_timestamp, INTERVAL 1 SECOND) 
-               WHERE `login` = ?", (string)$manager);
+               WHERE $type = ?", (string)$manager);
     }
     
     public function count_managers() {

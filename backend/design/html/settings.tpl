@@ -135,7 +135,6 @@
                 <select id = "table_translation" name = "table_translation">
                     <option value = "old_table" {if $settings->table_translation == "old_table"}selected{/if}>основной</option>
                     <option value = "jq_grid" {if $settings->table_translation == "jq_grid"}selected{/if}>ajax-jQGrid</option>
-                    <option value = "js_grid" {if $settings->table_translation == "js_grid"}selected{/if}>ajax-jSGrid</option>
                 </select>
             </li>
             <li>

@@ -89,6 +89,7 @@ $(document).ready(function () {
                 sortorder: "desc",
                 caption: "Переводы переменных в шаблонах",
                 pager: "#grid-pager",
+                multiselect: true,
                 viewrecords: true,
                 rowList: [10, 20, 30, 50, 100],
                 rowNum: 20,
@@ -96,6 +97,19 @@ $(document).ready(function () {
                 /** загрузка только один раз */
                 loadonce: false,
                 editurl: sPage + '?module=JqGridAjaxTranslations',
+                /*beforeSelectRow: function (rowid, e) {
+                    var $self = $(this),
+                        iCol = $.jgrid.getCellIndex($(e.target).closest("td")[0]),
+                        cm = $self.jqGrid("getGridParam", "colModel"),
+                        localData = $self.jqGrid("getLocalRow", rowid);
+                    if (cm[iCol].name === "MyPrint" && e.target.tagName.toUpperCase() === "INPUT") {
+                        // set local grid data
+                        localData.MyPrint = $(e.target).is(":checked");
+                        alert(JSON.stringify(localData));
+                    }
+
+                    return true; // allow selection
+                },*/
                 /** редактирование двойным кликом */
                 /*ondblClickRow: function(id){
                 if(id && id!==lastSel){
@@ -152,7 +166,7 @@ $(document).ready(function () {
                     url: sPage + '?module=JqGridAjaxTranslations', // бэкэнд
                     editData: { 'session_id': session_id },
                     closeAfterEdit: true, // закрыть диплог после редактирования
-                    reloadAfterSubmit: false, // перезагрузить таблицу после добавления
+                    reloadAfterSubmit: true, // перезагрузить таблицу после добавления
                     mtype: "POST", // тип запроса, перекрывает все предыдущие настройки
                     /**
                      * с помощью этой функции можно показать ошибки заполнения формы
@@ -191,7 +205,7 @@ $(document).ready(function () {
                     modal: true,
                     url: sPage + '?module=JqGridAjaxTranslations',
                     mtype: "POST",
-                    delData: { 'session_id': session_id },
+                    delData: { "session_id": session_id },
                     closeAfterDelete: true,
                     afterSubmit: function (response) {
                         var json = eval("(" + response.responseText + ");");
@@ -211,16 +225,19 @@ $(document).ready(function () {
             ).jqGrid('navButtonAdd',"#grid-pager",{
                 caption: "",
                 buttonicon: "ui-icon-closethick",
+                position: "last",
+                title: "Очистить кеш названий столбцов",
                 onClickButton: function () {
                     store.remove( "names_translations" );
                     store.remove( "models_translations" );
                     $("#success-message-ok").remove();
                     $(".navtable .ui-icon-closethick").after("<span id='success-message-ok'>выполнено</span>").show('slow');
                     setTimeout(function() { $("#success-message-ok").hide('slow').remove(); }, 1000);
-                },
-                position: "last",
-                title: "Очистить кеш названий столбцов"
-            });
+                }
+
+                // включить поиск для каждой колонки
+            }) //.jqGrid('filterToolbar')
+            ;
         }
         //эта функция добавляет POST параметр в запрос на получение данных для таблицы и обновляет её
         function updateTable(value) {

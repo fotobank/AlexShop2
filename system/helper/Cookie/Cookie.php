@@ -74,6 +74,6 @@ class Cookie extends ArrayHelper
      */
     public function del($name)
     {
-        setcookie ($name, $value = '', 1);
+        setcookie ($name,'', 1, '/');
     }
 }
