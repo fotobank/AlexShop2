@@ -10,13 +10,16 @@
     font-size: 14px;
 }
 .ui-jqgrid .ui-jqgrid-htable .ui-th-div {
-     margin-top: 0;
-}
-.ui-jqgrid .ui-jqgrid-htable .ui-th-div {
     margin-top: 0;
     padding-top: 6px;
     padding-bottom: 6px;
     background-color: transparent;
+}
+.ui-jqgrid td input, .ui-jqgrid td select, .ui-jqgrid td textarea {
+    margin: 3px 0 0 0;
+}
+.ui-jqgrid .ui-jqgrid-htable #cb_list {
+    margin: 0;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
     background: #efefef none;

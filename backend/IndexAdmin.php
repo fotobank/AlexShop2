@@ -185,15 +185,19 @@ class IndexAdmin extends Registry
             // проверяем время доступности и вылидность cookie
             $cookie_remember = $this->request->filter(Cookie::get('_remember'), 'sql');
             $manager_cookie = $this->managers->manager_cookie($cookie_remember);
+            // если запись в базе не найдена или время вышло
             if (null != $manager_cookie && $manager_cookie->diff > 0){
-                // при каждоб посещении страницы обновляем cookie и записываем их в базу
-                $cookie = $this->managers->hash_cookie($manager_cookie->login);
                 $admin_cookie = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
-                Cookie::set('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
-                $arr_value['cookie'] = $cookie;
-                $arr_value['valid_period'] = $admin_cookie;
-                $this->managers->update_manager((int)$manager_cookie->id, $arr_value);
-                Session::set('admin', $manager_cookie->login);
+                // не создавать cookie чаше 5 секунд
+                if(strtotime("+ $admin_cookie") - $manager_cookie->diff - time() > 5){
+                    // при каждом посещении страницы обновляем cookie и записываем их в базу
+                    $cookie = $this->managers->hash_cookie($manager_cookie->login);
+                    Cookie::set('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
+                    $arr_value['cookie'] = $cookie;
+                    $arr_value['valid_period'] = $admin_cookie;
+                    $this->managers->update_manager((int)$manager_cookie->id, $arr_value);
+                    Session::set('admin', $manager_cookie->login);
+                }
                 // если время вышло или менеджер в базе не найден удаляем фиктивную cookie и выходим
             } else {
                 $this->managers->delete_cookie($cookie_remember, 'cookie');

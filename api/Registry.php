@@ -62,6 +62,7 @@ class Registry extends AbstractProxy {
     ];
     /**
      * Созданные объекты
+     * переместились в AbstractProxy
      * @var array
      */
 //	private static $objects = array();
