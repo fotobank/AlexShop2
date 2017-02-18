@@ -179,35 +179,8 @@ class IndexAdmin extends Registry
         // Берем название модуля из get-запроса
         $module = $this->request->get('module', 'string');
         $module = preg_replace('/[^A-Za-z0-9]+/', '', $module);
-
-
-        if (Cookie::has('_remember')){
-            // проверяем время доступности и вылидность cookie
-            $cookie_remember = $this->request->filter(Cookie::get('_remember'), 'sql');
-            $manager_cookie = $this->managers->manager_cookie($cookie_remember);
-            // если запись в базе не найдена или время вышло
-            if (null != $manager_cookie && $manager_cookie->diff > 0){
-                $admin_cookie = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
-                // не создавать cookie чаше 5 секунд
-                if(strtotime("+ $admin_cookie") - $manager_cookie->diff - time() > 5){
-                    // при каждом посещении страницы обновляем cookie и записываем их в базу
-                    $cookie = $this->managers->hash_cookie($manager_cookie->login);
-                    Cookie::set('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
-                    $arr_value['cookie'] = $cookie;
-                    $arr_value['valid_period'] = $admin_cookie;
-                    $this->managers->update_manager((int)$manager_cookie->id, $arr_value);
-                    Session::set('admin', $manager_cookie->login);
-                }
-                // если время вышло или менеджер в базе не найден удаляем фиктивную cookie и выходим
-            } else {
-                $this->managers->delete_cookie($cookie_remember, 'cookie');
-                $this->managers->delete_cookie(Session::get('admin'), 'login');
-                Session::del('admin');
-                Cookie::del('_remember'); // если доступное время для менеджера вышло - удаляем cookie
-                header('location: ' . $this->config->root_url . '/admin');
-                exit();
-            }
-        }
+        // проверяем чекбокс 'напомнить'
+        $this->support_remember();
         // Администратор
         $this->manager = $this->managers->get_manager();
         $this->design->assign('mаnаgеr', $this->manager);
@@ -368,6 +341,40 @@ class IndexAdmin extends Registry
             return $this->body = $this->design->fetch($wrapper);
         } else {
             return $this->body = $content;
+        }
+    }
+
+    /**
+     * поддержка чекбокса 'напомнить'
+     */
+    protected function support_remember()
+    {
+        if (Cookie::has('_remember')){
+            // проверяем время доступности и вылидность cookie
+            $cookie_remember = $this->request->filter(Cookie::get('_remember'), 'sql');
+            $manager_cookie = $this->managers->manager_cookie($cookie_remember);
+            // если запись в базе не найдена или время вышло
+            if (null != $manager_cookie && $manager_cookie->diff > 0){
+                $admin_cookie = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
+                // не создавать cookie чаше 5 секунд
+                if (strtotime("+ $admin_cookie") - $manager_cookie->diff - time() > 5){
+                    // при каждом посещении страницы обновляем cookie и записываем их в базу
+                    $cookie = $this->managers->hash_cookie($manager_cookie->login);
+                    Cookie::set('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
+                    $arr_value['cookie'] = $cookie;
+                    $arr_value['valid_period'] = $admin_cookie;
+                    $this->managers->update_manager((int)$manager_cookie->id, $arr_value);
+                    Session::set('admin', $manager_cookie->login);
+                }
+                // если время вышло или менеджер в базе не найден удаляем фиктивную cookie и выходим
+            } else {
+                $this->managers->delete_cookie($cookie_remember, 'cookie');
+                $this->managers->delete_cookie(Session::get('admin'), 'login');
+                Session::del('admin');
+                Cookie::del('_remember'); // если доступное время для менеджера вышло - удаляем cookie
+                header('location: ' . $this->config->root_url . '/admin');
+                exit();
+            }
         }
     }
 }
