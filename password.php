@@ -33,53 +33,66 @@ $head = '
 
 $registry = new Registry();
 
-// Если пришли по ссылке из письма
-$c = $registry->request->get('code');
-if ($c){
-    // Код не совпадает - прекращяем работу
-    if (empty($_SESSION['admin_password_recovery_code']) || empty($c) || $_SESSION['admin_password_recovery_code'] !== $c){
-        header('Location:admin');
-        exit();
+// Если запостили логин и пароль
+if ($new_password = $registry->request->post('new_password', 'string')){
+    // Новый логин
+    $new_login = $registry->request->post('new_login', 'string');
+    $manager = $registry->managers->get_manager($new_login);
+    if($manager) {
+    if (!$registry->managers->update_manager($manager->id, ['password' => $new_password, 'cnt_try' => 0, 'last_try' => null])){
+        $registry->managers->add_manager(['login' => $new_login, 'password' => $new_password]);
     }
-
-    // IP не совпадает - прекращяем работу
-    if (empty($_SESSION['admin_password_recovery_ip']) || empty($_SERVER['REMOTE_ADDR']) || $_SESSION['admin_password_recovery_ip'] !== $_SERVER['REMOTE_ADDR']){
-        header('Location:admin');
-        exit();
-    }
-
-    // Если запостили логин и пароль
-    if ($new_password = $registry->request->post('new_password')){
-        // Новый логин
-        $new_login = $registry->request->post('new_login');
-        $manager = $registry->managers->get_manager($new_login);
-        if (!$registry->managers->update_manager($manager->id, ['password' => $new_password, 'cnt_try' => 0, 'last_try' => null])){
-            $registry->managers->add_manager(['login' => $new_login, 'password' => $new_password]);
-        }
-        // Удаляем из сессии код, чтобы больше никто не воспользовался ссылкой
-        unset($_SESSION['admin_password_recovery_code'], $_SESSION['admin_password_recovery_ip']);
-
-        echo $head,
-            '
+    // Удаляем из сессии код, чтобы больше никто не воспользовался ссылкой
+    unset($_SESSION['admin_password_recovery_code'], $_SESSION['admin_password_recovery_ip']);
+    echo $head,
+        '
             <h1>Восстановление пароля администратора</h1>
             <div class = "message_ok">
             <p>Новый пароль установлен</p>
             </div>   
             <a href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
             ';
-    } else {
-        // Форма указания нового логина и пароля
+        } else {
         echo $head,
+            '
+            <h1>Восстановление пароля администратора</h1>
+            <div class = "message_error">
+            <p>Администратор не найден</p>
+            </div>   
+            <a href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
+            ';
+    }
+} else {
+
+// Если пришли по ссылке из письма
+$code = $registry->request->get('code');
+if ($code){
+    // Код не совпадает - прекращаем работу
+    if (!isset($_SESSION['admin_password_recovery_code']) || empty($code) ||
+        $_SESSION['admin_password_recovery_code'] !== $code){
+        header('Location:admin');
+        exit();
+    }
+
+    // IP не совпадает - прекращаем работу
+    if (!isset($_SESSION['admin_password_recovery_ip'], $_SERVER['REMOTE_ADDR']) ||
+        $_SESSION['admin_password_recovery_ip'] !== $_SERVER['REMOTE_ADDR']){
+        header('Location:admin');
+        exit('действие запрещено');
+    }
+
+    // Форма указания нового логина и пароля
+    echo $head,
         '
             <h1>Восстановление пароля администратора</h1>
              <form id="loginForm" method="post" action="' . $registry->config->root_url . '/password.php" >
             <div class = "field">
-                <label for = "autx_login">Новый логин:&nbsp;&nbsp;</label>
+                <label for = "autx_login">Ваш логин:&nbsp;&nbsp;</label>
             	<div class = "input"><input id = "autx_login" type="text" name="new_login"></div>
              </div> 
             <div class = "field">
                 <label for = "autx_password">Новый пароль:</label>
-            	<div class = "input"><input id = "autx_password" type="password" name="new_password"></div>
+            	<div class = "input"><input id = "autx_password" type="text" name="new_password"></div>
              </div> 
               <div class="submit">
              <a id = "return" class="recovery" href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
@@ -87,9 +100,8 @@ if ($c){
             	</div>
             </form>
         ';
-    }
 } else {
-    // восстановление пароля по email
+    // восстановление пароля по email администратора
     echo $head,
     '
         <h1>Восстановление пароля администратора</h1>
@@ -101,7 +113,8 @@ if ($c){
             	 <div class = "input"> <input id = "autx_email" type="text" name="email"></div> 	
              </div> 
              <div class="submit">
-             <a id = "return" class="recovery" href="' . $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
+             <a id = "return" class="recovery" href="' .
+                 $registry->root_url . '/backend/index.php?module=AuthAdmin">Перейти в панель входа</a>
                 <input class="button" type="submit" value="Восстановить">
                 </div>
             </form>
@@ -133,16 +146,12 @@ if ($c){
         }
     }
 }
-?>
-
+}
+echo '
 </div>
         <div id = "footer">
             <span>&copy; 2016</span>
-            <a href = 'http://alexshop-sms.com'>AlexShop CMS</a>
+            <a href = "http://alexshop-sms.com">AlexShop CMS</a>
         </div>
 </body>
-<head>
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv = "cache-control" content = "no-cache">
-</head>
-</html>
+</html>';
