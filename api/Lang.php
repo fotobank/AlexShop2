@@ -211,6 +211,7 @@ class Lang extends Registry
     {
         $query = $this->db->placehold('SELECT * FROM __languages WHERE id=? LIMIT 1', (int)$id);
         $this->db->query($query);
+
         return $this->db->result();
     }
 
@@ -218,6 +219,7 @@ class Lang extends Registry
     {
         $query = $this->db->placehold("SELECT * FROM __translations WHERE label=? LIMIT 1", (string)$label);
         $this->db->query($query);
+
         return $this->db->result();
     }
 
@@ -442,9 +444,11 @@ class Lang extends Registry
      *
      * @return int
      */
-    public function get_count($qWhere = null) {
+    public function get_count($qWhere = null)
+    {
         $query = $this->db->placehold("SELECT COUNT(id) AS count FROM __translations " . $qWhere);
         $this->db->query($query);
+
         return (int)$this->db->result()->count;
     }
 
@@ -483,19 +487,46 @@ class Lang extends Registry
             }
             //вставляем условия
             if (in_array($rule->field, $filter['allowedFields'])){
+                $rule->data = addslashes($rule->data);
+                $qWhere .= "`" . preg_replace('/-|\'|\"/', '', $rule->field) . "`";
                 switch ($rule->op) {
                     case 'eq': // равно
-                        $qWhere .= $rule->field . " = '" . $this->db->escape($rule->data) . "'";
+                        $qWhere .= " = '" . $rule->data . "'";
                         break;
                     case 'ne': // не равно
-                        $qWhere .= $rule->field . " <> '" . $this->db->escape($rule->data) . "'";
+                        $qWhere .= " <> '" . $rule->data . "'";
                         break;
                     case 'bw': // начинаетя с
-                        $qWhere .= $rule->field . " LIKE '" . $this->db->escape($rule->data . '%') . "'";
+                        $qWhere .= " LIKE '" . $rule->data . "%'";
                         break;
                     case 'cn': // содержит
-                        $qWhere .= $rule->field . " LIKE '" . $this->db->escape('%' . $rule->data . '%') . "'";
+                        $qWhere .= " LIKE '%" . $rule->data . "%'";
                         break;
+                    case 'bn':
+                        $qWhere .= " NOT LIKE '" . $rule->data . "%'";
+                        break;
+                    case 'ew':
+                        $qWhere .= " LIKE '%" . $rule->data . "'";
+                        break;
+                    case 'en':
+                        $qWhere .= " NOT LIKE '%" . $rule->data . "'";
+                        break;
+                    case 'nc':
+                        $qWhere .= " NOT LIKE '%" . $rule->data . "%'";
+                        break;
+                    case 'nu':
+                        $qWhere .= ' IS NULL';
+                        break;
+                    case 'nn':
+                        $qWhere .= ' IS NOT NULL';
+                        break;
+                    case 'in':
+                        $qWhere .= " IN ('" . str_replace(',', "','", $rule->data) . "')";
+                        break;
+                    case 'ni':
+                        $qWhere .= " NOT IN ('" . str_replace(',', "','", $rule->data) . "')";
+                        break;
+
                     default:
                         throw new \Exception('Cool hacker is here!!! :)');
                 }
@@ -592,7 +623,8 @@ class Lang extends Registry
      * @return array
      * @internal param $query
      */
-    public function get_autocomplete($filter) {
+    public function get_autocomplete($filter)
+    {
 
         $order = 'ORDER BY id';
         $lang = '*';
@@ -639,24 +671,26 @@ class Lang extends Registry
 
         return $last_id;
     }
-    public function update_translation_file() {
+
+    public function update_translation_file()
+    {
         $translations = $this->get_translations();
         $languages = $this->get_languages();
-        $theme_dir = 'design/'.$this->settings->theme;
+        $theme_dir = 'design/' . $this->settings->theme;
 
         // ALL
-        $filephp = $theme_dir.'/translation.php';
+        $filephp = $theme_dir . '/translation.php';
         $filephp = fopen($filephp, 'wb');
         $row = "<?PHP\n\n";
-        foreach($languages as $l) {
-            $row .= "$"."languages['".$l->label."']='".$l->name."';\n";
+        foreach ($languages as $l){
+            $row .= "$" . "languages['" . $l->label . "']='" . $l->name . "';\n";
         }
-        foreach($languages as $l) {
-            $row .= "\n//".$l->name."\n\n";
+        foreach ($languages as $l){
+            $row .= "\n//" . $l->name . "\n\n";
 
-            foreach($translations as $t) {
-                $lang = 'lang_'.$l->label;
-                $row .= "$"."lang['".$l->label."']['".$t->label."'] = '".$this->db->escape($t->$lang)."';\n";
+            foreach ($translations as $t){
+                $lang = 'lang_' . $l->label;
+                $row .= "$" . "lang['" . $l->label . "']['" . $t->label . "'] = '" . $this->db->escape($t->$lang) . "';\n";
             }
         }
         fwrite($filephp, $row);
@@ -688,6 +722,7 @@ class Lang extends Registry
 
     /**
      * удаление одной строки
+     *
      * @param $id
      */
     public function delete_translation($id)
@@ -705,9 +740,10 @@ class Lang extends Registry
      *
      * @throws \exception\DbException
      */
-    public function delete_translations($ids) {
-        if(!empty($ids)) {
-            $this->db->query('delete from __translations where id in(?@)', $ids);
+    public function delete_translations($ids)
+    {
+        if (!empty($ids)){
+            $this->db->query('DELETE FROM __translations WHERE id IN(?@)', $ids);
         }
     }
 

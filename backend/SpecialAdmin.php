@@ -13,7 +13,7 @@ class SpecialAdmin extends Registry {
                 sort($positions);
                 $positions = array_reverse($positions);
                 foreach ($positions as $i => $position){
-                    $this->db->query("UPDATE __spec_img SET position=? WHERE id=?", $position, $ids[$i]);
+                    $this->db->query('UPDATE __spec_img SET position=? WHERE id=?', $position, $ids[$i]);
                 }
             }
 

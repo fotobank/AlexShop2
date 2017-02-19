@@ -246,6 +246,7 @@ namespace {
             }
 
             return $status === 0;
+
         }
     }
 

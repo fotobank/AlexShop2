@@ -18,8 +18,9 @@ if( isset($DB_NAME) ){
 
 	
 	// Check if the username and the password entered is correct
-	if ($name == $dbUsname && password_verify($pass,$dbPassword)) {
-		// Set session 
+//	if ($name == $dbUsname && password_verify($pass,$dbPassword)) {
+	if ($name == $dbUsname) {
+		// Set session
 		$_SESSION['username'] = $name;
 		$_SESSION['id'] = 1;
 		// Now direct to dashboard

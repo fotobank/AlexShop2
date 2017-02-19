@@ -7,7 +7,7 @@ if (isset($_SESSION['id'])):
     //include database information
     // and pagination
     include __DIR__ . '/../inc/config.php';
-    include __DIR__ . 'inc/pagination.php';
+    include __DIR__ . '/inc/pagination.php';
     $connect = @new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
     $data = $stats = $subs = $sent = '';
     $tp = '';
