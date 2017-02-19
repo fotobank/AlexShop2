@@ -179,7 +179,7 @@ class IndexAdmin extends Registry
         // Берем название модуля из get-запроса
         $module = $this->request->get('module', 'string');
         $module = preg_replace('/[^A-Za-z0-9]+/', '', $module);
-        // проверяем чекбокс 'напомнить'
+        // проверяем чекбокс 'запомнить'
         $this->support_remember();
         // Администратор
         $this->manager = $this->managers->get_manager();
@@ -345,7 +345,7 @@ class IndexAdmin extends Registry
     }
 
     /**
-     * поддержка чекбокса 'напомнить'
+     * поддержка чекбокса 'запомнить'
      */
     protected function support_remember()
     {

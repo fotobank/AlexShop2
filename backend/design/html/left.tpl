@@ -215,7 +215,7 @@
 	{if in_array('service', $manager->permissions)}
         <li class = "{if $menu_selected == 'service'}active{/if}">
 			<a href = "index.php?module=ServiceAdmin">
-				<i class = "icon_banner"></i>
+				<i class = "icon_service"></i>
 				<span>Обслуживание</span>
 			</a>
 		</li>

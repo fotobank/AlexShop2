@@ -149,6 +149,9 @@ textarea{
 #main_menu .icon_banner{
     background-position: 0 -500px;
 }
+#main_menu .icon_service{
+    background-position: -29px -728px;
+}
 #main_menu .icon_topvisor {
 	background-position: 1px -407px;
 }
@@ -211,6 +214,10 @@ textarea{
 #main_menu li:hover .icon_banner, 
 #main_menu li.active .icon_banner {
     background-position: -41px -500px;
+}
+#main_menu li:hover .icon_service,
+#main_menu li.active .icon_service {
+    background-position: -29px -767px;
 }
 #main_menu li:hover .icon_topvisor, 
 #main_menu li.active .icon_topvisor {

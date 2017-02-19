@@ -16,7 +16,7 @@ class Managers extends Registry {
     public $permissions_list = array('products','comment', 'comment_edit', 'categories', 'brands', 'features',
         'orders', 'labels', 'users', 'groups', 'coupons', 'pages', 'blog', 'comments', 'feedbacks', 'import',
         'export', 'stats', 'design', 'settings', 'settings2', 'currency', 'delivery', 'payment', 'managers', 'license',
-        'languages', 'banners', 'special', 'callbacks', 'topvisor', 'yametrika', 'robots', 'service'
+        'languages', 'banners', 'special', 'callbacks', 'topvisor', 'yametrika', 'robots', 'service', 'antivirus'
         
     );
 

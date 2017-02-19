@@ -77,7 +77,7 @@ class Request extends Registry {
      * @param null $name
      * @param null $type
      *
-     * @return bool|float|int|null|string
+     * @return bool|float|int|null|string|array
      */
     public function post($name = null, $type = null) {
         $val = null;
