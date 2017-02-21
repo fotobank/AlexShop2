@@ -130,6 +130,7 @@ class IndexAdmin extends Registry
         'ScriptsAdmin' => 'design',
         'SettingsAdmin' => 'settings',
         'SecondarySettingsAdmin' => 'settings2',
+        'ServiceAdmin' => 'settings2',
         'CurrencyAdmin' => 'currency',
         'DeliveriesAdmin' => 'delivery',
         'DeliveryAdmin' => 'delivery',
@@ -180,7 +181,9 @@ class IndexAdmin extends Registry
         $module = $this->request->get('module', 'string');
         $module = preg_replace('/[^A-Za-z0-9]+/', '', $module);
         // проверяем чекбокс 'запомнить'
-        $this->support_remember();
+        if(!is_ajax()){
+            $this->support_remember();
+        }
         // Администратор
         $this->manager = $this->managers->get_manager();
         $this->design->assign('mаnаgеr', $this->manager);
@@ -354,7 +357,7 @@ class IndexAdmin extends Registry
             $cookie_remember = $this->request->filter(Cookie::get('_remember'), 'sql');
             $manager_cookie = $this->managers->manager_cookie($cookie_remember);
             // если запись в базе не найдена или время вышло
-            if (null != $manager_cookie && $manager_cookie->diff > 0){
+            if (null != $manager_cookie && $manager_cookie->diff > 5){
                 $admin_cookie = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
                 // не создавать cookie чаше 5 секунд
                 if (strtotime("+ $admin_cookie") - $manager_cookie->diff - time() > 5){

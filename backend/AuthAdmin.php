@@ -29,7 +29,7 @@ class AuthAdmin extends Registry
 
                     $cookie_remember = $this->request->filter(Cookie::get('_remember'), 'sql');
                     $manager_cookie = $this->managers->manager_cookie($cookie_remember);
-
+                    // если найденная кука валидна - заходим
                     if (null != $manager_cookie && $manager_cookie->diff > 0 &&
                         $manager_cookie->login === $manager->login){
                         Session::set('admin', $manager->login);
@@ -47,6 +47,7 @@ class AuthAdmin extends Registry
                     $arr_value = ['cnt_try' => 0, 'last_try' => null];
 
                     if ($this->request->post('remember', 'string') == 'ok'){
+                        // хешируем cookie
                         $cookie = $this->managers->hash_cookie($manager->login);
                         $admin_cookie = $this->settings->admin_cookie_number . ' ' . $this->settings->admin_cookie_unit;
                         Cookie::set('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
@@ -56,6 +57,7 @@ class AuthAdmin extends Registry
                                                       $this->settings->admin_cookie_unit;
 
                     } else {
+                        // если запоминать не надо - удаляем имеющуюся cookie
                         Cookie::del('_remember');
                     }
 

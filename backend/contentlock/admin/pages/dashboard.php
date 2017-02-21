@@ -19,33 +19,33 @@ if (isset($_SESSION['id'])):
         }
         //get stats from database for ocks and subscribers
         // and total emails sent to subscribers
-        $sett = $connect->query("SELECT 1 FROM `settings` LIMIT 1");
+        $sett = $connect->query('SELECT 1 FROM `settings` LIMIT 1');
         $data = data('single', $pagenum);
         $group = data('group', $pagenum);
-        $locks = $connect->query("SELECT id FROM locks");
-        $stats = $connect->query("SELECT SUM(stats) FROM locks");
+        $locks = $connect->query('SELECT id FROM locks');
+        $stats = $connect->query('SELECT SUM(stats) FROM locks');
         $stats = mysqli_fetch_row($stats);
-        $all = $connect->query("SELECT * FROM locks");
-        $subs = $connect->query("SELECT id FROM subscribers");
-        $sent = $connect->query("SELECT SUM(stats) FROM subscribers");
+        $all = $connect->query('SELECT * FROM locks');
+        $subs = $connect->query('SELECT id FROM subscribers');
+        $sent = $connect->query('SELECT SUM(stats) FROM subscribers');
         $sent = mysqli_fetch_row($sent);
         // collect chart information
         $chart['labels'] = [];
         $chart['data'] = [];
-        $dy = date("y") . '-' . date("m");
+        $dy = date('y') . '-' . date('m');
         $dt = 0;
         if (isset($_GET['dt'])){
             $dt = $_GET['dt'];
-            $dy = date("y") . '-' . date("m", strtotime($dt . " months"));
+            $dy = date('y') . '-' . date('m', strtotime($dt . ' months'));
         }
-        $days = date("t", strtotime($dt . " months"));
-        $from = date("y") . '-' . date("m", strtotime($dt . " months")) . '-' . '01';
-        $to = date("y") . '-' . date("m", strtotime($dt . " months")) . '-' . date("t", strtotime($dt . " months"));
+        $days = date('t', strtotime($dt . ' months'));
+        $from = date('y') . '-' . date('m', strtotime($dt . ' months')) . '-' . '01';
+        $to = date('y') . '-' . date('m', strtotime($dt . " months")) . '-' . date("t", strtotime($dt . ' months'));
         $from = $connect->real_escape_string($from);
         $to = $connect->real_escape_string($to);
         $view = 'All';
         $chq = "SELECT * FROM `unlocks` WHERE DATE(`timestamp`) BETWEEN '$from' AND '$to'";
-        if (isset($_GET['type']) && isset($_GET['id'])){
+        if (isset($_GET['type'], $_GET['id'])){
             $tp = $connect->real_escape_string($_GET['type']);
             $dd = $connect->real_escape_string($_GET['id']);
             $view = $dd;
@@ -73,7 +73,7 @@ if (isset($_SESSION['id'])):
                 array_push($chart['labels'], $g);
             endwhile;
         endif;
-        if (isset($_GET['delete']) && isset($_GET['month'])){
+        if (isset($_GET['delete'], $_GET['month'])){
             if ($_GET['month'] != 'Select month'){
                 $mnth = $_GET['month'];
                 $nmb = cal_days_in_month(CAL_GREGORIAN, $mnth, date('y'));
@@ -91,9 +91,9 @@ if (isset($_SESSION['id'])):
     }
 
     ?>
-    <?php include('inc/head.php'); ?>
+    <?php include(__DIR__ . '/inc/head.php'); ?>
 
-    <?php include('inc/sidebar.php'); ?>
+    <?php include(__DIR__ . '/inc/sidebar.php'); ?>
 
     <div id = "page-wrapper">
         <div id = "page-inner">
@@ -372,7 +372,7 @@ if (isset($_SESSION['id'])):
       };
       var stats = new Chart(ctx).Line(data);
     </script>
-    <?php include('inc/footer.php'); ?>
+    <?php include(__DIR__ . '/inc/footer.php'); ?>
     <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()

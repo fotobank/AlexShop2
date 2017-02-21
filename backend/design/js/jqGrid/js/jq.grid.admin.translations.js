@@ -241,8 +241,9 @@ $(document).ready(function () {
                 title: "Экспорт в Эксель",
                 onClickButton: function () {
                     // CSV
-                    // exportTableToCVS("list", "table-translations");
                     exportSelectRowToCVS("list", "table-translations");
+                    $("table input:checkbox:checked").prop('checked', false)
+                        .closest(".ui-state-highlight").removeClass("ui-state-highlight").trigger("reloadGrid");
                 }
                 /*onClickButton:function () {
                     var rows = prompt("How many rows to export?");

@@ -7,8 +7,7 @@ var exportSelectRowToCVS = function (gridID, filename) {
         rowDelim = "\r\n",
         colNames = [],
         html = "",
-        i = 0, col, json,
-        obj = {};
+        i = 0, col;
     filename = filename.replace('.csv', '') + '.csv';
 
     // массив имен столбцов
