@@ -48,7 +48,7 @@ class JqGridAjaxTranslations extends Registry
                             break;
                         case 'false':
                             $filter['query'] = trim($this->request->post('query', 'string'));
-                            if(!empty($filter['query'])){
+                            if (!empty($filter['query'])){
                                 // выводим результата поиска с автодополнением
                                 $this->get_search($filter);
                             } else {
@@ -83,9 +83,11 @@ class JqGridAjaxTranslations extends Registry
 
     /**
      * запрос для выводя результатов автопоиска
+     *
      * @param $filter
      */
-    public function get_search($filter) {
+    public function get_search($filter)
+    {
 
         $translations = $this->languages->get_autocomplete($filter);
         $filter['totalRows'] = count($translations);
@@ -116,9 +118,9 @@ class JqGridAjaxTranslations extends Registry
                 }
             }
 
-            $result = ['query'=> $filter['query'], 'suggestions' => $result];
-                $json = json_encode($result);
-                $this->send($json);
+            $result = ['query' => $filter['query'], 'suggestions' => $result];
+            $json = json_encode($result);
+            $this->send($json);
 
         } catch (JqGridAjaxTranslationsException $e) {
             throw $e;
@@ -233,7 +235,7 @@ class JqGridAjaxTranslations extends Registry
             // допустимый маркер
             $filter['allowedOperations'] = ['AND', 'OR'];
 
-            if(Post::has('filters')){
+            if (Post::has('filters')){
                 $filter['searchData'] = json_decode($_POST['filters']);
             } else {
                 // поиск по отдельным колонкам
@@ -244,7 +246,7 @@ class JqGridAjaxTranslations extends Registry
                 $flipped = array_flip($filter['allowedFields']);
                 $keys = array_intersect_key($_POST, $flipped);
 
-                foreach ($keys as $key => $value) {
+                foreach ($keys as $key => $value){
                     $rules->field = $key;
                     $rules->data = $value;
                     $rules->op = 'cn';
@@ -256,7 +258,7 @@ class JqGridAjaxTranslations extends Registry
             if (count($filter['searchData']->rules) > 10){
                 throw new JqGridAjaxTranslationsException('Cool hacker is here!!! :)');
             }
-            if(isset($filter['searchData'])){
+            if (isset($filter['searchData'])){
                 $translations = $this->languages->get_search($filter);
                 $this->prepare($filter, $translations);
             }

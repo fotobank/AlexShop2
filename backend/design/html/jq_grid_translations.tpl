@@ -39,10 +39,14 @@
 
 <script src = "/backend/design/js/jqGrid/js/i18n/grid.locale-ru.js"></script>
     <script src = "/backend/design/js/jqGrid/js/jquery.jqGrid.min.js"></script>
-    <script src = "/backend/design/js/jqGrid/js/jq.grid.admin.translations.js"></script>
+   <script  src = "/backend/design/js/jqGrid/js/export.table.to.csv.js" charset="utf-8"></script>
+   <script  src = "/backend/design/js/jqGrid/js/export.select.row.to.csv.js" charset="utf-8"></script>
+    <script src = "/backend/design/js/jqGrid/js/jq.grid.admin.translations.js" charset="utf-8"></script>
     <script src = "/backend/design/js/jquery.filtertable/jquery.filtertable.min.js"></script>
 
-    <link rel = "stylesheet" type = "text/css" media = "screen" href = "/backend/design/js/jqGrid/css/ui.jqgrid.css"/>
+
+    <link rel = "stylesheet" type = "text/css" media = "screen"
+          href = "/backend/design/js/jqGrid/css/ui.jqgrid.css"/>
     <link rel = "stylesheet" type = "text/css" media = "screen"
           href = "/backend/design/js/jqGrid/css/ui.jqgrid-main.css"/>
 

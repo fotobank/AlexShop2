@@ -103,6 +103,7 @@ class Request extends Registry {
         return $val;
     }
 
+
     /**
      * доделать
      * очистка переменных
@@ -113,6 +114,9 @@ class Request extends Registry {
      */
     public function filter($string, $type = null) {
 
+        if ($type === 'safety'){
+            return addslashes(htmlspecialchars(strip_tags(trim($string))));
+        }
         if ($type === 'js'){
             $string = preg_replace("/\r*\n/", "\\n", $string);
             $string = preg_replace("/\//", "\\\/", $string);

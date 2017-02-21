@@ -91,7 +91,7 @@ $(document).ready(function () {
                 pager: "#grid-pager",
                 multiselect: true,
                 viewrecords: true,
-                rowList: [10, 20, 30, 50, 100],
+                rowList: [10, 20, 30, 50, 500],
                 rowNum: 20,
                 sortable:true,
                 /** загрузка только один раз */
@@ -234,7 +234,22 @@ $(document).ready(function () {
                     $(".navtable .ui-icon-closethick").after("<span id='success-message-ok'>выполнено</span>").show('slow');
                     setTimeout(function() { $("#success-message-ok").hide('slow').remove(); }, 1000);
                 }
+            }).jqGrid('navButtonAdd',"#grid-pager",{
+                caption: "Export to excel",
+                buttonicon: "ui-icon-extlink",
+                position: "last",
+                title: "Экспорт в Эксель",
+                onClickButton: function () {
+                    // CSV
+                    // exportTableToCVS("list", "table-translations");
+                    exportSelectRowToCVS("list", "table-translations");
+                }
+                /*onClickButton:function () {
+                    var rows = prompt("How many rows to export?");
+                    if (!rows) return;
 
+                    $(this).jqGrid("extExport", {"export":"excelHtml", "rows":rows});
+                }*/
                 // включить поиск для каждой колонки
             }) //.jqGrid('filterToolbar')
             ;
@@ -250,7 +265,6 @@ $(document).ready(function () {
                 })
                 .trigger("reloadGrid");
         }
-
         //настройка плагина Autocomplete
         //при возникновении события onSelect вызываем функцию updateTable
         $('#input-filter').autocomplete({

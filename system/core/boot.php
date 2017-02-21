@@ -39,7 +39,6 @@ include(ROOT . 'vendor/autoload.php');
 include(SYS_DIR . 'core/Autoloader.php');
 new Autoloader();
 
-
 Session::start();
 
 require SYS_DIR . 'inc/api_functions.php';
