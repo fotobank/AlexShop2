@@ -12,20 +12,20 @@ namespace api;
 
 class Request extends Registry {
 
-    private $cleanMasks = array(
-        'integer'		=>	array('int'	=>	'[^0-9]'),
-        'float'			=>	array('float'	=>	'[^0-9\.]'),
-        'string'		=>	array('string'	=>	'[^\p{L}\p{Nd}\d\s_\-\.\%\s]'),
-        'boolean'	    =>	array('bool'	=>	'[^0-1|(true)|(false)]'),
-        'phone'			=>	array('string'	=>	'[^0-9\-\(\)\+]'),
-        'email'			=>	array('string'	=>	'[^a-zA-Zа-яёЁА-Я\_\@\.\-]'),
-        'address'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \-\,]'),
-        'person'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \-]'),
-        'ip'			=>	array('string'	=>	'[^0-9\.]'),
-        'bbcode'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \.\,\:\;\=\(\)\_\@\`\"\'\-\&\?\!\~\|\+\[\]\s]'),
-        'price'			=>	array('string'	=>	'[^0-9\.\,]'),
-        'default'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9]')
-    );
+    private $cleanMasks = [
+        'integer'		=>	['int'	    =>	'[^0-9]'],
+        'float'			=>	['float'	=>	'[^0-9\.]'],
+        'string'		=>	['string'	=>	'[^\p{L}\p{Nd}\d\s_\-\.\%\s]'],
+        'boolean'	    =>	['bool'	    =>	'[^0-1|(true)|(false)]'],
+        'phone'			=>	['string'	=>	'[^0-9\-\(\)\+]'],
+        'email'			=>	['string'	=>	'[^a-zA-Zа-яёЁА-Я\_\@\.\-]'],
+        'address'		=>	['string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \-\,]'],
+        'person'		=>	['string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \-]'],
+        'ip'			=>	['string'	=>	'[^0-9\.]'],
+        'bbcode'		=>	['string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \.\,\:\;\=\(\)\_\@\`\"\'\-\&\?\!\~\|\+\[\]\s]'],
+        'price'			=>	['string'	=>	'[^0-9\.\,]'],
+        'default'		=>	['no_type'	=>	'[^a-zA-ZА-ЯёЁа-я0-9]']
+    ];
 
     public function __construct() {
         parent::__construct();
@@ -107,42 +107,46 @@ class Request extends Registry {
      */
     public function filter($str, $type = null) {
 
-        if ($type === 'safety'){
-            return addslashes(htmlspecialchars(strip_tags(trim($str))));
-        }
-        if ($type === 'js'){
-            $str = preg_replace("/\r*\n/", "\\n", $str);
-            $str = preg_replace("/\//", "\\\/", $str);
-            $str = preg_replace("/\"/", "\\\"", $str);
-            return preg_replace("/'/", " ", $str);
-        }
-        if ($type === 'sql_valid'){
-            return str_replace(["\\", "'", '"', "\x00", "\x1a", "\r", "\n"],
-                ["\\\\", "\'", '\"', "\\x00", "\\x1a", "\\r", "\\n"], $str);
-        }
-        if ($type === 'sql'){
-            $str = htmlentities($str, ENT_QUOTES);
-            if(get_magic_quotes_gpc())
-            {
-                $str = stripslashes($str);
-            }
-            $str = mysqli_real_escape_string($this->db->getMysqli(), $str);
-            $str = strip_tags($str);
-            $str = str_replace('  ', "\n", $str);
+        switch ($type) {
+            case 'safety':
+                return addslashes(htmlspecialchars(strip_tags(trim($str))));
+                break;
+            case 'js':
+                $str = preg_replace("/\r*\n/", "\\n", $str);
+                $str = preg_replace("/\//", "\\\/", $str);
+                $str = preg_replace("/\"/", "\\\"", $str);
+                return preg_replace("/'/", " ", $str);
+                break;
+            case 'sql_valid':
+                return str_replace(["\\", "'", '"', "\x00", "\x1a", "\r", "\n"],
+                    ["\\\\", "\'", '\"', "\\x00", "\\x1a", "\\r", "\\n"], $str);
+                break;
+            case 'sql':
+                $str = htmlentities($str, ENT_QUOTES);
+                if(get_magic_quotes_gpc())
+                {
+                    $str = stripslashes($str);
+                }
+                $str = mysqli_real_escape_string($this->db->getMysqli(), $str);
+                $str = strip_tags($str);
+                $str = str_replace('  ', "\n", $str);
 
-            return $str;
-        }
-        if ($type === 'clean'){
-            $search = [
-                '@<script[^>]*?>.*?</script>@si', // javascript
-                '@<[\/\!]*?[^<>]*?>@si', // HTML теги
-                '@<style[^>]*?>.*?</style>@siU', // теги style
-                '@<![\s\S]*?--[ \t\n\r]*>@' // многоуровневые комментарии
-            ];
+                return $str;
+                break;
+            case 'clean':
+                $search = [
+                    '@<script[^>]*?>.*?</script>@si', // javascript
+                    '@<[\/\!]*?[^<>]*?>@si', // HTML теги
+                    '@<style[^>]*?>.*?</style>@siU', // теги style
+                    '@<![\s\S]*?--[ \t\n\r]*>@' // многоуровневые комментарии
+                ];
 
-            return preg_replace($search, '', $str);
+                return preg_replace($search, '', $str);
+                break;
+            default:
+                return $str;
+                break;
         }
-        return $str;
     }
 
     /**
@@ -172,6 +176,9 @@ class Request extends Registry {
                 break;
             case 'float':
                 return (float)preg_replace('/' . $value . '/iu', "", $str);
+                break;
+            case 'no_type':
+                return preg_replace('/' . $value . '/iu', "", $str);
                 break;
             default:
                 return $this->filter($str, $key);
