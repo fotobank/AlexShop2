@@ -12,19 +12,21 @@ namespace api;
 
 class Request extends Registry
 {
-
-    private $cleanMasks = [
-        'integer' => ['int' => '[^0-9]'],
-        'float' => ['float' => '[^0-9\.]'],
-        'string' => ['string' => '[^\p{L}\p{Nd}\d\s_\-\.\%\s]'],
-        'boolean' => ['bool' => '[^0-1|(true)|(false)]'],
-        'phone' => ['string' => '[^0-9\-\(\)\+]'],
-        'email' => ['string' => '[^a-zA-Zа-яёЁА-Я\_\@\.\-]'],
-        'address' => ['string' => '[^a-zA-ZА-ЯёЁа-я0-9 \-\,]'],
-        'person' => ['string' => '[^a-zA-ZА-ЯёЁа-я0-9 \-]'],
-        'ip' => ['string' => '[^0-9\.]'],
-        'bbcode' => ['string' => '[^a-zA-ZА-ЯёЁа-я0-9 \.\,\:\;\=\(\)\_\@\`\"\'\-\&\?\!\~\|\+\[\]\s]'],
-        'price' => ['string' => '[^0-9\.\,]'],
+    /**
+     * @var array
+     */
+    private $cleanMasks = [ // @formatter:off
+        'integer' => ['int'     => '[^0-9]'],
+        'float'   => ['float'   => '[^0-9\.]'],
+        'string'  => ['string'  => '[^\p{L}\p{Nd}\d\s_\-\.\%\s]'],
+        'boolean' => ['bool'    => '[^0-1|(true)|(false)]'],
+        'phone'   => ['string'  => '[^0-9\-\(\)\+]'],
+        'email'   => ['string'  => '[^a-zA-Zа-яёЁА-Я\_\@\.\-]'],
+        'address' => ['string'  => '[^a-zA-ZА-ЯёЁа-я0-9 \-\,]'],
+        'person'  => ['string'  => '[^a-zA-ZА-ЯёЁа-я0-9 \-]'],
+        'ip'      => ['string'  => '[^0-9\.]'],
+        'bbcode'  => ['string'  => '[^a-zA-ZА-ЯёЁа-я0-9 \.\,\:\;\=\(\)\_\@\`\"\'\-\&\?\!\~\|\+\[\]\s]'],
+        'price'   => ['string'  => '[^0-9\.\,]'],
         'default' => ['no_type' => '[^a-zA-ZА-ЯёЁа-я0-9]']
     ];
 
@@ -43,7 +45,6 @@ class Request extends Registry
      * Пример:
      *    if($registry->request->method('post'))
      *        print 'Request method is POST';
-
      */
     public function method($method = null)
     {
