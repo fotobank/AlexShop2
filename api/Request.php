@@ -15,7 +15,7 @@ class Request extends Registry {
     private $cleanMasks = array(
         'integer'		=>	array('int'	=>	'[^0-9]'),
         'float'			=>	array('float'	=>	'[^0-9\.]'),
-        'string'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \.\,\:\;\=\(\)\_\@\`\"\'\-\&\?\!\~\|\+\s]'),
+        'string'		=>	array('string'	=>	'[^\p{L}\p{Nd}\d\s_\-\.\%\s]'),
         'boolean'	    =>	array('bool'	=>	'[^0-1|(true)|(false)]'),
         'phone'			=>	array('string'	=>	'[^0-9\-\(\)\+]'),
         'email'			=>	array('string'	=>	'[^a-zA-Zа-яёЁА-Я\_\@\.\-]'),
@@ -53,7 +53,8 @@ class Request extends Registry {
 
     /**
      * Возвращает переменную _GET, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
-     * Второй параметр $type может иметь такие значения: integer, string, boolean
+     * Второй параметр $type может иметь такие значения: integer, string, boolean, phone, email, address, person, ip,
+     * bbcode, price, strip_tags, default, safety, js, sql_valid, sql, clean
      * Если $type не задан, возвращает переменную в чистом виде
      *
      * @param      $name
@@ -69,18 +70,14 @@ class Request extends Registry {
         if(!empty($type) && is_array($val)) {
             $val = reset($val);
         }
-        if($type === 'string') {
-            return (string)preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $val);
-        }
-        if($val) {
+
             return $this->filter_string($val, $type);
-        }
-        return $val;
     }
 
     /**
      * Возвращает переменную _POST, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
-     * Второй параметр $type может иметь такие значения: integer, string, boolean
+     * Второй параметр $type может иметь такие значения: integer, string, boolean, phone, email, address, person, ip,
+     * bbcode, price, strip_tags, default, safety, js, sql_valid, sql, clean
      * Если $type не задан, возвращает переменную в чистом виде
      *
      * @param null $name
@@ -95,13 +92,8 @@ class Request extends Registry {
         } elseif(empty($name)) {
             $val = file_get_contents('php://input');
         }
-        if($val){
-            if ($type === 'string'){
-                return (string)preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/iu', '', $val);
-            }
-            return $this->filter_string($val, $type);
-        }
-        return $val;
+
+        return $this->filter_string($val, $type);
     }
 
 
@@ -170,16 +162,16 @@ class Request extends Registry {
                 return (string)$this->clear_url($str);
                 break;
             case 'bool':
-                return (bool)preg_replace('/' . $value . '/u', "", $str);
+                return (bool)preg_replace('/' . $value . '/iu', "", $str);
                 break;
             case 'int':
-                return (int)preg_replace('/' . $value . '/u', "", $str);
+                return (int)preg_replace('/' . $value . '/iu', "", $str);
                 break;
             case 'string':
-                return (string)preg_replace('/' . $value . '/u', "", $str);
+                return (string)preg_replace('/' . $value . '/iu', "", $str);
                 break;
             case 'float':
-                return (float)preg_replace('/' . $value . '/u', "", $str);
+                return (float)preg_replace('/' . $value . '/iu', "", $str);
                 break;
             default:
                 return $this->filter($str, $key);
