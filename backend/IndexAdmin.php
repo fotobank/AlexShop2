@@ -12,7 +12,7 @@ use proxy\Session;
  */
 class IndexAdmin extends Registry
 {
-
+    // главное меню
     private $left_menu = [
         'ProductsAdmin' => 'catalog',
         'ProductAdmin' => 'catalog',
@@ -56,6 +56,7 @@ class IndexAdmin extends Registry
         'StatsAdmin' => 'stats',
         'ReportStatsAdmin' => 'stats',
         'CategoryStatsAdmin' => 'stats',
+
         'TopvisorProjectsAdmin' => 'topvisor',
         'TopvisorProjectAdmin' => 'topvisor',
 
@@ -85,8 +86,8 @@ class IndexAdmin extends Registry
         'TranslationsAdmin' => 'settings',
         'JqGridAjaxTranslations' => 'settings',
 
-        'SecondarySettingsAdmin' => 'settings2',
-
+        'ComingSoon' => 'settings2',
+        'ServiceAdmin' => 'service',
         'LicenseAdmin' => 'license'
 
     ];
@@ -129,8 +130,6 @@ class IndexAdmin extends Registry
         'ImagesAdmin' => 'design',
         'ScriptsAdmin' => 'design',
         'SettingsAdmin' => 'settings',
-        'SecondarySettingsAdmin' => 'settings2',
-        'ServiceAdmin' => 'settings2',
         'CurrencyAdmin' => 'currency',
         'DeliveriesAdmin' => 'delivery',
         'DeliveryAdmin' => 'delivery',
@@ -166,7 +165,9 @@ class IndexAdmin extends Registry
         /*YaMetrika*/
         'YametrikaAdmin' => 'yametrika',
         /*YaMetrika*/
-        'RobotsAdmin' => 'robots'
+        'RobotsAdmin' => 'robots',
+        'ServiceAdmin' => 'service',
+        'ComingSoon' => 'soon'
     ];
 
     protected $manager;
@@ -354,7 +355,7 @@ class IndexAdmin extends Registry
     {
         if (Cookie::has('_remember')){
             // проверяем время доступности и вылидность cookie
-            $cookie_remember = $this->request->filter(Cookie::get('_remember'), 'sql');
+            $cookie_remember = $this->request->filter_string(Cookie::get('_remember'), 'sql');
             $manager_cookie = $this->managers->manager_cookie($cookie_remember);
             // если запись в базе не найдена или время вышло
             if (null != $manager_cookie && $manager_cookie->diff > 5){

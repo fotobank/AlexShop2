@@ -27,7 +27,7 @@ class AuthAdmin extends Registry
 
                 if (Cookie::has('_remember')){
 
-                    $cookie_remember = $this->request->filter(Cookie::get('_remember'), 'sql');
+                    $cookie_remember = $this->request->filter_string(Cookie::get('_remember'), 'sql');
                     $manager_cookie = $this->managers->manager_cookie($cookie_remember);
                     // если найденная кука валидна - заходим
                     if (null != $manager_cookie && $manager_cookie->diff > 0 &&

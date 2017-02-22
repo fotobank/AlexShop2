@@ -11,7 +11,7 @@
 
 use api\Registry;
 
-class SecondarySettingsAdmin extends Registry {
+class ComingSoon extends Registry {
 
 
     public function fetch() {

@@ -15,7 +15,7 @@ $view = new IndexView();
 
 
 if(isset($_GET['logout'])) {
-    $out_manager = $view->request->filter($_SESSION['admin'], 'sql');
+    $out_manager = $view->request->filter_string($_SESSION['admin'], 'sql');
     $view->managers->delete_cookie($out_manager, 'login');
     Cookie::del('_remember');
     unset($_SESSION['admin']);

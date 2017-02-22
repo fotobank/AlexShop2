@@ -11,7 +11,22 @@
 namespace api;
 
 class Request extends Registry {
-    
+
+    private $cleanMasks = array(
+        'integer'		=>	array('int'	=>	'[^0-9]'),
+        'float'			=>	array('float'	=>	'[^0-9\.]'),
+        'string'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \.\,\:\;\=\(\)\_\@\`\"\'\-\&\?\!\~\|\+\s]'),
+        'boolean'	    =>	array('bool'	=>	'[^0-1|(true)|(false)]'),
+        'phone'			=>	array('string'	=>	'[^0-9\-\(\)\+]'),
+        'email'			=>	array('string'	=>	'[^a-zA-Zа-яёЁА-Я\_\@\.\-]'),
+        'address'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \-\,]'),
+        'person'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \-]'),
+        'ip'			=>	array('string'	=>	'[^0-9\.]'),
+        'bbcode'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \.\,\:\;\=\(\)\_\@\`\"\'\-\&\?\!\~\|\+\[\]\s]'),
+        'price'			=>	array('string'	=>	'[^0-9\.\,]'),
+        'default'		=>	array('string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9]')
+    );
+
     public function __construct() {
         parent::__construct();
 
@@ -57,14 +72,8 @@ class Request extends Registry {
         if($type === 'string') {
             return (string)preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $val);
         }
-        if($type === 'integer') {
-            return (int)$val;
-        }
-        if($type === 'float') {
-            return (float)$val;
-        }
-        if($type === 'boolean') {
-            return !empty($val);
+        if($val) {
+            return $this->filter_string($val, $type);
         }
         return $val;
     }
@@ -90,54 +99,46 @@ class Request extends Registry {
             if ($type === 'string'){
                 return (string)preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/iu', '', $val);
             }
-            if ($type === 'integer'){
-                return (int)$val;
-            }
-            if ($type === 'float'){
-                return (float)$val;
-            }
-            if ($type === 'boolean'){
-                return !empty($val);
-            }
+            return $this->filter_string($val, $type);
         }
         return $val;
     }
 
 
     /**
-     * доделать
      * очистка переменных
-     * @param      $string
-     * @param null $type
+     *
+     * @param      $str
+     * @param null $type - safety, js, sql_valid, sql, clean
      *
      * @return mixed|string
      */
-    public function filter($string, $type = null) {
+    public function filter($str, $type = null) {
 
         if ($type === 'safety'){
-            return addslashes(htmlspecialchars(strip_tags(trim($string))));
+            return addslashes(htmlspecialchars(strip_tags(trim($str))));
         }
         if ($type === 'js'){
-            $string = preg_replace("/\r*\n/", "\\n", $string);
-            $string = preg_replace("/\//", "\\\/", $string);
-            $string = preg_replace("/\"/", "\\\"", $string);
-            return preg_replace("/'/", " ", $string);
+            $str = preg_replace("/\r*\n/", "\\n", $str);
+            $str = preg_replace("/\//", "\\\/", $str);
+            $str = preg_replace("/\"/", "\\\"", $str);
+            return preg_replace("/'/", " ", $str);
         }
         if ($type === 'sql_valid'){
             return str_replace(["\\", "'", '"', "\x00", "\x1a", "\r", "\n"],
-                ["\\\\", "\'", '\"', "\\x00", "\\x1a", "\\r", "\\n"], $string);
+                ["\\\\", "\'", '\"', "\\x00", "\\x1a", "\\r", "\\n"], $str);
         }
         if ($type === 'sql'){
-            $string = htmlentities($string, ENT_QUOTES);
+            $str = htmlentities($str, ENT_QUOTES);
             if(get_magic_quotes_gpc())
             {
-                $string = stripslashes($string);
+                $str = stripslashes($str);
             }
-            $string = mysqli_real_escape_string($this->db->getMysqli(), $string);
-            $string = strip_tags($string);
-            $string = str_replace('  ', "\n", $string);
+            $str = mysqli_real_escape_string($this->db->getMysqli(), $str);
+            $str = strip_tags($str);
+            $str = str_replace('  ', "\n", $str);
 
-            return $string;
+            return $str;
         }
         if ($type === 'clean'){
             $search = [
@@ -147,11 +148,67 @@ class Request extends Registry {
                 '@<![\s\S]*?--[ \t\n\r]*>@' // многоуровневые комментарии
             ];
 
-            return preg_replace($search, '', $string);
+            return preg_replace($search, '', $str);
         }
-        return $string;
+        return $str;
     }
-    
+
+    /**
+     * @param       $str
+     * @param $type - integer, string, boolean, phone, email, address, person, ip, bbcode, price, strip_tags, default +
+     *              safety, js, sql_valid, sql, clean
+     *
+     * @return mixed|string
+     */
+    public function filter_string($str, $type = 'default')
+    {
+            $masks = $this->cleanMasks;
+            list($key, $value) = each($masks[$type]);
+
+        switch ($key) {
+            case 'url':
+                return (string)$this->clear_url($str);
+                break;
+            case 'bool':
+                return (bool)preg_replace('/' . $value . '/u', "", $str);
+                break;
+            case 'int':
+                return (int)preg_replace('/' . $value . '/u', "", $str);
+                break;
+            case 'string':
+                return (string)preg_replace('/' . $value . '/u', "", $str);
+                break;
+            case 'float':
+                return (float)preg_replace('/' . $value . '/u', "", $str);
+                break;
+            default:
+                return $this->filter($str, $key);
+                break;
+        }
+    }
+
+    /**
+     * @param $str
+     *
+     * @return mixed|string
+     */
+    public function clear_url($str) {
+        $str = trim($str);
+        $str = urldecode($str);
+        $str = strip_tags($str);
+        $clean_symbols = array();
+        $clean_symbols[] = 'where ';
+        $clean_symbols[] = 'select ';
+        $clean_symbols[] = 'union ';
+        $clean_symbols[] = 'delete ';
+        foreach($clean_symbols as $v) {
+            $str = preg_replace('#' .$v. '#is',"",$str);
+        }
+
+        $str = preg_replace("/[^a-zA-ZА-ЯёЁа-я0-9\-_,\:\=\[\]\&\/\.\|\?\s]/u","",$str);
+        return $str;
+    }
+
     /**
     * Возвращает переменную _FILES
     * Обычно переменные _FILES являются двухмерными массивами, поэтому можно указать второй параметр,

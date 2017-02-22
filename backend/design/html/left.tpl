@@ -234,13 +234,13 @@
                        <a href = "index.php?module=SettingsAdmin">
                            <i class="icon_first_settings"></i><span>Основные</span></a></li>
                    <li class = "dropdown {if $menu_selected == ('settings2')}active{/if}" rel="12">
-                       <a href = "index.php?module=SecondarySettingsAdmin">
+                       <a href = "index.php?module=ComingSoon">
                            <i class="icon_second_settings"></i><span>Дополнительные</span></a></li>
                  </ul>
 
 		</li>
 
-        {elseif in_array('currency', $manager->permissions)}
+         {elseif in_array('currency', $manager->permissions)}
 
         <li class = "{if $menu_selected == 'settings'}active{/if}">
 			<a href = "index.php?module=CurrencyAdmin">
