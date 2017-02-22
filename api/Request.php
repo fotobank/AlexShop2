@@ -1,53 +1,56 @@
 <?php
 /*************************************************
-  Framework Component
-  name      AlexShop_CMS
-  created   by Alex production
-  version   1.0
-  author    Alex Jurii <alexjurii@gmail.com>
-  Copyright (c) 2016
+ * Framework Component
+ * name      AlexShop_CMS
+ * created   by Alex production
+ * version   1.0
+ * author    Alex Jurii <alexjurii@gmail.com>
+ * Copyright (c) 2016
  ************************************************/
 
 namespace api;
 
-class Request extends Registry {
+class Request extends Registry
+{
 
     private $cleanMasks = [
-        'integer'		=>	['int'	    =>	'[^0-9]'],
-        'float'			=>	['float'	=>	'[^0-9\.]'],
-        'string'		=>	['string'	=>	'[^\p{L}\p{Nd}\d\s_\-\.\%\s]'],
-        'boolean'	    =>	['bool'	    =>	'[^0-1|(true)|(false)]'],
-        'phone'			=>	['string'	=>	'[^0-9\-\(\)\+]'],
-        'email'			=>	['string'	=>	'[^a-zA-Zа-яёЁА-Я\_\@\.\-]'],
-        'address'		=>	['string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \-\,]'],
-        'person'		=>	['string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \-]'],
-        'ip'			=>	['string'	=>	'[^0-9\.]'],
-        'bbcode'		=>	['string'	=>	'[^a-zA-ZА-ЯёЁа-я0-9 \.\,\:\;\=\(\)\_\@\`\"\'\-\&\?\!\~\|\+\[\]\s]'],
-        'price'			=>	['string'	=>	'[^0-9\.\,]'],
-        'default'		=>	['no_type'	=>	'[^a-zA-ZА-ЯёЁа-я0-9]']
+        'integer' => ['int' => '[^0-9]'],
+        'float' => ['float' => '[^0-9\.]'],
+        'string' => ['string' => '[^\p{L}\p{Nd}\d\s_\-\.\%\s]'],
+        'boolean' => ['bool' => '[^0-1|(true)|(false)]'],
+        'phone' => ['string' => '[^0-9\-\(\)\+]'],
+        'email' => ['string' => '[^a-zA-Zа-яёЁА-Я\_\@\.\-]'],
+        'address' => ['string' => '[^a-zA-ZА-ЯёЁа-я0-9 \-\,]'],
+        'person' => ['string' => '[^a-zA-ZА-ЯёЁа-я0-9 \-]'],
+        'ip' => ['string' => '[^0-9\.]'],
+        'bbcode' => ['string' => '[^a-zA-ZА-ЯёЁа-я0-9 \.\,\:\;\=\(\)\_\@\`\"\'\-\&\?\!\~\|\+\[\]\s]'],
+        'price' => ['string' => '[^0-9\.\,]'],
+        'default' => ['no_type' => '[^a-zA-ZА-ЯёЁа-я0-9]']
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $_POST = $this->stripslashes_recursive($_POST);
         $_GET = $this->stripslashes_recursive($_GET);
     }
-    
+
     /**
-    * Определение request-метода обращения к странице (GET, POST)
-    * Если задан аргумент функции (название метода, в любом регистре), возвращает true или false
-    * Если аргумент не задан, возвращает имя метода
-    * Пример:
-    *
-    *	if($registry->request->method('post'))
-    *		print 'Request method is POST';
-    *
-    */
-    public function method($method = null) {
-        if(!empty($method)) {
+     * Определение request-метода обращения к странице (GET, POST)
+     * Если задан аргумент функции (название метода, в любом регистре), возвращает true или false
+     * Если аргумент не задан, возвращает имя метода
+     * Пример:
+     *    if($registry->request->method('post'))
+     *        print 'Request method is POST';
+
+     */
+    public function method($method = null)
+    {
+        if (!empty($method)){
             return strtolower($_SERVER['REQUEST_METHOD']) == strtolower($method);
         }
+
         return $_SERVER['REQUEST_METHOD'];
     }
 
@@ -62,16 +65,17 @@ class Request extends Registry {
      *
      * @return array|bool|float|int|mixed|null
      */
-    public function get($name, $type = null) {
+    public function get($name, $type = null)
+    {
         $val = null;
-        if(isset($_GET[$name])) {
+        if (isset($_GET[$name])){
             $val = $_GET[$name];
         }
-        if(!empty($type) && is_array($val)) {
+        if (!empty($type) && is_array($val)){
             $val = reset($val);
         }
 
-            return $this->filter_string($val, $type);
+        return $this->filter_string($val, $type);
     }
 
     /**
@@ -85,11 +89,12 @@ class Request extends Registry {
      *
      * @return bool|float|int|null|string|array
      */
-    public function post($name = null, $type = null) {
+    public function post($name = null, $type = null)
+    {
         $val = null;
-        if(!empty($name) && isset($_POST[$name])) {
+        if (!empty($name) && isset($_POST[$name])){
             $val = $_POST[$name];
-        } elseif(empty($name)) {
+        } elseif (empty($name)) {
             $val = file_get_contents('php://input');
         }
 
@@ -105,7 +110,8 @@ class Request extends Registry {
      *
      * @return mixed|string
      */
-    public function filter($str, $type = null) {
+    public function filter($str, $type = null)
+    {
 
         switch ($type) {
             case 'safety':
@@ -115,6 +121,7 @@ class Request extends Registry {
                 $str = preg_replace("/\r*\n/", "\\n", $str);
                 $str = preg_replace("/\//", "\\\/", $str);
                 $str = preg_replace("/\"/", "\\\"", $str);
+
                 return preg_replace("/'/", " ", $str);
                 break;
             case 'sql_valid':
@@ -123,8 +130,7 @@ class Request extends Registry {
                 break;
             case 'sql':
                 $str = htmlentities($str, ENT_QUOTES);
-                if(get_magic_quotes_gpc())
-                {
+                if (get_magic_quotes_gpc()){
                     $str = stripslashes($str);
                 }
                 $str = mysqli_real_escape_string($this->db->getMysqli(), $str);
@@ -150,16 +156,16 @@ class Request extends Registry {
     }
 
     /**
-     * @param       $str
-     * @param $type - integer, string, boolean, phone, email, address, person, ip, bbcode, price, strip_tags, default +
-     *              safety, js, sql_valid, sql, clean
+     * @param $str
+     * @param $type - integer, string, boolean, phone, email, address, person, ip, bbcode, price, strip_tags, default
+     *              + новые -> safety, js, sql_valid, sql, clean
      *
      * @return mixed|string
      */
     public function filter_string($str, $type = 'default')
     {
         $masks = $this->cleanMasks;
-        if ($masks[$type]){
+        if (array_key_exists($type, $masks)){
 
             list($key, $value) = each($masks[$type]);
             switch ($key) {
@@ -183,6 +189,7 @@ class Request extends Registry {
                     break;
             }
         }
+
         return $this->filter($str, $type);
     }
 
@@ -191,32 +198,35 @@ class Request extends Registry {
      *
      * @return mixed|string
      */
-    public function clear_url($str) {
+    public function clear_url($str)
+    {
         $str = trim($str);
         $str = urldecode($str);
         $str = strip_tags($str);
-        $clean_symbols = array();
+        $clean_symbols = [];
         $clean_symbols[] = 'where ';
         $clean_symbols[] = 'select ';
         $clean_symbols[] = 'union ';
         $clean_symbols[] = 'delete ';
-        foreach($clean_symbols as $v) {
-            $str = preg_replace('#' .$v. '#is',"",$str);
+        foreach ($clean_symbols as $v){
+            $str = preg_replace('#' . $v . '#is', "", $str);
         }
 
-        $str = preg_replace("/[^a-zA-ZА-ЯёЁа-я0-9\-_,\:\=\[\]\&\/\.\|\?\s]/u","",$str);
+        $str = preg_replace("/[^a-zA-ZА-ЯёЁа-я0-9\-_,\:\=\[\]\&\/\.\|\?\s]/u", "", $str);
+
         return $str;
     }
 
     /**
-    * Возвращает переменную _FILES
-    * Обычно переменные _FILES являются двухмерными массивами, поэтому можно указать второй параметр,
-    * например, чтобы получить имя загруженного файла: $filename = $registry->request->files('myfile', 'name');
-    */
-    public function files($name, $name2 = null) {
-        if(!empty($name2) && !empty($_FILES[$name][$name2])) {
+     * Возвращает переменную _FILES
+     * Обычно переменные _FILES являются двухмерными массивами, поэтому можно указать второй параметр,
+     * например, чтобы получить имя загруженного файла: $filename = $registry->request->files('myfile', 'name');
+     */
+    public function files($name, $name2 = null)
+    {
+        if (!empty($name2) && !empty($_FILES[$name][$name2])){
             return $_FILES[$name][$name2];
-        } elseif(empty($name2) && !empty($_FILES[$name])) {
+        } elseif (empty($name2) && !empty($_FILES[$name])) {
             return $_FILES[$name];
         } else {
             return null;
@@ -235,14 +245,15 @@ class Request extends Registry {
     public function quoteSmart($value)
     {
         // если magic_quotes_gpc включена - используем stripslashes
-        if (get_magic_quotes_gpc()) {
+        if (get_magic_quotes_gpc()){
             $value = stripslashes($value);
         }
         // Если переменная - число, то экранировать её не нужно
         // если нет - то окружем её кавычками, и экранируем
-        if (!is_numeric($value)) {
+        if (!is_numeric($value)){
             $value = $this->db->getMysqli()->real_escape_string($value);
         }
+
         return $value;
     }
 
@@ -250,11 +261,12 @@ class Request extends Registry {
     /**
      * Рекурсивная чистка магических слешей
      */
-    private function stripslashes_recursive($var) {
-        if(get_magic_quotes_gpc()) {
+    private function stripslashes_recursive($var)
+    {
+        if (get_magic_quotes_gpc()){
             $res = null;
-            if(is_array($var)) {
-                foreach($var as $k=>$v) {
+            if (is_array($var)){
+                foreach ($var as $k => $v){
                     $res[stripcslashes($k)] = $this->stripslashes_recursive($v);
                 }
             } else {
@@ -263,19 +275,23 @@ class Request extends Registry {
         } else {
             $res = $var;
         }
+
         return $res;
     }
-    
+
     /**
-    * Проверка сессии
-    */
-    public function checkSession() {
-        if(isset($_POST, $_POST['session_id'])) {
-            if(empty($_POST['session_id']) || $_POST['session_id'] != session_id()) {
+     * Проверка сессии
+     */
+    public function checkSession()
+    {
+        if (isset($_POST, $_POST['session_id'])){
+            if (empty($_POST['session_id']) || $_POST['session_id'] != session_id()){
                 unset($_POST);
+
                 return false;
             }
         }
+
         return true;
     }
 
@@ -286,30 +302,31 @@ class Request extends Registry {
      *
      * @return string
      */
-    public function url($params = array()) {
+    public function url($params = [])
+    {
         $url = @parse_url($_SERVER['REQUEST_URI']);
         parse_str($url['query'], $query);
-        
-        if(get_magic_quotes_gpc()) {
-            foreach($query as &$v) {
-                if(!is_array($v)) {
+
+        if (get_magic_quotes_gpc()){
+            foreach ($query as &$v){
+                if (!is_array($v)){
                     $v = stripslashes(urldecode($v));
                 }
             }
         }
-        
-        foreach($params as $name=>$value) {
+
+        foreach ($params as $name => $value){
             $query[$name] = $value;
         }
-        
+
         $query_is_empty = true;
-        foreach($query as $name=>$value) {
-            if($value!=='' && $value!==null) {
+        foreach ($query as $name => $value){
+            if ($value !== '' && $value !== null){
                 $query_is_empty = false;
             }
         }
-        
-        if(!$query_is_empty) {
+
+        if (!$query_is_empty){
             $url['query'] = http_build_query($query);
         } else {
             $url['query'] = null;
@@ -324,17 +341,19 @@ class Request extends Registry {
      *
      * @return bool|string
      */
-    public function create($view){
+    public function create($view)
+    {
 
         $res = $view->fetch();
-        if($res !== false) {
+        if ($res !== false){
             header('Content-type: text/html; charset=UTF-8');
 
             // Сохраняем последнюю просмотренную страницу в переменной $_SESSION['last_visited_page']
             if ((isset($_SESSION['last_visited_page']) && empty($_SESSION['last_visited_page'])) ||
                 (isset($_SESSION['current_page']) && empty($_SESSION['current_page'])) ||
-                $_SERVER['REQUEST_URI'] !== $_SESSION['current_page']) {
-                if(!empty($_SESSION['current_page']) && $_SESSION['last_visited_page'] !== $_SESSION['current_page']) {
+                $_SERVER['REQUEST_URI'] !== $_SESSION['current_page']
+            ){
+                if (!empty($_SESSION['current_page']) && $_SESSION['last_visited_page'] !== $_SESSION['current_page']){
                     $_SESSION['last_visited_page'] = $_SESSION['current_page'];
                 }
                 $_SESSION['current_page'] = $_SERVER['REQUEST_URI'];
@@ -347,10 +366,10 @@ class Request extends Registry {
             // Подменим переменную GET, чтобы вывести страницу 404
             $_GET['page_url'] = '404';
             $_GET['module'] = 'PageView';
+
             return $view->fetch();
         }
     }
-
 
 
 }
