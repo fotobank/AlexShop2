@@ -178,12 +178,12 @@ class Request extends Registry {
                 case 'float':
                     return (float)preg_replace('/' . $value . '/iu', "", $str);
                     break;
-                case 'no_type':
+                default: // no_type
                     return preg_replace('/' . $value . '/iu', "", $str);
                     break;
             }
         }
-        $this->filter($str, $type);
+        return $this->filter($str, $type);
     }
 
     /**
