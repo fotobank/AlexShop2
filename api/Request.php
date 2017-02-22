@@ -158,32 +158,32 @@ class Request extends Registry {
      */
     public function filter_string($str, $type = 'default')
     {
-            $masks = $this->cleanMasks;
-            list($key, $value) = each($masks[$type]);
+        $masks = $this->cleanMasks;
+        if ($masks[$type]){
 
-        switch ($key) {
-            case 'url':
-                return (string)$this->clear_url($str);
-                break;
-            case 'bool':
-                return (bool)preg_replace('/' . $value . '/iu', "", $str);
-                break;
-            case 'int':
-                return (int)preg_replace('/' . $value . '/iu', "", $str);
-                break;
-            case 'string':
-                return (string)preg_replace('/' . $value . '/iu', "", $str);
-                break;
-            case 'float':
-                return (float)preg_replace('/' . $value . '/iu', "", $str);
-                break;
-            case 'no_type':
-                return preg_replace('/' . $value . '/iu', "", $str);
-                break;
-            default:
-                return $this->filter($str, $key);
-                break;
+            list($key, $value) = each($masks[$type]);
+            switch ($key) {
+                case 'url':
+                    return (string)$this->clear_url($str);
+                    break;
+                case 'bool':
+                    return (bool)preg_replace('/' . $value . '/iu', "", $str);
+                    break;
+                case 'int':
+                    return (int)preg_replace('/' . $value . '/iu', "", $str);
+                    break;
+                case 'string':
+                    return (string)preg_replace('/' . $value . '/iu', "", $str);
+                    break;
+                case 'float':
+                    return (float)preg_replace('/' . $value . '/iu', "", $str);
+                    break;
+                case 'no_type':
+                    return preg_replace('/' . $value . '/iu', "", $str);
+                    break;
+            }
         }
+        $this->filter($str, $type);
     }
 
     /**
