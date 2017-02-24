@@ -1,0 +1,22 @@
+version: 07052006-01
+
+KNOWN BUGS:
+=====================================================================================
+
+* closes after the MAXRUNTIME all opened IE windows
+
+
+
+
+
+COMMING FEATUREs:
+=====================================================================================
+
+* "credentials" authentication will be implemented so that the regpatch is
+  no longer needed. the security of your system will be improved!
+
+* window will closed after done job, not after the MAXRUNTIME
+
+* webcontent will opened in a evotrigger based window, not in IE
+
+* configure the "daten.ini" with GUI

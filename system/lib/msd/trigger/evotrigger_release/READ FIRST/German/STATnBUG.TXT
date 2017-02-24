@@ -1,0 +1,22 @@
+version: 07052006-01
+
+KNOWN BUGS / BEKANNTE FEHLER:
+=====================================================================================
+
+* schließt beim programmende ALLE internetexplorer fenster
+
+
+
+
+
+COMMING FEATUREs / KOMMENDE ÄNDERUNGEN:
+=====================================================================================
+
+* "Credentials" authentifizierung wird implementiert und löst die URL auth. ab,
+   dann wird der registry patch nicht mehr benötigt.
+
+* IE schließt sich nach getaner arbeit und nicht ini-zeit-gesteuert.
+
+* IE wird in einer programmeigenen "form" geöffnet und geschlossen
+
+* erstellen und ändern der "daten.ini" über ein kleines menü

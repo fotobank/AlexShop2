@@ -1,0 +1,14 @@
+obwohl ich bemüht bin das programm frei von fehlern, etc. zu halten garantiere ich
+nicht für den einwandfreien funktionsablauf und auch nicht für eventuelle, durch die
+nutzung entstehende schäden!
+
+der evotrigger befindet sich aktuell im betastadium und ist noch nicht im gewünschten
+funktionsbereich.
+
+aktuelle informationen zum derzeitigen status erhalten sie im forum von mysqldumper.de
+oder auf meiner homepage plasmatrix.de.
+
+ein bugliste sowie noch zukünftige änderungen und erweiterungen finden sie in der datei
+STATnBUG.TXT
+
+UM DEN EVOTRIGGER NUTZEN ZU KÖNNEN WIRD DAS "NET FRAMEWORK 2.0" VON MICROSOFT BENÖTIGT!

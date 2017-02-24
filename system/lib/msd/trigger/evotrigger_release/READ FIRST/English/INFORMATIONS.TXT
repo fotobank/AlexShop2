@@ -1,0 +1,13 @@
+i do my best to take this little tool free from mistakes and errors but i cant give
+any kind of warranty in order of the usage and other errors occure by using the 
+evotrigger. using the evotrigger is on your own responsibility.
+
+the evotrigger is actually in beta-status but it works stable and save!
+
+newest versions of evotrigger, support and other information could be found at mysqldumper.de
+and plasmatrix.de (my site).
+
+planed corrections / mods / bugfixes are listet in the STATnBUG.TXT
+
+
+TO RUN THE EVOTRIGGER YOU NEED THE "NET FRAMEWORK 2.0" FROM MICROSOFT

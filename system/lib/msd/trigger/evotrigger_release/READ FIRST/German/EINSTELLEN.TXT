@@ -1,0 +1,23 @@
+1) "daten.ini" an die eigenen daten anpassen und die maximale laufzeit deklarieren:
+
+USERNAME;PASSWORD;WWW.DOMAIN.DE/DIRECTORY/dump.php;MAXLAUFZEIT
+
+1.1) bitte KEIN "http://" mit eingeben, das wird automatisch vom programm erledigt!
+
+1.2) MAXLAUFZEIT wird als ganze zahl angegeben (z.B.: 7 - für sieben minuten).
+     nach den sieben minuten wird der internet explorer geschlossen, egal ob
+     der dump fertig ist oder nicht!
+
+2) durch ein windowsupdate wurde die authentifiezierungsart vom internetexplorer
+   umgestellt um vor phising-attacken zu schützen. damit man den trigger nutzen kann
+   (zuerst OHNE den patch testen!) sollte man den patch doppelt anklicken und dadurch
+   in die registry hinzufügen.
+
+
+INFO: die daten.ini muss sich im gleichen verz. wie der evotrigger.exe befinden!
+
+
+BEACHTEN: wenn man keinen htaccess schutz nutzt (was nicht zu empfehlen ist) muss 
+          die "daten.ini" folgendermaßen aussehen:
+          
+          ;;WWW.DOMAIN.DE/DIRECTORY/dump.php;MAXLAUFZEIT

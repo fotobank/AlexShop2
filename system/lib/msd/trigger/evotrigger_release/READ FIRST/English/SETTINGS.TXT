@@ -1,0 +1,22 @@
+1) configure "daten.ini" like your data to access your htaccess secured webspace:
+
+   USERNAME;PASSWORD;WWW.DOMAIN.DE/DIRECTORY/dump.php;MAXRUNTIME
+
+1.1) DONT enter "http://", evotrigger does it for you!
+
+1.2) MAXLRUNTIME is an integer of a full number (z.B.: 7 - for seven minutes).
+     for the maxruntime of seven minutes the opened explorerwindow will be
+     closed. all the same whatever the dump is already running.
+
+2) by one of the last official windows xp updates, the security options from the IE
+   where modded. if the evotrigger wont works doubleclick the "IEPatch.reg" and add them
+   to your registry. restart your system (try it at first without regpatch and without 
+   restart if you need the patch).
+
+
+INFO: daten.ini have to be in the same directory / folder where the evotrigger.exe is!
+
+
+ATTENTION: if you dont use htaccess the daten.ini must looks like this:
+
+           ;;WWW.DOMAIN.DE/DIRECTORY/dump.php;MAXRUNTIME

@@ -1,0 +1,18 @@
+There are Following commandlineparameters:
+/log
+	Save the Result
+/exit
+	Exits the programm when done
+/hide
+	Runs the Software in the background
+/url:<URL>
+	The URL to the dump.php i.e. www.meinedomain.de/mysqldumper/dump.php
+/user:<USER>
+	The USer for Http-Auth
+/pass:<PAsswort>
+	The Passwortd
+
+
+I would be pleased to get a short mail if you use thes program.
+Morty
+	morty@gmx.de

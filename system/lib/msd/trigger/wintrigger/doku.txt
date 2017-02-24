@@ -1,0 +1,18 @@
+Es gibt folgende Komandozeilenparameter:
+/log
+	Speichert die Seite mit dem Ergebnist
+/exit
+	Beendet das Programm nach dem Ausführen
+/hide
+	Führt die Operation im Hintergrund aus
+/url:<URL>
+	Die Url der dump.php: z.b. www.meinedomain.de/mysqldumper/dump.php
+/user:<USER>
+	Der Benutzername für Http-Auth
+/pass:<PAsswort>
+	Das dazugehörige Passwort
+
+
+Ich würde mich über eine kurze Email freuen, falls Du diese Software verwendst.
+Morty
+	morty@gmx.de
