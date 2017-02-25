@@ -11,8 +11,8 @@ foreach ($_POST as $postvar=>$postval)
 	${$postvar}=$postval;
 }
 //include_once (__DIR__.'/inc/mysql_mysqli.inc.php');
-//include_once(__DIR__.'/inc/mydql2i/mysql2i.class.php');
-include_once(__DIR__.'/inc/mysql2i.php');
+include_once(__DIR__.'/../../helper/MySqlToMySqli/Mysql2i/Mysql2i.php');
+//include_once(__DIR__.'/inc/mysql2i.php');
 
 include_once ( './inc/functions.php' );
 include_once ( './inc/mysql.php' );

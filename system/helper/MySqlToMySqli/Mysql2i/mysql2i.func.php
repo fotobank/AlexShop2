@@ -1,13 +1,8 @@
 <?php
-/*
-mysql2i.func.php rev 3
-member of mysql2i.class.php ver 1.3
-*/
 
-//predifined fetch constants
-define('MYSQL_BOTH',MYSQLI_BOTH);
-define('MYSQL_NUM',MYSQLI_NUM);
-define('MYSQL_ASSOC',MYSQLI_ASSOC);
+define('MYSQL_BOTH', MYSQLI_BOTH);
+define('MYSQL_NUM', MYSQLI_NUM);
+define('MYSQL_ASSOC', MYSQLI_ASSOC);
 
 function mysql_affected_rows($link=null){
     

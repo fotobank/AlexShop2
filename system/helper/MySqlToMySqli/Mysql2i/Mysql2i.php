@@ -1,10 +1,12 @@
 <?php
-  /*
-    mysql2i.class.php ver 1.0
-    
-    This class is released into the public domain without copyright
-  */
-  class mysql2i{
+
+if( !extension_loaded('mysql') ){
+    include(__DIR__ . '/mysql2i.func.php');
+}
+/**
+ * Class Mysql2i
+ */
+  class Mysql2i{
       
       public static $currObj;
       
@@ -475,7 +477,7 @@
           
       }
 
-      public static function mysql_tablename($result,$row,$field=null){
+      public static function mysql_tablename($result, $row, $field=null){
           
           mysqli_data_seek($result,$row);
           
@@ -508,9 +510,3 @@
       }
       
   }
-  
-  if( !extension_loaded('mysql') ){
-      include('mysql2i.func.php');
-  }
-  
-?>

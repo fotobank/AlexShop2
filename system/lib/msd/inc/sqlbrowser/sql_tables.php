@@ -1,8 +1,8 @@
 <?php
 if (!defined('MSD_VERSION')) die('No direct access.');
 //include_once (__DIR__.'/../mysql_mysqli.inc.php');
+include_once(__DIR__.'/../../../../helper/MySqlToMySqli/Mysql2i/Mysql2i.php');
 //include_once(__DIR__.'/../mysql2i.php');
-include_once(__DIR__.'/../mysql2i.php');
 
 //Tabellen
 echo $aus.'<h6>'.$lang['L_SQL_TABLESOFDB'].' `'.$databases['Name'][$dbid].'` '.$lang['L_SQL_EDIT'].'</h6>';

@@ -19,7 +19,7 @@ class Managers extends Registry
         'users', 'groups', 'coupons', 'pages', 'blog', 'comments', 'feedbacks', 'import', 'export',
         'stats', 'design', 'settings', 'settings2', 'currency', 'delivery', 'payment', 'managers',
         'license', 'languages', 'banners', 'special', 'callbacks', 'topvisor', 'yametrika', 'robots',
-        'service', 'antivirus', 'soon'
+        'service', 'antivirus', 'soon', 'dump'
     ];
 
     private $all_managers = [];
@@ -222,6 +222,11 @@ class Managers extends Registry
         return "$" . "apr1" . "$" . $salt . "$" . $tmp;
     }
 
+    /**
+     * @param $module
+     *
+     * @return bool
+     */
     public function access($module)
     {
         $manager = $this->get_manager();

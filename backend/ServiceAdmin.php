@@ -28,11 +28,14 @@ use api\Registry;
 
 class ServiceAdmin extends Registry
 {
+    private $servise_modules = ['AntiShell', 'MySqlDumper'];
 
     public function fetch() {
 
+        foreach ($this->servise_pages as $module) {
+            $this->managers->access($page);
+        }
 
-        return $this->design->fetch('service_admin.tpl');
     }
 
 }

@@ -2,8 +2,8 @@
 if (!defined('MSD_VERSION')) die('No direct access.');
 
 //include_once (__DIR__.'/mysql_mysqli.inc.php');
-//include_once(__DIR__.'/mydql2i/mysql2i.class.php');
-include_once(__DIR__.'/mysql2i.php');
+include_once(__DIR__.'/../../../helper/MySqlToMySqli/Mysql2i/Mysql2i.php');
+//include_once(__DIR__.'/mysql2i.php');
 
 //Feldspezifikationen
 $feldtypen=Array(
@@ -489,4 +489,3 @@ function getDBIndex($db, $table)
 	$index=array_keys($dump['tables'],$db . '|' . $table);
 	return $index[0];
 }
-?>

@@ -1,8 +1,8 @@
 <?php
 if (!@ob_start("ob_gzhandler")) @ob_start();
 //include_once(__DIR__.'/inc/mydql2i/mysql2i.class.php');
-//include_once (__DIR__.'/inc/mysql_mysqli.inc.php');
-include_once(__DIR__.'/inc/mysql2i.php');
+include_once(__DIR__.'/../../helper/MySqlToMySqli/Mysql2i/Mysql2i.php');
+//include_once(__DIR__.'/inc/mysql2i.php');
 
 include (__DIR__.'/inc/functions.php');
 $page=(isset($_GET['page'])) ? $_GET['page'] : 'main.php';
