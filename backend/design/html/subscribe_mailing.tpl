@@ -99,7 +99,7 @@ $(function() {
 	// Удалить
 	$("a.delete").click(function() {
 		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
-		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
+		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').prop('checked', true);
 		$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
 		$(this).closest("form").submit();
 	});

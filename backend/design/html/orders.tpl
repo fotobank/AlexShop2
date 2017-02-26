@@ -259,9 +259,9 @@ $(function() {
 		hoverClass: "drop_hover",
 		tolerance: "pointer",
 		drop: function(event, ui){
-			label_id = $(ui.helper).attr('data-label-id');
-			$(this).find('input[type="checkbox"][name*="check"]').attr('checked', true);
-			$(this).closest("form").find('select[name="action"] option[value=set_label_'+label_id+']').attr("selected", "selected");		
+			label_id = $(ui.helper).prop('data-label-id');
+			$(this).find('input[type="checkbox"][name*="check"]').prop('checked', true);
+			$(this).closest("form").find('select[name="action"] option[value=set_label_'+label_id+']').prop("selected", "selected");
 			$(this).closest("form").submit();
 			return false;	
 		}		
@@ -284,7 +284,7 @@ $(function() {
 	// Удалить 
 	$("a.delete").click(function() {
 		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
-		$(this).closest(".row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
+		$(this).closest(".row").find('input[type="checkbox"][name*="check"]').prop('checked', true);
 		$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
 		$(this).closest("form").submit();
 	});

@@ -3,6 +3,7 @@
 
 use api\Registry;
 use core\Alex;
+use proxy\Config;
 use proxy\Cookie;
 use proxy\Session;
 
@@ -13,174 +14,19 @@ use proxy\Session;
 class IndexAdmin extends Registry
 {
     // главное меню
-    private $left_menu = [
-        'ProductsAdmin'   => 'catalog',
-        'ProductAdmin'    => 'catalog',
-        'CategoriesAdmin' => 'catalog',
-        'CategoryAdmin'   => 'catalog',
-        'BrandsAdmin'     => 'catalog',
-        'BrandAdmin'      => 'catalog',
-        'FeaturesAdmin'   => 'catalog',
-        'FeatureAdmin'    => 'catalog',
-        'SpecialAdmin'    => 'catalog',
-
-        'OrdersAdmin'       => 'orders',
-        'OrderAdmin'        => 'orders',
-        'OrdersLabelsAdmin' => 'orders',
-        'OrdersLabelAdmin'  => 'orders',
-
-        'UsersAdmin'            => 'users',
-        'UserAdmin'             => 'users',
-        'ExportUsersAdmin'      => 'users',
-        'GroupsAdmin'           => 'users',
-        'GroupAdmin'            => 'users',
-        'CouponsAdmin'          => 'users',
-        'CouponAdmin'           => 'users',
-        'SubscribeMailingAdmin' => 'users',
-
-        'PagesAdmin' => 'pages',
-        'PageAdmin'  => 'pages',
-
-        'BlogAdmin' => 'blog',
-        'PostAdmin' => 'blog',
-
-        'CommentsAdmin'  => 'comments',
-        'FeedbacksAdmin' => 'comments',
-        'CallbacksAdmin' => 'comments',
-
-        'ImportAdmin'      => 'auto',
-        'ExportAdmin'      => 'auto',
-        'MultiImportAdmin' => 'auto',
-        'MultiExportAdmin' => 'auto',
-
-        'StatsAdmin'         => 'stats',
-        'ReportStatsAdmin'   => 'stats',
-        'CategoryStatsAdmin' => 'stats',
-
-        'TopvisorProjectsAdmin' => 'topvisor',
-        'TopvisorProjectAdmin'  => 'topvisor',
-
-        'ThemeAdmin'     => 'design',
-        'StylesAdmin'    => 'design',
-        'TemplatesAdmin' => 'design',
-        'ImagesAdmin'    => 'design',
-        'ScriptsAdmin'   => 'design',
-        'RobotsAdmin'    => 'robots',
-
-        'BannersAdmin'       => 'banners',
-        'BannerAdmin'        => 'banners',
-        'BannersImagesAdmin' => 'banners',
-        'BannersImageAdmin'  => 'banners',
-
-        'SettingsAdmin'          => 'settings',
-        'CurrencyAdmin'          => 'settings',
-        'DeliveriesAdmin'        => 'settings',
-        'DeliveryAdmin'          => 'settings',
-        'PaymentMethodAdmin'     => 'settings',
-        'PaymentMethodsAdmin'    => 'settings',
-        'ManagersAdmin'          => 'settings',
-        'ManagerAdmin'           => 'settings',
-        'LanguageAdmin'          => 'settings',
-        'LanguagesAdmin'         => 'settings',
-        'TranslationAdmin'       => 'settings',
-        'TranslationsAdmin'      => 'settings',
-        'JqGridAjaxTranslations' => 'settings',
-
-        'ComingSoon' => 'settings2',
-
-        'ServiceAdmin' => 'service',
-        'MySqlDumper'  => 'service',
-        'AntiShell'    => 'service',
-
-        'LicenseAdmin' => 'license',
-
-    ];
+    private $left_menu = [];
 
     // Соответсвие модулей и названий соответствующих прав
-    private $modules_permissions = [
-        'ProductsAdmin'         => 'products',
-        'ProductAdmin'          => 'products',
-        'CategoriesAdmin'       => 'categories',
-        'CategoryAdmin'         => 'categories',
-        'BrandsAdmin'           => 'brands',
-        'BrandAdmin'            => 'brands',
-        'FeaturesAdmin'         => 'features',
-        'FeatureAdmin'          => 'features',
-        'OrdersAdmin'           => 'orders',
-        'OrderAdmin'            => 'orders',
-        'OrdersLabelsAdmin'     => 'labels',
-        'OrdersLabelAdmin'      => 'labels',
-        'UsersAdmin'            => 'users',
-        'UserAdmin'             => 'users',
-        'ExportUsersAdmin'      => 'users',
-        'GroupsAdmin'           => 'groups',
-        'GroupAdmin'            => 'groups',
-        'CouponsAdmin'          => 'coupons',
-        'CouponAdmin'           => 'coupons',
-        'PagesAdmin'            => 'pages',
-        'PageAdmin'             => 'pages',
-        'BlogAdmin'             => 'blog',
-        'PostAdmin'             => 'blog',
-        'CommentsAdmin'         => 'comments',
-        'FeedbacksAdmin'        => 'feedbacks',
-        'ImportAdmin'           => 'import',
-        'ExportAdmin'           => 'export',
-        'MultiImportAdmin'      => 'import',
-        'MultiExportAdmin'      => 'export',
-        'StatsAdmin'            => 'stats',
-        'ThemeAdmin'            => 'design',
-        'StylesAdmin'           => 'design',
-        'TemplatesAdmin'        => 'design',
-        'ImagesAdmin'           => 'design',
-        'ScriptsAdmin'          => 'design',
-        'SettingsAdmin'         => 'settings',
-        'CurrencyAdmin'         => 'currency',
-        'DeliveriesAdmin'       => 'delivery',
-        'DeliveryAdmin'         => 'delivery',
-        'PaymentMethodAdmin'    => 'payment',
-        'PaymentMethodsAdmin'   => 'payment',
-        'ManagersAdmin'         => 'managers',
-        'ManagerAdmin'          => 'managers',
-        'LicenseAdmin'          => 'license',
-        'SubscribeMailingAdmin' => 'users',
-        'BannersAdmin'          => 'banners',
-        'BannerAdmin'           => 'banners',
-        'BannersImagesAdmin'    => 'banners',
-        'BannersImageAdmin'     => 'banners',
-        'SpecialAdmin'          => 'special',
-        'CallbacksAdmin'        => 'callbacks',
-
-        'CommentAdmin'           => 'comment',
-        'CommentEditAdmin'       => 'comment_edit',
-
-        /* Мультиязычность start */
-        'LanguageAdmin'          => 'languages',
-        'LanguagesAdmin'         => 'languages',
-        'TranslationAdmin'       => 'languages',
-        'TranslationsAdmin'      => 'languages',
-        'JqGridAjaxTranslations' => 'languages',
-        /* Мультиязычность end */
-        /*statistic*/
-        'ReportStatsAdmin'       => 'stats',
-        'CategoryStatsAdmin'     => 'stats',
-        /*statistic*/
-        'TopvisorProjectsAdmin'  => 'topvisor',
-        'TopvisorProjectAdmin'   => 'topvisor',
-        /*YaMetrika*/
-        'YametrikaAdmin'         => 'yametrika',
-        /*YaMetrika*/
-        'RobotsAdmin'            => 'robots',
-        'ServiceAdmin'           => 'service',
-        'ComingSoon'             => 'soon',
-        'MySqlDumper'            => 'dump',
-        'AntiShell'              => 'antivirus'
-    ];
+    private $modules_permissions = [];
 
     protected $manager;
 
     // Конструктор
     public function __construct()
     {
+        $this->left_menu = Config::getData('left_menu');
+        $this->modules_permissions = Config::getData('modules_permissions');
+
         // Вызываем конструктор базового класса
         parent::__construct();
 
@@ -361,7 +207,8 @@ class IndexAdmin extends Registry
     {
         if (Cookie::has('_remember')){
             // проверяем время доступности и вылидность cookie
-            $cookie_remember = $this->request->filter_string(Cookie::get('_remember'), 'sql');
+            $cookie = Cookie::get('_remember');
+            $cookie_remember = $this->request->filter_string($cookie, 'sql');
             $manager_cookie = $this->managers->manager_cookie($cookie_remember);
             // если запись в базе не найдена или время вышло
             if (null != $manager_cookie && $manager_cookie->diff > 5){
@@ -369,7 +216,6 @@ class IndexAdmin extends Registry
                 // не создавать cookie чаше 5 секунд
                 if (strtotime("+ $admin_cookie") - $manager_cookie->diff - time() > 5){
                     // при каждом посещении страницы обновляем cookie и записываем их в базу
-                    $cookie = $this->managers->hash_cookie($manager_cookie->login);
                     Cookie::set('_remember', $cookie, strtotime("+ $admin_cookie"), '/');
                     $arr_value['cookie'] = $cookie;
                     $arr_value['valid_period'] = $admin_cookie;

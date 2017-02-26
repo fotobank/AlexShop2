@@ -1,19 +1,14 @@
-<div id = "cms_logo">
-     <a href = 'index.php?module=LicenseAdmin'><img src = "design/images/logo.png" alt = "AlexShop CMS"/></a>
-</div>
-<div id = "manager_login">
-     <span>{$manager->login}</span>
-    <p>текущий менеджер</p>
-</div>
-<div class="split-0"></div>
-
-<ul id = "main_menu">
+{*<!-- BEGIN SIDEBAR -->*}
+<div class="page-sidebar-wrapper">
+<div class="page-sidebar navbar-collapse collapse">
+{*<!-- BEGIN SIDEBAR MENU -->*}
+<ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 
 	{if in_array('products', $manager->permissions)}
-        <li class = "{if $menu_selected == 'catalog'}active{/if}">
+        <li class = "start {if $menu_selected == 'catalog'}active{/if}">
 			<a href = "index.php?module=ProductsAdmin">
-				<i class = "icon_catalog"></i>
-				<span>Каталог</span>
+				<i class = "icon-catalog"></i>
+				<span class="title">Каталог</span>
 			</a>
 		</li>
 
@@ -21,8 +16,8 @@
 
         <li class = "{if $menu_selected == 'catalog'}active{/if}">
 			<a href = "index.php?module=CategoriesAdmin">
-				<i class = "icon_catalog"></i>
-				<span>Каталог</span>
+				<i class = "icon-catalog"></i>
+				<span class="title">Каталог</span>
 			</a>
 		</li>
 
@@ -30,8 +25,8 @@
 
         <li class = "{if $menu_selected == 'catalog'}active{/if}">
 			<a href = "index.php?module=BrandsAdmin">
-				<i class = "icon_catalog"></i>
-				<span>Каталог</span>
+				<i class = "icon-catalog"></i>
+				<span class="title">Каталог</span>
 			</a>
 		</li>
 
@@ -39,8 +34,8 @@
 
         <li class = "{if $menu_selected == 'catalog'}active{/if}">
 			<a href = "index.php?module=FeaturesAdmin">
-				<i class = "icon_catalog"></i>
-				<span>Каталог</span>
+				<i class = "icon-catalog"></i>
+				<span class="title">Каталог</span>
 			</a>
 		</li>
 
@@ -48,8 +43,8 @@
 
         <li class = "{if $menu_selected == 'catalog'}active{/if}">
 			<a href = "index.php?module=SpecialAdmin">
-				<i class = "icon_catalog"></i>
-				<span>Каталог</span>
+				<i class = "icon-catalog"></i>
+				<span class="title">Каталог</span>
 			</a>
 		</li>
     {/if}
@@ -57,8 +52,9 @@
     {if in_array('orders', $manager->permissions)}
         <li class = "{if $menu_selected == 'orders'}active{/if}">
 			<a href = "index.php?module=OrdersAdmin">
-			   <i class = "icon_orders"></i>
-				<span>Заказы</span>
+			   <i class = "icon-orders"></i>
+				<span class="title">Заказы</span>
+                <span class="arrow "></span>
                 {if $new_orders_counter}
                     <span class = "orders_num">{$new_orders_counter}</span>
                 {/if}
@@ -70,8 +66,9 @@
 
         <li class = "{if $menu_selected == 'orders'}active{/if}">
 			<a href = "index.php?module=OrdersLabelsAdmin">
-				<i class = "icon_orders"></i>
-				<span>Заказы</span>
+				<i class = "icon-orders"></i>
+				<span class="title">Заказы</span>
+                <span class="arrow "></span>
                 {if $new_orders_counter}
                     <span class = "orders_num">{$new_orders_counter}</span>
                 {/if}
@@ -82,8 +79,8 @@
     {if in_array('users', $manager->permissions)}
         <li class = "{if $menu_selected == 'users'}active{/if}">
 			<a href = "index.php?module=UsersAdmin">
-			   <i class = "icon_users"></i>
-				<span>Пользователи</span>
+			   <i class = "icon-users"></i>
+				<span class="title">Пользователи</span>
 			</a>
 		</li>
 
@@ -91,8 +88,8 @@
 
         <li class = "{if $menu_selected == 'users'}active{/if}">
 			<a href = "index.php?module=GroupsAdmin">
-				<i class = "icon_users"></i>
-				<span>Пользователи</span>
+				<i class = "icon-users"></i>
+				<span class="title">Пользователи</span>
 			</a>
 		</li>
 
@@ -100,8 +97,8 @@
 
         <li class = "{if $menu_selected == 'users'}active{/if}">
 			<a href = "index.php?module=CouponsAdmin">
-				<i class = "icon_users"></i>
-				<span>Пользователи</span>
+				<i class = "icon-users"></i>
+				<span class="title">Пользователи</span>
 			</a>
 		</li>
     {/if}
@@ -109,24 +106,24 @@
     {if in_array('pages', $manager->permissions)}
         <li class = "{if $menu_selected == 'pages'}active{/if}">
 			<a href = "index.php?module=PagesAdmin">
-				<i class = "icon_pages"></i>
-				<span>Страницы</span>
+				<i class = "icon-pages"></i>
+				<span class="title">Страницы</span>
 			</a></li>
     {/if}
 
     {if in_array('blog', $manager->permissions)}
         <li class = "{if $menu_selected == 'blog'}active{/if}">
 			<a href = "index.php?module=BlogAdmin">
-				<i class = "icon_blog"></i>
-				<span>Блог</span>
+				<i class = "icon-blog"></i>
+				<span class="title">Блог</span>
 			</a></li>
     {/if}
 
     {if in_array('comments', $manager->permissions)}
         <li class = "{if $menu_selected == 'comments'}active{/if}">
 		<a href = "index.php?module=CommentsAdmin">
-			<i class = "icon_comments"></i>
-			<span>Комментарии</span>
+			<i class = "icon-comments"></i>
+			<span class="title">Комментарии</span>
             {if $new_comments_counter || $new_callbacks_counter || $new_feedbacks_counter}
                 <span class = "comments_num">{$new_comments_counter + $new_callbacks_counter + $new_feedbacks_counter}</span>
             {/if}
@@ -138,8 +135,8 @@
 
         <li class = "{if $menu_selected == 'comments'}active{/if}">
 		<a href = "index.php?module=FeedbacksAdmin">
-			<i class = "icon_comments"></i>
-			<span>Комментарии</span>
+			<i class = "icon-comments"></i>
+			<span class="title">Комментарии</span>
             {if $new_comments_counter || $new_callbacks_counter || $new_feedbacks_counter}
                 <span class = "comments_num">{$new_comments_counter + $new_callbacks_counter + $new_feedbacks_counter}</span>
             {/if}
@@ -150,8 +147,8 @@
 
         <li class = "{if $menu_selected == 'comments'}active{/if}">
 		<a href = "index.php?module=CallbacksAdmin">
-			<i class = "icon_comments"></i>
-			<span>Комментарии</span>
+			<i class = "icon-comments"></i>
+			<span class="title">Комментарии</span>
             {if $new_comments_counter || $new_callbacks_counter || $new_feedbacks_counter}
                 <span class = "comments_num">{$new_comments_counter + $new_callbacks_counter + $new_feedbacks_counter}</span>
             {/if}
@@ -162,8 +159,8 @@
     {if in_array('import', $manager->permissions)}
         <li class = "{if $menu_selected == 'auto'}active{/if}">
 		<a href = "index.php?module=ImportAdmin">
-			<i class = "icon_automatic"></i>
-			<span>Импорт/экспорт</span>
+			<i class = "icon-automatic"></i>
+			<span class="title">Импорт/экспорт</span>
 		</a>
 	</li>
 
@@ -171,8 +168,8 @@
 
         <li class = "{if $menu_selected == 'auto'}active{/if}">
 		<a href = "index.php?module=ExportAdmin">
-			<i class = "icon_automatic"></i>
-			<span>Импорт/экспорт</span>
+			<i class = "icon-automatic"></i>
+			<span class="title">Импорт/экспорт</span>
 		</a>
 	</li>
     {/if}
@@ -180,8 +177,8 @@
     {if in_array('stats', $manager->permissions)}
         <li class = "{if $menu_selected == 'stats'}active{/if}">
 			<a href = "index.php?module=StatsAdmin">
-				<i class = "icon_statistic"></i>
-				<span>Статистика</span>
+				<i class = "icon-statistic"></i>
+				<span class="title">Статистика</span>
 			</a>
 		</li>
     {/if}
@@ -189,8 +186,8 @@
     {if in_array('topvisor', $manager->permissions)}
         <li class = "{if $menu_selected == 'topvisor'}active{/if}">
 			<a href = "index.php?module=TopvisorProjectsAdmin">
-				<i class = "icon_topvisor"></i>
-				<span>Topvisor</span>
+				<i class = "icon-topvisor"></i>
+				<span class="title">Topvisor</span>
 			</a>
 		</li>
     {/if}
@@ -198,8 +195,8 @@
     {if in_array('design', $manager->permissions)}
         <li class = "{if $menu_selected == 'design'}active{/if}">
 			<a href = "index.php?module=ThemeAdmin">
-				<i class = "icon_design"></i>
-				<span>Шаблоны</span>
+				<i class = "icon-design"></i>
+				<span class="title">Шаблоны</span>
 			</a>
 		</li>
     {/if}
@@ -207,16 +204,16 @@
     {if in_array('banners', $manager->permissions)}
         <li class = "{if $menu_selected == 'banners'}active{/if}">
 			<a href = "index.php?module=BannersImagesAdmin">
-				<i class = "icon_banner"></i>
-				<span>Баннеры</span>
+				<i class = "icon-banner"></i>
+				<span class="title">Баннеры</span>
 			</a>
 		</li>
     {/if}
 	{if in_array('service', $manager->permissions)}
         <li class = "{if $menu_selected == 'service'}active{/if}">
 			<a href = "index.php?module=ServiceAdmin">
-				<i class = "icon_service"></i>
-				<span>Обслуживание</span>
+				<i class = "icon-service"></i>
+				<span class="title">Обслуживание</span>
 			</a>
 		</li>
     {/if}
@@ -225,17 +222,17 @@
         <li class = "dropdown {if $menu_selected == ('settings')}active
                               {elseif $menu_selected == ('settings2')}active{/if}" rel="1">
 			<a href = "index.php?module=SettingsAdmin">
-				<i class = "icon_settings"></i>
-				<span class="i-menu-max">Настройки</span>
-                <i class = "icon_more"></i>
+				<i class = "icon-settings"></i>
+				<span class="title">Настройки</span>
+                <span class="arrow "></span>
             </a>
-                 <ul class="dropdown-1">
-                   <li class = "dropdown {if $menu_selected == ('settings')}active{/if}" rel="11">
+                 <ul class="sub-menu">
+                   <li class = "{if $menu_selected == ('settings')}active{/if}" rel="11">
                        <a href = "index.php?module=SettingsAdmin">
-                           <i class="icon_first_settings"></i><span>Основные</span></a></li>
-                   <li class = "dropdown {if $menu_selected == ('settings2')}active{/if}" rel="12">
+                           <i class="icon-first_settings"></i><span class="title">Основные</span></a></li>
+                   <li class = "{if $menu_selected == ('settings2')}active{/if}" rel="12">
                        <a href = "index.php?module=ComingSoon">
-                           <i class="icon_second_settings"></i><span>Дополнительные</span></a></li>
+                           <i class="icon-second_settings"></i><span class="title">Дополнительные</span></a></li>
                  </ul>
 
 		</li>
@@ -244,8 +241,9 @@
 
         <li class = "{if $menu_selected == 'settings'}active{/if}">
 			<a href = "index.php?module=CurrencyAdmin">
-				<i class = "icon_settings"></i>
+				<i class = "icon-settings"></i>
 				<span>Настройки</span>
+				<span class="arrow "></span>
 			</a>
 		</li>
 
@@ -253,8 +251,9 @@
 
         <li class = "{if $menu_selected == 'settings'}active{/if}">
 			<a href = "index.php?module=DeliveriesAdmin">
-				<i class = "icon_settings"></i>
-				<span>Настройки</span>
+				<i class = "icon-settings"></i>
+				<span class="title">Настройки</span>
+				<span class="arrow "></span>
 			</a>
 		</li>
 
@@ -262,8 +261,9 @@
 
         <li class = "{if $menu_selected == 'settings'}active{/if}">
 			<a href = "index.php?module=PaymentMethodsAdmin">
-				<i class = "icon_settings"></i>
-				<span>Настройки</span>
+				<i class = "icon-settings"></i>
+				<span class="title">Настройки</span>
+				<span class="arrow "></span>
 			</a>
 		</li>
 
@@ -271,8 +271,9 @@
 
         <li class = "{if $menu_selected == 'settings'}active{/if}">
 			<a href = "index.php?module=ManagersAdmin">
-				<i class = "icon_settings"></i>
-				<span>Настройки</span>
+				<i class = "icon-settings"></i>
+				<span class="title">Настройки</span>
+				<span class="arrow "></span>
 			</a>
 		</li>
 
@@ -280,18 +281,23 @@
 
         <li class = "{if $menu_selected == 'settings'}active{/if}">
 			<a href = "index.php?module=LanguagesAdmin">
-				<i class = "icon_settings"></i>
-				<span>Настройки</span>
+				<i class = "icon-settings"></i>
+				<span class="title">Настройки</span>
+				<span class="arrow "></span>
 			</a>
 		</li>
     {/if}
     <li>
     <a href = '{$config->root_url}?logout'>
-        <i class = "icon_log_out"></i>
-        <span>Выход</span>
+        <i class = "icon-log_out"></i>
+        <span class="title">Выход</span>
     </a>
     </li>
 </ul>
+{*<!-- END SIDEBAR MENU -->*}
+			</div>
+		</div>
+{*<!-- END SIDEBAR -->*}
 <div class = "language">
 {foreach $languages as $l}
     <a href = "{url lang_id=$l->id}" {if $l->id == $lang_id}class = "selected"{/if}>{$l->label}</a>
@@ -309,12 +315,3 @@
     {/if}
 {/if}
 </div>
-{*основное меню*}
-<script>
-    jQuery(document).ready(function($) {
-        $("li.dropdown").hover(function() {
-            var id = $(this).attr("rel");
-            $("ul.dropdown-" + id).toggle("fade", 250);
-        });
-    });
-</script>

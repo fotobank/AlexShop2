@@ -156,13 +156,13 @@ $(function() {
 	// Выделить ожидающие
 	$("#check_unapproved").click(function() {
 		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
-		$('#list .unapproved input[type="checkbox"][name*="check"]').attr('checked', true);
+		$('#list .unapproved input[type="checkbox"][name*="check"]').prop('checked', true);
 	});	
 
 	// Удалить 
 	$("a.delete").click(function() {
 		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
-		$(this).closest(".row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
+		$(this).closest(".row").find('input[type="checkbox"][name*="check"]').prop('checked', true);
 		$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
 		$(this).closest("form").submit();
 	});

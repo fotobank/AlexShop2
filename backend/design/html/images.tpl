@@ -30,7 +30,7 @@ $(function() {
 
 	// Редактировать
 	$("a.edit").click(function() {
-		name = $(this).closest('li').attr('name');
+		name = $(this).closest('li').prop('name');
 		inp1 = $('<input type=hidden name="old_name[]">').val(name);
 		inp2 = $('<input type=text name="new_name[]">').val(name);
 		$(this).closest('li').find("p.name").html('').append(inp1).append(inp2);
@@ -41,7 +41,7 @@ $(function() {
 
 	// Удалить 
 	$("a.delete").click(function() {
-		name = $(this).closest('li').attr('name');
+		name = $(this).closest('li').prop('name');
 		$('input[name=delete_image]').val(name);
 		$(this).closest("form").submit();
 	});

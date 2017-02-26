@@ -446,7 +446,7 @@ $(function() {
   			new_item = new_purchase.clone().appendTo('.purchases');
   			new_item.removeAttr('id');
   			new_item.find('a.purchase_name').html(suggestion.data.name);
-  			new_item.find('a.purchase_name').attr('href', 'index.php?module=ProductAdmin&id='+suggestion.data.id);
+  			new_item.find('a.purchase_name').prop('href', 'index.php?module=ProductAdmin&id='+suggestion.data.id);
   			
   			// Добавляем варианты нового товара
   			var variants_select = new_item.find('select[name*=purchases][name*=variant_id]');
@@ -463,7 +463,7 @@ $(function() {
 				change_variant(variants_select);
   			
   			if(suggestion.data.image)
-  				new_item.find('img.product_icon').attr("src", suggestion.data.image);
+  				new_item.find('img.product_icon').prop("src", suggestion.data.image);
   			else
   				new_item.find('img.product_icon').remove();
 
@@ -482,8 +482,8 @@ $(function() {
   // Изменение цены и макс количества при изменении варианта
   function change_variant(element)
   {
-		price = element.find('option:selected').attr('price');
-		amount = element.find('option:selected').attr('amount');
+		price = element.find('option:selected').prop('price');
+		amount = element.find('option:selected').prop('amount');
 		element.closest('.row').find('input[name*=purchases][name*=price]').val(price);
 		
 		// 
@@ -547,7 +547,7 @@ $(function() {
 	});
 
 	// Посмотреть адрес на карте
-	$("a#address_link").attr('href', 'http://maps.yandex.ru/?text='+$('#order_details textarea[name="address"]').val());
+	$("a#address_link").prop('href', 'http://maps.yandex.ru/?text='+$('#order_details textarea[name="address"]').val());
     
 	$('select[name*=purchases][name*=variant_id]').bind('change', function(){change_variant($(this));});
     

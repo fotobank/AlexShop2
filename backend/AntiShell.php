@@ -81,6 +81,21 @@ class AntiShell extends Registry
         // /backend/AntiShell.php?snap=y
         $this->conf['makesnap'] = (isset($_GET['snap']) && trim($_GET['snap']) == 'y');
         $this->conf['sitename'] .= 'http://' . $_SERVER['HTTP_HOST'];
+
+    }
+
+    public function fetch()
+    {
+        $results = '';
+        if ($this->conf['on']){
+            $results =  $this->run();
+        }
+        // Выводим результаты в браузер
+        if ($this->conf['show_text']){
+            $this->design->assign('scan_results', $results);
+            return $this->design->fetch('service_anti_shell.tpl');
+        }
+        return '';
     }
 
     /**
@@ -184,9 +199,10 @@ class AntiShell extends Registry
             }
         }
         // Выводим результаты в браузер
-        if ($this->conf['showtext']){
+        /*if ($this->conf['show_text']){
             $this->showOutput($output, $this->conf['charset']);
-        }
+        }*/
+        return $output;
     }
 
     /**
@@ -355,6 +371,7 @@ class AntiShell extends Registry
 
                 $makeFileInfo['status'] = '1';
                 $makeFileInfo['text'] = "<h1 style=\"font:normal 22px 'Trebuchet MS',Arial,sans-serif;color:#2980b9;padding:40px 10px 10px;text-align: center;\">{$this->conf['sitename']}  сканирование завершено\"</h1>
+                <div class='clearfix'></div>
 				<ul style='list-style:none;margin:0 0 15px 0;padding:0;'>
 					{$logs}
 				</ul>
@@ -587,9 +604,4 @@ HTML;
         return $this->conf;
     }
 
-}
-
-if (Config::getData('antivirus')['on']){
-    $scan = new AntiShell();
-    $scan->run();
 }

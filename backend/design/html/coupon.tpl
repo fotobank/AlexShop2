@@ -41,7 +41,7 @@ $(function() {
 	// On change date
 	$('input[name="expire"]').focus(function() {
  
-    	$('input[name="expires"]').attr('checked', true);
+    	$('input[name="expires"]').prop('checked', true);
 
 	});
 

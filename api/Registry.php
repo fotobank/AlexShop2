@@ -58,7 +58,7 @@ class Registry extends AbstractProxy {
     private static $alias = [
         'db' => 'Database',
         'languages'  => 'Lang',
-        'reportstat' => 'ReportStat',
+        'reportstat' => 'ReportStat'
     ];
     /**
      * Созданные объекты

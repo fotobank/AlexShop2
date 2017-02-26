@@ -48,11 +48,11 @@
 
 <script>
 $(function() {
-	$('div#module_settings').filter(':hidden').find("input, select, textarea").attr("disabled", true);
+	$('div#module_settings').filter(':hidden').find("input, select, textarea").prop("disabled", true);
 
 	$('select[name=module]').change(function(){
-		$('div#module_settings').hide().find("input, select, textarea").attr("disabled", true);
-		$('div#module_settings[module='+$(this).val()+']').show().find("input, select, textarea").attr("disabled", false);
+		$('div#module_settings').hide().find("input, select, textarea").prop("disabled", true);
+		$('div#module_settings[module='+$(this).val()+']').show().find("input, select, textarea").prop("disabled", false);
 	});
 
     // Удаление изображений

@@ -54,7 +54,7 @@
         $(document).ready(function(){
             $('select[name=variant]').each(function(){
                 var first_in_stock = $(this).find('option[data-stock!="0"]').first();
-                first_in_stock.attr('selected',true);
+                first_in_stock.prop('selected',true);
                 first_in_stock.trigger('change');
             });
         });

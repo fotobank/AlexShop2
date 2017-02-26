@@ -1,6 +1,7 @@
 <?php
 
 use api\Registry;
+use proxy\Config as Options;
 
 class ManagerAdmin extends Registry {
     
@@ -50,8 +51,11 @@ class ManagerAdmin extends Registry {
             }
         }
 
+        // все доступные разрешения
+        $permissions_list = Options::getData('managers_permissions');
+        $this->design->assign('perms', $permissions_list);
+
         $this->design->assign('m', $manager);
-        
         return $this->design->fetch('manager.tpl');
     }
     

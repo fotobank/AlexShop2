@@ -63,10 +63,10 @@
                     new_item = new_related_product.clone().appendTo('.related_products');
                     new_item.removeAttr('id');
                     new_item.find('a.related_product_name').html(suggestion.data.name);
-                    new_item.find('a.related_product_name').attr('href', 'index.php?module=ProductAdmin&id='+suggestion.data.id);
+                    new_item.find('a.related_product_name').prop('href', 'index.php?module=ProductAdmin&id='+suggestion.data.id);
                     new_item.find('input[name*="related_products"]').val(suggestion.data.id);
                     if(suggestion.data.image)
-                        new_item.find('img.product_icon').attr("src", suggestion.data.image);
+                        new_item.find('img.product_icon').prop("src", suggestion.data.image);
                     else
                         new_item.find('img.product_icon').remove();
                     new_item.show();

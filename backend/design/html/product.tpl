@@ -42,7 +42,7 @@
     // Промо изображения
     $("#special_img img").click(function() {
  		var imgo        = $(this);
-		var state       = $(this).attr('alt');
+		var state       = $(this).prop('alt');
         var id = $('#name input[name=id]').val();
 		imgo.addClass('loading_icon');
         $("#special_img	img.selected").removeClass('selected');
@@ -182,7 +182,7 @@
 	$('#variants_block a.add_attachment').click(function() {
 		$(this).hide();
 		$(this).closest('li').find('div.browse_attachment').show('fast');
-		$(this).closest('li').find('input[name*=attachment]').attr('disabled', false);
+		$(this).closest('li').find('input[name*=attachment]').prop('disabled', false);
 		return false;		
 	});
 	
@@ -229,8 +229,8 @@
 					line = $("<li><label class=property></label><input class='order_inp option_value' type='text'/><input style='margin-left:175px;margin-top:2px;' readonly class='order_inp grey_translit' type='text'/></li>");
 					var new_line = line.clone(true);
 					new_line.find("label.property").text(feature.name);
-					new_line.find("input.option_value").attr('name', "options["+feature.id+"][value]").val(feature.value);
-                    new_line.find("input:not(.option_value)").attr('name', "options["+feature.id+"][translit]").val(feature.translit);
+					new_line.find("input.option_value").prop('name', "options["+feature.id+"][value]").val(feature.value);
+                    new_line.find("input:not(.option_value)").prop('name', "options["+feature.id+"][translit]").val(feature.translit);
 					new_line.appendTo('ul.prop_ul').find("input.option_value")
 					.autocomplete({
 						serviceUrl:'ajax/options_autocomplete.php',
@@ -254,7 +254,7 @@
 
 	// Автодополнение свойств
 	$('ul.prop_ul input.option_value[name*=options]').each(function(index) {
-		feature_id = $(this).closest('li').attr('feature_id');
+		feature_id = $(this).closest('li').prop('feature_id');
 		$(this).autocomplete({
 			serviceUrl:'ajax/options_autocomplete.php',
 			minChars:0,
@@ -296,10 +296,10 @@
 				new_item = new_related_product.clone().appendTo('.related_products');
 				new_item.removeAttr('id');
 				new_item.find('a.related_product_name').html(suggestion.data.name);
-				new_item.find('a.related_product_name').attr('href', 'index.php?module=ProductAdmin&id='+suggestion.data.id);
+				new_item.find('a.related_product_name').prop('href', 'index.php?module=ProductAdmin&id='+suggestion.data.id);
 				new_item.find('input[name*="related_products"]').val(suggestion.data.id);
 				if(suggestion.data.image)
-					new_item.find('img.product_icon').attr("src", suggestion.data.image);
+					new_item.find('img.product_icon').prop("src", suggestion.data.image);
 				else
 					new_item.find('img.product_icon').remove();
 				new_item.show();
@@ -374,11 +374,11 @@ function generate_meta_keywords()
 {
 	name = $('input[name="name"]').val();
 	result = name;
-	brand = $('select[name="brand_id"] option:selected').attr('brand_name');
+	brand = $('select[name="brand_id"] option:selected').prop('brand_name');
 	if(typeof(brand) == 'string' && brand!='')
 			result += ', '+brand;
 	$('select[name="categories[]"]').each(function(index) {
-		c = $(this).find('option:selected').attr('category_name');
+		c = $(this).find('option:selected').prop('category_name');
 		if(typeof(c) == 'string' && c != '')
     		result += ', '+c;
 	}); 

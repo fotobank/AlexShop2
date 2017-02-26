@@ -33,7 +33,7 @@ $(function() {
 	// Выбрать тему
 	$('.set_main_theme').click(function() {
      	$("form input[name=action]").val('set_main_theme');
-    	$("form input[name=theme]").val($(this).closest('li').attr('theme'));
+    	$("form input[name=theme]").val($(this).closest('li').prop('theme'));
     	$("form").submit();
 	});	
 	
@@ -45,7 +45,7 @@ $(function() {
 	
 	// Редактировать название
 	$("a.edit").click(function() {
-		name = $(this).closest('li').attr('theme');
+		name = $(this).closest('li').prop('theme');
 		inp1 = $('<input type=hidden name="old_name[]">').val(name);
 		inp2 = $('<input type=text name="new_name[]">').val(name);
 		$(this).closest('li').find("p.name").html('').append(inp1).append(inp2);
@@ -56,7 +56,7 @@ $(function() {
 	// Удалить тему
 	$('.delete').click(function() {
      	$("form input[name=action]").val('delete_theme');
-     	$("form input[name=theme]").val($(this).closest('li').attr('theme'));
+     	$("form input[name=theme]").val($(this).closest('li').prop('theme'));
    		$("form").submit();
 	});	
 

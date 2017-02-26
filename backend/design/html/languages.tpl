@@ -127,7 +127,7 @@
                         }
                         else {
                             helper.append(ui.clone());
-                            item.find('input[type="checkbox"][name*="check"]').attr('checked', false);
+                            item.find('input[type="checkbox"][name*="check"]').prop('checked', false);
                         }
                     });
                     return helper;
@@ -163,13 +163,13 @@
 
             // Выделить все
             $("#check_all").click(function () {
-                $('#list input[type="checkbox"][name*="check"]').attr('checked', $('#list input[type="checkbox"][name*="check"]:not(:checked)').length > 0);
+                $('#list input[type="checkbox"][name*="check"]').prop('checked', $('#list input[type="checkbox"][name*="check"]:not(:checked)').length > 0);
             });
 
             // Удалить
             $("a.delete").click(function () {
                 $('#list input[type="checkbox"][name*="check"]').prop('checked', false);
-                $(this).closest(".row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
+                $(this).closest(".row").find('input[type="checkbox"][name*="check"]').prop('checked', true);
                 $(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
                 $(this).closest("form").submit();
             });

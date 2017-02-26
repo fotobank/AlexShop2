@@ -2,6 +2,7 @@
 
 use api\Registry;
 
+
 class ManagersAdmin extends Registry {
     
     public function fetch() {
@@ -19,7 +20,7 @@ class ManagersAdmin extends Registry {
                 }
             }
         }
-        
+
         $managers = $this->managers->get_managers();
         $managers_count = $this->managers->count_managers();
         $this->design->assign('managers', $managers);

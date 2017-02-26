@@ -166,7 +166,7 @@ $(function() {
 				}
 				else {
 					helper.append(ui.clone());
-					item.find('input[type="checkbox"][name*="check"]').attr('checked', false);
+					item.find('input[type="checkbox"][name*="check"]').prop('checked', false);
 				}
 			});
 			return helper;			
@@ -205,9 +205,9 @@ $(function() {
 		hoverClass: "drop_hover",
 		tolerance: "pointer",
 		drop: function(event, ui){
-			$(ui.helper).find('input[type="checkbox"][name*="check"]').attr('checked', true);
-			$(ui.draggable).closest("form").find('select[name="action"] option[value=move_to_banner]').attr("selected", "selected");	
-			$(ui.draggable).closest("form").find('select[name=target_banner] option[value='+$(this).attr('banner_id')+']').attr("selected", "selected");
+			$(ui.helper).find('input[type="checkbox"][name*="check"]').prop('checked', true);
+			$(ui.draggable).closest("form").find('select[name="action"] option[value=move_to_banner]').prop("selected", "selected");
+			$(ui.draggable).closest("form").find('select[name=target_banner] option[value='+$(this).prop('banner_id')+']').prop("selected", "selected");
 			$(ui.draggable).closest("form").submit();
 			return false;			
 		}
@@ -231,7 +231,7 @@ $(function() {
 	// Удалить товар
 	$("a.delete").click(function() {
 		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
-		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
+		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').prop('checked', true);
 		$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
 		$(this).closest("form").submit();
 	});
@@ -239,8 +239,8 @@ $(function() {
 	// Дублировать товар
 	$("a.duplicate").click(function() {
 		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
-		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
-		$(this).closest("form").find('select[name="action"] option[value=duplicate]').attr('selected', true);
+		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').prop('checked', true);
+		$(this).closest("form").find('select[name="action"] option[value=duplicate]').prop('selected', true);
 		$(this).closest("form").submit();
 	});
 	

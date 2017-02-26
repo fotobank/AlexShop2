@@ -160,7 +160,7 @@ $(function() {
     $('#apometr .searcher').trigger('change');
     
     function apometr_ajax() {
-        $('.ajax_freeze').attr('disabled', true);
+        $('.ajax_freeze').prop('disabled', true);
         $("#apometr .apometr").datepicker('disable');
         var searcher = $('#apometr .searcher').val(), 
             region = $('#apometr .region').val().split(':'), 
@@ -173,11 +173,11 @@ $(function() {
 			success: function(data){
                 apometr_data = data.res;
                 $('#apometr .apometr').datepicker('refresh');
-                $('.ajax_freeze').attr('disabled', false);
+                $('.ajax_freeze').prop('disabled', false);
                 $("#apometr .apometr").datepicker('enable');
                 $("#apometr .apometr .ui-datepicker-calendar td").each(function() {
-                    if ($(this).attr('title')) {
-                        $(this).append('<span class="apometr_am">' + $(this).attr('title') + '</span>');
+                    if ($(this).prop('title')) {
+                        $(this).append('<span class="apometr_am">' + $(this).prop('title') + '</span>');
                         $(this).removeAttr('title')
                     }
                 });
@@ -282,7 +282,7 @@ $(function() {
 	// Удалить
 	$("a.delete").click(function() {
 		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
-		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
+		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').prop('checked', true);
 		$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
 		$(this).closest("form").submit();
 	});

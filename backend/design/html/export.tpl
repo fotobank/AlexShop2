@@ -39,7 +39,7 @@ $(function() {
 	$('input#start').click(function() {
         var elem = $('.fn-select:visible');
         if (elem) {
-            field = elem.attr('name');
+            field = elem.prop('name');
             value = elem.val();
         }
  

@@ -47,7 +47,7 @@
 $(function () {
     // Выделить все
     $("#check_all").click(function () {
-        $('input[type="checkbox"][name*="permissions"]:not(:disabled)').attr('checked', $('input[type="checkbox"][name*="permissions"]:not(:disabled):not(:checked)').length > 0);
+        $('input[type="checkbox"][name*="permissions"]:not(:disabled)').prop('checked', $('input[type="checkbox"][name*="permissions"]:not(:disabled):not(:checked)').length > 0);
     });
 
     {/literal}{if $m->id}$('#password_input').hide();{/if}{literal}
@@ -112,45 +112,6 @@ $(function () {
         <!-- Параметры  -->
 		<div class = "block">
 			<ul>
-				{$perms = [
-                'products'   =>'Товары',
-                'categories' =>'Категории',
-                'brands'     =>'Бренды',
-                'features'   =>'Свойства товаров',
-                'orders'     =>'Заказы',
-                'labels'     =>'Метки заказов',
-                'users'      =>'Покупатели',
-                'groups'     =>'Группы покупателей',
-                'coupons'    =>'Купоны',
-                'pages'      =>'Страницы',
-                'blog'       =>'Блог',
-                'comments'   =>'Просчмотр комментариев в админке',
-                'comment_edit' =>'Редактор комментариев',
-                'comment'    =>'Ответ на комментарии в админке',
-                'feedbacks'  =>'Обратная связь',
-                'import'     =>'Импорт',
-                'export'     =>'Экспорт',
-                'stats'      =>'Статистика',
-                'design'     =>'Шаблоны',
-                'settings'   =>'Основные настройки',
-                'settings2'  =>'Дополнительные настройки',
-                'soon'       =>'Страница - заглушка',
-                'currency'   =>'Валюты',
-                'delivery'   =>'Способы доставки',
-                'payment'    =>'Способы оплаты',
-                'managers'   =>'Менеджеры',
-                'languages'  =>'Языки',
-                'license'    =>'Управление лицензией',
-                'banners'    =>'Управление баннерами',
-                'callbacks'  =>'Заказ обратного звонка',
-                'special'    =>'Промо-изображения',
-                'topvisor'   =>'Топвизор',
-                'yametrika'  =>'Яндекс Мектрика',
-                'robots'     =>'Файл robots.txt',
-                'service'    => 'Обслуживание',
-                'antivirus'  => 'Антивирус'
-                ]}
-
                 {foreach $perms as $p=>$name}
                     <li>
                         <label class = property for = "{$p}">{$name}</label>

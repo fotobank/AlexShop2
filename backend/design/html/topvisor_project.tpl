@@ -333,7 +333,7 @@ $(function() {
     $('#new_query').remove();
     $('.add_query').on('click', function() {
         var new_item = new_query.clone().appendTo($(this).closest('.queries'));
-        new_item.find('.new_query_input').attr('name', 'new_queries[' + $(this).data('gid') + '][]');
+        new_item.find('.new_query_input').prop('name', 'new_queries[' + $(this).data('gid') + '][]');
         new_item.show();
     });
     // удалить запрос
@@ -367,20 +367,20 @@ $(function() {
     $(document).on('change', '.frequency_region', function() {
         var elem = $(this),
             dates = $('.frequency_date_from').val() + '---' + $('.frequency_date_to').val();
-        $('.ajax_freeze').attr('disabled', true);
+        $('.ajax_freeze').prop('disabled', true);
         frequency_ajax($('#project_id').val(), elem.data('searcher'), elem.val(), elem.find('option:selected').data('lang'), $('.frequency_group').val(), dates);
     });
     $('.frequency_searcher').trigger('change');
     // группы запросов
     $(document).on('change', '.frequency_group', function() {
-        $('.ajax_freeze').attr('disabled', true);
+        $('.ajax_freeze').prop('disabled', true);
         var region = $('.frequency_region:visible'),
             dates = $('.frequency_date_from').val() + '---' + $('.frequency_date_to').val();
         frequency_ajax($('#project_id').val(), region.data('searcher'), region.val(), region.find('option:selected').data('lang'), $(this).val(), dates);
     });
     // даты
     $(document).on('click', '.frequency_date', function() {
-        $('.ajax_freeze').attr('disabled', true);
+        $('.ajax_freeze').prop('disabled', true);
         var region = $('.frequency_region:visible'),
             dates = $('.frequency_date_from').val() + '---' + $('.frequency_date_to').val();
         frequency_ajax($('#project_id').val(), region.data('searcher'), region.val(), region.find('option:selected').data('lang'), $('.frequency_group').val(), dates);
@@ -394,7 +394,7 @@ $(function() {
 
     // пагинация динамики запросов
     $(document).on('click', '.topvisor_pagination', function() {
-        $('.ajax_freeze').attr('disabled', true);
+        $('.ajax_freeze').prop('disabled', true);
         var region = $('.frequency_region:visible'),
             dates = $('.frequency_date_from').val() + '---' + $('.frequency_date_to').val();
         frequency_ajax($('#project_id').val(), region.data('searcher'), region.val(), region.find('option:selected').data('lang'), $('.frequency_group').val(), dates, $(this).data('page'));
@@ -406,7 +406,7 @@ $(function() {
 			data: {'project_id': project_id, 'searcher': searcher, 'region_key': region, region_lang: region_lang, group_id: group_id, dates: dates, page: page, session_id: '{/literal}{$smarty.session.id}{literal}'},
 			success: function(data){
 				$('.queries_dynamics').html(data.content);
-                $('.ajax_freeze').attr('disabled', false);
+                $('.ajax_freeze').prop('disabled', false);
                 chart = data.data;
 			},
 			dataType: 'json'
@@ -418,8 +418,8 @@ $(function() {
         var cur_nav = $(this).find('.tab_navigation'),
             cur_tabs = $(this).find('.tab_container');
         if(cur_nav.children('.selected').size() > 0) {
-            $(cur_nav.children('.selected').attr("href")).show();
-            cur_tabs.css('height', cur_tabs.children($(cur_nav.children('.selected')).attr("href")).outerHeight());
+            $(cur_nav.children('.selected').prop("href")).show();
+            cur_tabs.css('height', cur_tabs.children($(cur_nav.children('.selected')).prop("href")).outerHeight());
         } else {
             cur_nav.children().first().addClass('selected');
             cur_tabs.children().first().show();
@@ -435,7 +435,7 @@ $(function() {
         cur_tabs.children().hide();
         cur_nav.children().removeClass('selected');
         $(this).addClass('selected');
-        $($(this).attr("href")).fadeIn(200);
+        $($(this).prop("href")).fadeIn(200);
         return false;
     });
 
@@ -476,13 +476,13 @@ $(function() {
 	// Выделить все
 	$(".check_all").click(function() {
         var form = $(this).closest('form');
-        form.find('#list input[type="checkbox"][name*="check"]').attr('checked', form.find('#list input[type="checkbox"][name*="check"]:not(:checked)').length>0);
+        form.find('#list input[type="checkbox"][name*="check"]').prop('checked', form.find('#list input[type="checkbox"][name*="check"]:not(:checked)').length>0);
 	});
 
 	// Удалить
 	$("a.delete").click(function() {
 		$('#list input[type="checkbox"][name*="check"]').prop('checked', false);
-		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').attr('checked', true);
+		$(this).closest("div.row").find('input[type="checkbox"][name*="check"]').prop('checked', true);
 		$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
 		$(this).closest("form").submit();
 	});

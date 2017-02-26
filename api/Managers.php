@@ -10,22 +10,20 @@
 
 namespace api;
 
+use proxy\Config as Options;
+
 class Managers extends Registry
 {
 
     // все существующие разрешения
-    public $permissions_list = [
-        'products', 'comment', 'comment_edit', 'categories', 'brands', 'features', 'orders', 'labels',
-        'users', 'groups', 'coupons', 'pages', 'blog', 'comments', 'feedbacks', 'import', 'export',
-        'stats', 'design', 'settings', 'settings2', 'currency', 'delivery', 'payment', 'managers',
-        'license', 'languages', 'banners', 'special', 'callbacks', 'topvisor', 'yametrika', 'robots',
-        'service', 'antivirus', 'soon', 'dump'
-    ];
+    public $permissions_list = [];
 
+    // все менеджеры
     private $all_managers = [];
 
     public function __construct()
     {
+        $this->permissions_list = array_keys(Options::getData('managers_permissions'));
         parent::__construct();
     }
 
@@ -223,6 +221,7 @@ class Managers extends Registry
     }
 
     /**
+     * проверяет доступ к модулю
      * @param $module
      *
      * @return bool

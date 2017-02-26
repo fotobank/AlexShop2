@@ -1,5 +1,6 @@
 <?php
-use api\Registry;
+use proxy\Config;
+
 
 /*******************************************************************
 
@@ -26,16 +27,31 @@ use api\Registry;
 
  *******************************************************************/
 
-class ServiceAdmin extends Registry
+class ServiceAdmin
 {
-    private $servise_modules = ['AntiShell', 'MySqlDumper'];
+    private $service_modules = ['AntiShell', 'MySqlDumper'];
 
+    /**
+     * @return mixed
+     */
     public function fetch() {
-
-        foreach ($this->servise_pages as $module) {
-            $this->managers->access($page);
+        // Подключаем первый из разрешенных модуль
+        foreach ($this->service_modules as $module){
+            $modules_permissions = Config::getData('modules_permissions');
+            if(array_key_exists($module, $modules_permissions)){
+                if (api()->managers->access($modules_permissions[$module])){
+                    $module_path = __DIR__ . '/' . $module . '.php';
+                    if (is_readable($module_path)){
+                        include($module_path);
+                        /** @var object $obj */
+                        $obj = new $module;
+                        return $obj->fetch();
+                    }
+                    break;
+                }
+            }
         }
-
+        return 'access denied';
     }
 
 }
