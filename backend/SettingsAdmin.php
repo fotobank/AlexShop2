@@ -112,6 +112,8 @@ class SettingsAdmin extends Registry {
                 }
             }
         }
+//        $arrOut = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($arrIn)), true);
+//        $this->design->assign('login_1c', isset($user_1c[0]) ? $user_1c[0] : '');
         $this->design->assign('login_1c', isset($user_1c[0]) ? $user_1c[0] : '');
         return $this->design->fetch('settings.tpl');
     }

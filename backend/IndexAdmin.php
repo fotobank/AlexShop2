@@ -13,8 +13,8 @@ use proxy\Session;
  */
 class IndexAdmin extends Registry
 {
-    // главное меню
-    private $left_menu = [];
+    // Соответсвие модулей и иерархия разделов главного меню
+    private $left_menu_modules = [];
 
     // Соответсвие модулей и названий соответствующих прав
     private $modules_permissions = [];
@@ -24,7 +24,7 @@ class IndexAdmin extends Registry
     // Конструктор
     public function __construct()
     {
-        $this->left_menu = Config::getData('left_menu');
+        $this->left_menu_modules = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator(Config::getData('left_menu'))), true);
         $this->modules_permissions = Config::getData('modules_permissions');
 
         // Вызываем конструктор базового класса
@@ -146,9 +146,10 @@ class IndexAdmin extends Registry
         if (empty($module)){
             $module = 'ProductsAdmin';
         }
-        if (isset($this->left_menu[$module])){
-            $this->design->assign('menu_selected', $this->left_menu[$module]);
+        if (array_key_exists($module, $this->left_menu_modules)){
+            $this->design->assign('menu_selected', $this->left_menu_modules[$module]);
         }
+        $this->design->assign('module', $module);
         // создаем необходимый модуль
         $this->module = new $module();
     }
