@@ -22,8 +22,8 @@ db_prefix = s_;
 ;Кодировка базы данных
 db_charset = UTF8;
 
-;Режим SQL
-db_sql_mode =;
+;Режим SQL - без пробелов через запятую
+db_sql_mode = 'NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES';
 
 ;Смещение часового пояса
 ;db_timezone = +04:00;

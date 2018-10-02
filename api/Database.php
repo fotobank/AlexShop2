@@ -177,7 +177,7 @@ class Database extends Registry
             $sql = $query ?? null;
             Debugger::log(new \Exception('[Ошибка в базе данных] - запрос: ' . $sql), 'err_db_query');
             if (DEBUG_MODE){
-                throw new DbException('Ошибка: ' . $this->mysqli->error . ' в запросе: ' . $sql);
+                throw new DbException('Ошибка: ' . $this->mysqli->error . "\r\nВ запросе: " . $sql);
             }
         }
 

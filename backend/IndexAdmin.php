@@ -24,6 +24,7 @@ class IndexAdmin extends Registry
     // Конструктор
     public function __construct()
     {
+        $t = Config::getData('left_menu');
         $this->left_menu_modules = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator(Config::getData('left_menu'))), true);
         $this->modules_permissions = Config::getData('modules_permissions');
 
@@ -150,6 +151,7 @@ class IndexAdmin extends Registry
             $this->design->assign('menu_selected', $this->left_menu_modules[$module]);
         }
         $this->design->assign('module', $module);
+        $this->design->assign('left_menu_modules', $this->left_menu_modules);
         // создаем необходимый модуль
         $this->module = new $module();
     }
@@ -196,9 +198,9 @@ class IndexAdmin extends Registry
 
         if (!empty($wrapper)){
             return $this->body = $this->design->fetch($wrapper);
-        } else {
-            return $this->body = $content;
         }
+            return $this->body = $content;
+
     }
 
     /**

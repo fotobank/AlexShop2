@@ -17,7 +17,7 @@ db_prefix: 's_'
 db_charset: 'utf8'
 
 #Режим SQL
-db_sql_mode:
+db_sql_mode: 'NO_ENGINE_SUBSTITUTION'
 
 #Смещение часового пояса
 db_timezone: '+04:00'

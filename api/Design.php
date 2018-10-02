@@ -28,6 +28,7 @@ class Design extends Registry
 
     /**
      * Design constructor.
+     * @throws \core\AlexException
      */
     public function __construct()
     {
@@ -49,17 +50,18 @@ class Design extends Registry
         $this->set_compiled_dir(SYS_DIR . 'assests/compiled/smarty/' . $theme);
 
         // кеш smarty
-        $this->smarty->cache_dir = SYS_DIR . 'assests/cache/smarty';
-        if (!is_dir( $this->smarty->cache_dir)){
-            Alex::checkDir( $this->smarty->cache_dir, 0777);
+        $cache_dir = SYS_DIR . 'assests/cache/smarty';
+        if (!is_dir($cache_dir)){
+            Alex::checkDir($cache_dir, 0777);
         }
+        $this->smarty->setCacheDir($cache_dir);
 
         // добавляем директорию плагинов
         $this->smarty->addPluginsDir(SYS_DIR . 'lib/Smarty/plugins');
 
         // указываем папку шаблонов
         $template_dir = ROOT . 'design/' . $theme . '/html';
-        $this->smarty->template_dir = [$template_dir];
+        $this->set_templates_dir([$template_dir]);
 
         // регистрация плагинов
         $this->smarty->registerPlugin('modifier', 'resize', [$this, 'resize_modifier']);
@@ -110,18 +112,20 @@ class Design extends Registry
      */
     public function set_templates_dir($dir)
     {
-        $this->smarty->template_dir = $dir;
+        $this->smarty->setTemplateDir($dir);
     }
 
     /**
      * @param $dir
+     *
+     * @throws \core\AlexException
      */
     public function set_compiled_dir($dir)
     {
         if (!is_dir($dir)){
             Alex::checkDir($dir, 0777);
         }
-        $this->smarty->compile_dir = $dir;
+        $this->smarty->setCompileDir($dir);
     }
 
     public function get_var($name)
@@ -137,7 +141,7 @@ class Design extends Registry
     private function is_mobile_browser()
     {
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $http_accept = isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : '';
+        $http_accept = $_SERVER['HTTP_ACCEPT'] ?? '';
 
         if (eregi('iPad', $user_agent)){
             return false;
@@ -247,7 +251,6 @@ class Design extends Registry
             'wapr' => 'wapr',
             'webc' => 'webc',
             'winw' => 'winw',
-            'winw' => 'winw',
             'xda-' => 'xda-'
         ];
 
@@ -347,7 +350,7 @@ class Design extends Registry
     public function date_modifier($date, $format = null)
     {
         if (empty($date)){
-            $date = date("Y-m-d");
+            $date = date('Y-m-d');
         }
 
         return date(empty($format) ? $this->settings->date_format : $format, strtotime($date));

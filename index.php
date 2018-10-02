@@ -5,7 +5,7 @@ use api\ComingSoon\ComingSoon;
 use lib\Security\Security;
 use proxy\Cookie;
 
-
+include(__DIR__ . '/License.php');
 include(__DIR__ . '/system/configs/define/config.php');
 /** @noinspection PhpIncludeInspection */
 include SYS_DIR . 'core' . DS . 'boot.php';
