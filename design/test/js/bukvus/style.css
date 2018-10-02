@@ -1,0 +1,14 @@
+@media (max-width: 600px) {
+	margin: 10px;
+}
+@media (min-width: 601px) {
+#content {
+	width: 600px;
+	margin: 0 auto;
+}
+}
+* { font-family: "PT Sans"; }
+body { margin: 0; padding: 0 20%; }
+#footer { position: fixed; left: 0; bottom: 0; padding: 10px; background: #f9f9f9; width: 100%; }
+#footer, #footer * { color: #aaa; font-size: 13px; }
+dir { background:#ffe; padding: 3px 15px; border: 1px solid #FBFAE6; }

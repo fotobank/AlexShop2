@@ -1,0 +1,38 @@
+# все доступные разрешения keys и их зшачения vars для менеджеров
+products:  Товары
+comment:  Ответ на комментарии в админке
+comment_edit:  Редактор комментариев
+categories:  Категории
+brands:  Бренды
+features:  Свойства товаров
+orders:  Заказы
+labels:  Метки заказов
+users:  Покупатели
+groups:  Группы покупателей
+coupons:  Купоны
+pages:  Страницы
+blog:  Блог
+comments:  Просчмотр комментариев в админке
+feedbacks:  Обратная связь
+import:  Импорт
+export:  Экспорт
+stats:  Статистика
+design:  Шаблоны
+settings: Основные настройки
+settings2: Дополнительные настройки
+currency:  Валюты
+delivery:  Способы доставки
+payment:  Способы оплаты
+managers: Менеджеры
+license:  Управление лицензией
+languages:  Языки
+banners: Управление баннерами
+special:  Промо-изображения
+callbacks: Заказ обратного звонка
+topvisor: Топвизор
+yametrika:  Яндекс Мектрика
+robots:  Файл robots.txt
+service: Обслуживание
+antivirus: Антивирус
+soon:  Страница - заглушка
+dump:  Обслуживание базы данных

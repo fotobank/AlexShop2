@@ -1,0 +1,96 @@
+# соответствие модулей и иерархии меню
+ProductsAdmin:
+  ProductsAdmin: 'catalog'
+  ProductAdmin: 'catalog'
+  CategoriesAdmin: 'catalog'
+  CategoryAdmin: 'catalog'
+  BrandsAdmin: 'catalog'
+  BrandAdmin: 'catalog'
+  FeaturesAdmin: 'catalog'
+  FeatureAdmin: 'catalog'
+  SpecialAdmin: 'catalog'
+
+OrdersAdmin:
+  OrdersAdmin: 'orders'
+  OrderAdmin: 'orders'
+  OrdersLabelsAdmin: 'orders'
+  OrdersLabelAdmin: 'orders'
+
+UsersAdmin:
+  UsersAdmin: 'users'
+  UserAdmin: 'users'
+  ExportUsersAdmin: 'users'
+  GroupsAdmin: 'users'
+  GroupAdmin: 'users'
+  CouponsAdmin: 'users'
+  CouponAdmin: 'users'
+  SubscribeMailingAdmin: 'users'
+
+PagesAdmin:
+  PagesAdmin: 'pages'
+  PageAdmin: 'pages'
+
+BlogAdmin:
+  BlogAdmin: 'blog'
+  PostAdmin: 'blog'
+
+CommentsAdmin:
+  CommentsAdmin: 'comments'
+  FeedbacksAdmin: 'comments'
+  CallbacksAdmin: 'comments'
+
+ImportAdmin:
+  ImportAdmin: 'auto'
+  ExportAdmin: 'auto'
+  MultiImportAdmin: 'auto'
+  MultiExportAdmin: 'auto'
+
+StatsAdmin:
+  StatsAdmin: 'stats'
+  ReportStatsAdmin: 'stats'
+  CategoryStatsAdmin: 'stats'
+  YametrikaAdmin: 'stats'
+
+TopvisorProjectsAdmin:
+  TopvisorProjectsAdmin: 'topvisor'
+  TopvisorProjectAdmin: 'topvisor'
+
+ThemeAdmin:
+  ThemeAdmin: 'design'
+  StylesAdmin: 'design'
+  TemplatesAdmin: 'design'
+  ImagesAdmin: 'design'
+  ScriptsAdmin: 'design'
+  RobotsAdmin: 'robots'
+
+BannersImagesAdmin:
+  BannersImagesAdmin: 'banners'
+  BannersAdmin: 'banners'
+  BannerAdmin: 'banners'
+  BannersImageAdmin: 'banners'
+
+SettingsAdmin:
+  SettingsAdmin: 'settings'
+  CurrencyAdmin: 'settings'
+  DeliveriesAdmin: 'settings'
+  DeliveryAdmin: 'settings'
+  PaymentMethodAdmin: 'settings'
+  PaymentMethodsAdmin: 'settings'
+  ManagersAdmin: 'settings'
+  ManagerAdmin: 'settings'
+  LanguageAdmin: 'settings'
+  LanguagesAdmin: 'settings'
+  TranslationAdmin: 'settings'
+  TranslationsAdmin: 'settings'
+  JqGridAjaxTranslations: 'settings'
+
+ComingSoon:
+  ComingSoon: 'settings2'
+
+ServiceAdmin:
+  ServiceAdmin: 'service'
+  MySqlDumper: 'service'
+  AntiShell: 'service'
+
+LicenseAdmin:
+  LicenseAdmin: 'license'

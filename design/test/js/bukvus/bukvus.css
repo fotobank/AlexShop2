@@ -1,0 +1,14 @@
+#bukvus {
+	position: fixed;
+	display: none;
+	bottom: 0;
+	opacity: 0.9;
+	background: #333;
+	width: 100%;
+	padding: 10px 0;
+	text-align: center;
+	color: #fff;
+	z-index: 99;
+	cursor: pointer;
+	width: 100%;
+}
