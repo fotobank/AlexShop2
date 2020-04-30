@@ -1,221 +1,320 @@
-<!-- BEGIN SIDEBAR -->
-<div class="page-sidebar-wrapper">
-<div class="page-sidebar navbar-collapse collapse">
-<!-- BEGIN SIDEBAR MENU -->
-<ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+<div id = "cms_logo">
+     <a href = 'index.php?module=LicenseAdmin'><img src = "design/images/logo.png" alt = "AlexShop CMS"/></a>
+</div>
+<div id = "manager_login">
+     <span>{$manager->login}</span>
+    <p>текущий менеджер</p>
+</div>
+<div class="split-0"></div>
 
-	{if in_array('products', $manager->permissions) ||
-    in_array('categories', $manager->permissions) ||
-    in_array('brands', $manager->permissions) ||
-    in_array('features', $manager->permissions) ||
-    in_array('special', $manager->permissions)}
-        <li class = "start {if $menu_selected == 'catalog'}active{/if}">
-			<a href = "index.php?module={if in_array('products', $manager->permissions)}ProductsAdmin
-			{elseif in_array('categories', $manager->permissions)}CategoriesAdmin
-			{elseif in_array('brands', $manager->permissions)}BrandsAdmin
-			{elseif in_array('features', $manager->permissions)}FeaturesAdmin
-			{elseif in_array('special', $manager->permissions)}SpecialAdmin{/if}">
-				<i class = "fa fa-list-alt"></i>
-				<span class="title">Каталог</span>
-                <span class="selected"></span>
+<ul id = "main_menu">
+
+	{if in_array('products', $manager->permissions)}
+        <li class = "{if $menu_selected == 'catalog'}active{/if}">
+			<a href = "index.php?module=ProductsAdmin">
+				<i class = "icon_catalog"></i>
+				<span>Каталог</span>
+			</a>
+		</li>
+
+                {elseif in_array('categories', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'catalog'}active{/if}">
+			<a href = "index.php?module=CategoriesAdmin">
+				<i class = "icon_catalog"></i>
+				<span>Каталог</span>
+			</a>
+		</li>
+
+                {elseif in_array('brands', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'catalog'}active{/if}">
+			<a href = "index.php?module=BrandsAdmin">
+				<i class = "icon_catalog"></i>
+				<span>Каталог</span>
+			</a>
+		</li>
+
+                {elseif in_array('features', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'catalog'}active{/if}">
+			<a href = "index.php?module=FeaturesAdmin">
+				<i class = "icon_catalog"></i>
+				<span>Каталог</span>
+			</a>
+		</li>
+
+                {elseif in_array('special', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'catalog'}active{/if}">
+			<a href = "index.php?module=SpecialAdmin">
+				<i class = "icon_catalog"></i>
+				<span>Каталог</span>
 			</a>
 		</li>
     {/if}
-    {if in_array('orders', $manager->permissions) || in_array('labels', $manager->permissions)}
-        <li{if $menu_selected == 'orders'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-			   <i class = "fa fa-shopping-cart"></i>
-				<span class="title">Заказы</span>
-                <span class="arrow "></span>
+
+    {if in_array('orders', $manager->permissions)}
+        <li class = "{if $menu_selected == 'orders'}active{/if}">
+			<a href = "index.php?module=OrdersAdmin">
+			   <i class = "icon_orders"></i>
+				<span>Заказы</span>
                 {if $new_orders_counter}
                     <span class = "orders_num">{$new_orders_counter}</span>
                 {/if}
 			</a>
-
+			
 		</li>
-	{/if}
 
-    {if in_array('users', $manager->permissions) ||
-	    in_array('groups', $manager->permissions) ||
-	    in_array('coupons', $manager->permissions)}
-        <li{if $menu_selected == 'users'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-			   <i class = "icon-users"></i>
-				<span class="title">Пользователи</span>
+                {elseif in_array('labels', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'orders'}active{/if}">
+			<a href = "index.php?module=OrdersLabelsAdmin">
+				<i class = "icon_orders"></i>
+				<span>Заказы</span>
+                {if $new_orders_counter}
+                    <span class = "orders_num">{$new_orders_counter}</span>
+                {/if}
 			</a>
 		</li>
-	{/if}
+    {/if}
+
+    {if in_array('users', $manager->permissions)}
+        <li class = "{if $menu_selected == 'users'}active{/if}">
+			<a href = "index.php?module=UsersAdmin">
+			   <i class = "icon_users"></i>
+				<span>Пользователи</span>
+			</a>
+		</li>
+
+                {elseif in_array('groups', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'users'}active{/if}">
+			<a href = "index.php?module=GroupsAdmin">
+				<i class = "icon_users"></i>
+				<span>Пользователи</span>
+			</a>
+		</li>
+
+                {elseif in_array('coupons', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'users'}active{/if}">
+			<a href = "index.php?module=CouponsAdmin">
+				<i class = "icon_users"></i>
+				<span>Пользователи</span>
+			</a>
+		</li>
+    {/if}
 
     {if in_array('pages', $manager->permissions)}
-        <li{if $menu_selected == 'pages'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-				<i class = "fa  fa-file-text-o"></i>
-				<span class="title">Страницы</span>
+        <li class = "{if $menu_selected == 'pages'}active{/if}">
+			<a href = "index.php?module=PagesAdmin">
+				<i class = "icon_pages"></i>
+				<span>Страницы</span>
 			</a></li>
     {/if}
 
     {if in_array('blog', $manager->permissions)}
-        <li{if $menu_selected == 'blog'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-				<i class = "fa fa-edit"></i>
-				<span class="title">Блог</span>
+        <li class = "{if $menu_selected == 'blog'}active{/if}">
+			<a href = "index.php?module=BlogAdmin">
+				<i class = "icon_blog"></i>
+				<span>Блог</span>
 			</a></li>
     {/if}
 
-    {if in_array('comments', $manager->permissions) ||
-	    in_array('feedbacks', $manager->permissions) ||
-	    in_array('callbacks', $manager->permissions)}
-        <li{if $menu_selected == 'comments'} class = "active"{/if}>
-		<a href = "index.php?module={$module}">
-			<i class = "fa fa-comments-o"></i>
-			<span class="title">Комментарии</span>
+    {if in_array('comments', $manager->permissions)}
+        <li class = "{if $menu_selected == 'comments'}active{/if}">
+		<a href = "index.php?module=CommentsAdmin">
+			<i class = "icon_comments"></i>
+			<span>Комментарии</span>
             {if $new_comments_counter || $new_callbacks_counter || $new_feedbacks_counter}
                 <span class = "comments_num">{$new_comments_counter + $new_callbacks_counter + $new_feedbacks_counter}</span>
             {/if}
 		</a>
-
+		
 	</li>
+
+                {elseif in_array('feedbacks', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'comments'}active{/if}">
+		<a href = "index.php?module=FeedbacksAdmin">
+			<i class = "icon_comments"></i>
+			<span>Комментарии</span>
+            {if $new_comments_counter || $new_callbacks_counter || $new_feedbacks_counter}
+                <span class = "comments_num">{$new_comments_counter + $new_callbacks_counter + $new_feedbacks_counter}</span>
+            {/if}
+		</a>
+    </li>
+
+                {elseif in_array('callbacks', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'comments'}active{/if}">
+		<a href = "index.php?module=CallbacksAdmin">
+			<i class = "icon_comments"></i>
+			<span>Комментарии</span>
+            {if $new_comments_counter || $new_callbacks_counter || $new_feedbacks_counter}
+                <span class = "comments_num">{$new_comments_counter + $new_callbacks_counter + $new_feedbacks_counter}</span>
+            {/if}
+		</a>
+    </li>
     {/if}
 
-    {if in_array('import', $manager->permissions) || in_array('export', $manager->permissions)}
-        <li{if $menu_selected == 'auto'} class = "active"{/if}>
-		<a href = "index.php?module={$module}">
-			<i class = "fa fa-chain"></i>
-			<span class="title">Импорт/экспорт</span>
+    {if in_array('import', $manager->permissions)}
+        <li class = "{if $menu_selected == 'auto'}active{/if}">
+		<a href = "index.php?module=ImportAdmin">
+			<i class = "icon_automatic"></i>
+			<span>Импорт/экспорт</span>
+		</a>
+	</li>
+
+                {elseif in_array('export', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'auto'}active{/if}">
+		<a href = "index.php?module=ExportAdmin">
+			<i class = "icon_automatic"></i>
+			<span>Импорт/экспорт</span>
 		</a>
 	</li>
     {/if}
 
     {if in_array('stats', $manager->permissions)}
-        <li{if $menu_selected == 'stats'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-				<i class = "fa fa-bar-chart-o"></i>
-				<span class="title">Статистика</span>
+        <li class = "{if $menu_selected == 'stats'}active{/if}">
+			<a href = "index.php?module=StatsAdmin">
+				<i class = "icon_statistic"></i>
+				<span>Статистика</span>
 			</a>
 		</li>
     {/if}
 
     {if in_array('topvisor', $manager->permissions)}
-        <li{if $menu_selected == 'topvisor'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-				<i class = "fa fa-bullseye"></i>
-				<span class="title">Topvisor</span>
+        <li class = "{if $menu_selected == 'topvisor'}active{/if}">
+			<a href = "index.php?module=TopvisorProjectsAdmin">
+				<i class = "icon_topvisor"></i>
+				<span>Topvisor</span>
 			</a>
 		</li>
     {/if}
 
     {if in_array('design', $manager->permissions)}
-        <li{if $menu_selected == 'design'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-				<i class = "fa fa-desktop"></i>
-				<span class="title">Шаблоны</span>
+        <li class = "{if $menu_selected == 'design'}active{/if}">
+			<a href = "index.php?module=ThemeAdmin">
+				<i class = "icon_design"></i>
+				<span>Шаблоны</span>
 			</a>
 		</li>
     {/if}
 
     {if in_array('banners', $manager->permissions)}
-        <li{if $menu_selected == 'banners'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-				<i class = "fa fa-picture-o"></i>
-				<span class="title">Баннеры</span>
+        <li class = "{if $menu_selected == 'banners'}active{/if}">
+			<a href = "index.php?module=BannersImagesAdmin">
+				<i class = "icon_banner"></i>
+				<span>Баннеры</span>
 			</a>
 		</li>
     {/if}
 	{if in_array('service', $manager->permissions)}
-        <li{if $menu_selected == 'service'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-				<i class = "fa fa-tachometer"></i>
-				<span class="title">Обслуживание</span>
+        <li class = "{if $menu_selected == 'service'}active{/if}">
+			<a href = "index.php?module=ServiceAdmin">
+				<i class = "icon_service"></i>
+				<span>Обслуживание</span>
 			</a>
 		</li>
     {/if}
 
-{if in_array('settings', $manager->permissions)}
+    {if in_array('settings', $manager->permissions)}
         <li class = "dropdown {if $menu_selected == ('settings')}active
                               {elseif $menu_selected == ('settings2')}active{/if}" rel="1">
-			<a href = "index.php?module={$module}">
-				<i class = "fa fa-gears"></i>
-				<span class="title">Настройки</span>
-                <span class="arrow "></span>
+			<a href = "index.php?module=SettingsAdmin">
+				<i class = "icon_settings"></i>
+				<span class="i-menu-max">Настройки</span>
+                <i class = "icon_more"></i>
             </a>
-                 <ul class="sub-menu">
-                   <li{if $menu_selected == ('settings')} class = "active"{/if} rel="11">
-                       <a href = "index.php?module={$module}">
-                           <i class="icon-first_settings"></i><span class="title">Основные</span></a></li>
-                   <li{if $menu_selected == ('settings2')} class = "active"{/if} rel="12">
-                       <a href = "index.php?module={$module}">
-                           <i class="fa fa-wrench"></i><span class="title">Дополнительные</span></a></li>
+                 <ul class="dropdown-1">
+                   <li class = "dropdown {if $menu_selected == ('settings')}active{/if}" rel="11">
+                       <a href = "index.php?module=SettingsAdmin">
+                           <i class="icon_first_settings"></i><span>Основные</span></a></li>
+                   <li class = "dropdown {if $menu_selected == ('settings2')}active{/if}" rel="12">
+                       <a href = "index.php?module=ComingSoon">
+                           <i class="icon_second_settings"></i><span>Дополнительные</span></a></li>
                  </ul>
 
 		</li>
 
-        {elseif in_array('currency', $manager->permissions) ||
-                 in_array('delivery', $manager->permissions) ||
-                 in_array('payment', $manager->permissions) ||
-                 in_array('managers', $manager->permissions) ||
-                 in_array('languages', $manager->permissions)}
+         {elseif in_array('currency', $manager->permissions)}
 
-        <li{if $menu_selected == 'settings'} class = "active"{/if}>
-			<a href = "index.php?module={$module}">
-				<i class = "icon-settings"></i>
-				<span class="title">Настройки</span>
-				<span class="arrow "></span>
+        <li class = "{if $menu_selected == 'settings'}active{/if}">
+			<a href = "index.php?module=CurrencyAdmin">
+				<i class = "icon_settings"></i>
+				<span>Настройки</span>
 			</a>
 		</li>
-        {/if}
+
+          {elseif in_array('delivery', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'settings'}active{/if}">
+			<a href = "index.php?module=DeliveriesAdmin">
+				<i class = "icon_settings"></i>
+				<span>Настройки</span>
+			</a>
+		</li>
+
+          {elseif in_array('payment', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'settings'}active{/if}">
+			<a href = "index.php?module=PaymentMethodsAdmin">
+				<i class = "icon_settings"></i>
+				<span>Настройки</span>
+			</a>
+		</li>
+
+          {elseif in_array('managers', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'settings'}active{/if}">
+			<a href = "index.php?module=ManagersAdmin">
+				<i class = "icon_settings"></i>
+				<span>Настройки</span>
+			</a>
+		</li>
+
+         {elseif in_array('languages', $manager->permissions)}
+
+        <li class = "{if $menu_selected == 'settings'}active{/if}">
+			<a href = "index.php?module=LanguagesAdmin">
+				<i class = "icon_settings"></i>
+				<span>Настройки</span>
+			</a>
+		</li>
+    {/if}
     <li>
     <a href = '{$config->root_url}?logout'>
-        <i class = "fa fa-power-off"></i>
-        <span class="title">Выход</span>
+        <i class = "icon_log_out"></i>
+        <span>Выход</span>
     </a>
     </li>
 </ul>
-<!-- END SIDEBAR MENU -->
-			</div>
-		</div>
-<!-- END SIDEBAR -->
-
-
-{*<!-- BEGIN SIDEBAR -->
-<div class="page-sidebar navbar-collapse collapse">
-  <!-- BEGIN SIDEBAR MENU -->
-  <ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-    <li>
-      <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-      <div class="sidebar-toggler hidden-phone"></div>
-	  <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-    </li>
-    <li class="start active ">
-      <a href="index.html">
-      <i class="icon-home"></i>
-      <span class="title">Dashboard</span>
-      <span class="selected"></span>
-      </a>
-    </li>
-    <li class="">
-      <a href="javascript:;">
-      <i class="icon-file-text"></i>
-      <span class="title">Portlets</span>
-      <span class="arrow "></span>
-      </a>
-      <ul class="sub-menu">
-        <li >
-          <a href="portlet_general.html">
-          General Portlets              </a>
-        </li>
-        <li >
-          <a href="portlet_draggable.html">
-          Draggable Portlets              </a>
-        </li>
-      </ul>
-    </li>
-    <li class="last ">
-      <a href="charts.html">
-      <i class="icon-bar-chart"></i>
-      <span class="title">Visual Charts</span>
-      </a>
-    </li>
-  </ul>
-  <!-- END SIDEBAR MENU -->
+<div class = "language">
+{foreach $languages as $l}
+    <a href = "{url lang_id=$l->id}" {if $l->id == $lang_id}class = "selected"{/if}>{$l->label}</a>
+{/foreach}
 </div>
-<!-- END SIDEBAR -->*}
+<div class = "license_info">
+{if in_array('license', $manager->permissions)}
+    {if $license->valid}
+<span>
+    <a href = 'index.php?module=LicenseAdmin'>Лицензия</a> действительна {if $license->expiration != '*'}до {$license->expiration}{/if} для домен{$license->domains|count|plural:'а':'ов'}
+    {foreach $license->domains as $d}{$d}{if !$d@last}, {/if}{/foreach} .</span>
+
+    {else}
+        <span><a href = 'index.php?module=LicenseAdmin'>Лицензия</a> недействительна.</span>
+    {/if}
+{/if}
+</div>
+{*основное меню*}
+<script>
+    jQuery(document).ready(function($) {
+        $("li.dropdown").hover(function() {
+            var id = $(this).attr("rel");
+            $("ul.dropdown-" + id).toggle("fade", 250);
+        });
+    });
+</script>

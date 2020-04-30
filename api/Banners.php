@@ -259,13 +259,18 @@ class Banners extends Registry {
                     unset($show_filter_array[$k]);
                     continue;
                 }
-                $show_filter_array[$k] = $this->db->placehold($k." regexp '[[:<:]](?)[[:>:]]'", (int)$show_filter_array[$k]);
+                // yt hf,jnftn yf MSQL8
+//                $show_filter_array[$k] = $this->db->placehold($k." regexp '[[:<:]](?)[[:>:]]'",
+//	                (int)$show_filter_array[$k]);
+	            $show_filter_array[$k] = $this->db->placehold($k." regexp '\\\\b(?)\\\\b'",
+		            (int)$show_filter_array[$k]);
             }
             $show_filter_array[] = 'show_all_pages=1';
             $show_filter = 'AND (' . implode(' OR ',$show_filter_array) . ')';
         }
         
-        $query = $this->db->placehold("SELECT * FROM __banners WHERE id=? $is_visible $show_filter LIMIT 1", $id);
+        $query = $this->db->placehold("SELECT * FROM __banners 
+                        WHERE id=? $is_visible $show_filter LIMIT 1", $id);
         $this->db->query($query);
         $banner = $this->db->result();
         return $banner;

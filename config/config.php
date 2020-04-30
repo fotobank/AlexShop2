@@ -11,7 +11,7 @@ db_server = "localhost"
 db_user = "okay"
 
 ;Пароль к базе
-db_password = "278019"
+db_password = "okay"
 
 ;Имя базы
 db_name = "okay"

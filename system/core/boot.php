@@ -127,4 +127,4 @@ $_SERVER['REMOTE_ADDR'] = filter($_SERVER['REMOTE_ADDR'], 'ip');
 
 function api() {
     return Registry::getInstance();
-};
+}
